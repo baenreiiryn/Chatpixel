@@ -47,9 +47,23 @@ Isso permite auditoria, Undo e correção manual.
 
 ## Integração ChatGPT
 
-O botão de conexão é intencionalmente um placeholder. A integração final deve usar Sign in with ChatGPT / plan sharing quando o aplicativo tiver acesso ao programa correspondente. Nenhuma API key deve ser embutida no cliente.
+O site nunca guarda tokens ChatGPT. O `Oracle Bridge` em `bridge/server.mjs` roda em
+`127.0.0.1:31415` e implementa o fluxo open-source de Sign in with ChatGPT:
 
-As tools iniciais ficam em `lib/tools.ts`.
+1. cria um `ext_agent_host_id` persistente;
+2. usa `dynamic_agent_client` na primeira autorização;
+3. abre o navegador do sistema para OAuth com PKCE;
+4. recebe o callback em `127.0.0.1`;
+5. valida o ID token por JWKS e exige `chatgpt.tokens.use.direct`;
+6. persiste as credenciais somente em `~/.oraclerpg/bridge.json`;
+7. lista os modelos disponíveis para a conta;
+8. chama `POST /v1/responses` com `store:false` e `stream:true`;
+9. devolve somente o resultado ao browser.
+
+O browser recebe tool calls, executa `executeGmTool()` contra o mesmo Command Bus da UI
+manual, envia `function_call_output` de volta ao modelo e repete até chegar à narração final.
+
+As tools ficam em `lib/tools.ts`; a orquestração fica em `lib/gm.ts`.
 
 ## Persistência
 
@@ -59,15 +73,15 @@ O navegador mantém `localStorage` como cache offline. A sincronização opciona
 - o servidor guarda apenas SHA-256 da chave;
 - alterações usam `expectedVersion` para impedir last-write-wins silencioso;
 - um conflito retorna a versão remota e a UI pede qual versão deve prevalecer;
-- quando Sign in with ChatGPT estiver habilitado, a campanha pode ser vinculada à conta verificada.
 
 As credenciais de pareamento ficam apenas nos dispositivos do usuário. Elas não são credenciais OpenAI.
 
 ## Sign in with ChatGPT
 
-As rotas `/api/auth/openai/start` e `/api/auth/openai/callback` implementam Authorization Code + PKCE
-e validação do ID token por JWKS. O fluxo permanece desativado enquanto `OPENAI_CLIENT_ID` não estiver configurado.
+O OracleRPG usa o fluxo open-source/local, sem client ID de parceiro. Login e inferência
+acontecem no Oracle Bridge local. Vercel e Neon nunca recebem access token, refresh token
+ou ID token da conta ChatGPT.
 
-O banco persiste somente a identidade necessária ao OracleRPG e sua sessão própria. Acesso ao plano ChatGPT
-é uma capacidade separada. No preview atual, o plan sharing aberto é para runtimes locais/open-source;
-um OracleRPG hospedado precisa da habilitação partner apropriada para oferecer esse uso no site.
+O bridge aceita por padrão apenas `https://oraclerpg.vercel.app`,
+`http://localhost:3000` e `http://127.0.0.1:3000`. Outras origens precisam ser adicionadas
+explicitamente por `ORACLE_ALLOWED_ORIGINS`.

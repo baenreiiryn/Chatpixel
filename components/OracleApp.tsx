@@ -3,15 +3,12 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { buildContextPacket, executeCommand, GameState, initialState, undoLatest } from "@/lib/game";
 import { useCloudSync } from "@/hooks/useCloudSync";
+import { useOracleBridge } from "@/hooks/useOracleBridge";
+import { buildTurnInput, executeGmTool, extractNarration, gmInstructions, responseTools } from "@/lib/gm";
 
 const STORAGE_KEY = "oraclerpg:campaign:v1";
 
 type View = "session" | "character" | "world" | "memory";
-type AuthState = {
-  configured: boolean;
-  authenticated: boolean;
-  account: { email: string | null; displayName: string | null } | null;
-};
 
 function Resource({
   label,
@@ -59,7 +56,8 @@ export default function OracleApp() {
   const [showSync, setShowSync] = useState(false);
   const [pairInput, setPairInput] = useState("");
   const [syncNote, setSyncNote] = useState("");
-  const [auth, setAuth] = useState<AuthState>({ configured: false, authenticated: false, account: null });
+  const [gmBusy, setGmBusy] = useState(false);
+  const [gmError, setGmError] = useState("");
 
   useEffect(() => {
     try {
@@ -74,22 +72,7 @@ export default function OracleApp() {
   }, [ready, state]);
 
   const cloud = useCloudSync(state, setState, ready);
-
-  useEffect(() => {
-    if (!ready) return;
-    void fetch("/api/auth/session", { cache: "no-store" })
-      .then((response) => response.json())
-      .then((data: AuthState) => setAuth(data))
-      .catch(() => undefined);
-  }, [ready]);
-
-  useEffect(() => {
-    if (!auth.authenticated || !cloud.credentials) return;
-    void fetch(`/api/campaigns/${cloud.credentials.campaignId}/claim`, {
-      method: "POST",
-      headers: { authorization: `Bearer ${cloud.credentials.syncKey}` },
-    }).catch(() => undefined);
-  }, [auth.authenticated, cloud.credentials]);
+  const bridge = useOracleBridge();
 
   const contextPreview = useMemo(() => buildContextPacket(state), [state]);
 
@@ -131,20 +114,11 @@ export default function OracleApp() {
   }
 
   function connectChatGPT() {
-    if (auth.authenticated) {
-      setShowConnect(true);
-      return;
-    }
-    if (auth.configured) {
-      window.location.href = "/api/auth/openai/start";
-      return;
-    }
     setShowConnect(true);
   }
 
   async function logoutChatGPT() {
-    await fetch("/api/auth/logout", { method: "POST" });
-    setAuth((current) => ({ ...current, authenticated: false, account: null }));
+    await bridge.logout();
     setShowConnect(false);
   }
 
@@ -152,16 +126,75 @@ export default function OracleApp() {
     setState((current) => executeCommand(current, { type: "adjust", resource, amount }));
   }
 
-  function submit(e: FormEvent) {
+  async function submit(e: FormEvent) {
     e.preventDefault();
     const text = input.trim();
-    if (!text) return;
-    setState((current) => ({
-      ...current,
-      messages: [...current.messages, { id: crypto.randomUUID(), role: "player", text, createdAt: new Date().toISOString() }],
-    }));
+    if (!text || gmBusy) return;
+    const playerMessage = { id: crypto.randomUUID(), role: "player" as const, text, createdAt: new Date().toISOString() };
+    let working: GameState = { ...state, messages: [...state.messages, playerMessage] };
+    setState(working);
     setInput("");
-    if (!auth.authenticated) setShowConnect(true);
+    setGmError("");
+    if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
+      setShowConnect(true);
+      return;
+    }
+
+    setGmBusy(true);
+    try {
+      const conversationInput: unknown[] = buildTurnInput(working, text);
+      let narration = "";
+      for (let round = 0; round < 6; round += 1) {
+        const response = await bridge.respond({
+          model: bridge.model,
+          instructions: gmInstructions(working.campaign.system),
+          input: conversationInput,
+          tools: responseTools,
+        });
+        const output = Array.isArray(response.output) ? response.output : [];
+        const calls = output.filter((item: Record<string, unknown>) => item.type === "function_call");
+        narration = extractNarration(response) || narration;
+        if (!calls.length) break;
+
+        for (const call of calls as Array<Record<string, unknown>>) {
+          const executed = executeGmTool(
+            working,
+            String(call.name || ""),
+            String(call.arguments || "{}"),
+          );
+          working = executed.state;
+          conversationInput.push(call);
+          conversationInput.push({
+            type: "function_call_output",
+            call_id: call.call_id,
+            output: JSON.stringify(executed.result),
+          });
+        }
+        setState(working);
+      }
+
+      if (!narration) narration = "O Oracle concluiu as alterações, mas não retornou uma narração.";
+      working = {
+        ...working,
+        messages: [
+          ...working.messages,
+          { id: crypto.randomUUID(), role: "gm", text: narration, createdAt: new Date().toISOString() },
+        ],
+      };
+      setState(working);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Falha ao consultar o Mestre.";
+      setGmError(message);
+      setState((current) => ({
+        ...current,
+        messages: [
+          ...current.messages,
+          { id: crypto.randomUUID(), role: "system", text: `Mestre IA indisponível: ${message}`, createdAt: new Date().toISOString() },
+        ],
+      }));
+    } finally {
+      setGmBusy(false);
+    }
   }
 
   return (
@@ -182,8 +215,8 @@ export default function OracleApp() {
           <button className={`cloudStatus ${cloud.status}`} onClick={() => setShowSync(true)}>
             <i /> Nuvem <span>{cloudLabel}</span>
           </button>
-          <button className={`connection ${auth.authenticated ? "connected" : ""}`} onClick={connectChatGPT}>
-            <i /> ChatGPT <span>{auth.authenticated ? "conectado" : "conectar"}</span>
+          <button className={`connection ${bridge.account?.connected ? "connected" : ""}`} onClick={connectChatGPT}>
+            <i /> ChatGPT <span>{bridge.account?.connected ? "conectado" : bridge.status === "missing" ? "bridge offline" : "conectar"}</span>
           </button>
         </div>
       </header>
@@ -232,10 +265,10 @@ export default function OracleApp() {
                 </div>
                 <form className="composer" onSubmit={submit}>
                   <button type="button" title="Ações rápidas">＋</button>
-                  <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="O que você faz?" />
-                  <button className="send" type="submit">➤</button>
+                  <input value={input} onChange={(e) => setInput(e.target.value)} placeholder={gmBusy ? "O Mestre está narrando..." : "O que você faz?"} disabled={gmBusy} />
+                  <button className="send" type="submit" disabled={gmBusy}>{gmBusy ? "…" : "➤"}</button>
                 </form>
-                <div className="composerHint"><span>O estado da campanha é salvo no OracleRPG.</span><span>Enter para enviar</span></div>
+                <div className="composerHint"><span>{gmError ? gmError : "O estado da campanha é salvo no OracleRPG."}</span><span>{bridge.model || "Mestre local"}</span></div>
               </section>
 
               <aside className="characterPanel panel">
@@ -362,16 +395,34 @@ export default function OracleApp() {
           <section className="connectModal" onClick={(e) => e.stopPropagation()}>
             <img src="/oracle-mark.svg" alt="" />
             <small>MESTRE IA</small>
-            <h2>{auth.authenticated ? "ChatGPT conectado" : "Conectar com ChatGPT"}</h2>
-            {auth.authenticated ? (
-              <p>Você entrou como <b>{auth.account?.displayName || auth.account?.email || "conta ChatGPT"}</b>. As campanhas sincronizadas podem ser vinculadas a esta identidade sem salvar suas credenciais de plano no OracleRPG.</p>
+            <h2>{bridge.account?.connected ? "ChatGPT conectado" : bridge.status === "missing" ? "Oracle Bridge necessário" : "Conectar com ChatGPT"}</h2>
+            {bridge.status === "missing" ? (
+              <>
+                <p>O plano ChatGPT precisa ser usado pelo runtime local. Inicie o Oracle Bridge neste computador; as credenciais nunca são enviadas ao Vercel ou ao Neon.</p>
+                <div className="bridgeCommand"><code>npm install</code><code>npm run bridge</code></div>
+                <button className="ghost" onClick={() => bridge.refresh()}>Verificar novamente</button>
+              </>
+            ) : bridge.account?.connected ? (
+              <>
+                <p>Conectado localmente como <b>{bridge.account.name || bridge.account.email || "conta ChatGPT"}</b>. O uso da IA conta no limite do próprio plano dessa conta.</p>
+                {bridge.models.length > 0 && (
+                  <label className="modelPicker">
+                    <span>Modelo do Mestre</span>
+                    <select value={bridge.model} onChange={(event) => bridge.setModel(event.target.value)}>
+                      {bridge.models.map((model) => <option key={model.slug} value={model.slug}>{model.displayName}</option>)}
+                    </select>
+                  </label>
+                )}
+                <button className="ghost" onClick={logoutChatGPT}>Desconectar ChatGPT deste dispositivo</button>
+              </>
             ) : (
-              <p>{auth.configured ? "Entre com sua conta ChatGPT para vincular sua identidade ao OracleRPG." : "O fluxo já está implementado, mas a OpenAI ainda precisa emitir o client ID do OracleRPG para habilitar o botão neste site."}</p>
+              <>
+                <p>O Oracle Bridge está ativo. O login abre no navegador do sistema usando o fluxo open-source oficial; não é necessário API key, empresa ou client secret.</p>
+                <button className="primary enabled" onClick={() => bridge.connect()}>Continuar com ChatGPT</button>
+              </>
             )}
-            <div className="connectFlow"><span>OracleRPG</span><i>→</i><span>ChatGPT</span><i>→</i><span>Tools</span></div>
-            {!auth.authenticated && auth.configured && <button className="primary enabled" onClick={() => { window.location.href = "/api/auth/openai/start"; }}>Continuar com ChatGPT</button>}
-            {!auth.authenticated && !auth.configured && <button className="primary" disabled>Continuar com ChatGPT · aguardando client ID</button>}
-            {auth.authenticated && <button className="ghost" onClick={logoutChatGPT}>Sair desta conta</button>}
+            <div className="connectFlow"><span>OracleRPG</span><i>→</i><span>Bridge local</span><i>→</i><span>ChatGPT</span></div>
+            {bridge.error && <p className="modalNote">{bridge.error}</p>}
             <button className="ghost" onClick={() => setShowConnect(false)}>Continuar em modo manual</button>
           </section>
         </div>

@@ -21,8 +21,11 @@ OracleRPG é uma interface persistente para campanhas em que o ChatGPT atua como
 - Cache offline em `localStorage`.
 - Sincronização opcional em Postgres/Neon com pareamento entre dispositivos.
 - Versionamento otimista e resolução explícita de conflitos.
-- Fluxo OIDC de `Continue with ChatGPT` preparado para o client ID oficial.
-- Campanhas podem ser vinculadas à identidade ChatGPT quando o login estiver habilitado.
+- Oracle Bridge local para Sign in with ChatGPT open-source.
+- Registro OAuth dinâmico com `dynamic_agent_client`, PKCE e callback em `127.0.0.1`.
+- Tokens ChatGPT ficam somente no dispositivo do usuário.
+- Catálogo de modelos da própria conta ChatGPT.
+- Loop real de Mestre IA com function tools → Command Bus → narração.
 
 ## Rodar
 
@@ -34,21 +37,28 @@ npm run dev
 Abra http://localhost:3000.
 
 Copie `.env.example` para `.env.local` e configure `DATABASE_URL` para habilitar a nuvem.
-As variáveis `OPENAI_CLIENT_ID`, `OPENAI_CLIENT_SECRET` e `OPENAI_REDIRECT_URI`
-só são necessárias quando o aplicativo receber credenciais oficiais de Sign in with ChatGPT.
+
+Para usar o ChatGPT como Mestre neste computador:
+
+```bash
+npm run bridge
+```
+
+Depois clique em **ChatGPT → Continuar com ChatGPT** no OracleRPG. O primeiro login usa
+o registro dinâmico oficial para apps open-source; não é necessário API key, empresa,
+client secret ou client ID pré-aprovado.
 
 ## Segurança do ChatGPT plan
 
 Credenciais que dão acesso ao plano ChatGPT **não pertencem ao banco do OracleRPG**.
-O banco remoto contém campanha, memória e sessões de identidade do próprio Oracle.
-Plan sharing deve seguir o fluxo permitido pela OpenAI para o tipo de distribuição escolhido.
+O browser também não recebe access/refresh tokens. O Oracle Bridge guarda as credenciais
+em `~/.oraclerpg/bridge.json` e faz a inferência localmente em nome do usuário.
 
-No preview atual, o fluxo aberto de plan sharing é voltado a apps open-source que executam
-localmente; um site hospedado precisa do acesso comercial/partner correspondente.
+O Vercel/Neon continuam responsáveis somente pela interface e pelos dados persistentes da campanha.
 
 ## Próximas camadas
 
-1. Sign in with ChatGPT / plan sharing quando o app tiver o client ID e acesso apropriado.
-2. Tool schema do Mestre apontando para o command bus.
+1. Empacotar o Oracle Bridge como aplicativo desktop instalável.
+2. Criar runtime equivalente no app Android.
 3. Recuperação semântica de memória por campanha.
 4. Regras por sistema (Daggerheart, D&D, Cyberpunk etc.).

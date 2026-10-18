@@ -48,6 +48,20 @@ export const oracleTools: OracleTool[] = [
     }
   },
   {
+    name: "condition_set",
+    description: "Aplica ou remove uma condição do personagem.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        name: { type: "string" },
+        active: { type: "boolean" },
+        reason: { type: "string" }
+      },
+      required: ["name", "active", "reason"],
+      additionalProperties: false
+    }
+  },
+  {
     name: "memory_search",
     description: "Busca fatos, eventos e segredos relevantes da campanha persistida no OracleRPG.",
     inputSchema: {
