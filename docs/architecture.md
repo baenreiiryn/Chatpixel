@@ -53,4 +53,21 @@ As tools iniciais ficam em `lib/tools.ts`.
 
 ## Persistência
 
-O MVP usa `localStorage` para provar o fluxo sem backend. A versão multi-dispositivo deverá mover o estado para banco remoto mantendo o mesmo formato lógico e um event log append-only.
+O navegador mantém `localStorage` como cache offline. A sincronização opcional usa Postgres:
+
+- cada campanha recebe um UUID e uma chave de pareamento aleatória;
+- o servidor guarda apenas SHA-256 da chave;
+- alterações usam `expectedVersion` para impedir last-write-wins silencioso;
+- um conflito retorna a versão remota e a UI pede qual versão deve prevalecer;
+- quando Sign in with ChatGPT estiver habilitado, a campanha pode ser vinculada à conta verificada.
+
+As credenciais de pareamento ficam apenas nos dispositivos do usuário. Elas não são credenciais OpenAI.
+
+## Sign in with ChatGPT
+
+As rotas `/api/auth/openai/start` e `/api/auth/openai/callback` implementam Authorization Code + PKCE
+e validação do ID token por JWKS. O fluxo permanece desativado enquanto `OPENAI_CLIENT_ID` não estiver configurado.
+
+O banco persiste somente a identidade necessária ao OracleRPG e sua sessão própria. Acesso ao plano ChatGPT
+é uma capacidade separada. No preview atual, o plan sharing aberto é para runtimes locais/open-source;
+um OracleRPG hospedado precisa da habilitação partner apropriada para oferecer esse uso no site.

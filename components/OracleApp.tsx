@@ -2,10 +2,16 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { buildContextPacket, executeCommand, GameState, initialState, undoLatest } from "@/lib/game";
+import { useCloudSync } from "@/hooks/useCloudSync";
 
 const STORAGE_KEY = "oraclerpg:campaign:v1";
 
 type View = "session" | "character" | "world" | "memory";
+type AuthState = {
+  configured: boolean;
+  authenticated: boolean;
+  account: { email: string | null; displayName: string | null } | null;
+};
 
 function Resource({
   label,
@@ -50,6 +56,10 @@ export default function OracleApp() {
   const [input, setInput] = useState("");
   const [ready, setReady] = useState(false);
   const [showConnect, setShowConnect] = useState(false);
+  const [showSync, setShowSync] = useState(false);
+  const [pairInput, setPairInput] = useState("");
+  const [syncNote, setSyncNote] = useState("");
+  const [auth, setAuth] = useState<AuthState>({ configured: false, authenticated: false, account: null });
 
   useEffect(() => {
     try {
@@ -63,7 +73,80 @@ export default function OracleApp() {
     if (ready) localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [ready, state]);
 
+  const cloud = useCloudSync(state, setState, ready);
+
+  useEffect(() => {
+    if (!ready) return;
+    void fetch("/api/auth/session", { cache: "no-store" })
+      .then((response) => response.json())
+      .then((data: AuthState) => setAuth(data))
+      .catch(() => undefined);
+  }, [ready]);
+
+  useEffect(() => {
+    if (!auth.authenticated || !cloud.credentials) return;
+    void fetch(`/api/campaigns/${cloud.credentials.campaignId}/claim`, {
+      method: "POST",
+      headers: { authorization: `Bearer ${cloud.credentials.syncKey}` },
+    }).catch(() => undefined);
+  }, [auth.authenticated, cloud.credentials]);
+
   const contextPreview = useMemo(() => buildContextPacket(state), [state]);
+
+  const cloudLabel = ({
+    local: "somente local",
+    connecting: "conectando",
+    synced: "sincronizado",
+    syncing: "salvando",
+    offline: "offline",
+    conflict: "conflito",
+    error: "erro",
+  } as const)[cloud.status];
+
+  async function createCloudCampaign() {
+    setSyncNote("");
+    try {
+      await cloud.createCloud();
+      setSyncNote("Campanha criada na nuvem. Use o código abaixo no outro dispositivo.");
+    } catch {
+      setSyncNote("Não foi possível ativar a sincronização.");
+    }
+  }
+
+  async function joinCloudCampaign() {
+    setSyncNote("");
+    try {
+      await cloud.joinCloud(pairInput);
+      setPairInput("");
+      setSyncNote("Campanha carregada deste dispositivo.");
+    } catch (error) {
+      setSyncNote(error instanceof Error ? error.message : "Código inválido.");
+    }
+  }
+
+  async function copyPairCode() {
+    if (!cloud.pairCode) return;
+    await navigator.clipboard.writeText(cloud.pairCode);
+    setSyncNote("Código copiado.");
+  }
+
+  function connectChatGPT() {
+    if (auth.authenticated) {
+      setShowConnect(true);
+      return;
+    }
+    if (auth.configured) {
+      window.location.href = "/api/auth/openai/start";
+      return;
+    }
+    setShowConnect(true);
+  }
+
+  async function logoutChatGPT() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setAuth((current) => ({ ...current, authenticated: false, account: null }));
+    setShowConnect(false);
+  }
 
   function adjust(resource: "hp" | "hope" | "stress" | "armor", amount: number) {
     setState((current) => executeCommand(current, { type: "adjust", resource, amount }));
@@ -78,7 +161,7 @@ export default function OracleApp() {
       messages: [...current.messages, { id: crypto.randomUUID(), role: "player", text, createdAt: new Date().toISOString() }],
     }));
     setInput("");
-    setShowConnect(true);
+    if (!auth.authenticated) setShowConnect(true);
   }
 
   return (
@@ -95,9 +178,14 @@ export default function OracleApp() {
           <small>{state.campaign.system} · Sessão {state.campaign.session}</small>
           <strong>{state.campaign.name}</strong>
         </div>
-        <button className="connection" onClick={() => setShowConnect(true)}>
-          <i /> ChatGPT <span>conectar</span>
-        </button>
+        <div className="topActions">
+          <button className={`cloudStatus ${cloud.status}`} onClick={() => setShowSync(true)}>
+            <i /> Nuvem <span>{cloudLabel}</span>
+          </button>
+          <button className={`connection ${auth.authenticated ? "connected" : ""}`} onClick={connectChatGPT}>
+            <i /> ChatGPT <span>{auth.authenticated ? "conectado" : "conectar"}</span>
+          </button>
+        </div>
       </header>
 
       <nav className="mobileNav">
@@ -117,7 +205,7 @@ export default function OracleApp() {
           <button className={view === "character" ? "active" : ""} onClick={() => setView("character")}><b>◇</b><span>Personagem</span></button>
           <button className={view === "world" ? "active" : ""} onClick={() => setView("world")}><b>⌘</b><span>Mundo</span></button>
           <button className={view === "memory" ? "active" : ""} onClick={() => setView("memory")}><b>◉</b><span>Memória</span></button>
-          <div className="railBottom"><button onClick={() => setShowConnect(true)}><b>⚙</b><span>Configurar</span></button></div>
+          <div className="railBottom"><button onClick={() => setShowSync(true)}><b>⚙</b><span>Configurar</span></button></div>
         </aside>
 
         <section className="content">
@@ -224,15 +312,66 @@ export default function OracleApp() {
         </section>
       </section>
 
+      {showSync && (
+        <div className="modalBackdrop" onClick={() => setShowSync(false)}>
+          <section className="connectModal syncModal" onClick={(e) => e.stopPropagation()}>
+            <img src="/oracle-mark.svg" alt="" />
+            <small>SINCRONIZAÇÃO</small>
+            <h2>Campanha em todos os seus dispositivos</h2>
+            {!cloud.credentials ? (
+              <>
+                <p>O Oracle pode guardar a campanha na nuvem sem enviar credenciais do ChatGPT. Você pode criar uma campanha sincronizada ou abrir uma existente usando o código de pareamento.</p>
+                <button className="primary enabled" onClick={createCloudCampaign}>Ativar sincronização desta campanha</button>
+                <div className="divider"><span>ou</span></div>
+                <label className="pairField">
+                  <span>Código de outro dispositivo</span>
+                  <input value={pairInput} onChange={(event) => setPairInput(event.target.value)} placeholder="campaign-id.chave" />
+                </label>
+                <button className="ghost" onClick={joinCloudCampaign} disabled={!pairInput.trim()}>Abrir campanha sincronizada</button>
+              </>
+            ) : (
+              <>
+                <div className="syncState">
+                  <i className={cloud.status} />
+                  <div><small>ESTADO DA NUVEM</small><strong>{cloudLabel}</strong></div>
+                </div>
+                <p>Use este código apenas nos seus dispositivos. Ele funciona como uma chave da campanha e não contém sua conta ChatGPT.</p>
+                <button className="pairCode" onClick={copyPairCode} title="Copiar código">{cloud.pairCode}</button>
+                {cloud.conflict && (
+                  <div className="conflictBox">
+                    <strong>Dois dispositivos editaram a campanha.</strong>
+                    <p>Escolha qual versão deve continuar como fonte da verdade.</p>
+                    <div>
+                      <button onClick={() => cloud.resolveConflict("remote")}>Usar versão da nuvem</button>
+                      <button onClick={() => cloud.resolveConflict("local")}>Usar este dispositivo</button>
+                    </div>
+                  </div>
+                )}
+                <button className="ghost" onClick={() => cloud.fetchRemote()}>Atualizar agora</button>
+                <button className="dangerGhost" onClick={cloud.disconnectCloud}>Desconectar este dispositivo</button>
+              </>
+            )}
+            {syncNote && <p className="modalNote">{syncNote}</p>}
+            <button className="closeText" onClick={() => setShowSync(false)}>Fechar</button>
+          </section>
+        </div>
+      )}
+
       {showConnect && (
         <div className="modalBackdrop" onClick={() => setShowConnect(false)}>
           <section className="connectModal" onClick={(e) => e.stopPropagation()}>
             <img src="/oracle-mark.svg" alt="" />
             <small>MESTRE IA</small>
-            <h2>Conectar com ChatGPT</h2>
-            <p>A interface e a memória já estão prontas. A autenticação por plano ChatGPT entra aqui quando o acesso <b>Sign in with ChatGPT</b> estiver habilitado para este aplicativo.</p>
+            <h2>{auth.authenticated ? "ChatGPT conectado" : "Conectar com ChatGPT"}</h2>
+            {auth.authenticated ? (
+              <p>Você entrou como <b>{auth.account?.displayName || auth.account?.email || "conta ChatGPT"}</b>. As campanhas sincronizadas podem ser vinculadas a esta identidade sem salvar suas credenciais de plano no OracleRPG.</p>
+            ) : (
+              <p>{auth.configured ? "Entre com sua conta ChatGPT para vincular sua identidade ao OracleRPG." : "O fluxo já está implementado, mas a OpenAI ainda precisa emitir o client ID do OracleRPG para habilitar o botão neste site."}</p>
+            )}
             <div className="connectFlow"><span>OracleRPG</span><i>→</i><span>ChatGPT</span><i>→</i><span>Tools</span></div>
-            <button className="primary" disabled>Continuar com ChatGPT · aguardando acesso</button>
+            {!auth.authenticated && auth.configured && <button className="primary enabled" onClick={() => { window.location.href = "/api/auth/openai/start"; }}>Continuar com ChatGPT</button>}
+            {!auth.authenticated && !auth.configured && <button className="primary" disabled>Continuar com ChatGPT · aguardando client ID</button>}
+            {auth.authenticated && <button className="ghost" onClick={logoutChatGPT}>Sair desta conta</button>}
             <button className="ghost" onClick={() => setShowConnect(false)}>Continuar em modo manual</button>
           </section>
         </div>
@@ -240,3 +379,4 @@ export default function OracleApp() {
     </main>
   );
 }
+

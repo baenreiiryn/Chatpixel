@@ -18,8 +18,11 @@ OracleRPG é uma interface persistente para campanhas em que o ChatGPT atua como
 - Condições, NPCs e missões.
 - Memória persistente e prévia do pacote de contexto.
 - Log de alterações com Undo.
-- Persistência em `localStorage`.
-- Tela preparada para Sign in with ChatGPT.
+- Cache offline em `localStorage`.
+- Sincronização opcional em Postgres/Neon com pareamento entre dispositivos.
+- Versionamento otimista e resolução explícita de conflitos.
+- Fluxo OIDC de `Continue with ChatGPT` preparado para o client ID oficial.
+- Campanhas podem ser vinculadas à identidade ChatGPT quando o login estiver habilitado.
 
 ## Rodar
 
@@ -30,11 +33,22 @@ npm run dev
 
 Abra http://localhost:3000.
 
+Copie `.env.example` para `.env.local` e configure `DATABASE_URL` para habilitar a nuvem.
+As variáveis `OPENAI_CLIENT_ID`, `OPENAI_CLIENT_SECRET` e `OPENAI_REDIRECT_URI`
+só são necessárias quando o aplicativo receber credenciais oficiais de Sign in with ChatGPT.
+
+## Segurança do ChatGPT plan
+
+Credenciais que dão acesso ao plano ChatGPT **não pertencem ao banco do OracleRPG**.
+O banco remoto contém campanha, memória e sessões de identidade do próprio Oracle.
+Plan sharing deve seguir o fluxo permitido pela OpenAI para o tipo de distribuição escolhido.
+
+No preview atual, o fluxo aberto de plan sharing é voltado a apps open-source que executam
+localmente; um site hospedado precisa do acesso comercial/partner correspondente.
+
 ## Próximas camadas
 
-1. Banco remoto (campanhas, entidades, eventos, memórias).
-2. Conta do usuário.
-3. Sign in with ChatGPT / plan sharing quando o app tiver acesso.
-4. Tool schema do Mestre apontando para o command bus.
-5. Recuperação semântica de memória por campanha.
-6. Regras por sistema (Daggerheart, D&D, Cyberpunk etc.).
+1. Sign in with ChatGPT / plan sharing quando o app tiver o client ID e acesso apropriado.
+2. Tool schema do Mestre apontando para o command bus.
+3. Recuperação semântica de memória por campanha.
+4. Regras por sistema (Daggerheart, D&D, Cyberpunk etc.).
