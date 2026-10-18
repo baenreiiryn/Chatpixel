@@ -85,7 +85,7 @@ public final class ChatGptClient {
         }
     }
 
-    public JSONObject accountStatus() {
+    public Object accountStatus() {
         JSONObject registration = registration();
         if (registration == null) return JSONObject.NULL;
         JSONObject result = new JSONObject();
