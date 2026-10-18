@@ -1,0 +1,61 @@
+plugins {
+    id "com.android.application"
+}
+
+android {
+    namespace "com.baenreiiryn.oraclerpg"
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.baenreiiryn.oraclerpg"
+        minSdk 26
+        targetSdk 35
+        versionCode Integer.parseInt(System.getenv("ORACLE_VERSION_CODE") ?: "2")
+        versionName System.getenv("ORACLE_VERSION_NAME") ?: "0.2.0"
+
+        buildConfigField "String", "ORACLE_URL", "\"https://oraclerpg.vercel.app\""
+        buildConfigField "String", "GITHUB_REPO", "\"baenreiiryn/Rpgpt\""
+    }
+
+    signingConfigs {
+        release {
+            def storePath = System.getenv("ORACLE_KEYSTORE_PATH")
+            if (storePath) {
+                storeFile file(storePath)
+                storePassword System.getenv("ORACLE_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("ORACLE_KEY_ALIAS")
+                keyPassword System.getenv("ORACLE_KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            if (System.getenv("ORACLE_KEYSTORE_PATH")) {
+                signingConfig signingConfigs.release
+            }
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    implementation "androidx.webkit:webkit:1.12.1"
+    implementation "androidx.core:core:1.15.0"
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+}

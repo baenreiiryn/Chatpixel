@@ -1,0 +1,81 @@
+name: Android APK
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 35
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Resolve version
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION="0.2.${GITHUB_RUN_NUMBER}"
+          fi
+          echo "ORACLE_VERSION_NAME=$VERSION" >> "$GITHUB_ENV"
+          echo "ORACLE_VERSION_CODE=$((1000 + GITHUB_RUN_NUMBER))" >> "$GITHUB_ENV"
+          echo "APK_NAME=OracleRPG-v${VERSION}.apk" >> "$GITHUB_ENV"
+
+      - name: Restore signing key
+        shell: bash
+        run: |
+          base64 --decode .github/oraclerpg-test.jks.b64 > "$RUNNER_TEMP/oraclerpg-release.jks"
+          echo "ORACLE_KEYSTORE_PATH=$RUNNER_TEMP/oraclerpg-release.jks" >> "$GITHUB_ENV"
+
+      - name: Build signed APK
+        env:
+          ORACLE_KEYSTORE_PASSWORD: oraclerpg-test
+          ORACLE_KEY_ALIAS: oraclerpg-test
+          ORACLE_KEY_PASSWORD: oraclerpg-test
+        run: gradle -p android :app:assembleRelease --stacktrace
+
+      - name: Prepare artifact
+        shell: bash
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk "$APK_NAME"
+          sha256sum "$APK_NAME" > "$APK_NAME.sha256"
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OracleRPG-Android-${{ env.ORACLE_VERSION_NAME }}
+          path: |
+            ${{ env.APK_NAME }}
+            ${{ env.APK_NAME }}.sha256
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release create "$GITHUB_REF_NAME" +            "$APK_NAME" "$APK_NAME.sha256" +            --title "OracleRPG $GITHUB_REF_NAME" +            --generate-notes
