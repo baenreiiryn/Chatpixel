@@ -79,4 +79,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          gh release create "$GITHUB_REF_NAME" +            "$APK_NAME" "$APK_NAME.sha256" +            --title "OracleRPG $GITHUB_REF_NAME" +            --generate-notes
+          gh release create "$GITHUB_REF_NAME" "$APK_NAME" "$APK_NAME.sha256" --title "OracleRPG $GITHUB_REF_NAME" --generate-notes
