@@ -6,6 +6,7 @@ import { useCloudSync } from "@/hooks/useCloudSync";
 import { useOracleBridge } from "@/hooks/useOracleBridge";
 import { buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
 import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestGmMessage } from "@/lib/scene";
+import DaggerheartCompendium from "@/components/DaggerheartCompendium";
 
 const STORAGE_KEY = "oraclerpg:campaign:v1";
 
@@ -445,31 +446,7 @@ export default function OracleApp() {
   }
 
   if (screen === "compendium") {
-    return (
-      <main className="appShell menuPageShell">
-        <div className="ambient ambientOne" />
-        <div className="ambient ambientTwo" />
-        <header className="menuPageHeader">
-          <button className="backButton" onClick={goHome}>‹</button>
-          <div><small>BIBLIOTECA</small><strong>Compêndio</strong></div>
-        </header>
-        <section className="menuPageContent">
-          <div className="menuPageIntro"><small>CONHECIMENTO DO ORACLE</small><h1>Tudo que a mesa precisa.</h1><p>Esta área será preenchida conforme adicionarmos os sistemas suportados.</p></div>
-          <div className="compendiumGrid">
-            {[
-              ["◇", "Regras", "Regras básicas e referências rápidas"],
-              ["♜", "Criaturas", "Monstros, adversários e NPCs"],
-              ["✦", "Itens", "Equipamentos, relíquias e tesouros"],
-              ["◉", "Magias", "Feitiços, habilidades e poderes"],
-            ].map(([icon, title, subtitle]) => (
-              <button className="compendiumCard" key={title}>
-                <b>{icon}</b><div><strong>{title}</strong><small>{subtitle}</small></div><span>Em breve</span>
-              </button>
-            ))}
-          </div>
-        </section>
-      </main>
-    );
+    return <DaggerheartCompendium onBack={goHome} />;
   }
 
   if (screen === "settings") {

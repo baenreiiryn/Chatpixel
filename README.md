@@ -7,6 +7,12 @@ da versão Plugin/MCP do OracleRPG. Os APKs desta linha recebem atualizações p
 `baenreiiryn/RPGptSWIG` e carregam a interface hospedada em
 `https://oraclerpg-swig.vercel.app`.
 
+## Compêndio
+
+O app inclui um compêndio Daggerheart PT-BR otimizado para consulta em mesa: regras,
+classes, ancestralidades, comunidades, subclasses, cartas de domínio e adversários.
+O pipeline e as fontes estão documentados em `docs/daggerheart-compendium.md`.
+
 ## Princípio
 
 - O **OracleRPG é a fonte da verdade**: ficha, recursos, NPCs, missões, memória e histórico de eventos.
