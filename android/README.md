@@ -17,7 +17,7 @@ runtime de Sign in with ChatGPT **dentro do próprio processo Android**.
 
 Ao iniciar, o app consulta:
 
-`https://api.github.com/repos/baenreiiryn/Rpgpt/releases/latest`
+`https://api.github.com/repos/baenreiiryn/RPGptSWIG/releases/latest`
 
 Se o `tag_name` for mais novo que `BuildConfig.VERSION_NAME`, o usuário recebe um diálogo.
 Ao aceitar:

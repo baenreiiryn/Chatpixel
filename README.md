@@ -1,6 +1,11 @@
-# OracleRPG
+# OracleRPG SWIG
 
 OracleRPG é uma interface persistente para campanhas em que o ChatGPT atua como Mestre.
+
+Esta é a linha **standalone / Sign in with ChatGPT** do projeto. Ela é mantida separadamente
+da versão Plugin/MCP do OracleRPG. Os APKs desta linha recebem atualizações pelo repositório
+`baenreiiryn/RPGptSWIG` e carregam a interface hospedada em
+`https://oraclerpg-swig.vercel.app`.
 
 ## Princípio
 

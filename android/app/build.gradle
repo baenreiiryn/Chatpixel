@@ -13,8 +13,8 @@ android {
         versionCode Integer.parseInt(System.getenv("ORACLE_VERSION_CODE") ?: "2")
         versionName System.getenv("ORACLE_VERSION_NAME") ?: "0.2.0"
 
-        buildConfigField "String", "ORACLE_URL", "\"https://oraclerpg.vercel.app\""
-        buildConfigField "String", "GITHUB_REPO", "\"baenreiiryn/Rpgpt\""
+        buildConfigField "String", "ORACLE_URL", "\"https://oraclerpg-swig.vercel.app\""
+        buildConfigField "String", "GITHUB_REPO", "\"baenreiiryn/RPGptSWIG\""
     }
 
     signingConfigs {
