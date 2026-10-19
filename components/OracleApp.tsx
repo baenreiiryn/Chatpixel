@@ -125,6 +125,22 @@ function SheetExpandableCard({
   );
 }
 
+function syncStateSummary(value: GameState) {
+  const timestamps = [
+    ...value.messages.map((entry) => entry.createdAt),
+    ...value.events.map((entry) => entry.createdAt),
+    ...value.memories.map((entry) => entry.createdAt),
+  ]
+    .map((entry) => Date.parse(entry))
+    .filter((entry) => Number.isFinite(entry));
+  const latest = timestamps.length ? new Date(Math.max(...timestamps)) : null;
+  return {
+    messages: value.messages.length,
+    events: value.events.length,
+    latestLabel: latest ? latest.toLocaleString("pt-BR") : "sem atividade registrada",
+  };
+}
+
 export default function OracleApp() {
   const [state, setState] = useState<GameState>(initialState);
   const [screen, setScreen] = useState<AppScreen>("home");
@@ -153,9 +169,22 @@ export default function OracleApp() {
   }, []);
 
   useEffect(() => {
-    if (ready && hasSavedCampaign) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }
+    if (!ready || !hasSavedCampaign) return;
+    const persist = () => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch {}
+    };
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "hidden") persist();
+    };
+    persist();
+    window.addEventListener("pagehide", persist);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      window.removeEventListener("pagehide", persist);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, [ready, hasSavedCampaign, state]);
 
   const cloud = useCloudSync(state, setState, ready);
@@ -167,6 +196,18 @@ export default function OracleApp() {
     () => state.messages.find((message) => message.id === imageMessageId),
     [imageMessageId, state.messages],
   );
+  const latestUnansweredPlayer = useMemo(() => {
+    let playerIndex = -1;
+    for (let index = state.messages.length - 1; index >= 0; index -= 1) {
+      if (state.messages[index].role === "player") {
+        playerIndex = index;
+        break;
+      }
+    }
+    if (playerIndex < 0) return null;
+    const answered = state.messages.slice(playerIndex + 1).some((message) => message.role === "gm");
+    return answered ? null : state.messages[playerIndex];
+  }, [state.messages]);
 
   const cloudLabel = ({
     local: "somente local",
@@ -432,15 +473,7 @@ export default function OracleApp() {
     setState((current) => executeCommand(current, { type: "adjust", resource, amount }));
   }
 
-  async function submit(e: FormEvent) {
-    e.preventDefault();
-    const text = input.trim();
-    if (!text || gmBusy) return;
-    const playerMessage = { id: crypto.randomUUID(), role: "player" as const, text, createdAt: new Date().toISOString() };
-    let working: GameState = { ...state, messages: [...state.messages, playerMessage] };
-    setState(working);
-    setInput("");
-    setGmError("");
+  async function runGmNarration(working: GameState, text: string, allowTools = true) {
     if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
       setShowConnect(true);
       return;
@@ -449,6 +482,12 @@ export default function OracleApp() {
     setGmBusy(true);
     try {
       const conversationInput: unknown[] = buildTurnInput(working, text);
+      if (!allowTools) {
+        conversationInput.push({
+          role: "developer",
+          content: "As consequências persistentes desta ação já foram aplicadas anteriormente. Não execute ferramentas nem altere o estado novamente. Produza somente a narração do Mestre coerente com o estado atual.",
+        });
+      }
       let narration = "";
       let refusal = "";
       let lastOutputTypes: string[] = [];
@@ -458,7 +497,7 @@ export default function OracleApp() {
           model: bridge.model,
           instructions: gmInstructions(working.campaign.system),
           input: conversationInput,
-          tools: responseTools,
+          ...(allowTools ? { tools: responseTools } : {}),
         });
         const output = Array.isArray(response.output) ? response.output : [];
         const calls = output.filter((item: Record<string, unknown>) => item.type === "function_call");
@@ -481,6 +520,7 @@ export default function OracleApp() {
         }
 
         for (const call of calls as Array<Record<string, unknown>>) {
+          if (!allowTools) continue;
           const executed = executeGmTool(
             working,
             String(call.name || ""),
@@ -551,6 +591,45 @@ export default function OracleApp() {
     } finally {
       setGmBusy(false);
     }
+  }
+
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    const text = input.trim();
+    if (!text || gmBusy) return;
+    const playerMessage = { id: crypto.randomUUID(), role: "player" as const, text, createdAt: new Date().toISOString() };
+    const working: GameState = { ...state, messages: [...state.messages, playerMessage] };
+    setState(working);
+    setInput("");
+    setGmError("");
+    if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
+      setShowConnect(true);
+      return;
+    }
+    await runGmNarration(working, text, true);
+  }
+
+  async function regenerateNarration(message: Message) {
+    if (gmBusy || message.role !== "player") return;
+    if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
+      setShowConnect(true);
+      return;
+    }
+    const playerIndex = state.messages.findIndex((entry) => entry.id === message.id);
+    if (playerIndex < 0) return;
+    const playerTime = Date.parse(message.createdAt);
+    const persistentChangesAlreadyApplied = state.events.some((event) =>
+      event.actor === "gm-ai"
+      && Number.isFinite(playerTime)
+      && Date.parse(event.createdAt) >= playerTime
+    );
+    const working: GameState = {
+      ...state,
+      messages: state.messages.slice(0, playerIndex + 1),
+    };
+    setGmError("");
+    setState(working);
+    await runGmNarration(working, message.text, !persistentChangesAlreadyApplied);
   }
 
   if (screen === "home") {
@@ -767,6 +846,11 @@ export default function OracleApp() {
                         {message.role === "gm" && lastGmMessage?.id === message.id && (
                           <button className="sceneImageButton" onClick={() => prepareSceneImage(message)}>
                             <span>✦</span> Gerar imagem da cena
+                          </button>
+                        )}
+                        {message.role === "player" && latestUnansweredPlayer?.id === message.id && (
+                          <button className="regenerateNarrationButton" onClick={() => void regenerateNarration(message)} disabled={gmBusy}>
+                            <span>↻</span> {gmBusy ? "Gerando narração…" : "Regenerar narração do Mestre"}
                           </button>
                         )}
                       </div>
@@ -1070,12 +1154,51 @@ export default function OracleApp() {
                 <button className="pairCode" onClick={copyPairCode} title="Copiar código">{cloud.pairCode}</button>
                 {cloud.conflict && (
                   <div className="conflictBox">
-                    <strong>Dois dispositivos editaram a campanha.</strong>
-                    <p>Escolha qual versão deve continuar como fonte da verdade.</p>
+                    {(() => {
+                      const localSummary = syncStateSummary(state);
+                      const remoteSummary = syncStateSummary(cloud.conflict.state);
+                      const localLast = Date.parse(state.messages.at(-1)?.createdAt || "");
+                      const remoteLast = Date.parse(cloud.conflict.state.messages.at(-1)?.createdAt || "");
+                      const localLooksNewer =
+                        localSummary.messages > remoteSummary.messages
+                        || (
+                          localSummary.messages === remoteSummary.messages
+                          && Number.isFinite(localLast)
+                          && (!Number.isFinite(remoteLast) || localLast > remoteLast)
+                        );
+                      return (
+                        <>
+                          <strong>{cloud.conflict.reason === "remote_older" ? "A nuvem parece estar desatualizada." : "Existem alterações diferentes no aparelho e na nuvem."}</strong>
+                          <p>Nenhuma versão será descartada automaticamente. Compare antes de escolher.</p>
+                          <div className="conflictCompare">
+                            <article className={localLooksNewer ? "recommended" : ""}>
+                              <small>ESTE DISPOSITIVO {localLooksNewer ? "· MAIS RECENTE" : ""}</small>
+                              <b>{localSummary.messages} mensagens</b>
+                              <span>Última atividade: {localSummary.latestLabel}</span>
+                            </article>
+                            <article>
+                              <small>NUVEM</small>
+                              <b>{remoteSummary.messages} mensagens</b>
+                              <span>Última atividade: {remoteSummary.latestLabel}</span>
+                            </article>
+                          </div>
+                          <div className="conflictActions">
+                            <button className={localLooksNewer ? "recommended" : ""} onClick={() => cloud.resolveConflict("local")}>Manter este dispositivo</button>
+                            <button onClick={() => cloud.resolveConflict("remote")}>Usar versão da nuvem</button>
+                          </div>
+                        </>
+                      );
+                    })()}
+                  </div>
+                )}
+                {cloud.recovery && cloud.recovery.campaignId === cloud.credentials.campaignId && (
+                  <div className="recoveryBox">
                     <div>
-                      <button onClick={() => cloud.resolveConflict("remote")}>Usar versão da nuvem</button>
-                      <button onClick={() => cloud.resolveConflict("local")}>Usar este dispositivo</button>
+                      <small>BACKUP LOCAL DISPONÍVEL</small>
+                      <strong>Cópia salva antes de usar a versão da nuvem</strong>
+                      <span>{new Date(cloud.recovery.savedAt).toLocaleString("pt-BR")}</span>
                     </div>
+                    <button onClick={cloud.restoreRecovery}>Restaurar backup local</button>
                   </div>
                 )}
                 <button className="ghost" onClick={() => cloud.fetchRemote()}>Atualizar agora</button>

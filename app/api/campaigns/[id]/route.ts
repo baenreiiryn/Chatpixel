@@ -70,7 +70,12 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
     const current = await authorizedCampaign(id, key);
     if (!current) return NextResponse.json({ error: "Campaign not found." }, { status: 404 });
     return NextResponse.json(
-      { error: "Version conflict.", state: current.state, version: Number(current.version) },
+      {
+        error: "Version conflict.",
+        state: current.state,
+        version: Number(current.version),
+        updatedAt: current.updated_at,
+      },
       { status: 409 },
     );
   } catch {
