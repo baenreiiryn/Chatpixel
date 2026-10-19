@@ -57,6 +57,10 @@ export function entryTypeLabel(type: string) {
     subclass: "Subclasse",
     subclassFeature: "Característica de subclasse",
     domainCard: "Carta de domínio",
+    weapon: "Arma",
+    armor: "Armadura",
+    consumable: "Consumível",
+    loot: "Item de saque",
     adversary: "Adversário",
   } as Record<string, string>)[type] || type;
 }

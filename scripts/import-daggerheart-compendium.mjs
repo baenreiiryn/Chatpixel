@@ -513,6 +513,17 @@ for (const [key, data] of loadEntries("daggerheart-expansion-content.domains.jso
   if (key.trim()) entries.push(makeEntry({ key, data, type: "domainCard", category: "domains", source: "expansion" }));
 }
 
+for (const [file, type] of [
+  ["daggerheart.weapons.json", "weapon"],
+  ["daggerheart.armors.json", "armor"],
+  ["daggerheart.consumables.json", "consumable"],
+  ["daggerheart.loot.json", "loot"],
+]) {
+  for (const [key, data] of loadEntries(file)) {
+    entries.push(makeEntry({ key, data, type, category: "equipment" }));
+  }
+}
+
 const portraitDir = path.join(artRoot, "adversaries", "portraits");
 const portraitFiles = fs.existsSync(portraitDir) ? fs.readdirSync(portraitDir).filter((file) => file.toLowerCase().endsWith(".webp")) : [];
 const portraitMap = new Map(portraitFiles.map((file) => [
@@ -661,6 +672,7 @@ const categories = [
   { id: "communities", name: "Comunidades", icon: "⌂", description: "Origens culturais e características" },
   { id: "subclasses", name: "Subclasses", icon: "△", description: "Caminhos e características de subclasse" },
   { id: "domains", name: "Domínios", icon: "◈", description: "Cartas, feitiços e habilidades de domínio" },
+  { id: "equipment", name: "Equipamentos", icon: "⚔", description: "Armas, armaduras, consumíveis e itens de saque" },
   { id: "adversaries", name: "Adversários", icon: "♜", description: "Criaturas e oponentes para o Mestre" },
 ];
 

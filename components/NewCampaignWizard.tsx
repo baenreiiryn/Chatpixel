@@ -19,7 +19,7 @@ import {
   subclassesFor,
   suggestedTraitsFor,
 } from "@/lib/characterCreation/daggerheart";
-import type { CompendiumEntry } from "@/lib/compendium/daggerheart";
+import { daggerheartCompendium, entryTypeLabel, type CompendiumEntry } from "@/lib/compendium/daggerheart";
 import { extractNarration } from "@/lib/gm";
 import type { CharacterTraitName, InventoryItem } from "@/lib/game";
 
@@ -110,6 +110,13 @@ const SOURCE_LABELS = {
   playtest: "Teste de jogo",
 } as const;
 
+const EQUIPMENT_TYPE_ICONS: Record<string, string> = {
+  weapon: "⚔",
+  armor: "◈",
+  consumable: "✦",
+  loot: "◇",
+};
+
 function randomId(prefix: string) {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return `${prefix}-${crypto.randomUUID()}`;
   return `${prefix}-${Math.random().toString(36).slice(2, 10)}`;
@@ -199,6 +206,10 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
   const classes = useMemo(() => classEntries(), []);
   const ancestries = useMemo(() => ancestryEntries(), []);
   const communities = useMemo(() => communityEntries(), []);
+  const equipmentEntries = useMemo(
+    () => daggerheartCompendium.entries.filter((entry) => entry.category === "equipment"),
+    [],
+  );
 
   const [step, setStep] = useState(0);
   const [campaignName, setCampaignName] = useState("");
@@ -227,7 +238,9 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
   const [domainCards, setDomainCards] = useState<string[]>([]);
   const [equipmentMode, setEquipmentMode] = useState<"suggested" | "manual">("suggested");
   const [equipmentChoiceSelections, setEquipmentChoiceSelections] = useState<number[]>([]);
-  const [manualEquipment, setManualEquipment] = useState<Set<number>>(new Set());
+  const [manualEquipmentIds, setManualEquipmentIds] = useState<Set<string>>(new Set());
+  const [equipmentQuery, setEquipmentQuery] = useState("");
+  const [equipmentTypeFilter, setEquipmentTypeFilter] = useState("all");
   const [customEquipment, setCustomEquipment] = useState("");
 
   const [characterName, setCharacterName] = useState("");
@@ -266,6 +279,23 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
   const classConfig = classId ? CLASS_CONFIG[classId] : undefined;
   const isRanger = classId === "Ranger";
   const isBeastbound = isRanger && subclassId === "Beastbound";
+  const filteredEquipmentEntries = useMemo(() => {
+    const query = equipmentQuery
+      .trim()
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLocaleLowerCase("pt-BR");
+    return equipmentEntries.filter((entry) => {
+      if (equipmentTypeFilter !== "all" && entry.type !== equipmentTypeFilter) return false;
+      if (!query) return true;
+      const text = [entry.name, entry.originalName || "", entry.description, entryTypeLabel(entry.type)]
+        .join(" ")
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .toLocaleLowerCase("pt-BR");
+      return text.includes(query);
+    });
+  }, [equipmentEntries, equipmentQuery, equipmentTypeFilter]);
 
   useEffect(() => {
     if (traitMode !== "suggested" || !classId) return;
@@ -276,7 +306,9 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
   useEffect(() => {
     const groups = classConfig?.equipmentChoices || [];
     setEquipmentChoiceSelections(groups.map(() => 0));
-    setManualEquipment(new Set((classConfig?.suggestedEquipment || []).map((_, index) => index)));
+    setManualEquipmentIds(new Set());
+    setEquipmentQuery("");
+    setEquipmentTypeFilter("all");
   }, [classId, classConfig]);
 
   useEffect(() => {
@@ -308,11 +340,11 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     setTraits((current) => ({ ...current, [trait]: value }));
   }
 
-  function toggleManualEquipment(index: number) {
-    setManualEquipment((current) => {
+  function toggleManualEquipment(entryId: string) {
+    setManualEquipmentIds((current) => {
       const next = new Set(current);
-      if (next.has(index)) next.delete(index);
-      else next.add(index);
+      if (next.has(entryId)) next.delete(entryId);
+      else next.add(entryId);
       return next;
     });
   }
@@ -448,7 +480,11 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     if (step === 4) return traitDistributionIsValid(traits);
     if (step === 5) return experiences.every((experience) => Boolean(experience.trim()));
     if (step === 6) return domainCards.length === 2;
-    if (step === 7) return Boolean(classConfig);
+    if (step === 7) {
+      if (!classConfig) return false;
+      if (equipmentMode === "suggested") return true;
+      return manualEquipmentIds.size > 0 || Boolean(customEquipment.trim());
+    }
     if (step === 8) {
       return Boolean(characterName.trim() && history.trim()) && !characterImageBusy && !animalImageBusy;
     }
@@ -459,12 +495,15 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     characterImageBusy,
     characterName,
     classConfig,
+    customEquipment,
     classId,
     communityId,
     customTone,
     domainCards.length,
+    equipmentMode,
     experiences,
     history,
+    manualEquipmentIds,
     mixedAncestry,
     animalImageBusy,
     primaryAncestryFeatures,
@@ -486,20 +525,26 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
           }),
         ]
       : [
-          ...classConfig.suggestedEquipment.filter((_, index) => manualEquipment.has(index)),
-          ...customEquipment
-            .split(/\n+/)
-            .map((line) => line.trim())
-            .filter(Boolean)
-            .map((line) => {
-              const [name, ...detailParts] = line.split("|");
-              return {
-                name: name.trim(),
-                qty: 1,
-                detail: detailParts.join("|").trim() || "Equipamento escolhido pelo jogador",
-                icon: "◇",
-              };
-            }),
+          ...equipmentEntries
+            .filter((entry) => manualEquipmentIds.has(entry.id))
+            .map((entry) => ({
+              name: entry.name,
+              qty: 1,
+              detail: entry.description || entryTypeLabel(entry.type),
+              icon: EQUIPMENT_TYPE_ICONS[entry.type] || "◇",
+            })),
+          ...(() => {
+            const line = customEquipment.trim();
+            if (!line) return [];
+            const [name, ...detailParts] = line.split("|");
+            if (!name.trim()) return [];
+            return [{
+              name: name.trim(),
+              qty: 1,
+              detail: detailParts.join("|").trim() || "Equipamento personalizado",
+              icon: "◇",
+            }];
+          })(),
         ];
     return sourceItems.map((item) => ({ ...item, id: randomId("item") }));
   }
@@ -778,27 +823,66 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                 <button className={equipmentMode === "suggested" ? "active" : ""} onClick={() => setEquipmentMode("suggested")}>Conjunto sugerido</button>
                 <button className={equipmentMode === "manual" ? "active" : ""} onClick={() => setEquipmentMode("manual")}>Escolher manualmente</button>
               </div>
-              <div className="campaignWizardEquipmentList">
-                {classConfig.suggestedEquipment.map((item, index) => (
-                  <label className={equipmentMode === "manual" && !manualEquipment.has(index) ? "muted" : ""} key={`${item.name}-${index}`}>
-                    {equipmentMode === "manual" && <input type="checkbox" checked={manualEquipment.has(index)} onChange={() => toggleManualEquipment(index)} />}
-                    <span>{item.icon}</span>
-                    <div><strong>{item.name}</strong><small>{item.detail}</small></div>
-                    <b>×{item.qty}</b>
+              {equipmentMode === "suggested" ? (
+                <>
+                  <div className="campaignWizardEquipmentList">
+                    {classConfig.suggestedEquipment.map((item, index) => (
+                      <label key={`${item.name}-${index}`}>
+                        <span>{item.icon}</span>
+                        <div><strong>{item.name}</strong><small>{item.detail}</small></div>
+                        <b>×{item.qty}</b>
+                      </label>
+                    ))}
+                  </div>
+                  {(classConfig.equipmentChoices || []).map((group, groupIndex) => (
+                    <div className="campaignWizardEquipmentChoice" key={groupIndex}>
+                      <small>ESCOLHA 1 ITEM</small>
+                      <div>{group.map((item, itemIndex) => <button className={(equipmentChoiceSelections[groupIndex] || 0) === itemIndex ? "selected" : ""} onClick={() => setEquipmentChoiceSelections((current) => current.map((value, index) => index === groupIndex ? itemIndex : value))} key={item.name}><span>{item.icon}</span><strong>{item.name}</strong></button>)}</div>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div className="campaignWizardEquipmentBrowser">
+                  <div className="campaignWizardEquipmentBrowserHeader">
+                    <div><small>COMPÊNDIO</small><strong>Escolha seus itens</strong></div>
+                    <span>{manualEquipmentIds.size} {manualEquipmentIds.size === 1 ? "selecionado" : "selecionados"}</span>
+                  </div>
+                  <label className="campaignWizardEquipmentSearch">
+                    <span>⌕</span>
+                    <input value={equipmentQuery} onChange={(event) => setEquipmentQuery(event.target.value)} placeholder="Buscar equipamento…" />
+                    {equipmentQuery && <button onClick={() => setEquipmentQuery("")} type="button">×</button>}
                   </label>
-                ))}
-              </div>
-              {equipmentMode === "suggested" && (classConfig.equipmentChoices || []).map((group, groupIndex) => (
-                <div className="campaignWizardEquipmentChoice" key={groupIndex}>
-                  <small>ESCOLHA 1 ITEM</small>
-                  <div>{group.map((item, itemIndex) => <button className={(equipmentChoiceSelections[groupIndex] || 0) === itemIndex ? "selected" : ""} onClick={() => setEquipmentChoiceSelections((current) => current.map((value, index) => index === groupIndex ? itemIndex : value))} key={item.name}><span>{item.icon}</span><strong>{item.name}</strong></button>)}</div>
+                  <div className="campaignWizardEquipmentFilters">
+                    {["all", "weapon", "armor", "consumable", "loot"].map((type) => (
+                      <button
+                        className={equipmentTypeFilter === type ? "active" : ""}
+                        key={type}
+                        onClick={() => setEquipmentTypeFilter(type)}
+                        type="button"
+                      >
+                        {type === "all" ? "Todos" : entryTypeLabel(type)}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="campaignWizardEquipmentCatalog">
+                    {filteredEquipmentEntries.map((entry) => (
+                      <label className={manualEquipmentIds.has(entry.id) ? "selected" : ""} key={entry.id}>
+                        <input type="checkbox" checked={manualEquipmentIds.has(entry.id)} onChange={() => toggleManualEquipment(entry.id)} />
+                        <span>{EQUIPMENT_TYPE_ICONS[entry.type] || "◇"}</span>
+                        <div>
+                          <small>{entryTypeLabel(entry.type)}</small>
+                          <strong>{entry.name}</strong>
+                          <p>{entry.description || "Sem descrição no compêndio."}</p>
+                        </div>
+                      </label>
+                    ))}
+                    {!filteredEquipmentEntries.length && <div className="campaignWizardEquipmentEmpty">Nenhum equipamento encontrado.</div>}
+                  </div>
+                  <label className="campaignWizardField campaignWizardCustomEquipment">
+                    <span>Item personalizado <em>opcional · Nome | detalhe</em></span>
+                    <input value={customEquipment} onChange={(event) => setCustomEquipment(event.target.value)} placeholder="Ex.: Amuleto antigo | Lembrança de família" />
+                  </label>
                 </div>
-              ))}
-              {equipmentMode === "manual" && (
-                <label className="campaignWizardField">
-                  <span>Itens adicionais <em>um por linha · Nome | detalhe</em></span>
-                  <textarea value={customEquipment} onChange={(event) => setCustomEquipment(event.target.value)} placeholder={"Kit de cartografia | Mapas, tinta e instrumentos\nAmuleto antigo | Lembrança de família"} />
-                </label>
               )}
             </div>
           )}

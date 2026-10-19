@@ -1,6 +1,7 @@
 package com.baenreiiryn.oraclerpg;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -12,11 +13,15 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.ValueCallback;
 import android.widget.FrameLayout;
 
 public final class MainActivity extends Activity {
+    private static final int FILE_CHOOSER_REQUEST_CODE = 1001;
+
     private WebView webView;
     private UpdateManager updates;
+    private ValueCallback<Uri[]> fileChooserCallback;
     private final String oracleHost = Uri.parse(BuildConfig.ORACLE_URL).getHost();
 
     @Override
@@ -52,7 +57,29 @@ public final class MainActivity extends Activity {
         cookies.setAcceptThirdPartyCookies(webView, true);
 
         webView.setBackgroundColor(Color.rgb(7, 6, 12));
-        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onShowFileChooser(
+                    WebView view,
+                    ValueCallback<Uri[]> filePathCallback,
+                    FileChooserParams fileChooserParams
+            ) {
+                if (fileChooserCallback != null) {
+                    fileChooserCallback.onReceiveValue(null);
+                }
+                fileChooserCallback = filePathCallback;
+
+                Intent picker = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                picker.addCategory(Intent.CATEGORY_OPENABLE);
+                picker.setType("image/*");
+                picker.putExtra(
+                        Intent.EXTRA_ALLOW_MULTIPLE,
+                        fileChooserParams.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE
+                );
+                startActivityForResult(picker, FILE_CHOOSER_REQUEST_CODE);
+                return true;
+            }
+        });
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -74,6 +101,36 @@ public final class MainActivity extends Activity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == FILE_CHOOSER_REQUEST_CODE) {
+            ValueCallback<Uri[]> callback = fileChooserCallback;
+            fileChooserCallback = null;
+
+            if (callback != null) {
+                callback.onReceiveValue(extractSelectedImages(resultCode, data));
+            }
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private static Uri[] extractSelectedImages(int resultCode, Intent data) {
+        if (resultCode != RESULT_OK || data == null) return null;
+
+        ClipData clipData = data.getClipData();
+        if (clipData != null && clipData.getItemCount() > 0) {
+            Uri[] uris = new Uri[clipData.getItemCount()];
+            for (int i = 0; i < clipData.getItemCount(); i++) {
+                uris[i] = clipData.getItemAt(i).getUri();
+            }
+            return uris;
+        }
+
+        Uri uri = data.getData();
+        return uri == null ? null : new Uri[]{uri};
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (updates != null) updates.resumePendingInstall();
@@ -83,6 +140,15 @@ public final class MainActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         webView.saveState(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (fileChooserCallback != null) {
+            fileChooserCallback.onReceiveValue(null);
+            fileChooserCallback = null;
+        }
+        super.onDestroy();
     }
 
     @Override

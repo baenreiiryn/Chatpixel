@@ -28,6 +28,10 @@ const TYPE_ORDER: Record<string, number> = {
   communityFeature: 1,
   subclassFeature: 1,
   domainCard: 0,
+  weapon: 0,
+  armor: 1,
+  consumable: 2,
+  loot: 3,
 };
 
 function normalize(value: string) {
@@ -66,7 +70,7 @@ function EntryCard({ entry, onOpen }: { entry: CompendiumEntry; onOpen: () => vo
       {entry.art ? (
         <div className="compEntryArt"><img src={entry.art} alt="" loading="lazy" /></div>
       ) : (
-        <div className="compEntryGlyph">{entry.category === "domains" ? "◈" : entry.category === "classes" ? "✦" : entry.category === "ancestries" ? "◐" : entry.category === "adversaries" ? "♜" : "◇"}</div>
+        <div className="compEntryGlyph">{entry.category === "domains" ? "◈" : entry.category === "classes" ? "✦" : entry.category === "ancestries" ? "◐" : entry.category === "equipment" ? "⚔" : entry.category === "adversaries" ? "♜" : "◇"}</div>
       )}
       <div className="compEntryBody">
         <div className="compEntryMeta">
@@ -218,7 +222,7 @@ export default function DaggerheartCompendium({ onBack }: Props) {
             <div>
               <small>REFERÊNCIA RÁPIDA</small>
               <h1>{category === "all" ? "Todo o compêndio" : activeCategory?.name}</h1>
-              <p>{category === "all" ? "Pesquise regras, características, cartas e adversários." : activeCategory?.description}</p>
+              <p>{category === "all" ? "Pesquise regras, características, cartas, equipamentos e adversários." : activeCategory?.description}</p>
             </div>
           </div>
 
