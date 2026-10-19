@@ -9,6 +9,7 @@ import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestG
 import DaggerheartCompendium from "@/components/DaggerheartCompendium";
 import NewCampaignWizard, { type NewCampaignResult } from "@/components/NewCampaignWizard";
 import { CLASS_CONFIG, TRAIT_LABELS, TRAIT_ORDER } from "@/lib/characterCreation/daggerheart";
+import { daggerheartCompendium, mechanicsSummary, type CompendiumEntry } from "@/lib/compendium/daggerheart";
 
 const STORAGE_KEY = "oraclerpg:campaign:v1";
 
@@ -58,6 +59,69 @@ function MessageText({ text }: { text: string }) {
     <div className="messageText">
       {blocks.map((block, index) => <p key={index}>{block}</p>)}
     </div>
+  );
+}
+
+function findCompendiumEntry(id?: string, name?: string) {
+  if (id) {
+    const exact = daggerheartCompendium.entries.find((entry) => entry.id === id || entry.sourceId === id);
+    if (exact) return exact;
+  }
+  if (!name) return undefined;
+  const normalized = name.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("pt-BR");
+  return daggerheartCompendium.entries.find((entry) =>
+    entry.name.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("pt-BR") === normalized
+    || entry.originalName?.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("pt-BR") === normalized
+  );
+}
+
+function SheetExpandableCard({
+  icon,
+  title,
+  subtitle,
+  entry,
+  description,
+  badge,
+}: {
+  icon: string;
+  title: string;
+  subtitle: string;
+  entry?: CompendiumEntry;
+  description?: string;
+  badge?: string;
+}) {
+  const body = description?.trim() || entry?.description?.trim() || "";
+  const mechanics = entry ? mechanicsSummary(entry) : [];
+  const canExpand = Boolean(body || mechanics.length);
+
+  if (!canExpand) {
+    return (
+      <article className="miniCard">
+        <b>{icon}</b>
+        <div><h3>{title}</h3><p>{subtitle}</p></div>
+        {badge && <strong>{badge}</strong>}
+      </article>
+    );
+  }
+
+  return (
+    <details className="sheetExpandableCard">
+      <summary>
+        <b>{icon}</b>
+        <div><h3>{title}</h3><p>{subtitle}</p></div>
+        <span className={"sheetExpandHint " + (badge ? "badge" : "chevron")}>{badge || "⌄"}</span>
+      </summary>
+      <div className="sheetExpandableBody">
+        {mechanics.length > 0 && (
+          <div className="sheetMechanics">
+            {mechanics.map((item, index) => (
+              <span className={"mechanicChip " + item.kind} key={item.kind + item.label + index}>{item.label}</span>
+            ))}
+          </div>
+        )}
+        {body && <p>{body}</p>}
+      </div>
+    </details>
   );
 }
 
@@ -779,24 +843,37 @@ export default function OracleApp() {
                 <>
                   <h3 className="subhead">Daggerheart</h3>
                   <div className="cardGrid">
-                    <article className="miniCard">
-                      <b>◇</b>
-                      <div>
-                        <h3>Classe</h3>
-                        <p>{state.character.daggerheart.class.name} · {state.character.daggerheart.subclass.name}</p>
-                      </div>
-                    </article>
-                    <article className="miniCard">
-                      <b>◈</b>
-                      <div>
-                        <h3>Herança</h3>
-                        <p>
-                          {state.character.daggerheart.ancestry.primary.name}
-                          {state.character.daggerheart.ancestry.secondary ? ` + ${state.character.daggerheart.ancestry.secondary.name}` : ""}
-                          {" · "}{state.character.daggerheart.community.name}
-                        </p>
-                      </div>
-                    </article>
+                    <SheetExpandableCard
+                      icon="◇"
+                      title={state.character.daggerheart.class.name}
+                      subtitle="Classe"
+                      entry={findCompendiumEntry(state.character.daggerheart.class.id, state.character.daggerheart.class.name)}
+                    />
+                    <SheetExpandableCard
+                      icon="△"
+                      title={state.character.daggerheart.subclass.name}
+                      subtitle="Subclasse"
+                      entry={findCompendiumEntry(state.character.daggerheart.subclass.id, state.character.daggerheart.subclass.name)}
+                    />
+                    <SheetExpandableCard
+                      icon="◐"
+                      title={state.character.daggerheart.ancestry.secondary
+                        ? `${state.character.daggerheart.ancestry.primary.name} + ${state.character.daggerheart.ancestry.secondary.name}`
+                        : state.character.daggerheart.ancestry.primary.name}
+                      subtitle={state.character.daggerheart.ancestry.mixed ? "Ancestralidade mista" : "Ancestralidade"}
+                      description={[
+                        findCompendiumEntry(state.character.daggerheart.ancestry.primary.id, state.character.daggerheart.ancestry.primary.name)?.description,
+                        state.character.daggerheart.ancestry.secondary
+                          ? findCompendiumEntry(state.character.daggerheart.ancestry.secondary.id, state.character.daggerheart.ancestry.secondary.name)?.description
+                          : "",
+                      ].filter(Boolean).join("\n\n")}
+                    />
+                    <SheetExpandableCard
+                      icon="⌂"
+                      title={state.character.daggerheart.community.name}
+                      subtitle="Comunidade"
+                      entry={findCompendiumEntry(state.character.daggerheart.community.id, state.character.daggerheart.community.name)}
+                    />
                   </div>
 
                   <h3 className="subhead">Traços</h3>
@@ -815,16 +892,40 @@ export default function OracleApp() {
                   <h3 className="subhead">Características</h3>
                   <div className="cardGrid">
                     {state.character.daggerheart.classFeatures.map((feature) => (
-                      <article className="miniCard" key={feature.id}><b>✦</b><div><h3>{feature.name}</h3><p>Característica de classe</p></div></article>
+                      <SheetExpandableCard
+                        icon="✦"
+                        title={feature.name}
+                        subtitle="Característica de classe"
+                        entry={findCompendiumEntry(feature.id, feature.name)}
+                        key={feature.id}
+                      />
                     ))}
                     {state.character.daggerheart.subclassFeatures.map((feature) => (
-                      <article className="miniCard" key={feature.id}><b>△</b><div><h3>{feature.name}</h3><p>Característica de subclasse</p></div></article>
+                      <SheetExpandableCard
+                        icon="△"
+                        title={feature.name}
+                        subtitle="Característica de subclasse"
+                        entry={findCompendiumEntry(feature.id, feature.name)}
+                        key={feature.id}
+                      />
                     ))}
                     {state.character.daggerheart.ancestry.features.map((feature) => (
-                      <article className="miniCard" key={feature.id}><b>◐</b><div><h3>{feature.name}</h3><p>Característica de ancestralidade</p></div></article>
+                      <SheetExpandableCard
+                        icon="◐"
+                        title={feature.name}
+                        subtitle="Característica de ancestralidade"
+                        entry={findCompendiumEntry(feature.id, feature.name)}
+                        key={feature.id}
+                      />
                     ))}
                     {state.character.daggerheart.community.features.map((feature) => (
-                      <article className="miniCard" key={feature.id}><b>⌂</b><div><h3>{feature.name}</h3><p>Característica de comunidade</p></div></article>
+                      <SheetExpandableCard
+                        icon="⌂"
+                        title={feature.name}
+                        subtitle="Característica de comunidade"
+                        entry={findCompendiumEntry(feature.id, feature.name)}
+                        key={feature.id}
+                      />
                     ))}
                   </div>
 
@@ -851,10 +952,13 @@ export default function OracleApp() {
                   <h3 className="subhead">Cartas de domínio</h3>
                   <div className="cardGrid">
                     {state.character.daggerheart.domainCards.map((card) => (
-                      <article className="miniCard" key={card.id}>
-                        <b>✦</b>
-                        <div><h3>{card.name}</h3><p>{card.domain} · Nível {card.level}</p></div>
-                      </article>
+                      <SheetExpandableCard
+                        icon="✦"
+                        title={card.name}
+                        subtitle={`${card.domain} · Nível ${card.level}`}
+                        entry={findCompendiumEntry(card.id, card.name)}
+                        key={card.id}
+                      />
                     ))}
                   </div>
 
@@ -895,7 +999,25 @@ export default function OracleApp() {
                 </>
               )}
               <h3 className="subhead">Inventário</h3>
-              <div className="cardGrid">{state.inventory.map(item => <article className="miniCard" key={item.id}><b>{item.icon}</b><div><h3>{item.name}</h3><p>{item.detail}</p></div><strong>×{item.qty}</strong></article>)}</div>
+              <div className="cardGrid">
+                {state.inventory.map((item) => {
+                  const entry = findCompendiumEntry(item.id, item.name);
+                  const description = entry?.description && entry.description !== item.detail
+                    ? [item.detail, entry.description].filter(Boolean).join("\n\n")
+                    : item.detail;
+                  return (
+                    <SheetExpandableCard
+                      icon={item.icon}
+                      title={item.name}
+                      subtitle={entry ? entry.type === "weapon" ? "Arma" : entry.type === "armor" ? "Armadura" : entry.type === "consumable" ? "Consumível" : entry.type === "loot" ? "Item de saque" : "Item" : "Item"}
+                      entry={entry}
+                      description={description}
+                      badge={`×${item.qty}`}
+                      key={item.id}
+                    />
+                  );
+                })}
+              </div>
             </section>
           )}
 
