@@ -10,6 +10,9 @@ import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestG
 const STORAGE_KEY = "oraclerpg:campaign:v1";
 
 type View = "session" | "character" | "world" | "memory";
+type AppScreen = "home" | "campaign" | "newCampaign" | "compendium" | "settings";
+
+const SYSTEM_OPTIONS = ["Daggerheart", "D&D 5e", "Cyberpunk RED", "Sistema próprio"];
 
 function Resource({
   label,
@@ -59,9 +62,13 @@ function MessageText({ text }: { text: string }) {
 
 export default function OracleApp() {
   const [state, setState] = useState<GameState>(initialState);
+  const [screen, setScreen] = useState<AppScreen>("home");
   const [view, setView] = useState<View>("session");
   const [input, setInput] = useState("");
   const [ready, setReady] = useState(false);
+  const [hasSavedCampaign, setHasSavedCampaign] = useState(false);
+  const [newCampaignName, setNewCampaignName] = useState("");
+  const [newCampaignSystem, setNewCampaignSystem] = useState("Daggerheart");
   const [showConnect, setShowConnect] = useState(false);
   const [showSync, setShowSync] = useState(false);
   const [pairInput, setPairInput] = useState("");
@@ -74,14 +81,19 @@ export default function OracleApp() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) setState(JSON.parse(saved));
+      if (saved) {
+        setState(JSON.parse(saved));
+        setHasSavedCampaign(true);
+      }
     } catch {}
     setReady(true);
   }, []);
 
   useEffect(() => {
-    if (ready) localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [ready, state]);
+    if (ready && hasSavedCampaign) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+  }, [ready, hasSavedCampaign, state]);
 
   const cloud = useCloudSync(state, setState, ready);
   const bridge = useOracleBridge();
@@ -117,6 +129,7 @@ export default function OracleApp() {
     setSyncNote("");
     try {
       await cloud.joinCloud(pairInput);
+      setHasSavedCampaign(true);
       setPairInput("");
       setSyncNote("Campanha carregada deste dispositivo.");
     } catch (error) {
@@ -158,6 +171,62 @@ export default function OracleApp() {
     if (!imageMessage?.imageDraft?.prompt) return;
     await navigator.clipboard.writeText(imageMessage.imageDraft.prompt);
     setImageNote("Prompt da cena copiado.");
+  }
+
+  function continueCampaign() {
+    if (!hasSavedCampaign) return;
+    setView("session");
+    setScreen("campaign");
+  }
+
+  function startNewCampaign() {
+    const name = newCampaignName.trim() || "Nova campanha";
+    const next: GameState = {
+      ...structuredClone(initialState),
+      campaign: {
+        name,
+        system: newCampaignSystem,
+        session: 1,
+        scene: "Prólogo · Cena inicial",
+      },
+      character: {
+        id: "player-character",
+        name: "Novo personagem",
+        archetype: "Defina seu personagem",
+        level: 1,
+        hp: 6,
+        maxHp: 6,
+        hope: 2,
+        maxHope: 6,
+        stress: 0,
+        maxStress: 6,
+        armor: 0,
+        maxArmor: 3,
+        conditions: [],
+      },
+      inventory: [],
+      quests: [],
+      npcs: [],
+      memories: [],
+      messages: [{
+        id: crypto.randomUUID(),
+        role: "gm",
+        text: "A campanha está pronta. Diga quem é seu personagem e onde esta história começa.",
+        createdAt: new Date().toISOString(),
+      }],
+      events: [],
+    };
+    setState(next);
+    setHasSavedCampaign(true);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    setNewCampaignName("");
+    setView("session");
+    setScreen("campaign");
+  }
+
+  function goHome() {
+    setScreen("home");
+    setView("session");
   }
 
   function connectChatGPT() {
@@ -294,16 +363,206 @@ export default function OracleApp() {
     }
   }
 
+  if (screen === "home") {
+    return (
+      <main className="appShell homeShell">
+        <div className="ambient ambientOne" />
+        <div className="ambient ambientTwo" />
+        <section className="homeScreen">
+          <div className="homeBrand">
+            <div className="homeSigil"><img src="/oracle-mark.svg" alt="" /></div>
+            <small>ORACLE RPG</small>
+            <h1>Onde histórias<br />ganham memória.</h1>
+            <p>Campanhas persistentes conduzidas pelo seu Mestre IA.</p>
+          </div>
+
+          <div className="homeMenu">
+            <button className="homeMenuCard primaryCard" onClick={() => setScreen("newCampaign")}>
+              <span className="homeMenuIcon">✦</span>
+              <div><strong>Nova campanha</strong><small>Comece uma nova história</small></div>
+              <b>›</b>
+            </button>
+
+            <button className="homeMenuCard" onClick={continueCampaign} disabled={!hasSavedCampaign}>
+              <span className="homeMenuIcon">◈</span>
+              <div>
+                <strong>Continuar campanha</strong>
+                <small>{hasSavedCampaign ? state.campaign.name : "Nenhuma campanha salva"}</small>
+              </div>
+              <b>›</b>
+            </button>
+
+            <button className="homeMenuCard" onClick={() => setScreen("compendium")}>
+              <span className="homeMenuIcon">⌘</span>
+              <div><strong>Compêndio</strong><small>Regras, criaturas, itens e magias</small></div>
+              <b>›</b>
+            </button>
+
+            <button className="homeMenuCard" onClick={() => setScreen("settings")}>
+              <span className="homeMenuIcon">⚙</span>
+              <div><strong>Configurações</strong><small>ChatGPT, nuvem e preferências</small></div>
+              <b>›</b>
+            </button>
+          </div>
+
+          <div className="homeFooter">
+            <span className={bridge.account?.connected ? "onlineDot connected" : "onlineDot"} />
+            {bridge.account?.connected ? "ChatGPT conectado" : "Mestre IA desconectado"}
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  if (screen === "newCampaign") {
+    return (
+      <main className="appShell menuPageShell">
+        <div className="ambient ambientOne" />
+        <div className="ambient ambientTwo" />
+        <header className="menuPageHeader">
+          <button className="backButton" onClick={goHome}>‹</button>
+          <div><small>NOVA CAMPANHA</small><strong>Comece uma nova história</strong></div>
+        </header>
+        <section className="menuPageContent setupCampaign">
+          <div className="setupHero">
+            <AvatarSigil />
+            <div><small>PRIMEIRO PASSO</small><h1>Dê um nome ao seu mundo.</h1><p>Você poderá ajustar personagens, regras e detalhes depois.</p></div>
+          </div>
+          <label className="setupField">
+            <span>Nome da campanha</span>
+            <input value={newCampaignName} onChange={(event) => setNewCampaignName(event.target.value)} placeholder="Ex.: As Crônicas de Eryndor" />
+          </label>
+          <label className="setupField">
+            <span>Sistema</span>
+            <select value={newCampaignSystem} onChange={(event) => setNewCampaignSystem(event.target.value)}>
+              {SYSTEM_OPTIONS.map((system) => <option value={system} key={system}>{system}</option>)}
+            </select>
+          </label>
+          <button className="setupStart" onClick={startNewCampaign}>Criar campanha <span>→</span></button>
+        </section>
+      </main>
+    );
+  }
+
+  if (screen === "compendium") {
+    return (
+      <main className="appShell menuPageShell">
+        <div className="ambient ambientOne" />
+        <div className="ambient ambientTwo" />
+        <header className="menuPageHeader">
+          <button className="backButton" onClick={goHome}>‹</button>
+          <div><small>BIBLIOTECA</small><strong>Compêndio</strong></div>
+        </header>
+        <section className="menuPageContent">
+          <div className="menuPageIntro"><small>CONHECIMENTO DO ORACLE</small><h1>Tudo que a mesa precisa.</h1><p>Esta área será preenchida conforme adicionarmos os sistemas suportados.</p></div>
+          <div className="compendiumGrid">
+            {[
+              ["◇", "Regras", "Regras básicas e referências rápidas"],
+              ["♜", "Criaturas", "Monstros, adversários e NPCs"],
+              ["✦", "Itens", "Equipamentos, relíquias e tesouros"],
+              ["◉", "Magias", "Feitiços, habilidades e poderes"],
+            ].map(([icon, title, subtitle]) => (
+              <button className="compendiumCard" key={title}>
+                <b>{icon}</b><div><strong>{title}</strong><small>{subtitle}</small></div><span>Em breve</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  if (screen === "settings") {
+    return (
+      <main className="appShell menuPageShell">
+        <div className="ambient ambientOne" />
+        <div className="ambient ambientTwo" />
+        <header className="menuPageHeader">
+          <button className="backButton" onClick={goHome}>‹</button>
+          <div><small>ORACLE RPG</small><strong>Configurações</strong></div>
+        </header>
+        <section className="menuPageContent">
+          <div className="menuPageIntro"><small>PREFERÊNCIAS</small><h1>Seu Oracle, do seu jeito.</h1></div>
+          <div className="settingsList">
+            <button onClick={connectChatGPT}>
+              <span className="settingsIcon">✦</span>
+              <div><strong>ChatGPT</strong><small>{bridge.account?.connected ? bridge.account.name || bridge.account.email || "Conectado" : "Conectar Mestre IA"}</small></div>
+              <em className={bridge.account?.connected ? "statusConnected" : ""}>{bridge.account?.connected ? "Conectado" : "Configurar"}</em>
+            </button>
+            <button onClick={() => setShowSync(true)}>
+              <span className="settingsIcon">☁</span>
+              <div><strong>Sincronização</strong><small>Campanha entre seus dispositivos</small></div>
+              <em>{cloudLabel}</em>
+            </button>
+            <div className="settingsInfo">
+              <span className="settingsIcon">ⓘ</span>
+              <div><strong>OracleRPG SWIG</strong><small>Sign in with ChatGPT · canal standalone</small></div>
+              <em>v0.2.6+</em>
+            </div>
+          </div>
+        </section>
+
+        {showSync && (
+          <div className="modalBackdrop" onClick={() => setShowSync(false)}>
+            <section className="connectModal syncModal" onClick={(e) => e.stopPropagation()}>
+              <img src="/oracle-mark.svg" alt="" />
+              <small>SINCRONIZAÇÃO</small>
+              <h2>Campanha em todos os seus dispositivos</h2>
+              {!cloud.credentials ? (
+                <>
+                  <p>Crie uma campanha sincronizada ou abra uma existente usando o código de pareamento.</p>
+                  <button className="primary enabled" onClick={createCloudCampaign}>Ativar sincronização</button>
+                  <div className="divider"><span>ou</span></div>
+                  <label className="pairField"><span>Código existente</span><input value={pairInput} onChange={(event) => setPairInput(event.target.value)} placeholder="campaign-id.chave" /></label>
+                  <button className="ghost" onClick={joinCloudCampaign} disabled={!pairInput.trim()}>Abrir campanha sincronizada</button>
+                </>
+              ) : (
+                <>
+                  <div className="syncState"><i className={cloud.status} /><div><small>ESTADO DA NUVEM</small><strong>{cloudLabel}</strong></div></div>
+                  <button className="pairCode" onClick={copyPairCode}>{cloud.pairCode}</button>
+                  <button className="ghost" onClick={() => cloud.fetchRemote()}>Atualizar agora</button>
+                </>
+              )}
+              {syncNote && <p className="modalNote">{syncNote}</p>}
+              <button className="closeText" onClick={() => setShowSync(false)}>Fechar</button>
+            </section>
+          </div>
+        )}
+
+        {showConnect && (
+          <div className="modalBackdrop" onClick={() => setShowConnect(false)}>
+            <section className="connectModal" onClick={(e) => e.stopPropagation()}>
+              <img src="/oracle-mark.svg" alt="" />
+              <small>MESTRE IA</small>
+              <h2>{bridge.account?.connected ? "ChatGPT conectado" : "Conectar com ChatGPT"}</h2>
+              {bridge.account?.connected ? (
+                <>
+                  <p>Conectado como <b>{bridge.account.name || bridge.account.email || "conta ChatGPT"}</b>.</p>
+                  <button className="ghost" onClick={logoutChatGPT}>Desconectar</button>
+                </>
+              ) : bridge.status === "ready" ? (
+                <button className="primary enabled" onClick={() => bridge.connect()}>Continuar com ChatGPT</button>
+              ) : (
+                <p>O runtime local do Oracle ainda não foi detectado.</p>
+              )}
+              <button className="closeText" onClick={() => setShowConnect(false)}>Fechar</button>
+            </section>
+          </div>
+        )}
+      </main>
+    );
+  }
+
   return (
     <main className="appShell">
       <div className="ambient ambientOne" />
       <div className="ambient ambientTwo" />
 
       <header className="topbar">
-        <div className="brand">
+        <button className="brand brandButton" onClick={goHome}>
           <img src="/oracle-mark.svg" alt="" />
           <div><b>ORACLE</b><span>RPG</span></div>
-        </div>
+        </button>
         <div className="campaignTitle">
           <small>{state.campaign.system} · Sessão {state.campaign.session}</small>
           <strong>{state.campaign.name}</strong>
