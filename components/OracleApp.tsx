@@ -7,13 +7,13 @@ import { useOracleBridge } from "@/hooks/useOracleBridge";
 import { buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
 import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestGmMessage } from "@/lib/scene";
 import DaggerheartCompendium from "@/components/DaggerheartCompendium";
+import NewCampaignWizard, { type NewCampaignResult } from "@/components/NewCampaignWizard";
+import { CLASS_CONFIG, TRAIT_LABELS, TRAIT_ORDER } from "@/lib/characterCreation/daggerheart";
 
 const STORAGE_KEY = "oraclerpg:campaign:v1";
 
 type View = "session" | "character" | "world" | "memory";
 type AppScreen = "home" | "campaign" | "newCampaign" | "compendium" | "settings";
-
-const SYSTEM_OPTIONS = ["Daggerheart", "D&D 5e", "Cyberpunk RED", "Sistema próprio"];
 
 function Resource({
   label,
@@ -68,8 +68,6 @@ export default function OracleApp() {
   const [input, setInput] = useState("");
   const [ready, setReady] = useState(false);
   const [hasSavedCampaign, setHasSavedCampaign] = useState(false);
-  const [newCampaignName, setNewCampaignName] = useState("");
-  const [newCampaignSystem, setNewCampaignSystem] = useState("Daggerheart");
   const [showConnect, setShowConnect] = useState(false);
   const [showSync, setShowSync] = useState(false);
   const [pairInput, setPairInput] = useState("");
@@ -115,6 +113,13 @@ export default function OracleApp() {
     conflict: "conflito",
     error: "erro",
   } as const)[cloud.status];
+
+  const newCampaignAi = {
+    connected: Boolean(bridge.account?.connected),
+    model: bridge.model,
+    respond: bridge.respond,
+    onConnect: bridge.connect,
+  };
 
   async function createCloudCampaign() {
     setSyncNote("");
@@ -180,20 +185,94 @@ export default function OracleApp() {
     setScreen("campaign");
   }
 
-  function startNewCampaign() {
-    const name = newCampaignName.trim() || "Nova campanha";
+  function finishNewCampaign(result: NewCampaignResult) {
+    const createdAt = new Date().toISOString();
+    const characterName = result.character.name.trim() || "Novo personagem";
+    const campaignName = result.campaignName.trim() || "Nova campanha";
+    const scene = "Prólogo · Cena inicial";
+    const memories: GameState["memories"] = [];
+    const remember = (kind: GameState["memories"][number]["kind"], text: string) => {
+      memories.push({ id: crypto.randomUUID(), kind, text, createdAt });
+    };
+
+    remember(
+      "fact",
+      `${characterName} é ${result.classEntry.name} (${result.subclassEntry.name}), de herança ${result.ancestry.primary.name}${result.ancestry.secondary ? ` e ${result.ancestry.secondary.name}` : ""}, da comunidade ${result.community.entry.name}.`,
+    );
+    remember("fact", `Sistema da campanha: ${result.system}. Tom definido: ${result.tone}.`);
+    if (result.classFeatures.length) {
+      remember("fact", `Características de classe de ${characterName}: ${result.classFeatures.map((feature) => feature.name).join(", ")}.`);
+    }
+    if (result.subclassFeatures.length) {
+      remember("fact", `Características de subclasse de ${characterName}: ${result.subclassFeatures.map((feature) => feature.name).join(", ")}.`);
+    }
+    if (result.ancestry.features.length) {
+      remember("fact", `Características de ancestralidade de ${characterName}: ${result.ancestry.features.map((feature) => feature.name).join(", ")}.`);
+    }
+    if (result.community.features.length) {
+      remember("fact", `Característica de comunidade de ${characterName}: ${result.community.features.map((feature) => feature.name).join(", ")}.`);
+    }
+    remember(
+      "fact",
+      `Traços de ${characterName}: ${TRAIT_ORDER.map((trait) => `${TRAIT_LABELS[trait]} ${result.traits[trait] >= 0 ? "+" : ""}${result.traits[trait]}`).join(", ")}.`,
+    );
+    remember("fact", `Experiências iniciais de ${characterName}: ${result.experiences.map((experience) => `${experience} +2`).join("; ")}.`);
+    remember("fact", `Cartas de domínio iniciais de ${characterName}: ${result.domainCards.map((card) => `${card.name} (${card.domain})`).join("; ")}.`);
+    if (result.equipment.length) {
+      remember("fact", `Equipamento inicial de ${characterName}: ${result.equipment.map((item) => item.name).join(", ")}.`);
+    }
+    remember("event", result.character.history.trim()
+      ? `História de ${characterName}: ${result.character.history.trim()}`
+      : `${characterName} inicia sua jornada em ${campaignName}.`);
+
+    if (result.character.appearance?.trim()) {
+      remember("visual", `Aparência de ${characterName}: ${result.character.appearance.trim()}`);
+    } else if (result.character.image) {
+      remember("visual", `${characterName} possui uma imagem de referência visual registrada na ficha.`);
+    }
+
+    for (const companion of result.companions) {
+      const connection = companion.connection.trim();
+      remember(
+        "fact",
+        connection
+          ? `${companion.name} (${companion.role}) acompanha o grupo. Vínculo com ${characterName}: ${connection}`
+          : `${companion.name} (${companion.role}) acompanha o grupo e acabou de conhecer ${characterName}.`,
+      );
+      if (companion.appearance?.trim()) {
+        remember("visual", `Aparência de ${companion.name}: ${companion.appearance.trim()}`);
+      }
+    }
+
+    if (result.animalCompanion) {
+      remember(
+        "fact",
+        `${result.animalCompanion.name} é o companheiro animal de ${characterName}${result.animalCompanion.kind ? ` (${result.animalCompanion.kind})` : ""}.`,
+      );
+      if (result.animalCompanion.appearance?.trim()) {
+        remember("visual", `Aparência de ${result.animalCompanion.name}: ${result.animalCompanion.appearance.trim()}`);
+      } else if (result.animalCompanion.image) {
+        remember("visual", `${result.animalCompanion.name} possui uma imagem de referência visual registrada na ficha.`);
+      }
+    }
+
+    const companionNames = result.companions.map((companion) => companion.name);
+    const initialMessage = companionNames.length
+      ? `${characterName}, sua jornada em ${campaignName} está pronta. ${companionNames.join(", ")} ${companionNames.length === 1 ? "está" : "estão"} com você no início do prólogo. Descreva sua primeira ação quando quiser começar.`
+      : `${characterName}, sua jornada em ${campaignName} está pronta. O prólogo aguarda sua primeira ação.`;
+
     const next: GameState = {
-      ...structuredClone(initialState),
       campaign: {
-        name,
-        system: newCampaignSystem,
+        name: campaignName,
+        system: result.system,
+        tone: result.tone,
         session: 1,
-        scene: "Prólogo · Cena inicial",
+        scene,
       },
       character: {
         id: "player-character",
-        name: "Novo personagem",
-        archetype: "Defina seu personagem",
+        name: characterName,
+        archetype: `${result.classEntry.name} · ${result.subclassEntry.name}`,
         level: 1,
         hp: 6,
         maxHp: 6,
@@ -201,26 +280,68 @@ export default function OracleApp() {
         maxHope: 6,
         stress: 0,
         maxStress: 6,
-        armor: 0,
-        maxArmor: 3,
+        armor: result.armorSlots,
+        maxArmor: result.armorSlots,
         conditions: [],
+        appearance: result.character.appearance?.trim() || undefined,
+        daggerheart: {
+          class: { id: result.classEntry.id, name: result.classEntry.name },
+          subclass: { id: result.subclassEntry.id, name: result.subclassEntry.name },
+          classFeatures: result.classFeatures.map((feature) => ({ id: feature.id, name: feature.name })),
+          subclassFeatures: result.subclassFeatures.map((feature) => ({ id: feature.id, name: feature.name })),
+          ancestry: {
+            mixed: result.ancestry.mixed,
+            primary: { id: result.ancestry.primary.id, name: result.ancestry.primary.name },
+            secondary: result.ancestry.secondary
+              ? { id: result.ancestry.secondary.id, name: result.ancestry.secondary.name }
+              : undefined,
+            features: result.ancestry.features.map((feature) => ({ id: feature.id, name: feature.name })),
+          },
+          community: {
+            id: result.community.entry.id,
+            name: result.community.entry.name,
+            features: result.community.features.map((feature) => ({ id: feature.id, name: feature.name })),
+          },
+          traits: result.traits,
+          experiences: result.experiences.map((name) => ({ name: name.trim(), bonus: 2 })),
+          domains: [...(CLASS_CONFIG[result.classEntry.sourceId || ""]?.domains || Array.from(new Set(result.domainCards.map((card) => card.domain))))],
+          domainCards: result.domainCards.map((card) => ({
+            id: card.id,
+            name: card.name,
+            domain: card.domain,
+            level: 1,
+          })),
+          connections: result.companions
+            .filter((companion) => companion.connection.trim())
+            .map((companion) => ({ npcId: companion.id, text: companion.connection.trim() })),
+          history: result.character.history.trim(),
+          pronouns: result.character.pronouns.trim() || undefined,
+          image: result.character.image || undefined,
+          animalCompanion: result.animalCompanion,
+        },
       },
-      inventory: [],
+      inventory: result.equipment,
       quests: [],
-      npcs: [],
-      memories: [],
+      npcs: result.companions.map((companion) => ({
+        id: companion.id,
+        name: companion.name,
+        role: companion.role,
+        relation: "friendly" as const,
+        location: scene,
+        appearance: companion.appearance.trim() || undefined,
+      })),
+      memories,
       messages: [{
         id: crypto.randomUUID(),
         role: "gm",
-        text: "A campanha está pronta. Diga quem é seu personagem e onde esta história começa.",
-        createdAt: new Date().toISOString(),
+        text: initialMessage,
+        createdAt,
       }],
       events: [],
     };
     setState(next);
     setHasSavedCampaign(true);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    setNewCampaignName("");
     setView("session");
     setScreen("campaign");
   }
@@ -417,31 +538,11 @@ export default function OracleApp() {
 
   if (screen === "newCampaign") {
     return (
-      <main className="appShell menuPageShell">
-        <div className="ambient ambientOne" />
-        <div className="ambient ambientTwo" />
-        <header className="menuPageHeader">
-          <button className="backButton" onClick={goHome}>‹</button>
-          <div><small>NOVA CAMPANHA</small><strong>Comece uma nova história</strong></div>
-        </header>
-        <section className="menuPageContent setupCampaign">
-          <div className="setupHero">
-            <AvatarSigil />
-            <div><small>PRIMEIRO PASSO</small><h1>Dê um nome ao seu mundo.</h1><p>Você poderá ajustar personagens, regras e detalhes depois.</p></div>
-          </div>
-          <label className="setupField">
-            <span>Nome da campanha</span>
-            <input value={newCampaignName} onChange={(event) => setNewCampaignName(event.target.value)} placeholder="Ex.: As Crônicas de Eryndor" />
-          </label>
-          <label className="setupField">
-            <span>Sistema</span>
-            <select value={newCampaignSystem} onChange={(event) => setNewCampaignSystem(event.target.value)}>
-              {SYSTEM_OPTIONS.map((system) => <option value={system} key={system}>{system}</option>)}
-            </select>
-          </label>
-          <button className="setupStart" onClick={startNewCampaign}>Criar campanha <span>→</span></button>
-        </section>
-      </main>
+      <NewCampaignWizard
+        ai={newCampaignAi}
+        onBack={goHome}
+        onComplete={finishNewCampaign}
+      />
     );
   }
 
@@ -591,7 +692,7 @@ export default function OracleApp() {
                 <div className="messages">
                   {state.messages.map((message) => (
                     <article className={`message ${message.role}`} key={message.id}>
-                      <div className="messageAvatar">{message.role === "gm" ? "◈" : "F"}</div>
+                      <div className="messageAvatar">{message.role === "gm" ? "◈" : state.character.name.slice(0, 1).toUpperCase()}</div>
                       <div className="messageBody">
                         <small>{message.role === "gm" ? "ORACLE · MESTRE" : message.role === "player" ? state.character.name : "SISTEMA"}</small>
                         <MessageText text={message.text} />
@@ -614,14 +715,16 @@ export default function OracleApp() {
 
               <aside className="characterPanel panel">
                 <div className="characterHero">
-                  <AvatarSigil />
+                  {state.character.daggerheart?.image
+                    ? <img className="characterHeroPortrait" src={state.character.daggerheart.image} alt={`Retrato de ${state.character.name}`} />
+                    : <AvatarSigil />}
                   <div><small>PERSONAGEM ATIVO</small><h2>{state.character.name}</h2><p>{state.character.archetype}</p></div>
                   <button>•••</button>
                 </div>
                 <div className="resourceGrid">
                   <Resource label="Pontos de Vida" value={state.character.hp} max={state.character.maxHp} kind="hp" onAdjust={adjust} />
                   <Resource label="Esperança" value={state.character.hope} max={state.character.maxHope} kind="hope" onAdjust={adjust} />
-                  <Resource label="Estresse" value={state.character.stress} max={state.character.maxStress} kind="stress" onAdjust={adjust} />
+                  <Resource label={state.campaign.system === "Daggerheart" ? "Fadiga" : "Estresse"} value={state.character.stress} max={state.character.maxStress} kind="stress" onAdjust={adjust} />
                   <Resource label="Armadura" value={state.character.armor} max={state.character.maxArmor} kind="armor" onAdjust={adjust} />
                 </div>
                 <div className="conditions">
@@ -652,13 +755,141 @@ export default function OracleApp() {
           {view === "character" && (
             <section className="widePanel panel">
               <div className="eyebrow">PERSONAGEM</div>
-              <div className="profileTop"><AvatarSigil /><div><h1>{state.character.name}</h1><p>{state.character.archetype} · {state.campaign.system}</p></div></div>
+              <div className="profileTop">
+                {state.character.daggerheart?.image ? (
+                  <img
+                    src={state.character.daggerheart.image}
+                    alt={`Retrato de ${state.character.name}`}
+                    style={{ width: 88, height: 88, borderRadius: 20, objectFit: "cover" }}
+                  />
+                ) : <AvatarSigil />}
+                <div><h1>{state.character.name}</h1><p>{state.character.archetype} · {state.campaign.system}</p></div>
+              </div>
               <div className="fourCols">
                 <Resource label="PV" value={state.character.hp} max={state.character.maxHp} kind="hp" onAdjust={adjust} />
                 <Resource label="Esperança" value={state.character.hope} max={state.character.maxHope} kind="hope" onAdjust={adjust} />
-                <Resource label="Estresse" value={state.character.stress} max={state.character.maxStress} kind="stress" onAdjust={adjust} />
+                <Resource label={state.campaign.system === "Daggerheart" ? "Fadiga" : "Estresse"} value={state.character.stress} max={state.character.maxStress} kind="stress" onAdjust={adjust} />
                 <Resource label="Armadura" value={state.character.armor} max={state.character.maxArmor} kind="armor" onAdjust={adjust} />
               </div>
+              {state.character.daggerheart && (
+                <>
+                  <h3 className="subhead">Daggerheart</h3>
+                  <div className="cardGrid">
+                    <article className="miniCard">
+                      <b>◇</b>
+                      <div>
+                        <h3>Classe</h3>
+                        <p>{state.character.daggerheart.class.name} · {state.character.daggerheart.subclass.name}</p>
+                      </div>
+                    </article>
+                    <article className="miniCard">
+                      <b>◈</b>
+                      <div>
+                        <h3>Herança</h3>
+                        <p>
+                          {state.character.daggerheart.ancestry.primary.name}
+                          {state.character.daggerheart.ancestry.secondary ? ` + ${state.character.daggerheart.ancestry.secondary.name}` : ""}
+                          {" · "}{state.character.daggerheart.community.name}
+                        </p>
+                      </div>
+                    </article>
+                  </div>
+
+                  <h3 className="subhead">Traços</h3>
+                  <div className="cardGrid">
+                    {TRAIT_ORDER.map((trait) => {
+                      const value = state.character.daggerheart!.traits[trait];
+                      return (
+                        <article className="miniCard" key={trait}>
+                          <b>{value >= 0 ? "+" : ""}{value}</b>
+                          <div><h3>{TRAIT_LABELS[trait]}</h3><p>Traço de personagem</p></div>
+                        </article>
+                      );
+                    })}
+                  </div>
+
+                  <h3 className="subhead">Características</h3>
+                  <div className="cardGrid">
+                    {state.character.daggerheart.classFeatures.map((feature) => (
+                      <article className="miniCard" key={feature.id}><b>✦</b><div><h3>{feature.name}</h3><p>Característica de classe</p></div></article>
+                    ))}
+                    {state.character.daggerheart.subclassFeatures.map((feature) => (
+                      <article className="miniCard" key={feature.id}><b>△</b><div><h3>{feature.name}</h3><p>Característica de subclasse</p></div></article>
+                    ))}
+                    {state.character.daggerheart.ancestry.features.map((feature) => (
+                      <article className="miniCard" key={feature.id}><b>◐</b><div><h3>{feature.name}</h3><p>Característica de ancestralidade</p></div></article>
+                    ))}
+                    {state.character.daggerheart.community.features.map((feature) => (
+                      <article className="miniCard" key={feature.id}><b>⌂</b><div><h3>{feature.name}</h3><p>Característica de comunidade</p></div></article>
+                    ))}
+                  </div>
+
+                  <h3 className="subhead">Experiências</h3>
+                  <div className="cardGrid">
+                    {state.character.daggerheart.experiences.map((experience) => (
+                      <article className="miniCard" key={experience.name}>
+                        <b>+{experience.bonus}</b>
+                        <div><h3>{experience.name}</h3><p>Experiência inicial</p></div>
+                      </article>
+                    ))}
+                  </div>
+
+                  {state.character.daggerheart.history && (
+                    <>
+                      <h3 className="subhead">História</h3>
+                      <article className="miniCard characterHistoryCard">
+                        <b>◉</b>
+                        <div><h3>História do personagem</h3><p>{state.character.daggerheart.history}</p></div>
+                      </article>
+                    </>
+                  )}
+
+                  <h3 className="subhead">Cartas de domínio</h3>
+                  <div className="cardGrid">
+                    {state.character.daggerheart.domainCards.map((card) => (
+                      <article className="miniCard" key={card.id}>
+                        <b>✦</b>
+                        <div><h3>{card.name}</h3><p>{card.domain} · Nível {card.level}</p></div>
+                      </article>
+                    ))}
+                  </div>
+
+                  {(state.character.daggerheart.connections.length > 0 || state.character.daggerheart.animalCompanion) && (
+                    <>
+                      <h3 className="subhead">Conexões</h3>
+                      <div className="cardGrid">
+                        {state.character.daggerheart.connections.map((connection) => {
+                          const npc = state.npcs.find((entry) => entry.id === connection.npcId);
+                          return (
+                            <article className="miniCard" key={connection.npcId}>
+                              <b>◇</b>
+                              <div><h3>{npc?.name || "Companheiro"}</h3><p>{connection.text}</p></div>
+                            </article>
+                          );
+                        })}
+                        {state.character.daggerheart.animalCompanion && (
+                          <article className="miniCard">
+                            {state.character.daggerheart.animalCompanion.image ? (
+                              <img
+                                src={state.character.daggerheart.animalCompanion.image}
+                                alt={`Retrato de ${state.character.daggerheart.animalCompanion.name}`}
+                                style={{ width: 48, height: 48, borderRadius: 12, objectFit: "cover" }}
+                              />
+                            ) : <b>◒</b>}
+                            <div>
+                              <h3>{state.character.daggerheart.animalCompanion.name}</h3>
+                              <p>
+                                {state.character.daggerheart.animalCompanion.kind || "Companheiro animal"}
+                                {state.character.daggerheart.animalCompanion.appearance ? ` · ${state.character.daggerheart.animalCompanion.appearance}` : ""}
+                              </p>
+                            </div>
+                          </article>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
               <h3 className="subhead">Inventário</h3>
               <div className="cardGrid">{state.inventory.map(item => <article className="miniCard" key={item.id}><b>{item.icon}</b><div><h3>{item.name}</h3><p>{item.detail}</p></div><strong>×{item.qty}</strong></article>)}</div>
             </section>

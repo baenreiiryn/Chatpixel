@@ -8,6 +8,70 @@ export type InventoryItem = {
   icon: string;
 };
 
+export type CharacterTraitName =
+  | "agility"
+  | "strength"
+  | "finesse"
+  | "instinct"
+  | "presence"
+  | "knowledge";
+
+export type CharacterExperience = {
+  name: string;
+  bonus: number;
+};
+
+export type CharacterFeatureRef = {
+  id: string;
+  name: string;
+};
+
+export type CharacterAncestry = {
+  mixed: boolean;
+  primary: CharacterFeatureRef;
+  secondary?: CharacterFeatureRef;
+  features: CharacterFeatureRef[];
+};
+
+export type CharacterCommunity = CharacterFeatureRef & {
+  features: CharacterFeatureRef[];
+};
+
+export type CharacterDomainCard = CharacterFeatureRef & {
+  domain: string;
+  level: number;
+};
+
+export type CharacterConnection = {
+  npcId: string;
+  text: string;
+};
+
+export type AnimalCompanion = {
+  name: string;
+  kind?: string;
+  image?: string;
+  appearance?: string;
+};
+
+export type DaggerheartCharacterData = {
+  class: CharacterFeatureRef;
+  subclass: CharacterFeatureRef;
+  classFeatures: CharacterFeatureRef[];
+  subclassFeatures: CharacterFeatureRef[];
+  ancestry: CharacterAncestry;
+  community: CharacterCommunity;
+  traits: Record<CharacterTraitName, number>;
+  experiences: CharacterExperience[];
+  domains: string[];
+  domainCards: CharacterDomainCard[];
+  connections: CharacterConnection[];
+  history: string;
+  pronouns?: string;
+  image?: string;
+  animalCompanion?: AnimalCompanion;
+};
+
 export type Quest = {
   id: string;
   title: string;
@@ -78,6 +142,7 @@ export type GameState = {
   campaign: {
     name: string;
     system: string;
+    tone?: string;
     session: number;
     scene: string;
   };
@@ -96,6 +161,7 @@ export type GameState = {
     maxArmor: number;
     conditions: string[];
     appearance?: string;
+    daggerheart?: DaggerheartCharacterData;
   };
   inventory: InventoryItem[];
   quests: Quest[];
