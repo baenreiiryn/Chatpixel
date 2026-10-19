@@ -200,6 +200,9 @@ export default function OracleApp() {
       `${characterName} é ${result.classEntry.name} (${result.subclassEntry.name}), de herança ${result.ancestry.primary.name}${result.ancestry.secondary ? ` e ${result.ancestry.secondary.name}` : ""}, da comunidade ${result.community.entry.name}.`,
     );
     remember("fact", `Sistema da campanha: ${result.system}. Tom definido: ${result.tone}.`);
+    if (result.adventureHook?.trim()) {
+      remember("event", `Gancho inicial da aventura: ${result.adventureHook.trim()}`);
+    }
     if (result.classFeatures.length) {
       remember("fact", `Características de classe de ${characterName}: ${result.classFeatures.map((feature) => feature.name).join(", ")}.`);
     }
@@ -266,6 +269,7 @@ export default function OracleApp() {
         name: campaignName,
         system: result.system,
         tone: result.tone,
+        adventureHook: result.adventureHook?.trim() || undefined,
         session: 1,
         scene,
       },

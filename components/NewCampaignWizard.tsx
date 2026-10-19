@@ -47,6 +47,7 @@ type CompanionDraft = {
 export type NewCampaignResult = {
   campaignName: string;
   tone: string;
+  adventureHook?: string;
   system: "Daggerheart";
   classEntry: CompendiumEntry;
   subclassEntry: CompendiumEntry;
@@ -215,6 +216,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
   const [campaignName, setCampaignName] = useState("");
   const [toneId, setToneId] = useState(TONE_OPTIONS[0]?.id || "heroic");
   const [customTone, setCustomTone] = useState("");
+  const [adventureHook, setAdventureHook] = useState("");
 
   const [classId, setClassId] = useState("");
   const [subclassId, setSubclassId] = useState("");
@@ -434,6 +436,9 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
             `Nome: ${characterName.trim() || "ainda não definido"}.`,
             `Pronomes: ${pronouns.trim() || "não definidos"}.`,
             `Tom da campanha: ${tone}.`,
+            ...(toneId === "custom" && adventureHook.trim()
+              ? [`Gancho opcional da aventura: ${adventureHook.trim()}.`]
+              : []),
             `Classe: ${selectedClass.name}.`,
             `Descrição da classe: ${selectedClass.description || "não disponível"}.`,
             `Subclasse: ${selectedSubclass.name}.`,
@@ -511,6 +516,9 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
           content: [
             "Crie exatamente 3 companheiros de grupo distintos e adequados ao personagem abaixo.",
             `Tom: ${tone}.`,
+            ...(toneId === "custom" && adventureHook.trim()
+              ? [`Gancho da aventura: ${adventureHook.trim()}.`]
+              : []),
             `Classe: ${selectedClass?.name || classId}.`,
             `Subclasse: ${selectedSubclass?.name || subclassId}.`,
             `Ancestralidade: ${selectedAncestryA?.name || ancestryA}${mixedAncestry && selectedAncestryB ? ` + ${selectedAncestryB.name}` : ""}.`,
@@ -630,6 +638,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     onComplete({
       campaignName: campaignName.trim() || "Nova campanha",
       tone,
+      adventureHook: toneId === "custom" ? adventureHook.trim() || undefined : undefined,
       system: "Daggerheart",
       classEntry: selectedClass,
       subclassEntry: selectedSubclass,
@@ -731,10 +740,20 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                 ))}
               </div>
               {toneId === "custom" && (
-                <label className="campaignWizardField">
-                  <span>Descreva o tom</span>
-                  <textarea value={customTone} onChange={(event) => setCustomTone(event.target.value)} placeholder="Ex.: fantasia de fronteira, melancólica, com descobertas antigas e humor entre o grupo." />
-                </label>
+                <>
+                  <label className="campaignWizardField">
+                    <span>Descreva o tom</span>
+                    <textarea value={customTone} onChange={(event) => setCustomTone(event.target.value)} placeholder="Ex.: fantasia de fronteira, melancólica, com descobertas antigas e humor entre o grupo." />
+                  </label>
+                  <label className="campaignWizardField">
+                    <span>Gancho da aventura <em>opcional</em></span>
+                    <textarea
+                      value={adventureHook}
+                      onChange={(event) => setAdventureHook(event.target.value)}
+                      placeholder="Ex.: todos receberam uma carta assinada por alguém que morreu há vinte anos, pedindo que se encontrem nas ruínas de uma cidade esquecida."
+                    />
+                  </label>
+                </>
               )}
             </div>
           )}

@@ -143,6 +143,7 @@ export type GameState = {
     name: string;
     system: string;
     tone?: string;
+    adventureHook?: string;
     session: number;
     scene: string;
   };
