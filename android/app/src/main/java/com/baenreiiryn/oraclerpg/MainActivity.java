@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 public final class MainActivity extends Activity {
     private WebView webView;
     private UpdateManager updates;
+    private final String oracleHost = Uri.parse(BuildConfig.ORACLE_URL).getHost();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public final class MainActivity extends Activity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 Uri uri = request.getUrl();
-                if ("oraclerpg.vercel.app".equalsIgnoreCase(uri.getHost())) return false;
+                if (oracleHost != null && oracleHost.equalsIgnoreCase(uri.getHost())) return false;
                 Intent external = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(external);
                 return true;

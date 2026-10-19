@@ -19,6 +19,10 @@ Ao iniciar, o app consulta:
 
 `https://api.github.com/repos/baenreiiryn/RPGptSWIG/releases/latest`
 
+O bridge nativo Android aceita como origem principal o mesmo `BuildConfig.ORACLE_URL`
+usado pelo WebView. Assim, trocar o domínio hospedado do SWIG não exige manter uma
+segunda allowlist manual e evita falsos avisos de "Oracle Bridge necessário".
+
 Builds futuros de release usam uma faixa de `versionCode` própria (300000+) para que usuários
 migrados do repositório antigo continuem recebendo atualizações sem o Android interpretar
 os APKs do novo repositório como downgrade.

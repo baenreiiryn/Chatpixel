@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 public final class OracleBridgeServer {
     private static final int PORT = 31415;
     private static final Set<String> ALLOWED_ORIGINS = Set.of(
-            "https://oraclerpg.vercel.app",
+            BuildConfig.ORACLE_URL,
             "http://localhost:3000",
             "http://127.0.0.1:3000"
     );
