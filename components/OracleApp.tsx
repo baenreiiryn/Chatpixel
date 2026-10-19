@@ -144,7 +144,8 @@ export default function OracleApp() {
     try {
       const conversationInput: unknown[] = buildTurnInput(working, text);
       let narration = "";
-      for (let round = 0; round < 6; round += 1) {
+      let exhaustedTools = false;
+      for (let round = 0; round < 8; round += 1) {
         const response = await bridge.respond({
           model: bridge.model,
           instructions: gmInstructions(working.campaign.system),
@@ -156,6 +157,10 @@ export default function OracleApp() {
         narration = extractNarration(response) || narration;
         if (!calls.length) break;
 
+        // store:false is intentionally stateless. Replay the complete model output,
+        // including encrypted reasoning items, before the function outputs.
+        conversationInput.push(...output);
+
         for (const call of calls as Array<Record<string, unknown>>) {
           const executed = executeGmTool(
             working,
@@ -163,7 +168,6 @@ export default function OracleApp() {
             String(call.arguments || "{}"),
           );
           working = executed.state;
-          conversationInput.push(call);
           conversationInput.push({
             type: "function_call_output",
             call_id: call.call_id,
@@ -171,9 +175,27 @@ export default function OracleApp() {
           });
         }
         setState(working);
+        if (round === 7) exhaustedTools = true;
       }
 
-      if (!narration) narration = "O Oracle concluiu as alterações, mas não retornou uma narração.";
+      // Safety valve: if the model spent every round using tools, ask one final
+      // stateless pass to narrate the already-applied result without more tools.
+      if (!narration && exhaustedTools) {
+        conversationInput.push({
+          role: "developer",
+          content: "As alterações solicitadas já foram executadas no OracleRPG. Não use novas ferramentas. Produza agora apenas a narração final coerente com os resultados acima.",
+        });
+        const finalResponse = await bridge.respond({
+          model: bridge.model,
+          instructions: gmInstructions(working.campaign.system),
+          input: conversationInput,
+        });
+        narration = extractNarration(finalResponse);
+      }
+
+      if (!narration) {
+        narration = "As alterações foram aplicadas, mas o Mestre não conseguiu concluir a resposta narrativa. Tente continuar a cena; o estado da campanha foi preservado.";
+      }
       working = {
         ...working,
         messages: [

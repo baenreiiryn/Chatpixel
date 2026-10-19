@@ -143,13 +143,18 @@ export function executeGmTool(
   return { state, result: { ok: false, error: `Unknown tool: ${name}` } };
 }
 
-export function extractNarration(response: { output?: unknown[] }) {
+export function extractNarration(response: { output?: unknown[]; output_text?: unknown }) {
+  if (typeof response.output_text === "string" && response.output_text.trim()) {
+    return response.output_text.trim();
+  }
   const output = Array.isArray(response.output) ? response.output : [];
   const parts: string[] = [];
   for (const item of output as Array<Record<string, unknown>>) {
     if (item.type !== "message" || !Array.isArray(item.content)) continue;
     for (const content of item.content as Array<Record<string, unknown>>) {
       if (content.type === "output_text" && typeof content.text === "string") {
+        parts.push(content.text);
+      } else if (typeof content.text === "string") {
         parts.push(content.text);
       }
     }
