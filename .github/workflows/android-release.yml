@@ -43,7 +43,9 @@ jobs:
             VERSION="0.2.${GITHUB_RUN_NUMBER}"
           fi
           echo "ORACLE_VERSION_NAME=$VERSION" >> "$GITHUB_ENV"
-          echo "ORACLE_VERSION_CODE=$((1000 + GITHUB_RUN_NUMBER))" >> "$GITHUB_ENV"
+          # Dedicated SWIG range. Keeps update version codes above the legacy
+          # Rpgpt repository even though this repository's run counter starts at 1.
+          echo "ORACLE_VERSION_CODE=$((200000 + GITHUB_RUN_NUMBER))" >> "$GITHUB_ENV"
           echo "APK_NAME=OracleRPG-v${VERSION}.apk" >> "$GITHUB_ENV"
 
       - name: Restore signing key

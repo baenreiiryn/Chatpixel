@@ -19,6 +19,10 @@ Ao iniciar, o app consulta:
 
 `https://api.github.com/repos/baenreiiryn/RPGptSWIG/releases/latest`
 
+Builds de release usam uma faixa de `versionCode` própria (200000+) para que usuários
+migrados do repositório antigo continuem recebendo atualizações sem o Android interpretar
+os APKs do novo repositório como downgrade.
+
 Se o `tag_name` for mais novo que `BuildConfig.VERSION_NAME`, o usuário recebe um diálogo.
 Ao aceitar:
 
