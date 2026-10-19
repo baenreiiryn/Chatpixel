@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { buildContextPacket, executeCommand, GameState, initialState, undoLatest } from "@/lib/game";
 import { useCloudSync } from "@/hooks/useCloudSync";
 import { useOracleBridge } from "@/hooks/useOracleBridge";
-import { buildTurnInput, executeGmTool, extractNarration, gmInstructions, responseTools } from "@/lib/gm";
+import { buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
 
 const STORAGE_KEY = "oraclerpg:campaign:v1";
 
@@ -144,8 +144,10 @@ export default function OracleApp() {
     try {
       const conversationInput: unknown[] = buildTurnInput(working, text);
       let narration = "";
-      let exhaustedTools = false;
-      for (let round = 0; round < 8; round += 1) {
+      let refusal = "";
+      let lastOutputTypes: string[] = [];
+      let reachedRoundLimit = true;
+      for (let round = 0; round < 12; round += 1) {
         const response = await bridge.respond({
           model: bridge.model,
           instructions: gmInstructions(working.campaign.system),
@@ -154,12 +156,23 @@ export default function OracleApp() {
         });
         const output = Array.isArray(response.output) ? response.output : [];
         const calls = output.filter((item: Record<string, unknown>) => item.type === "function_call");
+        lastOutputTypes = output.map((item: Record<string, unknown>) => String(item.type || "unknown"));
         narration = extractNarration(response) || narration;
-        if (!calls.length) break;
+        refusal = extractRefusal(response) || refusal;
 
         // store:false is intentionally stateless. Replay the complete model output,
         // including encrypted reasoning items, before the function outputs.
         conversationInput.push(...output);
+
+        // A reasoning model can return a reasoning-only phase. That is not the
+        // final answer: keep sampling until a message, refusal, or tool call arrives.
+        if (!calls.length) {
+          if (narration || refusal) {
+            reachedRoundLimit = false;
+            break;
+          }
+          continue;
+        }
 
         for (const call of calls as Array<Record<string, unknown>>) {
           const executed = executeGmTool(
@@ -172,15 +185,15 @@ export default function OracleApp() {
             type: "function_call_output",
             call_id: call.call_id,
             output: JSON.stringify(executed.result),
+            ...(call.caller ? { caller: call.caller } : {}),
           });
         }
         setState(working);
-        if (round === 7) exhaustedTools = true;
       }
 
-      // Safety valve: if the model spent every round using tools, ask one final
-      // stateless pass to narrate the already-applied result without more tools.
-      if (!narration && exhaustedTools) {
+      // Safety valve: if the model spent every round reasoning/using tools without
+      // emitting a message, ask one final pass with tools disabled.
+      if (!narration && !refusal && reachedRoundLimit) {
         conversationInput.push({
           role: "developer",
           content: "As alterações solicitadas já foram executadas no OracleRPG. Não use novas ferramentas. Produza agora apenas a narração final coerente com os resultados acima.",
@@ -191,10 +204,17 @@ export default function OracleApp() {
           input: conversationInput,
         });
         narration = extractNarration(finalResponse);
+        refusal = extractRefusal(finalResponse);
+        if (Array.isArray(finalResponse.output)) {
+          lastOutputTypes = finalResponse.output.map((item: Record<string, unknown>) => String(item.type || "unknown"));
+        }
       }
 
-      if (!narration) {
-        narration = "As alterações foram aplicadas, mas o Mestre não conseguiu concluir a resposta narrativa. Tente continuar a cena; o estado da campanha foi preservado.";
+      if (!narration && refusal) {
+        narration = refusal;
+      } else if (!narration) {
+        const received = lastOutputTypes.length ? lastOutputTypes.join(", ") : "nenhum item";
+        narration = `O Mestre não retornou uma mensagem narrativa. Tipos recebidos: ${received}. O estado da campanha foi preservado.`;
       }
       working = {
         ...working,

@@ -161,3 +161,17 @@ export function extractNarration(response: { output?: unknown[]; output_text?: u
   }
   return parts.join("\n").trim();
 }
+
+export function extractRefusal(response: { output?: unknown[] }) {
+  const output = Array.isArray(response.output) ? response.output : [];
+  const parts: string[] = [];
+  for (const item of output as Array<Record<string, unknown>>) {
+    if (item.type !== "message" || !Array.isArray(item.content)) continue;
+    for (const content of item.content as Array<Record<string, unknown>>) {
+      if (content.type === "refusal" && typeof content.refusal === "string") {
+        parts.push(content.refusal);
+      }
+    }
+  }
+  return parts.join("\n").trim();
+}
