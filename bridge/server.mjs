@@ -333,6 +333,24 @@ async function runResponse(payload) {
   let buffer = "";
   let completed = null;
   let failure = null;
+  const completedItems = new Map();
+  const completedText = [];
+  const consumeEvent = (event) => {
+    if (!event) return;
+    if (event.type === "response.completed") completed = event.response;
+    if (event.type === "response.output_item.done" && event.item) {
+      completedItems.set(Number(event.output_index ?? completedItems.size), event.item);
+    }
+    if (event.type === "response.output_text.done" && typeof event.text === "string" && event.text) {
+      completedText.push(event.text);
+    }
+    if (event.type === "response.failed") {
+      failure = event.response?.error || { message: "Response failed." };
+    }
+    if (event.type === "response.incomplete") {
+      failure = { message: "Response was incomplete." };
+    }
+  };
   for await (const chunk of response.body) {
     buffer += decoder.decode(chunk, { stream: true });
     const events = buffer.split("\n\n");
@@ -344,9 +362,16 @@ async function runResponse(payload) {
       if (!text || text === "[DONE]") continue;
       let event;
       try { event = JSON.parse(text); } catch { continue; }
-      if (event.type === "response.completed") completed = event.response;
-      if (event.type === "response.failed") failure = event.response?.error || { message: "Response failed." };
-      if (event.type === "response.incomplete") failure = { message: "Response was incomplete." };
+      consumeEvent(event);
+    }
+  }
+  if (buffer.trim()) {
+    const dataLine = buffer.split("\n").find((line) => line.startsWith("data:"));
+    if (dataLine) {
+      const text = dataLine.slice(5).trim();
+      if (text && text !== "[DONE]") {
+        try { consumeEvent(JSON.parse(text)); } catch {}
+      }
     }
   }
   if (failure) {
@@ -355,6 +380,17 @@ async function runResponse(payload) {
     throw error;
   }
   if (!completed) throw new Error("Stream ended without response.completed.");
+  if (completedItems.size) {
+    completed.output = [...completedItems.entries()]
+      .sort(([a], [b]) => a - b)
+      .map(([, item]) => item);
+  } else if ((!Array.isArray(completed.output) || completed.output.length === 0) && completedText.length) {
+    completed.output = [{
+      type: "message",
+      role: "assistant",
+      content: [{ type: "output_text", text: completedText.join("\n") }],
+    }];
+  }
   return completed;
 }
 

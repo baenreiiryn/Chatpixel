@@ -13,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -327,6 +329,8 @@ public final class ChatGptClient {
             }
             BufferedSource source = response.body().source();
             JSONObject completed = null;
+            Map<Integer, JSONObject> completedItems = new TreeMap<>();
+            StringBuilder completedText = new StringBuilder();
             StringBuilder event = new StringBuilder();
             while (!source.exhausted()) {
                 String line = source.readUtf8Line();
@@ -341,6 +345,16 @@ public final class ChatGptClient {
                 String type = parsed.optString("type");
                 if ("response.completed".equals(type)) {
                     completed = parsed.optJSONObject("response");
+                } else if ("response.output_item.done".equals(type)) {
+                    JSONObject item = parsed.optJSONObject("item");
+                    int index = parsed.optInt("output_index", completedItems.size());
+                    if (item != null) completedItems.put(index, item);
+                } else if ("response.output_text.done".equals(type)) {
+                    String text = parsed.optString("text");
+                    if (!text.isEmpty()) {
+                        if (completedText.length() > 0) completedText.append("\n");
+                        completedText.append(text);
+                    }
                 } else if ("response.failed".equals(type)) {
                     JSONObject failure = parsed.optJSONObject("response");
                     JSONObject error = failure == null ? null : failure.optJSONObject("error");
@@ -349,7 +363,42 @@ public final class ChatGptClient {
                     throw new IllegalStateException("Response was incomplete.");
                 }
             }
+            if (event.length() > 0) {
+                JSONObject parsed = parseSseEvent(event.toString());
+                if (parsed != null) {
+                    String type = parsed.optString("type");
+                    if ("response.completed".equals(type)) {
+                        completed = parsed.optJSONObject("response");
+                    } else if ("response.output_item.done".equals(type)) {
+                        JSONObject item = parsed.optJSONObject("item");
+                        int index = parsed.optInt("output_index", completedItems.size());
+                        if (item != null) completedItems.put(index, item);
+                    } else if ("response.output_text.done".equals(type)) {
+                        String text = parsed.optString("text");
+                        if (!text.isEmpty()) {
+                            if (completedText.length() > 0) completedText.append("\n");
+                            completedText.append(text);
+                        }
+                    }
+                }
+            }
             if (completed == null) throw new IllegalStateException("Stream ended before response.completed.");
+
+            JSONArray rebuilt = new JSONArray();
+            for (JSONObject item : completedItems.values()) rebuilt.put(item);
+            JSONArray original = completed.optJSONArray("output");
+            if (rebuilt.length() > 0) {
+                completed.put("output", rebuilt);
+            } else if ((original == null || original.length() == 0) && completedText.length() > 0) {
+                JSONObject content = new JSONObject();
+                content.put("type", "output_text");
+                content.put("text", completedText.toString());
+                JSONObject message = new JSONObject();
+                message.put("type", "message");
+                message.put("role", "assistant");
+                message.put("content", new JSONArray().put(content));
+                completed.put("output", new JSONArray().put(message));
+            }
             return completed;
         }
     }
