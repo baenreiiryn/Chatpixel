@@ -14,8 +14,20 @@ function locationMatches(scene: string, location: string) {
 }
 
 function visualMemoriesFor(state: GameState, name: string) {
+  const visualTerms = [
+    "aparência", "cabelo", "cabelos", "olho", "olhos", "pele", "rosto", "altura",
+    "alto", "alta", "baixo", "baixa", "roupa", "roupas", "veste", "vestes", "armadura",
+    "cicatriz", "tatuagem", "marca", "orelhas", "chifres", "cauda", "asas", "barba",
+    "corpo", "postura", "máscara", "chapéu", "manto", "capa",
+  ];
   return state.memories
-    .filter((memory) => memory.kind === "visual" && mentioned(memory.text, name))
+    .filter((memory) => {
+      if (!mentioned(memory.text, name) || memory.kind === "secret") return false;
+      if (memory.kind === "visual") return true;
+      if (memory.kind !== "fact") return false;
+      const normalized = memory.text.toLocaleLowerCase("pt-BR");
+      return visualTerms.some((term) => normalized.includes(term));
+    })
     .slice(0, 6)
     .map((memory) => memory.text);
 }
