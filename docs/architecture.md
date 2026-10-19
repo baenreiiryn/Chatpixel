@@ -65,6 +65,24 @@ manual, envia `function_call_output` de volta ao modelo e repete até chegar à 
 
 As tools ficam em `lib/tools.ts`; a orquestração fica em `lib/gm.ts`.
 
+## Snapshot visual da cena
+
+Cada nova mensagem narrativa do Mestre recebe um `SceneSnapshot` contendo:
+
+- cena/local;
+- texto exato da narração;
+- personagem ativo e NPCs detectados como presentes;
+- características visuais persistidas em memórias `visual`;
+- objetos de inventário explicitamente mencionados;
+- contexto das últimas mensagens.
+
+`buildSceneImagePrompt()` transforma esse snapshot em um prompt vertical 4:5. O snapshot
+fica anexado à própria mensagem, então uma imagem solicitada depois representa aquela cena,
+e não o estado futuro da campanha.
+
+A geração de imagem não é enviada pela credencial de plan sharing enquanto a limitação
+oficial da OpenAI mantiver image generation entre as Responses tools não suportadas nesse fluxo.
+
 ## Persistência
 
 O navegador mantém `localStorage` como cache offline. A sincronização opcional usa Postgres:

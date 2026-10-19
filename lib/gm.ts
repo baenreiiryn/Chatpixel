@@ -18,7 +18,11 @@ export function gmInstructions(system: string) {
     "Não invente valores mecânicos que já estejam no contexto.",
     "Faça alterações mecânicas antes de narrar seus efeitos quando isso for necessário.",
     "Registre em memória apenas fatos relevantes que precisem sobreviver ao contexto recente.",
+    "Quando uma característica visual estável de um personagem for estabelecida pela primeira vez, registre-a como memória visual.",
     "Não revele segredos que o personagem não teria como saber.",
+    "Formate a resposta em parágrafos curtos. Separe sempre narração e fala em parágrafos distintos.",
+    "Quando um NPC falar, coloque a fala em um parágrafo próprio, preferencialmente iniciada por travessão.",
+    "Nunca entregue narração e várias falas como um único bloco corrido.",
     "Depois das ferramentas, produza a narração final e, quando apropriado, pergunte o que o jogador faz.",
   ].join("\n");
 }
@@ -112,12 +116,12 @@ export function executeGmTool(
   if (name === "memory_record") {
     const kind = String(args.kind || "");
     const text = String(args.text || "").trim();
-    if (!["fact", "event", "secret"].includes(kind) || !text) {
+    if (!["fact", "event", "secret", "visual"].includes(kind) || !text) {
       return { state, result: { ok: false, error: "Invalid memory." } };
     }
     const next = executeCommand(
       state,
-      { type: "memory", kind: kind as "fact" | "event" | "secret", text },
+      { type: "memory", kind: kind as "fact" | "event" | "secret" | "visual", text },
       "gm-ai",
     );
     return { state: next, result: { ok: true, memory: next.memories[0] } };

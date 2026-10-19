@@ -80,7 +80,7 @@ export const oracleTools: OracleTool[] = [
     inputSchema: {
       type: "object",
       properties: {
-        kind: { type: "string", enum: ["fact", "event", "secret"] },
+        kind: { type: "string", enum: ["fact", "event", "secret", "visual"] },
         text: { type: "string" }
       },
       required: ["kind", "text"],

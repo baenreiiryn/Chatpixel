@@ -1,10 +1,11 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { buildContextPacket, executeCommand, GameState, initialState, undoLatest } from "@/lib/game";
+import { buildContextPacket, executeCommand, GameState, initialState, Message, undoLatest } from "@/lib/game";
 import { useCloudSync } from "@/hooks/useCloudSync";
 import { useOracleBridge } from "@/hooks/useOracleBridge";
 import { buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
+import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestGmMessage } from "@/lib/scene";
 
 const STORAGE_KEY = "oraclerpg:campaign:v1";
 
@@ -47,6 +48,15 @@ function AvatarSigil() {
   );
 }
 
+function MessageText({ text }: { text: string }) {
+  const blocks = text.split(/\n{2,}/).map((block) => block.trim()).filter(Boolean);
+  return (
+    <div className="messageText">
+      {blocks.map((block, index) => <p key={index}>{block}</p>)}
+    </div>
+  );
+}
+
 export default function OracleApp() {
   const [state, setState] = useState<GameState>(initialState);
   const [view, setView] = useState<View>("session");
@@ -58,6 +68,8 @@ export default function OracleApp() {
   const [syncNote, setSyncNote] = useState("");
   const [gmBusy, setGmBusy] = useState(false);
   const [gmError, setGmError] = useState("");
+  const [imageMessageId, setImageMessageId] = useState<string | null>(null);
+  const [imageNote, setImageNote] = useState("");
 
   useEffect(() => {
     try {
@@ -75,6 +87,11 @@ export default function OracleApp() {
   const bridge = useOracleBridge();
 
   const contextPreview = useMemo(() => buildContextPacket(state), [state]);
+  const lastGmMessage = useMemo(() => latestGmMessage(state.messages), [state.messages]);
+  const imageMessage = useMemo(
+    () => state.messages.find((message) => message.id === imageMessageId),
+    [imageMessageId, state.messages],
+  );
 
   const cloudLabel = ({
     local: "somente local",
@@ -111,6 +128,36 @@ export default function OracleApp() {
     if (!cloud.pairCode) return;
     await navigator.clipboard.writeText(cloud.pairCode);
     setSyncNote("Código copiado.");
+  }
+
+  async function prepareSceneImage(message: Message) {
+    const snapshot = message.sceneSnapshot || buildSceneSnapshot(state, message.text);
+    const prompt = buildSceneImagePrompt(snapshot);
+    setState((current) => ({
+      ...current,
+      messages: current.messages.map((entry) =>
+        entry.id === message.id
+          ? {
+              ...entry,
+              sceneSnapshot: snapshot,
+              imageDraft: {
+                prompt,
+                status: "unavailable",
+                provider: "chatgpt-plan-sharing",
+                createdAt: new Date().toISOString(),
+              },
+            }
+          : entry,
+      ),
+    }));
+    setImageMessageId(message.id);
+    setImageNote("");
+  }
+
+  async function copySceneImagePrompt() {
+    if (!imageMessage?.imageDraft?.prompt) return;
+    await navigator.clipboard.writeText(imageMessage.imageDraft.prompt);
+    setImageNote("Prompt da cena copiado.");
   }
 
   function connectChatGPT() {
@@ -216,11 +263,19 @@ export default function OracleApp() {
         const received = lastOutputTypes.length ? lastOutputTypes.join(", ") : "nenhum item";
         narration = `O Mestre não retornou uma mensagem narrativa. Tipos recebidos: ${received}. O estado da campanha foi preservado.`;
       }
+      narration = formatNarrationText(narration);
+      const sceneSnapshot = buildSceneSnapshot(working, narration);
       working = {
         ...working,
         messages: [
           ...working.messages,
-          { id: crypto.randomUUID(), role: "gm", text: narration, createdAt: new Date().toISOString() },
+          {
+            id: crypto.randomUUID(),
+            role: "gm",
+            text: narration,
+            createdAt: new Date().toISOString(),
+            sceneSnapshot,
+          },
         ],
       };
       setState(working);
@@ -301,7 +356,15 @@ export default function OracleApp() {
                   {state.messages.map((message) => (
                     <article className={`message ${message.role}`} key={message.id}>
                       <div className="messageAvatar">{message.role === "gm" ? "◈" : "F"}</div>
-                      <div><small>{message.role === "gm" ? "ORACLE · MESTRE" : message.role === "player" ? state.character.name : "SISTEMA"}</small><p>{message.text}</p></div>
+                      <div className="messageBody">
+                        <small>{message.role === "gm" ? "ORACLE · MESTRE" : message.role === "player" ? state.character.name : "SISTEMA"}</small>
+                        <MessageText text={message.text} />
+                        {message.role === "gm" && lastGmMessage?.id === message.id && (
+                          <button className="sceneImageButton" onClick={() => prepareSceneImage(message)}>
+                            <span>✦</span> Gerar imagem da cena
+                          </button>
+                        )}
+                      </div>
                     </article>
                   ))}
                 </div>
@@ -380,7 +443,7 @@ export default function OracleApp() {
             <section className="widePanel panel">
               <div className="eyebrow">MEMÓRIA PERSISTENTE</div>
               <div className="memoryHeader"><div><h1>O Oracle lembra do mundo.</h1><p>Esses dados pertencem à campanha, não à janela de contexto do modelo.</p></div><span>{state.memories.length} registros</span></div>
-              <div className="memoryList">{state.memories.map(memory => <article key={memory.id}><b>{memory.kind === "secret" ? "◇" : memory.kind === "event" ? "✦" : "◉"}</b><div><small>{memory.kind.toUpperCase()}</small><p>{memory.text}</p></div></article>)}</div>
+              <div className="memoryList">{state.memories.map(memory => <article key={memory.id}><b>{memory.kind === "secret" ? "◇" : memory.kind === "event" ? "✦" : memory.kind === "visual" ? "◐" : "◉"}</b><div><small>{memory.kind.toUpperCase()}</small><p>{memory.text}</p></div></article>)}</div>
               <details className="contextPreview"><summary>Prévia do pacote de contexto enviado ao Mestre</summary><pre>{JSON.stringify(contextPreview, null, 2)}</pre></details>
             </section>
           )}
@@ -466,6 +529,38 @@ export default function OracleApp() {
             <div className="connectFlow"><span>OracleRPG</span><i>→</i><span>Bridge local</span><i>→</i><span>ChatGPT</span></div>
             {bridge.error && <p className="modalNote">{bridge.error}</p>}
             <button className="ghost" onClick={() => setShowConnect(false)}>Continuar em modo manual</button>
+          </section>
+        </div>
+      )}
+
+      {imageMessage && imageMessage.imageDraft && (
+        <div className="modalBackdrop" onClick={() => setImageMessageId(null)}>
+          <section className="connectModal imageModal" onClick={(event) => event.stopPropagation()}>
+            <div className="imageModalIcon">✦</div>
+            <small>IMAGEM DA CENA</small>
+            <h2>Contexto visual preparado</h2>
+            <p>
+              O Oracle reuniu a cena, os personagens presentes e as memórias visuais conhecidas.
+              A geração de imagem ainda não pode usar o limite do seu plano ChatGPT porque o fluxo
+              atual de plan sharing não oferece a tool de image generation.
+            </p>
+            {imageMessage.sceneSnapshot && (
+              <div className="sceneContextCard">
+                <strong>{imageMessage.sceneSnapshot.scene}</strong>
+                <div className="scenePeople">
+                  {imageMessage.sceneSnapshot.participants.map((participant) => (
+                    <span key={participant.id}>{participant.name}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            <details className="imagePromptPreview">
+              <summary>Ver prompt gerado</summary>
+              <pre>{imageMessage.imageDraft.prompt}</pre>
+            </details>
+            <button className="primary enabled" onClick={copySceneImagePrompt}>Copiar prompt da imagem</button>
+            {imageNote && <p className="modalNote">{imageNote}</p>}
+            <button className="ghost" onClick={() => setImageMessageId(null)}>Fechar</button>
           </section>
         </div>
       )}

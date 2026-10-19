@@ -26,6 +26,10 @@ OracleRPG é uma interface persistente para campanhas em que o ChatGPT atua como
 - Tokens ChatGPT ficam somente no dispositivo do usuário.
 - Catálogo de modelos da própria conta ChatGPT.
 - Loop real de Mestre IA com function tools → Command Bus → narração.
+- Narração formatada em blocos, separando fala e descrição.
+- Snapshot de cena salvo junto das mensagens do Mestre.
+- Memórias visuais de personagens (`kind: visual`) usadas na composição de prompts de imagem.
+- Botão **Gerar imagem da cena** abaixo da última mensagem do Mestre.
 
 ## Rodar
 
@@ -55,6 +59,16 @@ O browser também não recebe access/refresh tokens. O Oracle Bridge guarda as c
 em `~/.oraclerpg/bridge.json` e faz a inferência localmente em nome do usuário.
 
 O Vercel/Neon continuam responsáveis somente pela interface e pelos dados persistentes da campanha.
+
+## Imagens de cena
+
+O OracleRPG já monta um prompt visual persistente a partir da mensagem do Mestre, local,
+personagens presentes, objetos mencionados e memórias visuais conhecidas.
+
+No preview atual de ChatGPT plan sharing, a OpenAI não oferece a tool hospedada de image
+generation nesse fluxo. Por isso o botão prepara e salva o prompt, mas não envia uma chamada
+de imagem fingindo compatibilidade. A UI foi feita atrás de uma camada separada para receber
+um provider de imagem local/terceiro depois, sem alterar o modelo de memória ou os snapshots.
 
 ## Próximas camadas
 

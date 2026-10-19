@@ -22,12 +22,38 @@ export type Npc = {
   relation: "friendly" | "neutral" | "hostile";
   location: string;
   secret?: string;
+  appearance?: string;
 };
 
 export type Memory = {
   id: string;
-  kind: "fact" | "event" | "secret";
+  kind: "fact" | "event" | "secret" | "visual";
   text: string;
+  createdAt: string;
+};
+
+export type SceneParticipant = {
+  id: string;
+  name: string;
+  role: string;
+  appearance?: string;
+  visualMemories: string[];
+};
+
+export type SceneSnapshot = {
+  scene: string;
+  location: string;
+  narration: string;
+  participants: SceneParticipant[];
+  visibleObjects: string[];
+  recentContext: string[];
+  createdAt: string;
+};
+
+export type SceneImageDraft = {
+  prompt: string;
+  status: "ready" | "unavailable";
+  provider?: string;
   createdAt: string;
 };
 
@@ -36,6 +62,8 @@ export type Message = {
   role: "gm" | "player" | "system";
   text: string;
   createdAt: string;
+  sceneSnapshot?: SceneSnapshot;
+  imageDraft?: SceneImageDraft;
 };
 
 export type EventRecord = {
@@ -67,6 +95,7 @@ export type GameState = {
     armor: number;
     maxArmor: number;
     conditions: string[];
+    appearance?: string;
   };
   inventory: InventoryItem[];
   quests: Quest[];
