@@ -246,6 +246,8 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
   const [characterName, setCharacterName] = useState("");
   const [pronouns, setPronouns] = useState("");
   const [history, setHistory] = useState("");
+  const [historyBusy, setHistoryBusy] = useState(false);
+  const [historyError, setHistoryError] = useState("");
   const [characterImage, setCharacterImage] = useState("");
   const [appearance, setAppearance] = useState("");
   const [characterImageBusy, setCharacterImageBusy] = useState(false);
@@ -397,6 +399,69 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     }
   }
 
+  async function generateHistory() {
+    if (!ai.connected || !ai.model) {
+      setHistoryError("Conecte o ChatGPT para gerar a história do personagem.");
+      return;
+    }
+    if (!selectedClass || !selectedSubclass || !selectedAncestryA || !selectedCommunity) {
+      setHistoryError("Escolha classe, subclasse, ancestralidade e comunidade antes de gerar a história.");
+      return;
+    }
+
+    setHistoryBusy(true);
+    setHistoryError("");
+    try {
+      const tone = toneId === "custom"
+        ? customTone.trim()
+        : TONE_OPTIONS.find((toneOption) => toneOption.id === toneId)?.name || "Fantasia heroica";
+      const ancestry = mixedAncestry && selectedAncestryB
+        ? `${selectedAncestryA.name} + ${selectedAncestryB.name}`
+        : selectedAncestryA.name;
+      const response = await ai.respond({
+        model: ai.model,
+        instructions: [
+          "Você ajuda a criar a história de um personagem de Daggerheart.",
+          "Escreva em português brasileiro, em terceira pessoa, com 3 a 5 parágrafos curtos.",
+          "Use as escolhas mecânicas fornecidas como inspiração narrativa, sem conceder vantagens, poderes ou itens que não foram escolhidos.",
+          "Inclua origem, uma motivação clara para se aventurar, algo importante que o personagem deixou para trás e pelo menos um gancho que o Mestre possa explorar.",
+          "Não estabeleça vínculos prévios com os companheiros da campanha, porque isso será decidido separadamente pelo jogador.",
+          "Não use títulos, listas ou markdown. Retorne somente a história pronta para ser editada pelo jogador.",
+        ].join("\n"),
+        input: [{
+          role: "user",
+          content: [
+            `Nome: ${characterName.trim() || "ainda não definido"}.`,
+            `Pronomes: ${pronouns.trim() || "não definidos"}.`,
+            `Tom da campanha: ${tone}.`,
+            `Classe: ${selectedClass.name}.`,
+            `Descrição da classe: ${selectedClass.description || "não disponível"}.`,
+            `Subclasse: ${selectedSubclass.name}.`,
+            `Descrição da subclasse: ${selectedSubclass.description || "não disponível"}.`,
+            `Ancestralidade: ${ancestry}.`,
+            `Descrição da ancestralidade principal: ${selectedAncestryA.description || "não disponível"}.`,
+            ...(mixedAncestry && selectedAncestryB
+              ? [`Descrição da segunda ancestralidade: ${selectedAncestryB.description || "não disponível"}.`]
+              : []),
+            `Comunidade: ${selectedCommunity.name}.`,
+            `Descrição da comunidade: ${selectedCommunity.description || "não disponível"}.`,
+            `Características de classe: ${selectedClassFeatures.map((feature) => feature.name).join(", ") || "nenhuma listada"}.`,
+            `Características de subclasse: ${selectedSubclassFeatures.map((feature) => feature.name).join(", ") || "nenhuma listada"}.`,
+            `Experiências escolhidas: ${experiences.filter((entry) => entry.trim()).join(" | ") || "não informadas"}.`,
+            "Crie uma história coerente com essas escolhas e apropriada para começar uma campanha.",
+          ].join("\n"),
+        }],
+      });
+      const narration = extractNarration(response).trim();
+      if (!narration) throw new Error("O ChatGPT não retornou uma história.");
+      setHistory(narration);
+    } catch (error) {
+      setHistoryError(error instanceof Error ? error.message : "Não foi possível gerar a história.");
+    } finally {
+      setHistoryBusy(false);
+    }
+  }
+
   async function uploadAnimalImage(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     event.target.value = "";
@@ -486,7 +551,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
       return manualEquipmentIds.size > 0 || Boolean(customEquipment.trim());
     }
     if (step === 8) {
-      return Boolean(characterName.trim() && history.trim()) && !characterImageBusy && !animalImageBusy;
+      return Boolean(characterName.trim() && history.trim()) && !historyBusy && !characterImageBusy && !animalImageBusy;
     }
     return false;
   }, [
@@ -503,6 +568,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     equipmentMode,
     experiences,
     history,
+    historyBusy,
     manualEquipmentIds,
     mixedAncestry,
     animalImageBusy,
@@ -892,7 +958,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
               <div className="campaignWizardIntro"><small>PASSO 9</small><h1>Dê vida ao personagem.</h1><p>Conte quem ele é, adicione uma referência visual e defina os vínculos que já existem quando a campanha começar.</p></div>
               {!ai.connected && (
                 <div className="campaignWizardAiNotice">
-                  <div><small>CHATGPT DESCONECTADO</small><strong>Conecte para analisar imagens e criar os companheiros do grupo.</strong></div>
+                  <div><small>CHATGPT DESCONECTADO</small><strong>Conecte para gerar a história, analisar imagens e criar os companheiros do grupo.</strong></div>
                   <button onClick={() => void ai.onConnect()}>Conectar ChatGPT</button>
                 </div>
               )}
@@ -900,7 +966,28 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                 <label className="campaignWizardField"><span>Nome do personagem</span><input value={characterName} onChange={(event) => setCharacterName(event.target.value)} placeholder="Nome" /></label>
                 <label className="campaignWizardField"><span>Pronomes <em>opcional</em></span><input value={pronouns} onChange={(event) => setPronouns(event.target.value)} placeholder="Ex.: ela/dela" /></label>
               </div>
-              <label className="campaignWizardField"><span>História do personagem</span><textarea value={history} onChange={(event) => setHistory(event.target.value)} placeholder="De onde veio, o que procura, o que deixou para trás e por que está com este grupo?" /></label>
+              <div className="campaignWizardGeneratedField">
+                <div className="campaignWizardGeneratedFieldHeader">
+                  <div>
+                    <small>HISTÓRIA DO PERSONAGEM</small>
+                    <span>O ChatGPT usa ancestralidade, classe, subclasse, comunidade e as demais escolhas do personagem como base.</span>
+                  </div>
+                  {ai.connected
+                    ? <button className="campaignWizardAiButton" onClick={() => void generateHistory()} disabled={historyBusy}>{historyBusy ? "Gerando…" : history ? "↻ Gerar novamente" : "✦ Gerar com ChatGPT"}</button>
+                    : <button className="campaignWizardAiButton" onClick={() => void ai.onConnect()}>Conectar ChatGPT</button>}
+                </div>
+                <textarea
+                  className="campaignWizardGeneratedTextarea history"
+                  value={history}
+                  onChange={(event) => {
+                    setHistory(event.target.value);
+                    if (historyError) setHistoryError("");
+                  }}
+                  placeholder="Escreva a história manualmente ou use o ChatGPT para gerar uma base."
+                />
+                <small className="campaignWizardEditableHint">A história continua totalmente editável depois de gerada. Você pode acrescentar, remover ou reescrever qualquer parte.</small>
+                {historyError && <p className="campaignWizardError">{historyError}</p>}
+              </div>
 
               <div className="campaignWizardImageBlock">
                 <div className="campaignWizardSectionTitle"><small>REFERÊNCIA VISUAL</small><strong>Imagem do personagem</strong></div>
@@ -911,12 +998,18 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                     <div className="campaignWizardUploadActions">
                       <label className="campaignWizardUploadButton">{characterImageBusy ? "Processando…" : characterImage ? "Trocar imagem" : "Escolher imagem"}<input type="file" accept="image/*" onChange={uploadCharacterImage} disabled={characterImageBusy} /></label>
                       {characterImage && (ai.connected
-                        ? <button className="campaignWizardAiButton" onClick={analyzeCharacterImage} disabled={characterImageBusy}>{characterImageBusy ? "Analisando…" : appearance ? "Analisar novamente" : "Analisar com ChatGPT"}</button>
+                        ? <button className="campaignWizardAiButton" onClick={analyzeCharacterImage} disabled={characterImageBusy}>{characterImageBusy ? "Analisando…" : appearance ? "↻ Regenerar descrição" : "✦ Gerar descrição"}</button>
                         : <button className="campaignWizardAiButton" onClick={() => void ai.onConnect()}>Conectar ChatGPT</button>)}
                     </div>
                   </div>
                 </div>
-                {appearance && <div className="campaignWizardAnalysis"><small>APARÊNCIA REGISTRADA</small><p>{appearance}</p></div>}
+                {appearance && (
+                  <div className="campaignWizardEditableAnalysis">
+                    <small>DESCRIÇÃO VISUAL · EDITÁVEL</small>
+                    <textarea value={appearance} onChange={(event) => setAppearance(event.target.value)} />
+                    <span>Edite livremente o texto gerado. “Regenerar descrição” substitui o conteúdo atual por uma nova análise da imagem.</span>
+                  </div>
+                )}
                 {characterImageError && <p className="campaignWizardError">{characterImageError}</p>}
               </div>
 
@@ -938,12 +1031,18 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                       <div className="campaignWizardUploadActions">
                         <label className="campaignWizardUploadButton">{animalImageBusy ? "Processando…" : animalImage ? "Trocar imagem" : "Escolher imagem"}<input type="file" accept="image/*" onChange={uploadAnimalImage} disabled={animalImageBusy} /></label>
                         {animalImage && (ai.connected
-                          ? <button className="campaignWizardAiButton" onClick={analyzeAnimalImage} disabled={animalImageBusy}>{animalImageBusy ? "Analisando…" : animalAppearance ? "Analisar novamente" : "Analisar com ChatGPT"}</button>
+                          ? <button className="campaignWizardAiButton" onClick={analyzeAnimalImage} disabled={animalImageBusy}>{animalImageBusy ? "Analisando…" : animalAppearance ? "↻ Regenerar descrição" : "✦ Gerar descrição"}</button>
                           : <button className="campaignWizardAiButton" onClick={() => void ai.onConnect()}>Conectar ChatGPT</button>)}
                       </div>
                     </div>
                   </div>
-                  {animalAppearance && <div className="campaignWizardAnalysis"><small>APARÊNCIA DO ANIMAL</small><p>{animalAppearance}</p></div>}
+                  {animalAppearance && (
+                    <div className="campaignWizardEditableAnalysis">
+                      <small>DESCRIÇÃO VISUAL DO ANIMAL · EDITÁVEL</small>
+                      <textarea value={animalAppearance} onChange={(event) => setAnimalAppearance(event.target.value)} />
+                      <span>Você pode corrigir ou complementar a descrição manualmente depois da análise.</span>
+                    </div>
+                  )}
                   {animalImageError && <p className="campaignWizardError">{animalImageError}</p>}
                 </div>
               )}
