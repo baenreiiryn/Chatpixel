@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T09:19:06.413Z",
+  "generatedAt": "2026-10-19T09:43:41.091Z",
   "sources": {
     "translation": "https://github.com/etiagoabreu/daggerheart-translation-pt-BR",
     "art": "https://github.com/mordachai/art-for-daggerheart",
@@ -4118,7 +4118,7 @@
       "category": "classes",
       "source": "expansion",
       "parent": null,
-      "description": "",
+      "description": "Ocultistas obtêm poder por meio de um pacto com uma entidade sobrenatural. Sua magia depende da relação que mantêm com esse patrono, pedindo favores, oferecendo tributos e recorrendo às esferas de influência da entidade para superar desafios. Esse poder pode ser extraordinário, mas sempre carrega o peso de uma dívida e de uma vontade externa.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -4156,14 +4156,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-chasing-death",
+      "id": "expansion-subclassFeature-chasing-death",
       "sourceId": "Chasing Death",
       "name": "Perseguindo a Morte",
       "originalName": "Chasing Death",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Ghost Slayer",
       "description": "Enquanto você tiver de 1 a 3 Pontos de Vida desmarcados, você pode usar seu Ritual Carmessim sem pagar o custo de Pontos de Vida. Se você tiver apenas 1 Ponto de Vida desmarcado, você rola d8s ao invés de d6s para o dano extra do seu Ritual Carmessim.",
       "mechanics": {
         "costs": [],
@@ -4179,14 +4179,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-shadowed-grit",
+      "id": "expansion-subclassFeature-shadowed-grit",
       "sourceId": "Shadowed Grit",
       "name": "Bravura Sombria",
       "originalName": "Shadowed Grit",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Ghost Slayer",
       "description": "Quando o GM ganhar Pontos de Medo oriundos de uma rolagem nos Dados de Dualidade, você pode marcar 1 Ponto de Fadiga para ganhar 1 Ponto de Esperança.",
       "mechanics": {
         "costs": [
@@ -4208,14 +4208,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-veilwalker",
+      "id": "expansion-subclassFeature-veilwalker",
       "sourceId": "Veilwalker",
       "name": "Caminhante do Véu",
       "originalName": "Veilwalker",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Ghost Slayer",
       "description": "Você pode se esgueirar brevemente para o reino entre os vivos e os mortos. Gaste 2 Pontos de Esperança para desaparecer e então reaparecer próximo a uma criatura ou a um cadáver em alcance Distante. Você tem vantagem na sua próxima rolagem de ataque que fizer nessa cena.",
       "mechanics": {
         "costs": [
@@ -4240,14 +4240,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-spectral-form",
+      "id": "expansion-subclassFeature-spectral-form",
       "sourceId": "Spectral Form",
       "name": "Forma Espectral",
       "originalName": "Spectral Form",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Ghost Slayer",
       "description": "Você tem mais uma opção de Movimento da Morte: a Forma Espectral. Quando você escolher essa opção, você recupera 1 Ponto de Vida, seu corpo se torna espectral, você tem resistência a danos físicos e pode atravesasr objetos. Essa forma termina se você recuperar mais Pontos de Vida. O efeito também passa se você marcar seu último Ponto de Vida, que forçará você a escolher um movimento de morte diferente. Você é transferido para o espaço aberto mais próximo se estiver dentro de um objeto sólido quando o efeito passar.",
       "mechanics": {
         "costs": [],
@@ -4265,14 +4265,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-mutagens",
+      "id": "expansion-subclassFeature-mutagens",
       "sourceId": "Mutagens",
       "name": "Mutagênicos",
       "originalName": "Mutagens",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Mutant",
       "description": "Você aplica toxinas mutagênicas criadas para aprimorar suas habilidades. Quando termina um descanso, você pode beber uma dessas toxinas para ganhar seus efeitos, que duram até o final do seu próximo descanso. Esses efeitos incluem um bônus de +1 em um tributo de sua escolha, uma penalidade de -1 em um atributo diferente de sua escolha, e um dos benefícios abaixo: Celeridade: Se você ficar Restringido ou Vulnerável, você pode marcar 1 Ponto de Fadiga para finalizar a condição de si mesmo. Durável: Sua Armadura Base aumenta em 2. Sentidos de Caçador: Você tem vantagem em qualquer teste que fizer para rastrear uma criatura, você pode enxergar na escuridão completa.",
       "mechanics": {
         "costs": [
@@ -4296,14 +4296,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-improved-mutagens",
+      "id": "expansion-subclassFeature-improved-mutagens",
       "sourceId": "Improved Mutagens",
       "name": "Mutagênicos Aprimorados",
       "originalName": "Improved Mutagens",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Mutant",
       "description": "Quando escolher um benefício de mutagênico, você também tem as opções a seguir: Nervos de Aço: Sempre que você tiver que marcar 1 Ponto de Fadiga, você pode gastar 2 Pontos de Fadiga no lugar. Rapidez: Sua Evasão aumenta em 1. Pele de Ferro: Seu limiar de Dano Grave ganha bônus igual à sua Proficiência.",
       "mechanics": {
         "costs": [
@@ -4330,14 +4330,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-volatile-toxins",
+      "id": "expansion-subclassFeature-volatile-toxins",
       "sourceId": "Volatile Toxins",
       "name": "Toxinas Voláteis",
       "originalName": "Volatile Toxins",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Mutant",
       "description": "Você pode escolher dois benefícios de mutagênico ao invés de um. Se fizer, marque 1 Ponto de Vida que não pode ser recuperado até você finalizar seu próximo descanso.",
       "mechanics": {
         "costs": [
@@ -4361,14 +4361,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-mastered-mutagens",
+      "id": "expansion-subclassFeature-mastered-mutagens",
       "sourceId": "Mastered Mutagens",
       "name": "Mestre dos Mutagênicos",
       "originalName": "Mastered Mutagens",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Mutant",
       "description": "O bônus e penalidade dos Mutagênicos muda para +2 e -2 respectivamente. Quando você escolher um benefício de mutagênico, você também tem as opções a seguir: Éter Sangúineo: Dentro da sua linha de visão, você pode ver criaturas e objetos invisíveis, e ilusões visuais se tornam transparentes para você. Se a criatura ou objeto na sua linha de visão foi transformada por mágica, você pode ver sua verdadeira forma. Fúria: Quando fizer uma rolagem de ataque, você pode marcar 1 Ponto de Fadiga para ganhar bônus na rolagem igual à sua Proficiência. Carne de Aço: O limiar do seu Dano Maior ganha bônus igual à sua Proficiência.",
       "mechanics": {
         "costs": [
@@ -4390,14 +4390,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-werewolf",
+      "id": "expansion-subclassFeature-werewolf",
       "sourceId": "Werewolf",
       "name": "Lobisomem",
       "originalName": "Werewolf",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Lycan",
       "description": "Você ganha a carta de Transformação “Lobisomem”. Suas rolagens para perceber via audição e odor têm vantagem.",
       "mechanics": {
         "costs": [],
@@ -4413,14 +4413,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-control-the-beast",
+      "id": "expansion-subclassFeature-control-the-beast",
       "sourceId": "Control the Beast",
       "name": "Controlar a Fera",
       "originalName": "Control the Beast",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Lycan",
       "description": "Enquanto estiver na Forma Lupina, você pode aplicar o dado de bônus dessa forma aos seus testes de Agilidade e Força.",
       "mechanics": {
         "costs": [],
@@ -4436,14 +4436,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-feral-hide",
+      "id": "expansion-subclassFeature-feral-hide",
       "sourceId": "Feral Hide",
       "name": "Couro Selvagem",
       "originalName": "Feral Hide",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Lycan",
       "description": "Enquanto estiver na Forma Lupina, você ganha bônus nos seus Limiares de Dano igual ao seu Patamar.",
       "mechanics": {
         "costs": [],
@@ -4459,14 +4459,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-lycan-regeneration",
+      "id": "expansion-subclassFeature-lycan-regeneration",
       "sourceId": "Lycan Regeneration",
       "name": "Regeneração Licantropa",
       "originalName": "Lycan Regeneration",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Lycan",
       "description": "Enquanto estiver na Forma Lupina com todos seus Pontos de Vida marcados, você pode marcar 1 Ponto de Fadiga para recuperar 1 Ponto de Vida. Você pode fazer isso inconsciente.",
       "mechanics": {
         "costs": [
@@ -4488,14 +4488,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-master-the-beast",
+      "id": "expansion-subclassFeature-master-the-beast",
       "sourceId": "Master the Beast",
       "name": "Domine a Fera",
       "originalName": "Master the Beast",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Order of the Lycan",
       "description": "Quando estiver na Forma Lupina e for marcar seu último Ponto de Fadiga, em vez disso você pode pode colocar uma das Cartas de Domínio da sua Mão na sua Reserva; você só poderá recuperar essa Carta de Domínio após finalizar um descanso longo. Quando entrar em Frenesi após marcar seu último Ponto de Fadiga, enquanto está em Forma Lupina, você ganha 2 Pontos de Esperança.",
       "mechanics": {
         "costs": [],
@@ -4511,14 +4511,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-patron-s-mantle",
+      "id": "expansion-subclassFeature-patron-s-mantle",
       "sourceId": "Patron's Mantle",
       "name": "Manto do Patrono",
       "originalName": "Patron's Mantle",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Endless",
       "description": "Marque 1 Ponto de Fadiga para assumir um aspecto horrendo de seu patrono que dura até você sofrer um Dano Grave ou que a cena acabe. Enquanto estiver transformado: Você pode gastar 2 Pontos de Favor ao invés de marcar um Ponto de Armadura. Você ganha bônus igual ao seu Patamar atual em testes para intimidar um alvo.",
       "mechanics": {
         "costs": [
@@ -4545,14 +4545,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-deadly-devotion",
+      "id": "expansion-subclassFeature-deadly-devotion",
       "sourceId": "Deadly Devotion",
       "name": "Devoção Mórbida",
       "originalName": "Deadly Devotion",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Endless",
       "description": "Após um ataque bem-sucedido, você pode gastar 1 Ponto de Favor para ganhar um bônus de +1 à sua Evasão que dura até você sofrer um ataque bem-sucedido ou até o seu próximo descanso.",
       "mechanics": {
         "costs": [],
@@ -4570,14 +4570,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-draining-invocation",
+      "id": "expansion-subclassFeature-draining-invocation",
       "sourceId": "Draining Invocation",
       "name": "Invocação Sugadora",
       "originalName": "Draining Invocation",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Endless",
       "description": "Quando você ou um aliado forem alvos do ataque de um inimigo em alcance Muito Próximo, você pode gastar 1 Ponto de Favor para fazê-lo rolar um d12 em vez de um d20 para atacá-lo. Além disso, O adversário deve marcar 1 Ponto de Fadiga, e você recupera 1 Ponto de Fadiga.",
       "mechanics": {
         "costs": [
@@ -4601,14 +4601,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-dark-aegis",
+      "id": "expansion-subclassFeature-dark-aegis",
       "sourceId": "Dark Aegis",
       "name": "Égide Sombria",
       "originalName": "Dark Aegis",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Endless",
       "description": "Uma vez por descanso longo, você pode gastar 1 Ponto de Favor ao invés de marcar qualquer quantidade de Pontos de Vida.",
       "mechanics": {
         "costs": [],
@@ -4626,14 +4626,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-draining-bane",
+      "id": "expansion-subclassFeature-draining-bane",
       "sourceId": "Draining Bane",
       "name": "Maldição Drenadora",
       "originalName": "Draining Bane",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Endless",
       "description": "Quando um adversário ataca você ou um aliado em alcance Muito Próximo, você pode gastar 2 Pontos de Favor para deixá-lo temporariamente Drenado. Quando você fizer isso, o adversário Drenado deve marcar 1 Ponto de Fadiga e você recupera 1 Ponto de Fadiga. A criatura Drenada usa d12 em vez de d20 para atacar.",
       "mechanics": {
         "costs": [
@@ -4657,14 +4657,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-favored-weapon",
+      "id": "expansion-subclassFeature-favored-weapon",
       "sourceId": "Favored Weapon",
       "name": "Arma Favorita",
       "originalName": "Favored Weapon",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Wrathful",
       "description": "Marque 1 Ponto de Fadiga para Imbuir sua arma com a fúria de seu patrono até que você cause Dano Grave. EM um ataque bem-sucedido com a arma Imbuída, você pode gastar qualquer quantidade de Pontos de Favor ára ganhar +1d6 de bônus no dano por cada Ponto de Favor gasto.",
       "mechanics": {
         "costs": [
@@ -4686,14 +4686,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-herald-of-death",
+      "id": "expansion-subclassFeature-herald-of-death",
       "sourceId": "Herald of Death",
       "name": "Arauto da Morte",
       "originalName": "Herald of Death",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Wrathful",
       "description": "Em um ataque mal-sucedido, você pode gastar 1 Ponto de Favor para rolar o ataque novamente. Se fracassar de novo, você fica com o segundo resultado e marca 1 Ponto de Fadiga.",
       "mechanics": {
         "costs": [],
@@ -4709,14 +4709,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-menacing-reach",
+      "id": "expansion-subclassFeature-menacing-reach",
       "sourceId": "Menacing Reach",
       "name": "Alcance Ameaçador",
       "originalName": "Menacing Reach",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Wrathful",
       "description": "Quando você Imbuir sua arma com a fúria de seu patrono, você pode marcar 1 Ponto de Fadiga adicional para aumentar o alcance em um passo (Corpo-a-Corpo para Muito Próximo, Muito Próximo para Próximo, etc.).",
       "mechanics": {
         "costs": [
@@ -4741,14 +4741,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-diminish-my-foes",
+      "id": "expansion-subclassFeature-diminish-my-foes",
       "sourceId": "Diminish My Foes",
       "name": "Desprezo Pelo Inimigo",
       "originalName": "Diminish My Foes",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Wrathful",
       "description": "Quando fizer um ataque bemsucedido com Esperança, você pode gastar 1 Ponto de Esperança para fazer o alvo marcar 1 Ponto de Fadiga.",
       "mechanics": {
         "costs": [
@@ -4775,14 +4775,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-fearsome-attack",
+      "id": "expansion-subclassFeature-fearsome-attack",
       "sourceId": "Fearsome Attack",
       "name": "Ataque Temível",
       "originalName": "Fearsome Attack",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Wrathful",
       "description": "Você sempre pode gastar 1 Ponto de Favor para rolar novamente qualquer quantidade de seus dados de dano. Você pode gastar seus Pontos de Favor para rolar novamente os mesmos dados quantas vezes quiser.",
       "mechanics": {
         "costs": [],
@@ -4798,14 +4798,14 @@
       "art": null
     },
     {
-      "id": "expansion-classFeature-divine-ire",
+      "id": "expansion-subclassFeature-divine-ire",
       "sourceId": "Divine Ire",
       "name": "Ira Divina",
       "originalName": "Divine Ire",
-      "type": "classFeature",
-      "category": "classes",
+      "type": "subclassFeature",
+      "category": "subclasses",
       "source": "expansion",
-      "parent": null,
+      "parent": "Pact of the Wrathful",
       "description": "Uma vez por descanso, quando você sofrer dano, você pode gastar qualquer quantidade de Pontos de Favor para afetar essa mesma quantidade de adversários em alcance Muito Próximo. Cada alvo afetado deve marcar 1 Ponto de Vida.",
       "mechanics": {
         "costs": [
@@ -4838,10 +4838,16 @@
       "type": "classFeature",
       "category": "classes",
       "source": "expansion",
-      "parent": null,
+      "parent": "Blood Hunter",
       "description": "Gaste 3 de Esperança para escolher como alvo uma criatura a longa distância ou que esteja em uma visão da sua Psicometria Sombria. Até terminar um descanso, sofrer dano grave ou usar esta habilidade novamente, você tem vantagem em todas as rolagens de ação contra o alvo.",
       "mechanics": {
-        "costs": [],
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 3,
+            "label": "3 Esperança"
+          }
+        ],
         "damage": [],
         "tests": [],
         "difficulties": [],
@@ -4861,7 +4867,7 @@
       "type": "classFeature",
       "category": "classes",
       "source": "expansion",
-      "parent": null,
+      "parent": "Blood Hunter",
       "description": "Quando estiver inspecionando uma criatura, um local ou um objeto em alcance Muito Próximo, faça um Teste de Conjuração (12). Em um sucesso, marque 1 Ponto de Fadiga para visualizar o ato de violência mais recente envolvendo o alvo, e até o final do descanso, você tem vantagem em qualquer teste para recordar informações sobre coisas na visão.",
       "mechanics": {
         "costs": [
@@ -4896,7 +4902,7 @@
       "type": "classFeature",
       "category": "classes",
       "source": "expansion",
-      "parent": null,
+      "parent": "Blood Hunter",
       "description": "Você pode enfeitiçar seus ataques com poder sedento de sangue ao custo de sua vitalidade. Marque 1 Ponto de Vida para enfeitiçar uma de suas armas ativas. Até o fim do seu próximo descanso, sua arma causa dano físico ou mágico (escolhido quando você usar essa habilidade) e 1d6 de dano extra quando você acertar ataques com ela. Esse dano extra aumenta para 2d6 no nível 5 e 3d6 no nível 8.",
       "mechanics": {
         "costs": [
@@ -4917,6 +4923,347 @@
           "Próximo"
         ],
         "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null
+    },
+    {
+      "id": "expansion-classFeature-patron-s-boon",
+      "sourceId": "Patron's Boon",
+      "name": "Bênção do Patrono",
+      "originalName": "Patron's Boon",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "expansion",
+      "parent": "Warlock",
+      "description": "Gaste 3 de Esperança para clamar por ajuda ao seu patrono, ganhando 1d4 de Favor.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 3,
+            "label": "3 Esperança"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null
+    },
+    {
+      "id": "expansion-classFeature-warlock-patron",
+      "sourceId": "Warlock Patron",
+      "name": "Patrono Oculto",
+      "originalName": "Warlock Patron",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "expansion",
+      "parent": "Warlock",
+      "description": "Você comprometeu sua vida a um patrono (deus, demônio, entidade feérica ou qualquer outra entidade sobrenatural) em troca de poder. Escolha um nome para o seu patrono. Então, escolha suas esferas de influência, a critério do GM (Natureza & Trapaça, Amor & Guerra, Conhecimento & Sombras, etc). Anote isso também na sua ficha e dê a cada esfera um bônus de +2. Sempre que subir de Patamar, essas esferas de influência ganham um bônus permanente de +1. Antes de fazer um teste que tenha relação com uma das esferas de influência do seu patrono, você pode gastar um Favor para interceder por ele e adicionar o valor do bônus à rolagem.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null
+    },
+    {
+      "id": "expansion-classFeature-favor",
+      "sourceId": "Favor",
+      "name": "Favor",
+      "originalName": "Favor",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "expansion",
+      "parent": "Warlock",
+      "description": "Você começa com 3 Pontos de Favor e tem um máximo de 6 Espaços de Favor. Durante um descanso, você pode gastar uma ação de repouso para pagar tributo ao seu patrono. Quando fizer, você recupera Favor igual à sua Presença. Se você escolher renunciar esse tributo, o GM ganha 1 Ponto de Medo.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": true
+      },
+      "art": null
+    },
+    {
+      "id": "srd2-classFeature-deadly-determination",
+      "sourceId": "Deadly Determination",
+      "name": "Determinação Mortal",
+      "originalName": "Deadly Determination",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "srd2",
+      "parent": "Assassin",
+      "description": "Gaste 3 Pontos de Esperança para limpar 2 Pontos de Fadiga.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 3,
+            "label": "3 Esperança"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null
+    },
+    {
+      "id": "srd2-classFeature-marked-for-death",
+      "sourceId": "Marked for Death",
+      "name": "Marcado para Morrer",
+      "originalName": "Marked for Death",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "srd2",
+      "parent": "Assassin",
+      "description": "Ao acertar um ataque com arma, você pode marcar 1 Ponto de Fadiga para deixar o alvo Marcado para Morrer. Quando causar dano a esse alvo, some à rolagem de dano uma quantidade de d4 igual ao seu Patamar. Você só pode manter um adversário Marcado para Morrer por vez. A marca termina quando você descansa, quando o alvo é derrotado ou quando o Mestre gasta uma quantidade de Pontos de Medo igual ao seu Patamar para removê-la.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": true
+      },
+      "art": null
+    },
+    {
+      "id": "srd2-classFeature-get-in-get-out",
+      "sourceId": "Get In & Get Out",
+      "name": "Entrar e Sair",
+      "originalName": "Get In & Get Out",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "srd2",
+      "parent": "Assassin",
+      "description": "Gaste 1 Ponto de Esperança para perguntar ao Mestre por uma maneira rápida ou discreta de entrar ou sair de um lugar que você possa ver. O próximo teste que fizer agindo com base nessa informação tem vantagem.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Próximo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null
+    },
+    {
+      "id": "srd2-classFeature-square-up",
+      "sourceId": "Square Up",
+      "name": "Partir pra Cima",
+      "originalName": "Square Up",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "srd2",
+      "parent": "Brawler",
+      "description": "Gaste 3 Pontos de Esperança para intimidar um alvo em alcance Próximo, deixando-o temporariamente Vulnerável.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 3,
+            "label": "3 Esperança"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Próximo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null
+    },
+    {
+      "id": "srd2-classFeature-i-am-the-weapon",
+      "sourceId": "I Am the Weapon",
+      "name": "Eu Sou a Arma",
+      "originalName": "I Am the Weapon",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "srd2",
+      "parent": "Brawler",
+      "description": "Seus ataques desarmados são tão perigosos quanto qualquer lâmina. Enquanto não tiver outra arma ativa, você possui uma arma principal chamada Golpe de Pugilista. Escolha um atributo para usá-la; ela tem alcance Corpo-a-Corpo e causa d8+d6 de dano físico usando sua Proficiência, com ambos os dados escalando pela Proficiência. Enquanto essa arma estiver ativa, sua Evasão recebe +1.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d8+d6",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null
+    },
+    {
+      "id": "srd2-classFeature-combo-strike",
+      "sourceId": "Combo Strike",
+      "name": "Golpe Combinado",
+      "originalName": "Combo Strike",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "srd2",
+      "parent": "Brawler",
+      "description": "Depois de rolar o dano de um ataque corpo a corpo bem-sucedido, você pode marcar 1 Ponto de Fadiga para iniciar um combo. Role seu Dado de Combo e anote o resultado, continuando a rolá-lo até que o resultado mais recente seja menor que o anterior. Cause dano adicional igual à soma de todos os resultados do Dado de Combo. Esse dado começa como d4 e pode aumentar em um passo uma vez por Patamar como opção de avanço.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null
+    },
+    {
+      "id": "srd2-classFeature-witch-s-charm",
+      "sourceId": "Witch's Charm",
+      "name": "Encanto do Bruxo",
+      "originalName": "Witch's Charm",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "srd2",
+      "parent": "Witch",
+      "description": "Quando você ou um aliado em alcance Distante falhar em um teste de ação, gaste 3 Pontos de Esperança para transformar o resultado em um sucesso com Medo.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 3,
+            "label": "3 Esperança"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Distante"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": true
+      },
+      "art": null
+    },
+    {
+      "id": "srd2-classFeature-hex",
+      "sourceId": "Hex",
+      "name": "Maldição",
+      "originalName": "Hex",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "srd2",
+      "parent": "Witch",
+      "description": "Marque 1 Ponto de Fadiga para amaldiçoar temporariamente um alvo em alcance Distante. Enquanto estiver Amaldiçoado, o alvo sofre uma penalidade nas rolagens de dano e na Dificuldade igual ao seu Patamar. Você pode manter uma quantidade de criaturas Amaldiçoadas igual ao seu atributo de conjuração.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Distante"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null
+    },
+    {
+      "id": "srd2-classFeature-commune",
+      "sourceId": "Commune",
+      "name": "Comunhão",
+      "originalName": "Commune",
+      "type": "classFeature",
+      "category": "classes",
+      "source": "srd2",
+      "parent": "Witch",
+      "description": "Uma vez por descanso longo, durante um momento de calma, você pode comungar com um ancestral, divindade, espírito ou entidade de outro mundo. Faça uma pergunta e role uma quantidade de d6 igual ao seu atributo de conjuração. Escolha um resultado: com 1–3, você recebe uma sensação relevante; com 4–5, ouve sons ou vê uma visão; com 6, vivencia psiquicamente uma cena relacionada à resposta.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [
+          "Uma vez por descanso longo"
+        ],
         "reaction": false,
         "hope": false,
         "fear": false
@@ -5739,7 +6086,13 @@
       "parent": null,
       "description": "Toque uma criatura e gaste 3 de Esperança. Ela limpa 1d4 Pontos de Vida.",
       "mechanics": {
-        "costs": [],
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 3,
+            "label": "3 Esperança"
+          }
+        ],
         "damage": [],
         "tests": [],
         "difficulties": [],
@@ -7364,8 +7717,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Assassin",
+      "description": "Execute seus alvos com precisão letal e golpes decisivos.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -7387,8 +7740,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Assassin",
+      "description": "Debilite seus alvos usando venenos e aflições.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -7410,14 +7763,16 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Blood Hunter",
+      "description": "Cace os mortos e caminhe perigosamente próximo ao véu entre a vida e a morte.",
       "mechanics": {
         "costs": [],
         "damage": [],
         "tests": [],
         "difficulties": [],
-        "ranges": [],
+        "ranges": [
+          "Próximo"
+        ],
         "frequency": [],
         "reaction": false,
         "hope": false,
@@ -7433,8 +7788,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Blood Hunter",
+      "description": "Assuma uma forma lupina e transforme sua ferocidade em poder.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -7456,8 +7811,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Blood Hunter",
+      "description": "Altere seu corpo com mutagênicos para adaptar suas capacidades à situação.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -7479,8 +7834,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Brawler",
+      "description": "Esmague seus oponentes com força e resistência implacáveis.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -7502,8 +7857,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Brawler",
+      "description": "Use técnicas e posturas marciais variadas para dominar o combate desarmado.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -7525,8 +7880,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Warlock",
+      "description": "Resista aos inimigos e evite a morte com a proteção de seu patrono.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -7548,8 +7903,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Warlock",
+      "description": "Canalize a fúria de seu patrono para destruir aqueles que se opõem a você.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -7571,8 +7926,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Witch",
+      "description": "Use sua arte e seus rituais para fortalecer a si mesmo e seus aliados.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -7594,8 +7949,8 @@
       "type": "subclass",
       "category": "subclasses",
       "source": "expansion",
-      "parent": null,
-      "description": "",
+      "parent": "Witch",
+      "description": "Canalize poder celestial para ampliar e transformar sua magia.",
       "mechanics": {
         "costs": [],
         "damage": [],
@@ -9331,7 +9686,13 @@
       "parent": null,
       "description": "Gaste qualquer quantidade de Esperança para conjurar um número equivalente de montarias (como cavalos, camelos ou elefantes) que você e seus aliados podem usar até seu próximo descanso longo ou até que as montarias sofram dano. As montarias dobram sua velocidade de viagem por terra e, quando em perigo, permitem que você se mova para um ponto Distante sem precisar de teste. Criaturas sobre as montarias sofrem uma penalidade de –2 em testes de ataque e ganham +2 de bônus nas rolagens de dano.",
       "mechanics": {
-        "costs": [],
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": null,
+            "label": "qualquer quantidade Esperança"
+          }
+        ],
         "damage": [],
         "tests": [],
         "difficulties": [],
@@ -9387,6 +9748,11 @@
       "description": "Faça um teste de conjuração (13). Em um sucesso, gaste qualquer quantidade de Esperança para criar um número equivalente de espíritos da floresta. Todos surgem em pontos à sua escolha Distante e fornecem os seguintes benefícios:\n • Seus aliados recebem um bônus de +3 em testes de ataque contra adversários Adjacentes a um espírito;\n • Se um aliado marcar uma Armadura enquanto estiver Adjacente a um dos espíritos, ele pode marcar uma Armadura adicional.\n Após conceder um benefício ou sofrer qualquer dano, um espírito desaparece.",
       "mechanics": {
         "costs": [
+          {
+            "resource": "Esperança",
+            "amount": null,
+            "label": "qualquer quantidade Esperança"
+          },
           {
             "resource": "Armadura",
             "amount": 1,
@@ -9451,7 +9817,13 @@
       "parent": null,
       "description": "Quando for sofrer dano mágico, você pode gastar qualquer quantidade de Esperança e rolar um número equivalente de d6. Se tirar 6 em qualquer um desses dados, o ataque é refletido e, em vez de causar dano a você, causa dano ao atacante.",
       "mechanics": {
-        "costs": [],
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": null,
+            "label": "qualquer quantidade Esperança"
+          }
+        ],
         "damage": [],
         "tests": [],
         "difficulties": [],
@@ -10652,7 +11024,13 @@
       "parent": null,
       "description": "Ao rastrear uma criatura ou grupo de criaturas com base nos sinais da passagem delas, você pode gastar qualquer quantidade de Esperança e fazer um número equivalente destas perguntas ao mestre:\n • Para que direção ele(s) foi(foram)?\n • Há quanto tempo a criatura ou grupo passou por aqui?\n • O que a criatura ou grupo fazia neste lugar?\n • Quantas criaturas havia?\nAo encontrar os alvos rastreados dessa forma, você recebe um bônus de +1 na Evasão contra elas.",
       "mechanics": {
-        "costs": [],
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": null,
+            "label": "qualquer quantidade Esperança"
+          }
+        ],
         "damage": [],
         "tests": [],
         "difficulties": [],
@@ -12131,6 +12509,11 @@
             "resource": "Esperança",
             "amount": 1,
             "label": "1 Esperança"
+          },
+          {
+            "resource": "Medo",
+            "amount": 2,
+            "label": "2 Medo"
           }
         ],
         "damage": [],
@@ -12304,7 +12687,13 @@
       "parent": null,
       "description": "Faça um Teste de Conjuração para disparar raios solares contra todos os adversários Distantes à sua frente. Em um sucesso, gaste qualquer quantidade de Esperança e force um número equivalente de alvos atingidos a fazer um teste de reação (14).\nAlvos bem-sucedidos sofrem 3d20+3 de dano mágico. Alvos que falharem sofrem 4d20+5 de dano mágico e ficam temporariamente Atordoados. Enquanto estiverem Atordoados, os alvos não podem usar reações e não podem fazer quaisquer outras ações até que se recuperem dessa condição.",
       "mechanics": {
-        "costs": [],
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": null,
+            "label": "qualquer quantidade Esperança"
+          }
+        ],
         "damage": [
           {
             "formula": "3d20+3",

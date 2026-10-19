@@ -119,13 +119,132 @@ const SUBCLASS_CLASS_PARENT = {
   "School Of Knowledge": "Wizard",
   "School Of War": "Wizard",
 };
+const EXPANSION_CLASS_FEATURE_PARENT = {
+  "Blood Maledict": "Blood Hunter",
+  "Grim Psychometry": "Blood Hunter",
+  "Crimson Rite": "Blood Hunter",
+  "Patron's Boon": "Warlock",
+  "Warlock Patron": "Warlock",
+  Favor: "Warlock",
+};
+const EXPANSION_SUBCLASS_PARENT = {
+  "Executioners Guild": "Assassin",
+  "Poisoners Guild": "Assassin",
+  "Order of the Ghost Slayer": "Blood Hunter",
+  "Order of the Lycan": "Blood Hunter",
+  "Order of the Mutant": "Blood Hunter",
+  Juggernaut: "Brawler",
+  "Martial Artist": "Brawler",
+  "Pact of the Endless": "Warlock",
+  "Pact of the Wrathful": "Warlock",
+  Hedge: "Witch",
+  Moon: "Witch",
+};
+const EXPANSION_SUBCLASS_FEATURE_PARENT = {
+  "Chasing Death": "Order of the Ghost Slayer",
+  "Shadowed Grit": "Order of the Ghost Slayer",
+  Veilwalker: "Order of the Ghost Slayer",
+  "Spectral Form": "Order of the Ghost Slayer",
+  Mutagens: "Order of the Mutant",
+  "Improved Mutagens": "Order of the Mutant",
+  "Volatile Toxins": "Order of the Mutant",
+  "Mastered Mutagens": "Order of the Mutant",
+  Werewolf: "Order of the Lycan",
+  "Control the Beast": "Order of the Lycan",
+  "Feral Hide": "Order of the Lycan",
+  "Lycan Regeneration": "Order of the Lycan",
+  "Master the Beast": "Order of the Lycan",
+  "Patron's Mantle": "Pact of the Endless",
+  "Deadly Devotion": "Pact of the Endless",
+  "Draining Invocation": "Pact of the Endless",
+  "Dark Aegis": "Pact of the Endless",
+  "Draining Bane": "Pact of the Endless",
+  "Favored Weapon": "Pact of the Wrathful",
+  "Herald of Death": "Pact of the Wrathful",
+  "Menacing Reach": "Pact of the Wrathful",
+  "Diminish My Foes": "Pact of the Wrathful",
+  "Fearsome Attack": "Pact of the Wrathful",
+  "Divine Ire": "Pact of the Wrathful",
+};
+const EXPANSION_CLASS_DESCRIPTION_FALLBACK = {
+  Warlock: "Ocultistas obtêm poder por meio de um pacto com uma entidade sobrenatural. Sua magia depende da relação que mantêm com esse patrono, pedindo favores, oferecendo tributos e recorrendo às esferas de influência da entidade para superar desafios. Esse poder pode ser extraordinário, mas sempre carrega o peso de uma dívida e de uma vontade externa.",
+};
+const EXPANSION_SUBCLASS_DESCRIPTION_FALLBACK = {
+  "Executioners Guild": "Execute seus alvos com precisão letal e golpes decisivos.",
+  "Poisoners Guild": "Debilite seus alvos usando venenos e aflições.",
+  "Order of the Ghost Slayer": "Cace os mortos e caminhe perigosamente próximo ao véu entre a vida e a morte.",
+  "Order of the Lycan": "Assuma uma forma lupina e transforme sua ferocidade em poder.",
+  "Order of the Mutant": "Altere seu corpo com mutagênicos para adaptar suas capacidades à situação.",
+  Juggernaut: "Esmague seus oponentes com força e resistência implacáveis.",
+  "Martial Artist": "Use técnicas e posturas marciais variadas para dominar o combate desarmado.",
+  "Pact of the Endless": "Resista aos inimigos e evite a morte com a proteção de seu patrono.",
+  "Pact of the Wrathful": "Canalize a fúria de seu patrono para destruir aqueles que se opõem a você.",
+  Hedge: "Use sua arte e seus rituais para fortalecer a si mesmo e seus aliados.",
+  Moon: "Canalize poder celestial para ampliar e transformar sua magia.",
+};
+const EXPANSION_FALLBACK_CLASS_FEATURES = [
+  {
+    key: "Deadly Determination",
+    parent: "Assassin",
+    name: "Determinação Mortal",
+    description: "Gaste 3 Pontos de Esperança para limpar 2 Pontos de Fadiga.",
+  },
+  {
+    key: "Marked for Death",
+    parent: "Assassin",
+    name: "Marcado para Morrer",
+    description: "Ao acertar um ataque com arma, você pode marcar 1 Ponto de Fadiga para deixar o alvo Marcado para Morrer. Quando causar dano a esse alvo, some à rolagem de dano uma quantidade de d4 igual ao seu Patamar. Você só pode manter um adversário Marcado para Morrer por vez. A marca termina quando você descansa, quando o alvo é derrotado ou quando o Mestre gasta uma quantidade de Pontos de Medo igual ao seu Patamar para removê-la.",
+  },
+  {
+    key: "Get In & Get Out",
+    parent: "Assassin",
+    name: "Entrar e Sair",
+    description: "Gaste 1 Ponto de Esperança para perguntar ao Mestre por uma maneira rápida ou discreta de entrar ou sair de um lugar que você possa ver. O próximo teste que fizer agindo com base nessa informação tem vantagem.",
+  },
+  {
+    key: "Square Up",
+    parent: "Brawler",
+    name: "Partir pra Cima",
+    description: "Gaste 3 Pontos de Esperança para intimidar um alvo em alcance Próximo, deixando-o temporariamente Vulnerável.",
+  },
+  {
+    key: "I Am the Weapon",
+    parent: "Brawler",
+    name: "Eu Sou a Arma",
+    description: "Seus ataques desarmados são tão perigosos quanto qualquer lâmina. Enquanto não tiver outra arma ativa, você possui uma arma principal chamada Golpe de Pugilista. Escolha um atributo para usá-la; ela tem alcance Corpo-a-Corpo e causa d8+d6 de dano físico usando sua Proficiência, com ambos os dados escalando pela Proficiência. Enquanto essa arma estiver ativa, sua Evasão recebe +1.",
+  },
+  {
+    key: "Combo Strike",
+    parent: "Brawler",
+    name: "Golpe Combinado",
+    description: "Depois de rolar o dano de um ataque corpo a corpo bem-sucedido, você pode marcar 1 Ponto de Fadiga para iniciar um combo. Role seu Dado de Combo e anote o resultado, continuando a rolá-lo até que o resultado mais recente seja menor que o anterior. Cause dano adicional igual à soma de todos os resultados do Dado de Combo. Esse dado começa como d4 e pode aumentar em um passo uma vez por Patamar como opção de avanço.",
+  },
+  {
+    key: "Witch's Charm",
+    parent: "Witch",
+    name: "Encanto do Bruxo",
+    description: "Quando você ou um aliado em alcance Distante falhar em um teste de ação, gaste 3 Pontos de Esperança para transformar o resultado em um sucesso com Medo.",
+  },
+  {
+    key: "Hex",
+    parent: "Witch",
+    name: "Maldição",
+    description: "Marque 1 Ponto de Fadiga para amaldiçoar temporariamente um alvo em alcance Distante. Enquanto estiver Amaldiçoado, o alvo sofre uma penalidade nas rolagens de dano e na Dificuldade igual ao seu Patamar. Você pode manter uma quantidade de criaturas Amaldiçoadas igual ao seu atributo de conjuração.",
+  },
+  {
+    key: "Commune",
+    parent: "Witch",
+    name: "Comunhão",
+    description: "Uma vez por descanso longo, durante um momento de calma, você pode comungar com um ancestral, divindade, espírito ou entidade de outro mundo. Faça uma pergunta e role uma quantidade de d6 igual ao seu atributo de conjuração. Escolha um resultado: com 1–3, você recebe uma sensação relevante; com 4–5, ouve sons ou vê uma visão; com 6, vivencia psiquicamente uma cena relacionada à resposta.",
+  },
+];
 const CLASS_ITEMS = new Set([
   "Broken Compass", "Whispering Orb", "A Romance Novel", "Grappling Hook", "Drawing Of A Lover",
   "A Sharpening Stone", "Strange Dirty Penant", "Tiny Elemental Pet", "Secret Key",
   "Letter(Never Opened)", "Family Heirloom", "Bundle of Offerings", "Totem from Mentor",
   "Trophy from your First Kill", "Untranslated Book", "50ft of Rope", "Sigil of Your God",
   "Small Bag (Rocks & Bones)", "Basic Supplies", "Set of Forgery Tools", "Torch",
-  "Steel Needle", "Vial of Blood", "Patron's Boon", "Warlock Patron", "Favor", "Carving", "Ring",
+  "Steel Needle", "Vial of Blood", "Carving", "Ring",
 ]);
 
 const RANGE_TERMS = [
@@ -181,7 +300,7 @@ function wordNumber(value) {
 function extractMechanics(description) {
   const costs = [];
   const seenCosts = new Set();
-  const costRegex = /\b(?:gaste|gastar|gastando|marque|marcar|marcando)\s+(?:até\s+)?(\d+|um|uma|dois|duas|três|qualquer quantidade)?\s*(?:Pontos?\s+de\s+|Ponto\s+de\s+)?(Esperança|Fadiga|Armadura|Vida|Medo)\b/giu;
+  const costRegex = /\b(?:gaste|gastar|gastando|marque|marcar|marcando)\s+(?:até\s+)?(\d+|um|uma|dois|duas|três|qualquer quantidade)?\s*(?:Pontos?\s+de\s+|Ponto\s+de\s+|de\s+)?(Esperança|Fadiga|Armadura|Vida|Medo)\b/giu;
   for (const match of description.matchAll(costRegex)) {
     const resource = match[2] === "Vida" ? "Ponto de Vida" : match[2];
     const amount = wordNumber(match[1]);
@@ -194,7 +313,7 @@ function extractMechanics(description) {
 
   const damage = [];
   const seenDamage = new Set();
-  const damageRegex = /\b(\d*d\d+(?:\s*[+-]\s*\d+)?|d\d+(?:\s*[+-]\s*\d+)?)\s+(?:de\s+)?dano(?:\s+(físico|mágico))?/giu;
+  const damageRegex = /\b(\d*d\d+(?:(?:\s*[+-]\s*)(?:\d*d\d+|\d+))*)\s+(?:de\s+)?dano(?:\s+(físico|mágico))?/giu;
   for (const match of description.matchAll(damageRegex)) {
     const formula = match[1].replace(/\s+/g, "");
     const type = match[2] ? match[2].toLocaleLowerCase("pt-BR") : undefined;
@@ -332,8 +451,35 @@ for (const [key, data] of loadEntries("daggerheart.classes.json")) {
     }));
   }
 }
-for (const [key, data] of loadEntries("daggerheart-expansion-content.classes.json")) {
-  if (key.trim() && !CLASS_ITEMS.has(key)) entries.push(makeEntry({ key, data, type: EXPANSION_CLASSES.has(key) ? "class" : "classFeature", category: "classes", source: "expansion" }));
+const expansionClassSourceEntries = loadEntries("daggerheart-expansion-content.classes.json");
+const expansionClassSourceKeys = new Set(expansionClassSourceEntries.map(([key]) => key));
+for (const [key, rawData] of expansionClassSourceEntries) {
+  if (!key.trim() || CLASS_ITEMS.has(key)) continue;
+  const isClass = EXPANSION_CLASSES.has(key);
+  const subclassParent = EXPANSION_SUBCLASS_FEATURE_PARENT[key];
+  const data = {
+    ...rawData,
+    description: rawData.description || EXPANSION_CLASS_DESCRIPTION_FALLBACK[key] || "",
+  };
+  entries.push(makeEntry({
+    key,
+    data,
+    type: isClass ? "class" : subclassParent ? "subclassFeature" : "classFeature",
+    category: subclassParent ? "subclasses" : "classes",
+    source: "expansion",
+    parent: isClass ? null : subclassParent || EXPANSION_CLASS_FEATURE_PARENT[key] || null,
+  }));
+}
+for (const fallback of EXPANSION_FALLBACK_CLASS_FEATURES) {
+  if (expansionClassSourceKeys.has(fallback.key)) continue;
+  entries.push(makeEntry({
+    key: fallback.key,
+    data: { name: fallback.name, description: fallback.description },
+    type: "classFeature",
+    category: "classes",
+    source: "srd2",
+    parent: fallback.parent,
+  }));
 }
 for (const [key, data] of loadEntries("daggerheart.subclasses.json")) {
   const isSubclass = CORE_SUBCLASSES.has(key);
@@ -345,8 +491,20 @@ for (const [key, data] of loadEntries("daggerheart.subclasses.json")) {
     parent: isSubclass ? SUBCLASS_CLASS_PARENT[key] || null : null,
   }));
 }
-for (const [key, data] of loadEntries("daggerheart-expansion-content.subclasses.json")) {
-  if (key.trim()) entries.push(makeEntry({ key, data, type: "subclass", category: "subclasses", source: "expansion" }));
+for (const [key, rawData] of loadEntries("daggerheart-expansion-content.subclasses.json")) {
+  if (!key.trim()) continue;
+  const data = {
+    ...rawData,
+    description: rawData.description || EXPANSION_SUBCLASS_DESCRIPTION_FALLBACK[key] || "",
+  };
+  entries.push(makeEntry({
+    key,
+    data,
+    type: "subclass",
+    category: "subclasses",
+    source: "expansion",
+    parent: EXPANSION_SUBCLASS_PARENT[key] || null,
+  }));
 }
 for (const [key, data] of loadEntries("daggerheart.domains.json")) {
   entries.push(makeEntry({ key, data, type: "domainCard", category: "domains" }));

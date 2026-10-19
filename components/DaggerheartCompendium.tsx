@@ -102,7 +102,7 @@ function EntryDetail({
         <div className="compDetailContent">
           <div className="compDetailMeta">
             <span>{entryTypeLabel(entry.type)}</span>
-            <i>{entry.source === "expansion" ? "Conteúdo de expansão" : entry.source === "srd" ? "SRD" : "Daggerheart"}</i>
+            <i>{entry.source === "expansion" ? "Conteúdo de expansão" : entry.source === "srd2" ? "SRD 2.0" : entry.source === "srd" ? "SRD" : "Daggerheart"}</i>
           </div>
           <h2>{entry.name}</h2>
           {entry.originalName && entry.originalName !== entry.name && <small className="compOriginalName">{entry.originalName}</small>}
