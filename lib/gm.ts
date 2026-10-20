@@ -4,6 +4,7 @@ import {
   type DiceType,
   type GameState,
   type RollKind,
+  type TimelineKind,
 } from "@/lib/game";
 import {
   addCalendarEvent,
@@ -35,6 +36,17 @@ const WEATHER_INTENSITIES = ["light", "moderate", "heavy"] as const;
 const CALENDAR_EVENT_KINDS: CalendarEventKind[] = ["quest", "effect", "appointment", "world", "custom"];
 const DICE_TYPES: DiceType[] = ["d2", "d4", "d6", "d8", "d10", "d12", "d20", "d100"];
 const ROLL_KINDS: RollKind[] = ["attack", "damage", "reaction", "check", "duality", "custom"];
+const TIMELINE_KINDS: TimelineKind[] = ["discovery", "quest", "combat", "travel", "relationship", "world", "milestone", "other"];
+
+function normalizeTimelineText(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase("pt-BR")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
 
 export const responseTools = oracleTools.map((tool) => ({
   type: "function",
@@ -65,6 +77,12 @@ export function gmInstructions(system: string) {
     "Em Daggerheart, pedidos de Dualidade devem usar rollKind duality e uma fórmula com exatamente 2d12 para Esperança e Medo; dados auxiliares e modificadores podem ser acrescentados à mesma fórmula.",
     "Faça alterações mecânicas antes de narrar seus efeitos quando isso for necessário.",
     "Registre em memória apenas fatos relevantes que precisem sobreviver ao contexto recente.",
+    "O timeline da aba Memória é a cronologia curta e visível do jogador. Quando algo importante acontecer ou for descoberto — uma pista, encontro decisivo, missão, viagem marcante, mudança de relação ou marco da campanha — registre uma única entrada com timeline_entry_add após o acontecimento estar estabelecido.",
+    "Não transforme cada batida da narração em timeline. Registre apenas acontecimentos que ajudam o jogador a entender a história depois.",
+    "Aceitar, concluir ou falhar uma missão normalmente merece uma entrada de timeline quando isso for relevante ao histórico da campanha.",
+    "Timeline e memória têm papéis diferentes: timeline é player-facing e cronológico; memory_record é para fatos persistentes, segredos e detalhes úteis ao Mestre. Não duplique o mesmo texto nos dois sem necessidade.",
+    "Não coloque segredos ainda desconhecidos no timeline público. Se precisar pré-registrar algo oculto, use visibility hidden e revele depois com timeline_entry_set_visibility.",
+    "Eventos futuros pertencem ao calendário. timeline_entry_add só registra algo que já aconteceu ou foi descoberto; avance o tempo primeiro quando a ficção tiver passado tempo.",
     "Quando uma característica visual estável de um personagem for estabelecida pela primeira vez, registre-a como memória visual.",
     "Não revele segredos que o personagem não teria como saber.",
     "Formate a resposta em parágrafos curtos. Separe sempre narração e fala em parágrafos distintos.",
@@ -92,6 +110,7 @@ export function buildTurnInput(state: GameState, playerText: string) {
         activeQuests: state.quests.filter((quest) => quest.status === "active"),
         npcs: state.npcs,
         memories: state.memories.slice(0, 20),
+        timeline: (state.timeline ?? []).slice(-20),
         time: campaignTime ? {
           ...campaignTime,
           currentDate,
@@ -466,11 +485,85 @@ export function executeGmTool(
     return { state: { ...state, time }, result: { ok: true, eventId } };
   }
 
+  if (name === "timeline_entry_add") {
+    const title = String(args.title || "").trim();
+    const description = String(args.description || "").trim();
+    const kind = String(args.kind || "other") as TimelineKind;
+    const importance = args.importance === "major" ? "major" as const : "normal" as const;
+    const visibility = args.visibility === "hidden" ? "hidden" as const : "public" as const;
+    const minute = args.campaignMinute === undefined ? state.time.campaignMinute : Number(args.campaignMinute);
+    if (!title || !description || !TIMELINE_KINDS.includes(kind)) {
+      return { state, result: { ok: false, error: "Invalid timeline entry." } };
+    }
+    if (!Number.isInteger(minute) || minute < 0 || minute > state.time.campaignMinute) {
+      return { state, result: { ok: false, error: "Timeline entries must use the current or a past campaign minute. Future events belong to the calendar." } };
+    }
+    const tags = Array.from(new Set(
+      (Array.isArray(args.tags) ? args.tags : [])
+        .map((value) => String(value).trim())
+        .filter(Boolean)
+        .slice(0, 8),
+    ));
+    const image = typeof args.image === "string" && args.image.trim() ? args.image.trim() : undefined;
+    const signature = normalizeTimelineText(title + " " + description);
+    const duplicate = (state.timeline ?? []).find((entry) =>
+      entry.campaignMinute === minute && normalizeTimelineText(entry.title + " " + entry.description) === signature
+    );
+    if (duplicate) {
+      return {
+        state,
+        result: { ok: true, duplicate: true, entry: duplicate, dateLabel: formatCampaignDateTime(state.time, duplicate.campaignMinute) },
+      };
+    }
+    const entry = {
+      id: globalThis.crypto?.randomUUID?.() || `timeline-${Math.random().toString(36).slice(2, 10)}`,
+      title,
+      description,
+      campaignMinute: minute,
+      createdAt: new Date().toISOString(),
+      kind,
+      tags,
+      visibility,
+      importance,
+      ...(image ? { image } : {}),
+    };
+    const timeline = [...(state.timeline ?? []), entry]
+      .sort((a, b) => a.campaignMinute - b.campaignMinute || Date.parse(a.createdAt) - Date.parse(b.createdAt));
+    return {
+      state: { ...state, timeline },
+      result: { ok: true, entry, dateLabel: formatCampaignDateTime(state.time, minute) },
+    };
+  }
+
+  if (name === "timeline_entry_set_visibility") {
+    const entryId = String(args.entryId || "").trim();
+    const visibility = String(args.visibility || "");
+    if (!entryId || !["public", "hidden"].includes(visibility)) {
+      return { state, result: { ok: false, error: "Invalid timeline visibility update." } };
+    }
+    const current = (state.timeline ?? []).find((entry) => entry.id === entryId);
+    if (!current) return { state, result: { ok: false, error: "Unknown timeline entry." } };
+    if (current.visibility === visibility) {
+      return { state, result: { ok: true, unchanged: true, entry: current } };
+    }
+    const timeline = (state.timeline ?? []).map((entry) =>
+      entry.id === entryId ? { ...entry, visibility: visibility as "public" | "hidden" } : entry,
+    );
+    return { state: { ...state, timeline }, result: { ok: true, entry: timeline.find((entry) => entry.id === entryId) } };
+  }
+
   if (name === "memory_record") {
     const kind = String(args.kind || "");
     const text = String(args.text || "").trim();
     if (!["fact", "event", "secret", "visual"].includes(kind) || !text) {
       return { state, result: { ok: false, error: "Invalid memory." } };
+    }
+    const normalizedMemory = normalizeTimelineText(text);
+    const existingMemory = state.memories.find((memory) =>
+      memory.kind === kind && normalizeTimelineText(memory.text) === normalizedMemory
+    );
+    if (existingMemory) {
+      return { state, result: { ok: true, duplicate: true, memory: existingMemory } };
     }
     const next = executeCommand(
       state,

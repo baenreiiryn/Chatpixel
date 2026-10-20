@@ -4,6 +4,7 @@ import { FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "
 import {
   buildContextPacket,
   createCampaignRestartSnapshot,
+  ensureGameStateTimeline,
   executeCommand,
   GameState,
   initialState,
@@ -51,6 +52,7 @@ import {
 } from "@/lib/campaignLibrary";
 import DiceOverlay from "@/components/DiceOverlay";
 import DiceAppearanceSettings from "@/components/DiceAppearanceSettings";
+import CampaignTimeline from "@/components/CampaignTimeline";
 import {
   dualityFormulaFromCommand,
   normalizeDiceAppearanceFonts,
@@ -761,6 +763,7 @@ export default function OracleApp() {
   const [state, setState] = useState<GameState>(initialState);
   const [screen, setScreen] = useState<AppScreen>("home");
   const [view, setView] = useState<View>("session");
+  const [memoryMode, setMemoryMode] = useState<"timeline" | "details">("timeline");
   const [input, setInput] = useState("");
   const [ready, setReady] = useState(false);
   const [campaigns, setCampaigns] = useState<CampaignLibraryEntry[]>([]);
@@ -810,6 +813,7 @@ export default function OracleApp() {
   }, []);
 
   useEffect(() => {
+    if (view !== "memory") setMemoryMode("timeline");
     if (view === "session") return;
     setShowDiceTray(false);
     setShowCalendar(false);
@@ -822,7 +826,9 @@ export default function OracleApp() {
       if (migrated) savedCampaigns = [migrated];
     }
     const normalizedCampaigns = savedCampaigns.map((entry) => {
-      const normalizedState = ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`);
+      const normalizedState = ensureGameStateTimeline(
+        ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`),
+      );
       return normalizedState === entry.state ? entry : { ...entry, state: normalizedState };
     });
     const sorted = sortCampaigns(normalizedCampaigns);
@@ -846,8 +852,8 @@ export default function OracleApp() {
 
   useEffect(() => {
     if (!ready || !activeCampaignId) return;
-    if ((state as GameState & { time?: CampaignTimeState }).time) return;
-    setState((current) => ensureCampaignTime(current, `legacy:${current.campaign.name}:${current.campaign.system}`));
+    if ((state as GameState & { time?: CampaignTimeState; timeline?: unknown[] }).time && Array.isArray((state as GameState & { timeline?: unknown[] }).timeline)) return;
+    setState((current) => ensureGameStateTimeline(ensureCampaignTime(current, `legacy:${current.campaign.name}:${current.campaign.system}`)));
   }, [ready, activeCampaignId, state]);
 
   useEffect(() => {
@@ -993,7 +999,9 @@ export default function OracleApp() {
   function openCampaign(campaignId: string) {
     const entry = campaignsRef.current.find((campaign) => campaign.id === campaignId);
     if (!entry) return;
-    const normalizedState = ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`);
+    const normalizedState = ensureGameStateTimeline(
+      ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`),
+    );
     campaignEpochRef.current += 1;
     activeCampaignIdRef.current = entry.id;
     setActiveDiceRoll(null);
@@ -1088,6 +1096,9 @@ export default function OracleApp() {
     const initialMessage = companionNames.length
       ? `${characterName}, sua jornada em ${campaignName} está pronta. ${companionNames.join(", ")} ${companionNames.length === 1 ? "está" : "estão"} com você no início do prólogo. Descreva sua primeira ação quando quiser começar.`
       : `${characterName}, sua jornada em ${campaignName} está pronta. O prólogo aguarda sua primeira ação.`;
+    const initialTimelineDescription = result.adventureHook?.trim()
+      || result.character.history.trim()
+      || `${characterName} inicia sua jornada em ${campaignName}.`;
 
     const next: GameState = {
       campaign: {
@@ -1161,6 +1172,17 @@ export default function OracleApp() {
         appearance: companion.appearance.trim() || undefined,
       })),
       memories,
+      timeline: [{
+        id: crypto.randomUUID(),
+        title: "Início da jornada",
+        description: initialTimelineDescription,
+        campaignMinute: campaignTime.campaignMinute,
+        createdAt,
+        kind: "milestone",
+        tags: ["Início"],
+        visibility: "public",
+        importance: "major",
+      }],
       messages: [{
         id: crypto.randomUUID(),
         role: "gm",
@@ -2451,16 +2473,31 @@ export default function OracleApp() {
           )}
 
           {view === "memory" && (
-            <section className="widePanel panel">
-              <div className="eyebrow">MEMÓRIA PERSISTENTE</div>
-              <div className="memoryHeader"><div><h1>O Oracle lembra do mundo.</h1><p>Esses dados pertencem à campanha, não à janela de contexto do modelo.</p></div><span>{state.memories.length} registros</span></div>
-              <div className="memoryList">{state.memories.map((memory) => {
-                const worldDate = memory.campaignMinute === undefined ? null : formatCampaignDateTime(state.time, memory.campaignMinute, { includeWeekday: false, includeTime: true });
-                const elapsed = memory.campaignMinute === undefined ? null : state.time.campaignMinute - memory.campaignMinute;
-                return <article key={memory.id}><b>{memory.kind === "secret" ? "◇" : memory.kind === "event" ? "✦" : memory.kind === "visual" ? "◐" : "◉"}</b><div><small>{memory.kind.toUpperCase()}{worldDate ? ` · ${worldDate}` : ""}{elapsed !== null && elapsed > 0 ? ` · há ${formatCampaignDuration(elapsed)}` : ""}</small><p>{memory.text}</p></div></article>;
-              })}</div>
-              <details className="contextPreview"><summary>Prévia do pacote de contexto enviado ao Mestre</summary><pre>{JSON.stringify(contextPreview, null, 2)}</pre></details>
-            </section>
+            memoryMode === "timeline" ? (
+              <CampaignTimeline
+                entries={state.timeline ?? []}
+                time={state.time}
+                onShowDetails={() => setMemoryMode("details")}
+              />
+            ) : (
+              <section className="widePanel panel memoryDetailsPanel">
+                <div className="memoryDetailsTop">
+                  <div>
+                    <div className="eyebrow">MEMÓRIA PERSISTENTE</div>
+                    <h1>O Oracle lembra do mundo.</h1>
+                    <p>Fatos, eventos, segredos e referências visuais que pertencem à campanha.</p>
+                  </div>
+                  <button type="button" className="timelineBackButton" onClick={() => setMemoryMode("timeline")}>Linha do tempo</button>
+                </div>
+                <div className="memoryHeader"><div><p>Esses dados pertencem à campanha, não à janela de contexto do modelo.</p></div><span>{state.memories.length} registros</span></div>
+                <div className="memoryList">{state.memories.map((memory) => {
+                  const worldDate = memory.campaignMinute === undefined ? null : formatCampaignDateTime(state.time, memory.campaignMinute, { includeWeekday: false, includeTime: true });
+                  const elapsed = memory.campaignMinute === undefined ? null : state.time.campaignMinute - memory.campaignMinute;
+                  return <article key={memory.id}><b>{memory.kind === "secret" ? "◇" : memory.kind === "event" ? "✦" : memory.kind === "visual" ? "◐" : "◉"}</b><div><small>{memory.kind.toUpperCase()}{worldDate ? ` · ${worldDate}` : ""}{elapsed !== null && elapsed > 0 ? ` · há ${formatCampaignDuration(elapsed)}` : ""}</small><p>{memory.text}</p></div></article>;
+                })}</div>
+                <details className="contextPreview"><summary>Prévia do pacote de contexto enviado ao Mestre</summary><pre>{JSON.stringify(contextPreview, null, 2)}</pre></details>
+              </section>
+            )
           )}
         </section>
       </section>

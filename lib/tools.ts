@@ -209,6 +209,41 @@ export const oracleTools: OracleTool[] = [
     }
   },
   {
+    name: "timeline_entry_add",
+    description: "Registra no timeline do jogador um acontecimento ou descoberta importante já ocorrida na campanha, usando a data do mundo. Não use para segredos ainda desconhecidos nem para eventos futuros.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        title: { type: "string", minLength: 1 },
+        description: { type: "string", minLength: 1 },
+        kind: {
+          type: "string",
+          enum: ["discovery", "quest", "combat", "travel", "relationship", "world", "milestone", "other"]
+        },
+        tags: { type: "array", items: { type: "string" }, maxItems: 8 },
+        importance: { type: "string", enum: ["normal", "major"] },
+        visibility: { type: "string", enum: ["public", "hidden"] },
+        image: { type: "string" },
+        campaignMinute: { type: "integer", minimum: 0, description: "Use apenas para registrar retroativamente algo que já aconteceu. O padrão é o minuto atual da campanha." }
+      },
+      required: ["title", "description", "kind"],
+      additionalProperties: false
+    }
+  },
+  {
+    name: "timeline_entry_set_visibility",
+    description: "Revela ou oculta uma entrada já existente do timeline. Use para revelar ao jogador algo previamente registrado como oculto.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        entryId: { type: "string" },
+        visibility: { type: "string", enum: ["public", "hidden"] }
+      },
+      required: ["entryId", "visibility"],
+      additionalProperties: false
+    }
+  },
+  {
     name: "memory_record",
     description: "Registra uma nova memória persistente da campanha.",
     inputSchema: {

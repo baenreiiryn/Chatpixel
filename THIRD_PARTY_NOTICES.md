@@ -14,3 +14,12 @@ The upstream pack license and domain-icon trademark notice are preserved alongsi
 Only the DPCGL-permitted domain-card PNGs are copied by `scripts/sync-foundryborne-art.mjs`. Foundryborne logos, wheelchair images, other Daggerheart-specific images, and generic Foundry icon assets are not copied by this pipeline.
 
 Darrington Press™, Daggerheart™, and their respective logos are trademarks of Critical Role, LLC. The Foundryborne source states that its Darrington Press authorized-work marks are used with permission; this repository does not copy those logos or marks.
+
+## Timeline Builder reference
+
+OracleRPG's vertical campaign timeline is an independent implementation inspired by the public interaction concepts of `brunocalado/timeline-builder`.
+
+- Reference: https://github.com/brunocalado/timeline-builder
+- Reference code license: GNU GPLv3
+
+No Timeline Builder source code, templates, styles, images, or other assets are included in OracleRPG. The OracleRPG implementation uses its own React components, persistent game-state model, campaign calendar, filters, and GM tools.

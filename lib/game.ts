@@ -1,9 +1,9 @@
 import {
-  CampaignTimeState,
   MINUTES_PER_DAY,
   createCampaignTimeState,
   createDemoCampaignTimeState,
 } from "@/lib/campaignTime";
+import type { CampaignTimeState } from "@/lib/campaignTime";
 
 export type Actor = "player" | "gm-ai";
 
@@ -168,6 +168,30 @@ export type Memory = {
   campaignMinute?: number;
 };
 
+export type TimelineKind =
+  | "discovery"
+  | "quest"
+  | "combat"
+  | "travel"
+  | "relationship"
+  | "world"
+  | "milestone"
+  | "other";
+
+export type TimelineEntry = {
+  id: string;
+  title: string;
+  description: string;
+  campaignMinute: number;
+  createdAt: string;
+  kind: TimelineKind;
+  tags: string[];
+  visibility: "public" | "hidden";
+  importance: "normal" | "major";
+  image?: string;
+  memoryId?: string;
+};
+
 export type SceneParticipant = {
   id: string;
   name: string;
@@ -248,6 +272,7 @@ export type CampaignRestartSnapshot = {
   quests: Quest[];
   npcs: Npc[];
   memories: Memory[];
+  timeline: TimelineEntry[];
   messages: Message[];
 };
 
@@ -261,6 +286,7 @@ export type GameState = {
   quests: Quest[];
   npcs: Npc[];
   memories: Memory[];
+  timeline: TimelineEntry[];
   messages: Message[];
   events: EventRecord[];
   pendingRoll?: PendingPlayerRoll;
@@ -289,7 +315,55 @@ export function createCampaignRestartSnapshot(state: GameState): CampaignRestart
     quests: structuredClone(state.quests),
     npcs: structuredClone(state.npcs),
     memories: structuredClone(state.memories),
+    timeline: structuredClone(state.timeline ?? timelineFromMemories(state.memories)),
     messages: structuredClone(state.messages),
+  };
+}
+
+function timelineTitleFromMemory(memory: Memory) {
+  const text = memory.text.trim();
+  const firstSentence = text.split(/[.!?](?:\s|$)/)[0]?.trim() || text;
+  if (firstSentence.length <= 72) return firstSentence;
+  return firstSentence.slice(0, 69).trimEnd() + "…";
+}
+
+export function timelineFromMemories(memories: Memory[]): TimelineEntry[] {
+  const publicMemories = memories.filter((memory) => memory.kind === "event" || memory.kind === "fact");
+  const datedMinutes = publicMemories
+    .map((memory) => memory.campaignMinute)
+    .filter((value): value is number => Number.isFinite(value));
+  const earliestMinute = datedMinutes.length ? Math.min(...datedMinutes) : undefined;
+  const datedCreatedAt = publicMemories
+    .map((memory) => Date.parse(memory.createdAt))
+    .filter((value) => Number.isFinite(value));
+  const earliestCreatedAt = datedCreatedAt.length ? Math.min(...datedCreatedAt) : undefined;
+  return publicMemories
+    .filter((memory) => {
+      if (memory.kind === "event") return true;
+      if (memory.campaignMinute !== undefined && earliestMinute !== undefined) return memory.campaignMinute > earliestMinute;
+      const createdAt = Date.parse(memory.createdAt);
+      return earliestCreatedAt !== undefined && Number.isFinite(createdAt) && createdAt > earliestCreatedAt;
+    })
+    .map((memory) => ({
+      id: "timeline-" + memory.id,
+      title: timelineTitleFromMemory(memory),
+      description: memory.text,
+      campaignMinute: memory.campaignMinute ?? 0,
+      createdAt: memory.createdAt,
+      kind: memory.kind === "event" ? "milestone" as const : "discovery" as const,
+      tags: memory.kind === "event" ? ["Acontecimento"] : ["Descoberta"],
+      visibility: "public" as const,
+      importance: "normal" as const,
+      memoryId: memory.id,
+    }))
+    .sort((a, b) => a.campaignMinute - b.campaignMinute || Date.parse(a.createdAt) - Date.parse(b.createdAt));
+}
+
+export function ensureGameStateTimeline(state: GameState): GameState {
+  if (Array.isArray((state as GameState & { timeline?: TimelineEntry[] }).timeline)) return state;
+  return {
+    ...state,
+    timeline: timelineFromMemories(state.memories ?? []),
   };
 }
 
@@ -359,6 +433,7 @@ export function inferLegacyRestartSnapshot(state: GameState): CampaignRestartSna
     quests: [],
     npcs: structuredClone(npcs),
     memories: structuredClone(creationMemories),
+    timeline: timelineFromMemories(creationMemories),
     messages: initialMessage ? [structuredClone(initialMessage)] : [],
   };
 }
@@ -383,6 +458,7 @@ export function restartCampaignFromSnapshot(state: GameState): GameState {
     quests: structuredClone(snapshot.quests),
     npcs: structuredClone(snapshot.npcs),
     memories: structuredClone(snapshot.memories),
+    timeline: structuredClone(snapshot.timeline ?? timelineFromMemories(snapshot.memories)),
     messages: structuredClone(snapshot.messages),
     events: [],
     pendingRoll: undefined,
@@ -444,6 +520,32 @@ export const initialState: GameState = {
     { id: "m1", kind: "fact", text: "Arven deve ao grupo a vida da filha.", createdAt: now(), campaignMinute: demoMinute - 2 * MINUTES_PER_DAY },
     { id: "m2", kind: "secret", text: "Ithran reconheceu o selo, mas escondeu sua reação.", createdAt: now(), campaignMinute: demoMinute - 180 },
     { id: "m3", kind: "event", text: "A Chave Lunar foi encontrada dentro do observatório quebrado.", createdAt: now(), campaignMinute: demoMinute - 95 },
+  ],
+  timeline: [
+    {
+      id: "tl-1",
+      title: "A dívida de Arven",
+      description: "Arven deve ao grupo a vida da filha.",
+      campaignMinute: demoMinute - 2 * MINUTES_PER_DAY,
+      createdAt: now(),
+      kind: "relationship",
+      tags: ["Arven", "Relação"],
+      visibility: "public",
+      importance: "normal",
+      memoryId: "m1",
+    },
+    {
+      id: "tl-2",
+      title: "A Chave Lunar foi encontrada",
+      description: "A Chave Lunar foi encontrada dentro do observatório quebrado.",
+      campaignMinute: demoMinute - 95,
+      createdAt: now(),
+      kind: "discovery",
+      tags: ["Chave Lunar", "Descoberta"],
+      visibility: "public",
+      importance: "major",
+      memoryId: "m3",
+    },
   ],
   messages: [
     { id: "g1", role: "gm", text: "A porta de pedra não possui fechadura. No centro, um eclipse de prata pulsa no mesmo ritmo que a Chave Lunar em sua mochila.", createdAt: now(), campaignMinute: demoMinute - 8 },
@@ -601,6 +703,7 @@ export function buildContextPacket(state: GameState) {
     activeQuests: state.quests.filter((quest) => quest.status === "active"),
     presentNpcs: state.npcs.filter((npc) => npc.location === "Santuário soterrado"),
     relevantMemories: state.memories.slice(0, 8),
+    timeline: (state.timeline ?? []).slice(-20),
     recentDialogue: state.messages.slice(-12),
     pendingRoll: state.pendingRoll ?? null,
     rollHistory: (state.rollHistory ?? []).slice(-12),

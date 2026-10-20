@@ -21,6 +21,7 @@ export function campaignActivityAt(state: GameState) {
     ...state.messages.map((entry) => entry.createdAt),
     ...state.memories.map((entry) => entry.createdAt),
     ...state.events.map((entry) => entry.createdAt),
+    ...(state.timeline ?? []).map((entry) => entry.createdAt),
   ]
     .map((value) => Date.parse(value))
     .filter((value) => Number.isFinite(value));
