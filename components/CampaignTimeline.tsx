@@ -1,12 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import type { CampaignTimeState } from "@/lib/campaignTime";
+import { FormEvent, useMemo, useState } from "react";
+import { deriveCampaignDateTime, type CampaignTimeState } from "@/lib/campaignTime";
 import type { TimelineEntry, TimelineKind } from "@/lib/game";
 import {
   formatTimelineEntryDate,
+  type ManualTimelineEntryInput,
   timelineElapsedMinutes,
   timelineEntrySortValue,
+  timelineEntryWorldDate,
 } from "@/lib/timeline";
 
 const KIND_META: Record<TimelineKind, { label: string; icon: string }> = {
@@ -39,14 +41,30 @@ export default function CampaignTimeline({
   entries,
   time,
   onShowDetails,
+  onSaveEntry,
 }: {
   entries: TimelineEntry[];
   time: CampaignTimeState;
   onShowDetails: () => void;
+  onSaveEntry: (input: ManualTimelineEntryInput, entryId?: string) => string | null;
 }) {
   const [kind, setKind] = useState<TimelineKind | "all">("all");
   const [tag, setTag] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [editor, setEditor] = useState<{
+    entryId?: string;
+    title: string;
+    description: string;
+    kind: TimelineKind;
+    tags: string;
+    importance: "normal" | "major";
+    year: number;
+    monthIndex: number;
+    day: number;
+    hour: number;
+    minute: number;
+  } | null>(null);
+  const [editorError, setEditorError] = useState("");
 
   const visibleEntries = useMemo(
     () => entries
@@ -71,15 +89,76 @@ export default function CampaignTimeline({
       .includes(normalizedQuery);
   });
 
+  function openNewEntry() {
+    const current = deriveCampaignDateTime(time);
+    setEditor({
+      title: "",
+      description: "",
+      kind: "other",
+      tags: "",
+      importance: "normal",
+      year: current.year,
+      monthIndex: current.monthIndex,
+      day: current.day,
+      hour: current.hour,
+      minute: current.minute,
+    });
+    setEditorError("");
+  }
+
+  function openEditEntry(entry: TimelineEntry) {
+    const date = timelineEntryWorldDate(time, entry);
+    setEditor({
+      entryId: entry.id,
+      title: entry.title,
+      description: entry.description,
+      kind: entry.kind,
+      tags: (entry.tags || []).join(", "),
+      importance: entry.importance,
+      year: date.year,
+      monthIndex: date.monthIndex,
+      day: date.day,
+      hour: date.hour,
+      minute: date.minute,
+    });
+    setEditorError("");
+  }
+
+  function submitEditor(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!editor) return;
+    const error = onSaveEntry({
+      title: editor.title,
+      description: editor.description,
+      kind: editor.kind,
+      tags: editor.tags.split(",").map((item) => item.trim()).filter(Boolean),
+      importance: editor.importance,
+      year: editor.year,
+      monthIndex: editor.monthIndex,
+      day: editor.day,
+      hour: editor.hour,
+      minute: editor.minute,
+    }, editor.entryId);
+    if (error) {
+      setEditorError(error);
+      return;
+    }
+    setEditor(null);
+    setEditorError("");
+  }
+
   return (
     <section className="campaignTimelinePanel">
       <header className="campaignTimelineHeader">
         <div>
           <div className="eyebrow">MEMÓRIA DA CAMPANHA</div>
           <h1>Linha do tempo</h1>
-          <p>Acontecimentos e descobertas registrados pelo Mestre na ordem em que ocorreram no mundo.</p>
+          <p>Acontecimentos e descobertas da campanha na ordem em que ocorreram no mundo. Você também pode corrigir ou registrar fatos manualmente.</p>
         </div>
-        <button type="button" className="timelineDetailsButton" onClick={onShowDetails}>Detalhes</button>
+        <div className="timelineHeaderActions">
+          <button type="button" className="timelineAddButton" onClick={openNewEntry}>＋ Adicionar evento</button>
+          <button type="button" className="timelineDetailsButton" onClick={onShowDetails}>Detalhes</button>
+        </div>
       </header>
 
       <div className="timelineFilters">
@@ -129,7 +208,10 @@ export default function CampaignTimeline({
                     <div className="timelineEntryBody">
                       <div className="timelineEntryTitleRow">
                         <small>{meta.label.toUpperCase()}</small>
-                        {entry.importance === "major" && <b>MARCO</b>}
+                        <div>
+                          {entry.importance === "major" && <b>MARCO</b>}
+                          <button type="button" onClick={() => openEditEntry(entry)}>Editar</button>
+                        </div>
                       </div>
                       <h2>{entry.title}</h2>
                       {entry.description && <p>{entry.description}</p>}
@@ -149,7 +231,89 @@ export default function CampaignTimeline({
         <div className="timelineEmpty">
           <b>◌</b>
           <h3>Nenhum acontecimento aqui ainda.</h3>
-          <p>{visibleEntries.length ? "Os filtros atuais não encontraram entradas." : "Quando algo importante acontecer ou for descoberto, o Mestre registrará aqui."}</p>
+          <p>{visibleEntries.length ? "Os filtros atuais não encontraram entradas." : "Você pode registrar manualmente acontecimentos do gancho, da história da personagem ou da própria campanha."}</p>
+          {!visibleEntries.length && <button type="button" onClick={openNewEntry}>Adicionar primeiro evento</button>}
+        </div>
+      )}
+
+      {editor && (
+        <div className="modalBackdrop timelineEditorBackdrop" onClick={() => setEditor(null)}>
+          <form className="timelineEditorModal" onSubmit={submitEditor} onClick={(event) => event.stopPropagation()}>
+            <header>
+              <div>
+                <small>{editor.entryId ? "EDITAR ACONTECIMENTO" : "NOVO ACONTECIMENTO"}</small>
+                <h2>{editor.entryId ? "Corrigir evento da timeline" : "Adicionar à timeline"}</h2>
+                <p>Use um evento por registro. A data pode ser estimada quando a história não informar um momento exato.</p>
+              </div>
+              <button type="button" aria-label="Fechar" onClick={() => setEditor(null)}>×</button>
+            </header>
+
+            <div className="timelineEditorFields">
+              <label className="timelineEditorWide">
+                <span>Título</span>
+                <input
+                  value={editor.title}
+                  maxLength={90}
+                  placeholder="Ex.: Zervyna entrou na Academia Deathlock"
+                  onChange={(event) => setEditor({ ...editor, title: event.target.value })}
+                  autoFocus
+                />
+              </label>
+              <label className="timelineEditorWide">
+                <span>Descrição</span>
+                <textarea
+                  value={editor.description}
+                  maxLength={360}
+                  rows={4}
+                  placeholder="Descreva apenas este acontecimento."
+                  onChange={(event) => setEditor({ ...editor, description: event.target.value })}
+                />
+              </label>
+              <label>
+                <span>Tipo</span>
+                <select value={editor.kind} onChange={(event) => setEditor({ ...editor, kind: event.target.value as TimelineKind })}>
+                  {Object.entries(KIND_META).map(([value, meta]) => <option value={value} key={value}>{meta.label}</option>)}
+                </select>
+              </label>
+              <label>
+                <span>Importância</span>
+                <select value={editor.importance} onChange={(event) => setEditor({ ...editor, importance: event.target.value as "normal" | "major" })}>
+                  <option value="normal">Normal</option>
+                  <option value="major">Marco importante</option>
+                </select>
+              </label>
+              <label className="timelineEditorWide">
+                <span>Tags <em>separadas por vírgula</em></span>
+                <input value={editor.tags} placeholder="Academia, Zervyna" onChange={(event) => setEditor({ ...editor, tags: event.target.value })} />
+              </label>
+            </div>
+
+            <div className="timelineEditorDate">
+              <small>DATA NO MUNDO</small>
+              <div>
+                <label><span>Ano</span><input type="number" value={editor.year} onChange={(event) => setEditor({ ...editor, year: Number(event.target.value) })} /></label>
+                <label>
+                  <span>Mês</span>
+                  <select value={editor.monthIndex} onChange={(event) => {
+                    const monthIndex = Number(event.target.value);
+                    const maxDay = time.calendar.months[monthIndex]?.days || 1;
+                    setEditor({ ...editor, monthIndex, day: Math.min(editor.day, maxDay) });
+                  }}>
+                    {time.calendar.months.map((month, index) => <option value={index} key={month.id}>{month.name}</option>)}
+                  </select>
+                </label>
+                <label><span>Dia</span><input type="number" min={1} max={time.calendar.months[editor.monthIndex]?.days || 1} value={editor.day} onChange={(event) => setEditor({ ...editor, day: Number(event.target.value) })} /></label>
+                <label><span>Hora</span><input type="number" min={0} max={23} value={editor.hour} onChange={(event) => setEditor({ ...editor, hour: Number(event.target.value) })} /></label>
+                <label><span>Minuto</span><input type="number" min={0} max={59} value={editor.minute} onChange={(event) => setEditor({ ...editor, minute: Number(event.target.value) })} /></label>
+              </div>
+            </div>
+
+            {editorError && <p className="timelineEditorError">{editorError}</p>}
+            <footer>
+              <button type="button" className="timelineEditorCancel" onClick={() => setEditor(null)}>Cancelar</button>
+              <button type="submit" className="timelineEditorSave">{editor.entryId ? "Salvar alterações" : "Adicionar evento"}</button>
+            </footer>
+          </form>
         </div>
       )}
     </section>

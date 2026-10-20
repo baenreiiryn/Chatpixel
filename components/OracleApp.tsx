@@ -60,6 +60,7 @@ import {
   mergeTimelineEntries,
   parseTimelineSynthesis,
   TIMELINE_SCHEMA_VERSION,
+  upsertManualTimelineEntry,
 } from "@/lib/timeline";
 import {
   dualityFormulaFromCommand,
@@ -2554,6 +2555,18 @@ export default function OracleApp() {
                   : state.timeline ?? []}
                 time={state.time}
                 onShowDetails={() => setMemoryMode("details")}
+                onSaveEntry={(input, entryId) => {
+                  try {
+                    const current = stateRef.current;
+                    const saved = upsertManualTimelineEntry(current.time, current.timeline ?? [], input, undefined, entryId);
+                    const next = { ...current, timeline: saved.timeline };
+                    stateRef.current = next;
+                    setState(next);
+                    return null;
+                  } catch (error) {
+                    return error instanceof Error ? error.message : "Não foi possível salvar este acontecimento.";
+                  }
+                }}
               />
             ) : (
               <section className="widePanel panel memoryDetailsPanel">

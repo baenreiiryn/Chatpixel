@@ -214,6 +214,95 @@ test("GM can add distinct historical facts on the same stipulated world date", (
   assert.deepEqual(second.state.timeline[0].worldDate, second.state.timeline[1].worldDate);
 });
 
+test("player can add a manual timeline event on a historical world date", () => {
+  const state = structuredClone(game.initialState);
+  state.timeline = [];
+  const current = timeline.timelineEntryWorldDate(state.time, {
+    id: "now",
+    title: "now",
+    description: "now",
+    campaignMinute: state.time.campaignMinute,
+    createdAt: new Date().toISOString(),
+    kind: "other",
+    tags: [],
+    visibility: "public",
+    importance: "normal",
+  });
+  const saved = timeline.upsertManualTimelineEntry(state.time, state.timeline, {
+    title: "Zervyna entrou na academia",
+    description: "Zervyna iniciou seus estudos na Academia Deathlock.",
+    kind: "milestone",
+    tags: ["Zervyna", "Academia"],
+    importance: "major",
+    year: current.year - 3,
+    monthIndex: current.monthIndex,
+    day: current.day,
+    hour: 9,
+    minute: 30,
+  }, "2026-01-01T00:00:00.000Z");
+
+  assert.equal(saved.timeline.length, 1);
+  assert.equal(saved.entry.title, "Zervyna entrou na academia");
+  assert.equal(saved.entry.visibility, "public");
+  assert.equal(saved.entry.importance, "major");
+  assert.deepEqual(saved.entry.tags, ["Zervyna", "Academia"]);
+  assert.equal(saved.entry.worldDate.year, current.year - 3);
+  assert.equal(saved.entry.createdAt, "2026-01-01T00:00:00.000Z");
+});
+
+test("player can edit an existing timeline event without changing its identity", () => {
+  const state = structuredClone(game.initialState);
+  const original = structuredClone(state.timeline[0]);
+  state.timeline = [original];
+  const date = timeline.timelineEntryWorldDate(state.time, original);
+  const saved = timeline.upsertManualTimelineEntry(state.time, state.timeline, {
+    title: "A dívida de Arven foi esclarecida",
+    description: "O grupo confirmou por que Arven lhes devia um favor.",
+    kind: "relationship",
+    tags: ["Arven", "Relação"],
+    importance: "normal",
+    year: date.year,
+    monthIndex: date.monthIndex,
+    day: date.day,
+    hour: date.hour,
+    minute: date.minute,
+  }, "2026-01-02T00:00:00.000Z", original.id);
+
+  assert.equal(saved.timeline.length, 1);
+  assert.equal(saved.entry.id, original.id);
+  assert.equal(saved.entry.createdAt, original.createdAt);
+  assert.equal(saved.entry.title, "A dívida de Arven foi esclarecida");
+  assert.equal(saved.entry.memoryId, undefined);
+});
+
+test("player manual timeline entry rejects a future world date", () => {
+  const state = structuredClone(game.initialState);
+  const current = timeline.timelineEntryWorldDate(state.time, {
+    id: "now",
+    title: "now",
+    description: "now",
+    campaignMinute: state.time.campaignMinute,
+    createdAt: new Date().toISOString(),
+    kind: "other",
+    tags: [],
+    visibility: "public",
+    importance: "normal",
+  });
+
+  assert.throws(() => timeline.upsertManualTimelineEntry(state.time, [], {
+    title: "Evento futuro",
+    description: "Ainda não aconteceu.",
+    kind: "world",
+    tags: [],
+    importance: "normal",
+    year: current.year + 1,
+    monthIndex: current.monthIndex,
+    day: current.day,
+    hour: current.hour,
+    minute: current.minute,
+  }), /futura/i);
+});
+
 test("memory_record no longer duplicates identical persistent memory", () => {
   const state = structuredClone(game.initialState);
   state.memories = [];

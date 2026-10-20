@@ -125,6 +125,72 @@ export function formatTimelineEntryDate(time: CampaignTimeState, entry: Timeline
   return `${weekday}${date.day} de ${month?.name || "?"}, ${date.year} · ${String(date.hour).padStart(2, "0")}:${String(date.minute).padStart(2, "0")}`;
 }
 
+export type ManualTimelineEntryInput = {
+  title: string;
+  description: string;
+  kind: TimelineKind;
+  tags: string[];
+  importance: "normal" | "major";
+  year: number;
+  monthIndex: number;
+  day: number;
+  hour: number;
+  minute: number;
+};
+
+export function upsertManualTimelineEntry(
+  time: CampaignTimeState,
+  entries: TimelineEntry[],
+  input: ManualTimelineEntryInput,
+  createdAt = new Date().toISOString(),
+  entryId?: string,
+) {
+  const title = normalizeText(input.title, 90);
+  const description = normalizeText(input.description, 360);
+  if (!title || !description) throw new Error("Título e descrição são obrigatórios.");
+  if (!TIMELINE_KINDS.includes(input.kind)) throw new Error("Tipo de acontecimento inválido.");
+
+  const current = currentWorldDate(time);
+  const monthIndex = clampInteger(input.monthIndex, 0, Math.max(0, time.calendar.months.length - 1), current.monthIndex);
+  const month = time.calendar.months[monthIndex];
+  const worldDate = {
+    year: Math.trunc(Number(input.year)),
+    monthIndex,
+    day: clampInteger(input.day, 1, month?.days || 1, current.day),
+    hour: clampInteger(input.hour, 0, 23, current.hour),
+    minute: clampInteger(input.minute, 0, 59, current.minute),
+  };
+  if (!Number.isFinite(worldDate.year)) throw new Error("Ano inválido.");
+
+  const currentOrdinal = worldDateOrdinalMinute(time.calendar, current);
+  const worldOrdinal = worldDateOrdinalMinute(time.calendar, worldDate);
+  if (worldOrdinal > currentOrdinal) throw new Error("A data da timeline não pode ser futura.");
+
+  const existing = entryId ? entries.find((entry) => entry.id === entryId) : undefined;
+  if (entryId && !existing) throw new Error("Acontecimento da timeline não encontrado.");
+  const tags = Array.from(new Set(input.tags.map((tag) => normalizeText(tag, 32)).filter(Boolean))).slice(0, 8);
+  const campaignMinute = Math.min(
+    time.campaignMinute,
+    Math.max(0, time.campaignMinute - (currentOrdinal - worldOrdinal)),
+  );
+  const entry: TimelineEntry = {
+    id: existing?.id || globalThis.crypto?.randomUUID?.() || `timeline-player-${Math.random().toString(36).slice(2, 10)}`,
+    title,
+    description,
+    campaignMinute,
+    worldDate,
+    createdAt: existing?.createdAt || createdAt,
+    kind: input.kind,
+    tags,
+    visibility: "public",
+    importance: input.importance,
+    ...(existing?.image ? { image: existing.image } : {}),
+  };
+  const timeline = [...entries.filter((item) => item.id !== entry.id), entry]
+    .sort((a, b) => timelineEntrySortValue(time, a) - timelineEntrySortValue(time, b) || Date.parse(a.createdAt) - Date.parse(b.createdAt));
+  return { timeline, entry };
+}
+
 function sourceMemories(state: GameState) {
   return state.memories
     .filter((memory) => memory.kind === "event" || memory.kind === "fact")
