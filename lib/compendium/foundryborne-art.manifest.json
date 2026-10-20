@@ -1,0 +1,1904 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "name": "Foundryborne Daggerheart",
+    "url": "https://github.com/Foundryborne/daggerheart",
+    "license": "Darrington Press Community Gaming License (DPCGL)"
+  },
+  "notices": {
+    "pack": "/compendium/daggerheart/foundryborne/DAGGERHEART_SRD_LICENSE.txt",
+    "domainIcons": "/compendium/daggerheart/foundryborne/DOMAIN_ICON_NOTICE.txt"
+  },
+  "entries": [
+    {
+      "type": "domainCard",
+      "name": "Adjust Reality",
+      "normalizedName": "adjustreality",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Arcana-Touched",
+      "normalizedName": "arcanatouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Arcane Reflection",
+      "normalizedName": "arcanereflection",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Armorer",
+      "normalizedName": "armorer",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "A Soldier's Bond",
+      "normalizedName": "asoldiersbond",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Astral Projection",
+      "normalizedName": "astralprojection",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Avatar of Terror",
+      "normalizedName": "avatarofterror",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Banish",
+      "normalizedName": "banish",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Bare Bones",
+      "normalizedName": "barebones",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Battle Cry",
+      "normalizedName": "battlecry",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Battle-Hardened",
+      "normalizedName": "battlehardened",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Battle Monster",
+      "normalizedName": "battlemonster",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Blade-Touched",
+      "normalizedName": "bladetouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Blighting Strike",
+      "normalizedName": "blightingstrike",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Blink Out",
+      "normalizedName": "blinkout",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Body Basher",
+      "normalizedName": "bodybasher",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Bold Presence",
+      "normalizedName": "boldpresence",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Bolt Beacon",
+      "normalizedName": "boltbeacon",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Bone-Touched",
+      "normalizedName": "bonetouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Ava",
+      "normalizedName": "bookofava",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Exota",
+      "normalizedName": "bookofexota",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Grynn",
+      "normalizedName": "bookofgrynn",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Homet",
+      "normalizedName": "bookofhomet",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Illiat",
+      "normalizedName": "bookofilliat",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Korvax",
+      "normalizedName": "bookofkorvax",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Norai",
+      "normalizedName": "bookofnorai",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Ronin",
+      "normalizedName": "bookofronin",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Sitil",
+      "normalizedName": "bookofsitil",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Tyfar",
+      "normalizedName": "bookoftyfar",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Vagras",
+      "normalizedName": "bookofvagras",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Vyola",
+      "normalizedName": "bookofvyola",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Book of Yarrow",
+      "normalizedName": "bookofyarrow",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Boost",
+      "normalizedName": "boost",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Brace",
+      "normalizedName": "brace",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Breaking Blow",
+      "normalizedName": "breakingblow",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Chain Lightning",
+      "normalizedName": "chainlightning",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Chains of Affliction",
+      "normalizedName": "chainsofaffliction",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Champion's Edge",
+      "normalizedName": "championsedge",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Chokehold",
+      "normalizedName": "chokehold",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Cinder Grasp",
+      "normalizedName": "cindergrasp",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Cloaking Blast",
+      "normalizedName": "cloakingblast",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Codex-Touched",
+      "normalizedName": "codextouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Confusing Aura",
+      "normalizedName": "confusingaura",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Conjured Steeds",
+      "normalizedName": "conjuredsteeds",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Conjure Swarm",
+      "normalizedName": "conjureswarm",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Copycat",
+      "normalizedName": "copycat",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Corrosive Projectile",
+      "normalizedName": "corrosiveprojectile",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Counterspell",
+      "normalizedName": "counterspell",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Critical Inspiration",
+      "normalizedName": "criticalinspiration",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Cruel Precision",
+      "normalizedName": "cruelprecision",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Damnation",
+      "normalizedName": "damnation",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Dark Army",
+      "normalizedName": "darkarmy",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Darkfire",
+      "normalizedName": "darkfire",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Dark Whispers",
+      "normalizedName": "darkwhispers",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Deadly Focus",
+      "normalizedName": "deadlyfocus",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Death Grip",
+      "normalizedName": "deathgrip",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Deathrun",
+      "normalizedName": "deathrun",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Deft Deceiver",
+      "normalizedName": "deftdeceiver",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Deft Maneuvers",
+      "normalizedName": "deftmaneuvers",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Dire Strike",
+      "normalizedName": "direstrike",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Disintegration Wave",
+      "normalizedName": "disintegrationwave",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Divination",
+      "normalizedName": "divination",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Dread-Touched",
+      "normalizedName": "dreadtouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Earthquake",
+      "normalizedName": "earthquake",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Eclipse",
+      "normalizedName": "eclipse",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Eldritch Flesh",
+      "normalizedName": "eldritchflesh",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Encore",
+      "normalizedName": "encore",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Endless Charisma",
+      "normalizedName": "endlesscharisma",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Enrapture",
+      "normalizedName": "enrapture",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Falling Sky",
+      "normalizedName": "fallingsky",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Fane of the Wilds",
+      "normalizedName": "faneofthewilds",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Ferocity",
+      "normalizedName": "ferocity",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Final Words",
+      "normalizedName": "finalwords",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Flight",
+      "normalizedName": "flight",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Floating Eye",
+      "normalizedName": "floatingeye",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Forager",
+      "normalizedName": "forager",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Forceful Push",
+      "normalizedName": "forcefulpush",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Force of Nature",
+      "normalizedName": "forceofnature",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Forest Sprites",
+      "normalizedName": "forestsprites",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Fortified Armor",
+      "normalizedName": "fortifiedarmor",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Frenzy",
+      "normalizedName": "frenzy",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Full Surge",
+      "normalizedName": "fullsurge",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Get Back Up",
+      "normalizedName": "getbackup",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Gifted Tracker",
+      "normalizedName": "giftedtracker",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Glancing Blow",
+      "normalizedName": "glancingblow",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Glyph of Nightfall",
+      "normalizedName": "glyphofnightfall",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Goad Them On",
+      "normalizedName": "goadthemon",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Gore and Glory",
+      "normalizedName": "goreandglory",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Grace-Touched",
+      "normalizedName": "gracetouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Ground Pound",
+      "normalizedName": "groundpound",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Healing Field",
+      "normalizedName": "healingfield",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Healing Hands",
+      "normalizedName": "healinghands",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Healing Strike",
+      "normalizedName": "healingstrike",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Hideous Retribution",
+      "normalizedName": "hideousretribution",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Hold the Line",
+      "normalizedName": "holdtheline",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Hush",
+      "normalizedName": "hush",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Hypnotic Shimmer",
+      "normalizedName": "hypnoticshimmer",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "I Am Your Shield",
+      "normalizedName": "iamyourshield",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Inevitable",
+      "normalizedName": "inevitable",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Inspirational Words",
+      "normalizedName": "inspirationalwords",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Invigoration",
+      "normalizedName": "invigoration",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Invisibility",
+      "normalizedName": "invisibility",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Invoke Torment",
+      "normalizedName": "invoketorment",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "I See It Coming",
+      "normalizedName": "iseeitcoming",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Jump Scare",
+      "normalizedName": "jumpscare",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Know Thy Enemy",
+      "normalizedName": "knowthyenemy",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Lead by Example",
+      "normalizedName": "leadbyexample",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Lean on Me",
+      "normalizedName": "leanonme",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Life Ward",
+      "normalizedName": "lifeward",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Manifest Wall",
+      "normalizedName": "manifestwall",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Mass Disguise",
+      "normalizedName": "massdisguise",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Mass Enrapture",
+      "normalizedName": "massenrapture",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Master of the Craft",
+      "normalizedName": "masterofthecraft",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Mending Touch",
+      "normalizedName": "mendingtouch",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Midnight Spirit",
+      "normalizedName": "midnightspirit",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Midnight-Touched",
+      "normalizedName": "midnighttouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Natural Familiar",
+      "normalizedName": "naturalfamiliar",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Nature's Tongue",
+      "normalizedName": "naturestongue",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Never Upstaged",
+      "normalizedName": "neverupstaged",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Night Terror",
+      "normalizedName": "nightterror",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Not Good Enough",
+      "normalizedName": "notgoodenough",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Notorious",
+      "normalizedName": "notorious",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Onslaught",
+      "normalizedName": "onslaught",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "On the Brink",
+      "normalizedName": "onthebrink",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Overwhelming Aura",
+      "normalizedName": "overwhelmingaura",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Phantom Retreat",
+      "normalizedName": "phantomretreat",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Pick and Pull",
+      "normalizedName": "pickandpull",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Plant Dominion",
+      "normalizedName": "plantdominion",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Premonition",
+      "normalizedName": "premonition",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Preservation Blast",
+      "normalizedName": "preservationblast",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Rage Up",
+      "normalizedName": "rageup",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Rain of Blades",
+      "normalizedName": "rainofblades",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Rapid Riposte",
+      "normalizedName": "rapidriposte",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Reaper's Strike",
+      "normalizedName": "reapersstrike",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Reassurance",
+      "normalizedName": "reassurance",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Reckless",
+      "normalizedName": "reckless",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Recovery",
+      "normalizedName": "recovery",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Redirect",
+      "normalizedName": "redirect",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Rejuvenation Barrier",
+      "normalizedName": "rejuvenationbarrier",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Restoration",
+      "normalizedName": "restoration",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Resurrection",
+      "normalizedName": "resurrection",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Rift Walker",
+      "normalizedName": "riftwalker",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Rise Up",
+      "normalizedName": "riseup",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Rousing Strike",
+      "normalizedName": "rousingstrike",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Rune Ward",
+      "normalizedName": "runeward",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Safe Haven",
+      "normalizedName": "safehaven",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Sage-Touched",
+      "normalizedName": "sagetouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Salvation Beam",
+      "normalizedName": "salvationbeam",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Savor the Anguish",
+      "normalizedName": "savortheanguish",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Scramble",
+      "normalizedName": "scramble",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Second Wind",
+      "normalizedName": "secondwind",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Sensory Projection",
+      "normalizedName": "sensoryprojection",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Shadowbind",
+      "normalizedName": "shadowbind",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Shadowhunter",
+      "normalizedName": "shadowhunter",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Shape Material",
+      "normalizedName": "shapematerial",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Shared Trauma",
+      "normalizedName": "sharedtrauma",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Share the Burden",
+      "normalizedName": "sharetheburden",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Shield Aura",
+      "normalizedName": "shieldaura",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Shrug It Off",
+      "normalizedName": "shrugitoff",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Sigil of Retribution",
+      "normalizedName": "sigilofretribution",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Signature Move",
+      "normalizedName": "signaturemove",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Siphon Essence",
+      "normalizedName": "siphonessence",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Smite",
+      "normalizedName": "smite",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Soothing Speech",
+      "normalizedName": "soothingspeech",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Specter of the Dark",
+      "normalizedName": "specterofthedark",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Spectral Mist",
+      "normalizedName": "spectralmist",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Spellcharge",
+      "normalizedName": "spellcharge",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Splendor-Touched",
+      "normalizedName": "splendortouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Splintering Strike",
+      "normalizedName": "splinteringstrike",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Stealth Expertise",
+      "normalizedName": "stealthexpertise",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Strategic Approach",
+      "normalizedName": "strategicapproach",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Stunning Sunlight",
+      "normalizedName": "stunningsunlight",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Summon Horror",
+      "normalizedName": "summonhorror",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Support Tank",
+      "normalizedName": "supporttank",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Swift Step",
+      "normalizedName": "swiftstep",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Tactician",
+      "normalizedName": "tactician",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Telekinesis",
+      "normalizedName": "telekinesis",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Teleport",
+      "normalizedName": "teleport",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Tell No Lies",
+      "normalizedName": "tellnolies",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Tempest",
+      "normalizedName": "tempest",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Terrify",
+      "normalizedName": "terrify",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Thorn Skin",
+      "normalizedName": "thornskin",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Thought Delver",
+      "normalizedName": "thoughtdelver",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Through Your Eyes",
+      "normalizedName": "throughyoureyes",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Towering Stalk",
+      "normalizedName": "toweringstalk",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Transcendent Union",
+      "normalizedName": "transcendentunion",
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/codex.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Troublemaker",
+      "normalizedName": "troublemaker",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Twilight Toll",
+      "normalizedName": "twilighttoll",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Umbral Veil",
+      "normalizedName": "umbralveil",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Unbreakable",
+      "normalizedName": "unbreakable",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Uncanny Disguise",
+      "normalizedName": "uncannydisguise",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Unleash Chaos",
+      "normalizedName": "unleashchaos",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Untouchable",
+      "normalizedName": "untouchable",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Unyielding Armor",
+      "normalizedName": "unyieldingarmor",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Valor-Touched",
+      "normalizedName": "valortouched",
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/valor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Vanishing Dodge",
+      "normalizedName": "vanishingdodge",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Veil of Night",
+      "normalizedName": "veilofnight",
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/midnight.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Versatile Fighter",
+      "normalizedName": "versatilefighter",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Vicious Entangle",
+      "normalizedName": "viciousentangle",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Vitality",
+      "normalizedName": "vitality",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Voice of Dread",
+      "normalizedName": "voiceofdread",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Voice of Reason",
+      "normalizedName": "voiceofreason",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Wall of Hunger",
+      "normalizedName": "wallofhunger",
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/dread.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Wall Walk",
+      "normalizedName": "wallwalk",
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/arcana.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Whirlwind",
+      "normalizedName": "whirlwind",
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/blade.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Wild Fortress",
+      "normalizedName": "wildfortress",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Wild Surge",
+      "normalizedName": "wildsurge",
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/sage.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Words of Discord",
+      "normalizedName": "wordsofdiscord",
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/grace.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Wrangle",
+      "normalizedName": "wrangle",
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/bone.png"
+    },
+    {
+      "type": "domainCard",
+      "name": "Zone of Protection",
+      "normalizedName": "zoneofprotection",
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)",
+      "sourcePath": "assets/icons/domains/domain-card/splendor.png"
+    }
+  ]
+}

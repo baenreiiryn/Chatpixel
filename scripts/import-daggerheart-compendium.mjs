@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { FOUNDRYBORNE_SOURCE_URL, normalizeSourceArtName } from "./sync-foundryborne-art.mjs";
 
 const root = process.cwd();
 const translationRoot = process.env.DAGGERHEART_TRANSLATION
@@ -13,6 +14,7 @@ const compendiumRoot = path.join(translationRoot, "compendium");
 const langPath = path.join(translationRoot, "lang", "pt-BR.json");
 const outputPath = path.join(root, "lib", "compendium", "daggerheart.generated.json");
 const artOutputRoot = path.join(root, "public", "compendium", "daggerheart", "adversaries");
+const foundryborneManifestPath = path.join(root, "lib", "compendium", "foundryborne-art.manifest.json");
 
 const CORE_CLASSES = new Set([
   "Bard", "Druid", "Guardian", "Ranger", "Rogue", "Seraph", "Sorcerer", "Warrior", "Wizard",
@@ -371,9 +373,9 @@ function extractMechanics(description) {
   };
 }
 
-function makeEntry({ key, data, type, category, source = "core", parent = null, art = null }) {
+function makeEntry({ key, data, type, category, source = "core", parent = null, art = null, artSource = null, artLicense = null }) {
   const description = cleanText(data.description || "");
-  return {
+  const entry = {
     id: source + "-" + type + "-" + slug(key),
     sourceId: key,
     name: cleanText(data.name || key),
@@ -386,11 +388,31 @@ function makeEntry({ key, data, type, category, source = "core", parent = null, 
     mechanics: extractMechanics(description),
     art,
   };
+  if (artSource) entry.artSource = artSource;
+  if (artLicense) entry.artLicense = artLicense;
+  return entry;
 }
 
 function loadEntries(file) {
   const data = readJson(path.join(compendiumRoot, file));
   return Object.entries(data.entries || {});
+}
+
+const foundryborneManifest = fs.existsSync(foundryborneManifestPath)
+  ? readJson(foundryborneManifestPath)
+  : { entries: [] };
+const foundryborneDomainArt = new Map();
+for (const entry of foundryborneManifest.entries || []) {
+  if (entry.type !== "domainCard") continue;
+  const normalizedName = normalizeSourceArtName(entry.name);
+  if (!normalizedName || entry.normalizedName !== normalizedName) {
+    throw new Error(`Invalid Foundryborne art manifest entry: ${entry.name || "<unnamed>"}`);
+  }
+  foundryborneDomainArt.set(normalizedName, entry);
+}
+
+function domainArtFor(key) {
+  return foundryborneDomainArt.get(normalizeSourceArtName(key)) || null;
 }
 
 const entries = [];
@@ -507,10 +529,31 @@ for (const [key, rawData] of loadEntries("daggerheart-expansion-content.subclass
   }));
 }
 for (const [key, data] of loadEntries("daggerheart.domains.json")) {
-  entries.push(makeEntry({ key, data, type: "domainCard", category: "domains" }));
+  const sourceArt = domainArtFor(key);
+  entries.push(makeEntry({
+    key,
+    data,
+    type: "domainCard",
+    category: "domains",
+    art: sourceArt?.art || null,
+    artSource: sourceArt?.artSource || null,
+    artLicense: sourceArt?.artLicense || null,
+  }));
 }
 for (const [key, data] of loadEntries("daggerheart-expansion-content.domains.json")) {
-  if (key.trim()) entries.push(makeEntry({ key, data, type: "domainCard", category: "domains", source: "expansion" }));
+  if (key.trim()) {
+    const sourceArt = domainArtFor(key);
+    entries.push(makeEntry({
+      key,
+      data,
+      type: "domainCard",
+      category: "domains",
+      source: "expansion",
+      art: sourceArt?.art || null,
+      artSource: sourceArt?.artSource || null,
+      artLicense: sourceArt?.artLicense || null,
+    }));
+  }
 }
 
 for (const [file, type] of [
@@ -681,6 +724,7 @@ const payload = {
   sources: {
     translation: "https://github.com/etiagoabreu/daggerheart-translation-pt-BR",
     art: "https://github.com/mordachai/art-for-daggerheart",
+    foundryborne: FOUNDRYBORNE_SOURCE_URL,
     srd: "https://www.daggerheart.com/srd/",
   },
   categories,

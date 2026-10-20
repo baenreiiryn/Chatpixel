@@ -1,8 +1,9 @@
 {
-  "generatedAt": "2026-10-19T11:22:20.935Z",
+  "generatedAt": "2026-10-20T14:44:02.002Z",
   "sources": {
     "translation": "https://github.com/etiagoabreu/daggerheart-translation-pt-BR",
     "art": "https://github.com/mordachai/art-for-daggerheart",
+    "foundryborne": "https://github.com/Foundryborne/daggerheart",
     "srd": "https://www.daggerheart.com/srd/"
   },
   "categories": [
@@ -7993,7 +7994,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-wall-walk",
@@ -8022,7 +8025,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-chain-lightning",
@@ -8061,7 +8066,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-phantom-retreat",
@@ -8092,7 +8099,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-tyfar",
@@ -8127,7 +8136,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-preservation-blast",
@@ -8160,7 +8171,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-hypnotic-shimmer",
@@ -8195,7 +8208,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-reckless",
@@ -8224,7 +8239,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-deft-deceiver",
@@ -8253,7 +8270,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-copycat",
@@ -8280,7 +8299,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-gore-and-glory",
@@ -8303,7 +8324,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-salvation-beam",
@@ -8332,7 +8355,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-flight",
@@ -8359,7 +8384,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-cinder-grasp",
@@ -8395,7 +8422,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-arcana-touched",
@@ -8420,7 +8449,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-strategic-approach",
@@ -8448,7 +8479,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-scramble",
@@ -8475,7 +8508,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-eclipse",
@@ -8517,7 +8552,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-counterspell",
@@ -8542,7 +8579,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-codex-touched",
@@ -8575,7 +8614,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-through-your-eyes",
@@ -8601,7 +8642,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-breaking-blow",
@@ -8636,7 +8679,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-share-the-burden",
@@ -8663,7 +8708,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-wrangle",
@@ -8696,7 +8743,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-untouchable",
@@ -8719,7 +8768,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-plant-dominion",
@@ -8750,7 +8801,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-wild-fortress",
@@ -8783,7 +8836,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-shadowhunter",
@@ -8806,7 +8861,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-critical-inspiration",
@@ -8833,7 +8890,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-banish",
@@ -8863,7 +8922,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-thought-delver",
@@ -8896,7 +8957,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-glyph-of-nightfall",
@@ -8929,7 +8992,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-get-back-up",
@@ -8958,7 +9023,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-bolt-beacon",
@@ -8996,7 +9063,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-lean-on-me",
@@ -9021,7 +9090,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-earthquake",
@@ -9059,7 +9130,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-unbreakable",
@@ -9082,7 +9155,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-wild-surge",
@@ -9113,7 +9188,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-battle-cry",
@@ -9138,7 +9215,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-fane-of-the-wilds",
@@ -9165,7 +9244,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-midnight-spirit",
@@ -9200,7 +9281,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-telekinesis",
@@ -9232,7 +9315,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-vanishing-dodge",
@@ -9263,7 +9348,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-rune-ward",
@@ -9295,7 +9382,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-rage-up",
@@ -9324,7 +9413,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-blade-touched",
@@ -9347,7 +9438,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-healing-field",
@@ -9378,7 +9471,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-swift-step",
@@ -9401,7 +9496,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-tell-no-lies",
@@ -9434,7 +9531,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-pick-and-pull",
@@ -9457,7 +9556,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-teleport",
@@ -9489,7 +9590,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-rejuvenation-barrier",
@@ -9518,7 +9621,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-goad-them-on",
@@ -9551,7 +9656,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-onslaught",
@@ -9589,7 +9696,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-notorious",
@@ -9618,7 +9727,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-yarrow",
@@ -9654,7 +9765,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-splendor-touched",
@@ -9679,7 +9792,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-conjured-steeds",
@@ -9711,7 +9826,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-troublemaker",
@@ -9740,7 +9857,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-forest-sprites",
@@ -9781,7 +9900,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-shrug-it-off",
@@ -9810,7 +9931,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-arcane-reflection",
@@ -9839,7 +9962,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-divination",
@@ -9872,7 +9997,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-grace-touched",
@@ -9901,7 +10028,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-invisibility",
@@ -9936,7 +10065,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-i-am-your-shield",
@@ -9967,7 +10098,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-i-see-it-coming",
@@ -9998,7 +10131,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-signature-move",
@@ -10023,7 +10158,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-force-of-nature",
@@ -10057,7 +10194,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-reaper-s-strike",
@@ -10093,7 +10232,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-frenzy",
@@ -10118,7 +10259,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-never-upstaged",
@@ -10149,7 +10292,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-stealth-expertise",
@@ -10180,7 +10325,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-final-words",
@@ -10207,7 +10354,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-battle-hardened",
@@ -10238,7 +10387,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-know-thy-enemy",
@@ -10274,7 +10425,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-bone-touched",
@@ -10305,7 +10458,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-life-ward",
@@ -10336,7 +10491,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-battle-monster",
@@ -10365,7 +10522,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-soothing-speech",
@@ -10388,7 +10547,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-brace",
@@ -10422,7 +10583,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-blink-out",
@@ -10457,7 +10620,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-grynn",
@@ -10500,7 +10665,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-chokehold",
@@ -10533,7 +10700,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-confusing-aura",
@@ -10562,7 +10731,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-sigil-of-retribution",
@@ -10587,7 +10758,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-twilight-toll",
@@ -10612,7 +10785,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-ronin",
@@ -10643,7 +10818,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-full-surge",
@@ -10676,7 +10853,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-mending-touch",
@@ -10707,7 +10886,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-uncanny-disguise",
@@ -10736,7 +10917,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-splintering-strike",
@@ -10767,7 +10950,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-natural-familiar",
@@ -10806,7 +10991,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-manifest-wall",
@@ -10844,7 +11031,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-smite",
@@ -10877,7 +11066,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-rain-of-blades",
@@ -10918,7 +11109,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-boost",
@@ -10951,7 +11144,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-vyola",
@@ -10992,7 +11187,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-sage-touched",
@@ -11017,7 +11214,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-gifted-tracker",
@@ -11046,7 +11245,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-tactician",
@@ -11075,7 +11276,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-healing-hands",
@@ -11111,7 +11314,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-ground-pound",
@@ -11152,7 +11357,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-norai",
@@ -11193,7 +11400,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-tempest",
@@ -11240,7 +11449,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-invigoration",
@@ -11268,7 +11479,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-inevitable",
@@ -11293,7 +11506,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-healing-strike",
@@ -11324,7 +11539,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-a-soldier-s-bond",
@@ -11349,7 +11566,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-astral-projection",
@@ -11382,7 +11601,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-lead-by-example",
@@ -11413,7 +11634,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-ava",
@@ -11459,7 +11682,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-cloaking-blast",
@@ -11490,7 +11715,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-words-of-discord",
@@ -11525,7 +11752,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-adjust-reality",
@@ -11554,7 +11783,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-enrapture",
@@ -11589,7 +11820,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-premonition",
@@ -11614,7 +11847,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-body-basher",
@@ -11639,7 +11874,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-vagras",
@@ -11678,7 +11915,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-whirlwind",
@@ -11709,7 +11948,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-nature-s-tongue",
@@ -11743,7 +11984,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-cruel-precision",
@@ -11766,7 +12009,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-korvax",
@@ -11813,7 +12058,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-inspirational-words",
@@ -11838,7 +12085,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-armorer",
@@ -11861,7 +12110,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-mass-disguise",
@@ -11890,7 +12141,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-shape-material",
@@ -11921,7 +12174,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-deft-maneuvers",
@@ -11957,7 +12212,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-illiat",
@@ -11997,7 +12254,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-sitil",
@@ -12033,7 +12292,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-spellcharge",
@@ -12056,7 +12317,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-redirect",
@@ -12088,7 +12351,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-second-wind",
@@ -12115,7 +12380,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-homet",
@@ -12148,7 +12415,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-veil-of-night",
@@ -12177,7 +12446,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-sensory-projection",
@@ -12206,7 +12477,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-recovery",
@@ -12235,7 +12508,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-hush",
@@ -12273,7 +12548,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-falling-sky",
@@ -12305,7 +12582,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-overwhelming-aura",
@@ -12345,7 +12624,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-specter-of-the-dark",
@@ -12374,7 +12655,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-reassurance",
@@ -12399,7 +12682,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-ferocity",
@@ -12430,7 +12715,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-valor-touched",
@@ -12459,7 +12746,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-transcendent-union",
@@ -12497,7 +12786,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-hold-the-line",
@@ -12534,7 +12825,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-shadowbind",
@@ -12561,7 +12854,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-disintegration-wave",
@@ -12598,7 +12893,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-encore",
@@ -12625,7 +12922,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-bare-bones",
@@ -12648,7 +12947,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-zone-of-protection",
@@ -12680,7 +12981,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-stunning-sunlight",
@@ -12725,7 +13028,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-safe-haven",
@@ -12756,7 +13061,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-towering-stalk",
@@ -12797,7 +13104,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-glancing-blow",
@@ -12826,7 +13135,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-unleash-chaos",
@@ -12859,7 +13170,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-rise-up",
@@ -12882,7 +13195,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-thorn-skin",
@@ -12915,7 +13230,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-fortified-armor",
@@ -12938,7 +13255,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-book-of-exota",
@@ -12976,7 +13295,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/codex.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-rousing-strike",
@@ -13001,7 +13322,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-corrosive-projectile",
@@ -13033,7 +13356,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-vicious-entangle",
@@ -13072,7 +13397,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-conjure-swarm",
@@ -13115,7 +13442,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-shield-aura",
@@ -13151,7 +13480,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-champion-s-edge",
@@ -13185,7 +13516,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-unyielding-armor",
@@ -13214,7 +13547,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-vitality",
@@ -13237,7 +13572,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-support-tank",
@@ -13268,7 +13605,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-voice-of-reason",
@@ -13291,7 +13630,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-endless-charisma",
@@ -13320,7 +13661,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-rapid-riposte",
@@ -13351,7 +13694,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-bold-presence",
@@ -13384,7 +13729,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-midnight-touched",
@@ -13415,7 +13762,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-mass-enrapture",
@@ -13448,7 +13797,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-rift-walker",
@@ -13475,7 +13826,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-floating-eye",
@@ -13506,7 +13859,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/arcana.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-versatile-fighter",
@@ -13535,7 +13890,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-restoration",
@@ -13560,7 +13917,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-death-grip",
@@ -13601,7 +13960,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/sage.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-deathrun",
@@ -13633,7 +13994,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-not-good-enough",
@@ -13656,7 +14019,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-deadly-focus",
@@ -13681,7 +14046,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/blade.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-master-of-the-craft",
@@ -13704,7 +14071,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/grace.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-dark-whispers",
@@ -13735,7 +14104,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-resurrection",
@@ -13762,7 +14133,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/splendor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-forceful-push",
@@ -13794,7 +14167,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/valor.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-on-the-brink",
@@ -13817,7 +14192,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/bone.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-domainCard-night-terror",
@@ -13848,7 +14225,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/midnight.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-blood-spike",
@@ -14592,7 +14971,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-umbral-veil",
@@ -14619,7 +15000,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-voice-of-dread",
@@ -14650,7 +15033,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-hideous-retribution",
@@ -14688,7 +15073,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-siphon-essence",
@@ -14722,7 +15109,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-shared-trauma",
@@ -14749,7 +15138,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-terrify",
@@ -14778,7 +15169,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-chains-of-affliction",
@@ -14809,7 +15202,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-summon-horror",
@@ -14850,7 +15245,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-dire-strike",
@@ -14879,7 +15276,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-spectral-mist",
@@ -14910,7 +15309,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-darkfire",
@@ -14951,7 +15352,9 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-jump-scare",
@@ -14982,7 +15385,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-dread-touched",
@@ -15013,7 +15418,9 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-wall-of-hunger",
@@ -15055,7 +15462,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-dark-army",
@@ -15090,7 +15499,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-eldritch-flesh",
@@ -15119,7 +15530,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-damnation",
@@ -15146,7 +15559,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-savor-the-anguish",
@@ -15182,7 +15597,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-avatar-of-terror",
@@ -15218,7 +15635,9 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "expansion-domainCard-invoke-torment",
@@ -15241,7 +15660,9 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/foundryborne/domains/dread.png",
+      "artSource": "https://github.com/Foundryborne/daggerheart",
+      "artLicense": "Darrington Press Community Gaming License (DPCGL)"
     },
     {
       "id": "core-weapon-advanced-whip",

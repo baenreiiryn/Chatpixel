@@ -22,6 +22,7 @@ import { useOracleBridge } from "@/hooks/useOracleBridge";
 import { buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
 import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestGmMessage } from "@/lib/scene";
 import DaggerheartCompendium from "@/components/DaggerheartCompendium";
+import CompendiumArt from "@/components/CompendiumArt";
 import NewCampaignWizard, { type NewCampaignResult } from "@/components/NewCampaignWizard";
 import { CLASS_CONFIG, TRAIT_LABELS, TRAIT_ORDER } from "@/lib/characterCreation/daggerheart";
 import { daggerheartCompendium, mechanicsSummary, type CompendiumEntry } from "@/lib/compendium/daggerheart";
@@ -478,7 +479,7 @@ function SheetExpandableCard({
   if (!canExpand) {
     return (
       <article className="miniCard">
-        <b>{icon}</b>
+        <span className="sheetEntryVisual"><CompendiumArt entry={entry} className="sheetEntryArt" fallback={<b>{icon}</b>} /></span>
         <div><h3>{title}</h3><p>{subtitle}</p></div>
         {badge && <strong>{badge}</strong>}
       </article>
@@ -488,7 +489,7 @@ function SheetExpandableCard({
   return (
     <details className="sheetExpandableCard">
       <summary>
-        <b>{icon}</b>
+        <span className="sheetEntryVisual"><CompendiumArt entry={entry} className="sheetEntryArt" fallback={<b>{icon}</b>} /></span>
         <div><h3>{title}</h3><p>{subtitle}</p></div>
         <span className={"sheetExpandHint " + (badge ? "badge" : "chevron")}>{badge || "⌄"}</span>
       </summary>
@@ -2186,17 +2187,20 @@ export default function OracleApp() {
                 </div>
                 <div className="inventory">
                   <div className="sectionTitle"><span>Inventário</span><small>{state.inventory.reduce((sum, i) => sum + i.qty, 0)} itens</small></div>
-                  {state.inventory.map((item) => (
-                    <div className="itemRow" key={item.id}>
-                      <b>{item.icon}</b>
-                      <div><strong>{item.name}</strong><small>{item.detail}</small></div>
-                      <div className="qty">
-                        <button onClick={() => setState((s) => executeCommand(s, { type: "inventory", itemId: item.id, amount: -1 }))}>−</button>
-                        <span>{item.qty}</span>
-                        <button onClick={() => setState((s) => executeCommand(s, { type: "inventory", itemId: item.id, amount: 1 }))}>+</button>
+                  {state.inventory.map((item) => {
+                    const entry = findCompendiumEntry(item.id, item.name);
+                    return (
+                      <div className="itemRow" key={item.id}>
+                        <span className="itemRowVisual"><CompendiumArt entry={entry} className="itemRowArt" fallback={<b>{item.icon}</b>} /></span>
+                        <div><strong>{item.name}</strong><small>{item.detail}</small></div>
+                        <div className="qty">
+                          <button onClick={() => setState((s) => executeCommand(s, { type: "inventory", itemId: item.id, amount: -1 }))}>−</button>
+                          <span>{item.qty}</span>
+                          <button onClick={() => setState((s) => executeCommand(s, { type: "inventory", itemId: item.id, amount: 1 }))}>+</button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
                 {state.events.length > 0 && (
                   <button className="undo" onClick={() => setState((s) => undoLatest(s))}>↶ Desfazer · {state.events[0].label}</button>

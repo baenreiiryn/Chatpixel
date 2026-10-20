@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import CompendiumArt, { compendiumGlyph } from "@/components/CompendiumArt";
 import {
   CLASS_CONFIG,
   REQUIRED_TRAIT_VALUES,
@@ -117,6 +118,16 @@ const EQUIPMENT_TYPE_ICONS: Record<string, string> = {
   consumable: "✦",
   loot: "◇",
 };
+
+function normalizeCompendiumName(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase("pt-BR")
+    .replace(/[’‘]/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 function randomId(prefix: string) {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return `${prefix}-${crypto.randomUUID()}`;
@@ -300,6 +311,14 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
       return text.includes(query);
     });
   }, [equipmentEntries, equipmentQuery, equipmentTypeFilter]);
+  const equipmentByName = useMemo(() => {
+    const map = new Map<string, CompendiumEntry>();
+    for (const entry of equipmentEntries) {
+      map.set(normalizeCompendiumName(entry.name), entry);
+      if (entry.originalName) map.set(normalizeCompendiumName(entry.originalName), entry);
+    }
+    return map;
+  }, [equipmentEntries]);
 
   useEffect(() => {
     if (traitMode !== "suggested" || !classId) return;
@@ -767,6 +786,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                   const config = CLASS_CONFIG[id];
                   return (
                     <button className={classId === id ? "selected" : ""} onClick={() => chooseClass(id)} key={entry.id}>
+                      <CompendiumArt entry={entry} className="campaignWizardChoiceArt" fallback={null} />
                       <div className="campaignWizardOptionMeta">
                         <span>{SOURCE_LABELS[config.source]}</span>
                         {config.source === "playtest" && <em>PLAYTEST</em>}
@@ -784,7 +804,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                   <div className="campaignWizardChoiceGrid compactGrid">
                     {subclasses.map((entry) => {
                       const id = sourceId(entry);
-                      return <button className={subclassId === id ? "selected" : ""} onClick={() => setSubclassId(id)} key={entry.id}><strong>{entry.name}</strong><span>{entry.description}</span></button>;
+                  return <button className={subclassId === id ? "selected" : ""} onClick={() => setSubclassId(id)} key={entry.id}><CompendiumArt entry={entry} className="campaignWizardChoiceArt compact" fallback={null} /><strong>{entry.name}</strong><span>{entry.description}</span></button>;
                     })}
                   </div>
                 </div>
@@ -804,12 +824,12 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
               <div className="campaignWizardChoiceGrid ancestryGrid">
                 {ancestries.map((entry) => {
                   const id = sourceId(entry);
-                  return <button className={ancestryA === id ? "selected" : ""} onClick={() => { setAncestryA(id); if (ancestryB === id) setAncestryB(""); }} key={entry.id}><strong>{entry.name}</strong><span>{entry.description}</span></button>;
+                  return <button className={ancestryA === id ? "selected" : ""} onClick={() => { setAncestryA(id); if (ancestryB === id) setAncestryB(""); }} key={entry.id}><CompendiumArt entry={entry} className="campaignWizardChoiceArt compact" fallback={null} /><strong>{entry.name}</strong><span>{entry.description}</span></button>;
                 })}
               </div>
               {selectedAncestryA && (
                 <div className="campaignWizardFeaturePreview">
-                  {(mixedAncestry ? primaryAncestryFeatures.slice(0, 1) : primaryAncestryFeatures).map((feature) => <div key={feature.id}><small>{mixedAncestry ? "CARACTERÍSTICA 1" : "CARACTERÍSTICA"}</small><strong>{feature.name}</strong><p>{feature.description}</p></div>)}
+                  {(mixedAncestry ? primaryAncestryFeatures.slice(0, 1) : primaryAncestryFeatures).map((feature) => <div key={feature.id}><CompendiumArt entry={feature} className="campaignWizardFeatureArt" fallback={null} /><small>{mixedAncestry ? "CARACTERÍSTICA 1" : "CARACTERÍSTICA"}</small><strong>{feature.name}</strong><p>{feature.description}</p></div>)}
                 </div>
               )}
               {mixedAncestry && ancestryA && (
@@ -818,11 +838,11 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                   <div className="campaignWizardChoiceGrid ancestryGrid">
                     {ancestries.filter((entry) => sourceId(entry) !== ancestryA).map((entry) => {
                       const id = sourceId(entry);
-                      return <button className={ancestryB === id ? "selected" : ""} onClick={() => setAncestryB(id)} key={entry.id}><strong>{entry.name}</strong><span>{entry.description}</span></button>;
+                      return <button className={ancestryB === id ? "selected" : ""} onClick={() => setAncestryB(id)} key={entry.id}><CompendiumArt entry={entry} className="campaignWizardChoiceArt compact" fallback={null} /><strong>{entry.name}</strong><span>{entry.description}</span></button>;
                     })}
                   </div>
                   {selectedAncestryB && secondaryAncestryFeatures[1] && (
-                    <div className="campaignWizardFeaturePreview"><div><small>CARACTERÍSTICA 2</small><strong>{secondaryAncestryFeatures[1].name}</strong><p>{secondaryAncestryFeatures[1].description}</p></div></div>
+                    <div className="campaignWizardFeaturePreview"><div><CompendiumArt entry={secondaryAncestryFeatures[1]} className="campaignWizardFeatureArt" fallback={null} /><small>CARACTERÍSTICA 2</small><strong>{secondaryAncestryFeatures[1].name}</strong><p>{secondaryAncestryFeatures[1].description}</p></div></div>
                   )}
                 </>
               )}
@@ -835,11 +855,11 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
               <div className="campaignWizardChoiceGrid communityGrid">
                 {communities.map((entry) => {
                   const id = sourceId(entry);
-                  return <button className={communityId === id ? "selected" : ""} onClick={() => setCommunityId(id)} key={entry.id}><strong>{entry.name}</strong><span>{entry.description}</span></button>;
+                  return <button className={communityId === id ? "selected" : ""} onClick={() => setCommunityId(id)} key={entry.id}><CompendiumArt entry={entry} className="campaignWizardChoiceArt compact" fallback={null} /><strong>{entry.name}</strong><span>{entry.description}</span></button>;
                 })}
               </div>
               {selectedCommunity && selectedCommunityFeatures.length > 0 && (
-                <div className="campaignWizardFeaturePreview">{selectedCommunityFeatures.map((feature) => <div key={feature.id}><small>CARACTERÍSTICA DE COMUNIDADE</small><strong>{feature.name}</strong><p>{feature.description}</p></div>)}</div>
+                <div className="campaignWizardFeaturePreview">{selectedCommunityFeatures.map((feature) => <div key={feature.id}><CompendiumArt entry={feature} className="campaignWizardFeatureArt" fallback={null} /><small>CARACTERÍSTICA DE COMUNIDADE</small><strong>{feature.name}</strong><p>{feature.description}</p></div>)}</div>
               )}
             </div>
           )}
@@ -890,11 +910,14 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
               <div className="campaignWizardDomainCount"><strong>{domainCards.length}</strong><span>/ 2 escolhidas</span></div>
               <div className="campaignWizardDomainGrid">
                 {availableCards.map((card) => (
-                  <button className={domainCards.includes(card.id) ? "selected" : ""} onClick={() => chooseDomainCard(card.id)} key={card.id}>
-                    <small>{card.domain} · NÍVEL 1</small>
-                    <strong>{card.name}</strong>
-                    <p>{card.description}</p>
-                    <span>{domainCards.includes(card.id) ? "✓ Escolhida" : "Selecionar"}</span>
+                  <button className={`${domainCards.includes(card.id) ? "selected" : ""} ${card.art ? "withArt" : ""}`} onClick={() => chooseDomainCard(card.id)} key={card.id}>
+                    {card.art && <div className="campaignWizardDomainVisual"><CompendiumArt entry={card} className="campaignWizardDomainArt" fallback={<span>{compendiumGlyph(card)}</span>} /></div>}
+                    <div className="campaignWizardDomainBody">
+                      <small>{card.domain} · NÍVEL 1</small>
+                      <strong>{card.name}</strong>
+                      <p>{card.description}</p>
+                      <span>{domainCards.includes(card.id) ? "✓ Escolhida" : "Selecionar"}</span>
+                    </div>
                   </button>
                 ))}
               </div>
@@ -911,18 +934,24 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
               {equipmentMode === "suggested" ? (
                 <>
                   <div className="campaignWizardEquipmentList">
-                    {classConfig.suggestedEquipment.map((item, index) => (
-                      <label key={`${item.name}-${index}`}>
-                        <span>{item.icon}</span>
-                        <div><strong>{item.name}</strong><small>{item.detail}</small></div>
-                        <b>×{item.qty}</b>
-                      </label>
-                    ))}
+                    {classConfig.suggestedEquipment.map((item, index) => {
+                      const entry = equipmentByName.get(normalizeCompendiumName(item.name));
+                      return (
+                        <label key={`${item.name}-${index}`}>
+                          <span className="campaignWizardEquipmentVisual"><CompendiumArt entry={entry} className="campaignWizardEquipmentArt" fallback={item.icon} /></span>
+                          <div><strong>{item.name}</strong><small>{item.detail}</small></div>
+                          <b>×{item.qty}</b>
+                        </label>
+                      );
+                    })}
                   </div>
                   {(classConfig.equipmentChoices || []).map((group, groupIndex) => (
                     <div className="campaignWizardEquipmentChoice" key={groupIndex}>
                       <small>ESCOLHA 1 ITEM</small>
-                      <div>{group.map((item, itemIndex) => <button className={(equipmentChoiceSelections[groupIndex] || 0) === itemIndex ? "selected" : ""} onClick={() => setEquipmentChoiceSelections((current) => current.map((value, index) => index === groupIndex ? itemIndex : value))} key={item.name}><span>{item.icon}</span><strong>{item.name}</strong></button>)}</div>
+                      <div>{group.map((item, itemIndex) => {
+                        const entry = equipmentByName.get(normalizeCompendiumName(item.name));
+                        return <button className={(equipmentChoiceSelections[groupIndex] || 0) === itemIndex ? "selected" : ""} onClick={() => setEquipmentChoiceSelections((current) => current.map((value, index) => index === groupIndex ? itemIndex : value))} key={item.name}><span className="campaignWizardEquipmentChoiceVisual"><CompendiumArt entry={entry} className="campaignWizardEquipmentChoiceArt" fallback={item.icon} /></span><strong>{item.name}</strong></button>;
+                      })}</div>
                     </div>
                   ))}
                 </>
@@ -953,7 +982,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                     {filteredEquipmentEntries.map((entry) => (
                       <label className={manualEquipmentIds.has(entry.id) ? "selected" : ""} key={entry.id}>
                         <input type="checkbox" checked={manualEquipmentIds.has(entry.id)} onChange={() => toggleManualEquipment(entry.id)} />
-                        <span>{EQUIPMENT_TYPE_ICONS[entry.type] || "◇"}</span>
+                        <span className="campaignWizardEquipmentVisual"><CompendiumArt entry={entry} className="campaignWizardEquipmentArt" fallback={EQUIPMENT_TYPE_ICONS[entry.type] || "◇"} /></span>
                         <div>
                           <small>{entryTypeLabel(entry.type)}</small>
                           <strong>{entry.name}</strong>

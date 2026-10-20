@@ -24,6 +24,8 @@ export type CompendiumEntry = {
   description: string;
   mechanics: CompendiumMechanics;
   art?: string | null;
+  artSource?: string;
+  artLicense?: string;
   motivesAndTactics?: string;
 };
 

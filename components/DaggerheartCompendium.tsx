@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import CompendiumArt, { compendiumGlyph } from "@/components/CompendiumArt";
 import {
   daggerheartCompendium,
   entryTypeLabel,
@@ -65,12 +66,20 @@ function Mechanics({ entry, expanded = false }: { entry: CompendiumEntry; expand
 }
 
 function EntryCard({ entry, onOpen }: { entry: CompendiumEntry; onOpen: () => void }) {
+  const glyph = compendiumGlyph(entry);
   return (
     <button className={"compEntryCard " + (entry.art ? "withArt" : "")} onClick={onOpen}>
       {entry.art ? (
-        <div className="compEntryArt"><img src={entry.art} alt="" loading="lazy" /></div>
+        <div className="compEntryArt">
+          <CompendiumArt
+            entry={entry}
+            alt=""
+            className={"compEntryArtImage" + (entry.category === "domains" ? " domainIconArt" : "")}
+            fallback={<div className="compEntryArtFallback">{glyph}</div>}
+          />
+        </div>
       ) : (
-        <div className="compEntryGlyph">{entry.category === "domains" ? "◈" : entry.category === "classes" ? "✦" : entry.category === "ancestries" ? "◐" : entry.category === "equipment" ? "⚔" : entry.category === "adversaries" ? "♜" : "◇"}</div>
+        <div className="compEntryGlyph">{glyph}</div>
       )}
       <div className="compEntryBody">
         <div className="compEntryMeta">
@@ -98,15 +107,26 @@ function EntryDetail({
   onOpen: (entry: CompendiumEntry) => void;
 }) {
   const paragraphs = (entry.description || "").split(/\n{2,}/).filter(Boolean);
+  const glyph = compendiumGlyph(entry);
   return (
     <div className="compDetailBackdrop" onClick={onClose}>
       <article className="compDetail" onClick={(event) => event.stopPropagation()}>
         <button className="compDetailClose" onClick={onClose}>×</button>
-        {entry.art && <div className="compDetailHero"><img src={entry.art} alt={entry.name} /></div>}
+        {entry.art && (
+          <div className="compDetailHero">
+            <CompendiumArt
+              entry={entry}
+              className={"compDetailHeroImage" + (entry.category === "domains" ? " domainIconArt" : "")}
+              fallback={<div className="compDetailArtFallback">{glyph}</div>}
+              loading="eager"
+            />
+          </div>
+        )}
         <div className="compDetailContent">
           <div className="compDetailMeta">
             <span>{entryTypeLabel(entry.type)}</span>
             <i>{entry.source === "expansion" ? "Conteúdo de expansão" : entry.source === "srd2" ? "SRD 2.0" : entry.source === "srd" ? "SRD" : "Daggerheart"}</i>
+            {entry.artSource?.includes("Foundryborne/daggerheart") && <i>Arte de domínio · Foundryborne · DPCGL</i>}
           </div>
           <h2>{entry.name}</h2>
           {entry.originalName && entry.originalName !== entry.name && <small className="compOriginalName">{entry.originalName}</small>}
@@ -126,7 +146,9 @@ function EntryDetail({
               <div>
                 {related.map((item) => (
                   <button onClick={() => onOpen(item)} key={item.id}>
-                    <span>◇</span>
+                    <span className="compRelatedVisual">
+                      <CompendiumArt entry={item} className={"compRelatedArt" + (item.category === "domains" ? " domainIconArt" : "")} fallback={compendiumGlyph(item)} />
+                    </span>
                     <div><strong>{item.name}</strong><small>{shortDescription(item.description, 85)}</small></div>
                     <b>›</b>
                   </button>
@@ -213,7 +235,7 @@ export default function DaggerheartCompendium({ onBack }: Props) {
           ))}
           <div className="compendiumCredits">
             <small>FONTES</small>
-            <p>Tradução PT-BR não oficial do SRD. Artes de adversários sob CC0.</p>
+            <p>Tradução PT-BR não oficial do SRD. Artes de adversários sob CC0. Ícones de domínio via Foundryborne sob DPCGL.</p>
           </div>
         </aside>
 
