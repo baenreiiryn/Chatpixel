@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   buildContextPacket,
   createCampaignRestartSnapshot,
@@ -11,7 +11,11 @@ import {
   restartCampaignFromSnapshot,
   undoLatest,
 } from "@/lib/game";
-import { useCloudSync } from "@/hooks/useCloudSync";
+import {
+  readCloudCredentialsForCampaign,
+  removeCloudMetadataForCampaign,
+  useCloudSync,
+} from "@/hooks/useCloudSync";
 import { useOracleBridge } from "@/hooks/useOracleBridge";
 import { buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
 import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestGmMessage } from "@/lib/scene";
@@ -19,11 +23,23 @@ import DaggerheartCompendium from "@/components/DaggerheartCompendium";
 import NewCampaignWizard, { type NewCampaignResult } from "@/components/NewCampaignWizard";
 import { CLASS_CONFIG, TRAIT_LABELS, TRAIT_ORDER } from "@/lib/characterCreation/daggerheart";
 import { daggerheartCompendium, mechanicsSummary, type CompendiumEntry } from "@/lib/compendium/daggerheart";
-
-const STORAGE_KEY = "oraclerpg:campaign:v1";
+import {
+  ACTIVE_CAMPAIGN_KEY,
+  campaignActivityAt,
+  type CampaignLibraryEntry,
+  migrateLegacyCampaign,
+  readCampaignLibrary,
+  sortCampaigns,
+  writeCampaignLibrary,
+} from "@/lib/campaignLibrary";
 
 type View = "session" | "character" | "world" | "memory";
-type AppScreen = "home" | "campaign" | "newCampaign" | "compendium" | "settings";
+type AppScreen = "home" | "campaigns" | "campaign" | "newCampaign" | "compendium" | "settings";
+type CampaignAction = {
+  type: "restart" | "delete";
+  campaignId: string;
+  step: 0 | 1;
+} | null;
 
 function Resource({
   label,
@@ -156,7 +172,9 @@ export default function OracleApp() {
   const [view, setView] = useState<View>("session");
   const [input, setInput] = useState("");
   const [ready, setReady] = useState(false);
-  const [hasSavedCampaign, setHasSavedCampaign] = useState(false);
+  const [campaigns, setCampaigns] = useState<CampaignLibraryEntry[]>([]);
+  const [activeCampaignId, setActiveCampaignId] = useState<string | null>(null);
+  const campaignsRef = useRef<CampaignLibraryEntry[]>([]);
   const [showConnect, setShowConnect] = useState(false);
   const [showSync, setShowSync] = useState(false);
   const [pairInput, setPairInput] = useState("");
@@ -165,25 +183,55 @@ export default function OracleApp() {
   const [gmError, setGmError] = useState("");
   const [imageMessageId, setImageMessageId] = useState<string | null>(null);
   const [imageNote, setImageNote] = useState("");
-  const [showRestart, setShowRestart] = useState(false);
-  const [restartConfirmStep, setRestartConfirmStep] = useState<0 | 1>(0);
+  const [campaignAction, setCampaignAction] = useState<CampaignAction>(null);
+  const [campaignActionError, setCampaignActionError] = useState("");
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        setState(JSON.parse(saved));
-        setHasSavedCampaign(true);
-      }
-    } catch {}
+    let savedCampaigns = readCampaignLibrary();
+    if (!savedCampaigns.length) {
+      const migrated = migrateLegacyCampaign();
+      if (migrated) savedCampaigns = [migrated];
+    }
+    const sorted = sortCampaigns(savedCampaigns);
+    campaignsRef.current = sorted;
+    setCampaigns(sorted);
+
+    const preferredId = localStorage.getItem(ACTIVE_CAMPAIGN_KEY);
+    const active = sorted.find((entry) => entry.id === preferredId) || sorted[0] || null;
+    if (active) {
+      setActiveCampaignId(active.id);
+      setState(active.state);
+      localStorage.setItem(ACTIVE_CAMPAIGN_KEY, active.id);
+    } else {
+      localStorage.removeItem(ACTIVE_CAMPAIGN_KEY);
+    }
     setReady(true);
   }, []);
 
   useEffect(() => {
-    if (!ready || !hasSavedCampaign) return;
+    campaignsRef.current = campaigns;
+  }, [campaigns]);
+
+  useEffect(() => {
+    if (!ready || !activeCampaignId) return;
     const persist = () => {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        const current = campaignsRef.current;
+        const existing = current.find((entry) => entry.id === activeCampaignId);
+        if (!existing) return;
+        const next = current.map((entry) =>
+          entry.id === activeCampaignId
+            ? {
+                ...entry,
+                state,
+                updatedAt: new Date().toISOString(),
+              }
+            : entry,
+        );
+        campaignsRef.current = next;
+        setCampaigns(next);
+        writeCampaignLibrary(next);
+        localStorage.setItem(ACTIVE_CAMPAIGN_KEY, activeCampaignId);
       } catch {}
     };
     const onVisibilityChange = () => {
@@ -196,9 +244,10 @@ export default function OracleApp() {
       window.removeEventListener("pagehide", persist);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [ready, hasSavedCampaign, state]);
+  }, [ready, activeCampaignId, state]);
 
-  const cloud = useCloudSync(state, setState, ready);
+  const hasSavedCampaign = campaigns.length > 0;
+  const cloud = useCloudSync(state, setState, ready, activeCampaignId);
   const bridge = useOracleBridge();
 
   const contextPreview = useMemo(() => buildContextPacket(state), [state]);
@@ -251,7 +300,6 @@ export default function OracleApp() {
     setSyncNote("");
     try {
       await cloud.joinCloud(pairInput);
-      setHasSavedCampaign(true);
       setPairInput("");
       setSyncNote("Campanha carregada deste dispositivo.");
     } catch (error) {
@@ -295,8 +343,17 @@ export default function OracleApp() {
     setImageNote("Prompt da cena copiado.");
   }
 
-  function continueCampaign() {
+  function openCampaignLibrary() {
     if (!hasSavedCampaign) return;
+    setScreen("campaigns");
+  }
+
+  function openCampaign(campaignId: string) {
+    const entry = campaignsRef.current.find((campaign) => campaign.id === campaignId);
+    if (!entry) return;
+    setActiveCampaignId(entry.id);
+    setState(entry.state);
+    localStorage.setItem(ACTIVE_CAMPAIGN_KEY, entry.id);
     setView("session");
     setScreen("campaign");
   }
@@ -460,9 +517,20 @@ export default function OracleApp() {
       events: [],
     };
     next.campaign.restartSnapshot = createCampaignRestartSnapshot(next);
+    const localCampaignId = crypto.randomUUID();
+    const record: CampaignLibraryEntry = {
+      id: localCampaignId,
+      state: next,
+      createdAt,
+      updatedAt: createdAt,
+    };
+    const nextLibrary = sortCampaigns([...campaignsRef.current, record]);
+    campaignsRef.current = nextLibrary;
+    setCampaigns(nextLibrary);
+    writeCampaignLibrary(nextLibrary);
+    localStorage.setItem(ACTIVE_CAMPAIGN_KEY, localCampaignId);
+    setActiveCampaignId(localCampaignId);
     setState(next);
-    setHasSavedCampaign(true);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     setView("session");
     setScreen("campaign");
   }
@@ -472,26 +540,66 @@ export default function OracleApp() {
     setView("session");
   }
 
-  function openRestartCampaign() {
-    if (!hasSavedCampaign) return;
-    setRestartConfirmStep(0);
-    setShowRestart(true);
+  function restartCampaign(campaignId: string) {
+    const target = campaignsRef.current.find((entry) => entry.id === campaignId);
+    if (!target) return;
+    const restarted = restartCampaignFromSnapshot(target.state);
+    const updatedAt = new Date().toISOString();
+    const next = campaignsRef.current.map((entry) =>
+      entry.id === campaignId
+        ? { ...entry, state: restarted, updatedAt }
+        : entry,
+    );
+    campaignsRef.current = next;
+    setCampaigns(next);
+    writeCampaignLibrary(next);
+    if (activeCampaignId === campaignId) {
+      setState(restarted);
+      setInput("");
+      setGmError("");
+      setImageMessageId(null);
+      setImageNote("");
+    }
+    setCampaignAction(null);
   }
 
-  function confirmRestartCampaign() {
-    const restarted = restartCampaignFromSnapshot(state);
-    setState(restarted);
-    setInput("");
-    setGmError("");
-    setImageMessageId(null);
-    setImageNote("");
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(restarted));
-    } catch {}
-    setRestartConfirmStep(0);
-    setShowRestart(false);
-    setView("session");
-    setScreen("campaign");
+  async function deleteCampaign(campaignId: string) {
+    const credentials = readCloudCredentialsForCampaign(campaignId);
+    if (credentials) {
+      try {
+        const response = await fetch(`/api/campaigns/${credentials.campaignId}`, {
+          method: "DELETE",
+          headers: { authorization: `Bearer ${credentials.syncKey}` },
+        });
+        if (!response.ok && response.status !== 404) {
+          setCampaignActionError("Não foi possível excluir a cópia da nuvem. Verifique a conexão e tente novamente.");
+          return;
+        }
+      } catch {
+        setCampaignActionError("Não foi possível falar com a nuvem. A campanha não foi excluída.");
+        return;
+      }
+    }
+    removeCloudMetadataForCampaign(campaignId);
+
+    const next = campaignsRef.current.filter((entry) => entry.id !== campaignId);
+    campaignsRef.current = next;
+    setCampaigns(next);
+    writeCampaignLibrary(next);
+
+    if (activeCampaignId === campaignId) {
+      const replacement = sortCampaigns(next)[0] || null;
+      if (replacement) {
+        setActiveCampaignId(replacement.id);
+        setState(replacement.state);
+        localStorage.setItem(ACTIVE_CAMPAIGN_KEY, replacement.id);
+      } else {
+        setActiveCampaignId(null);
+        setState(initialState);
+        localStorage.removeItem(ACTIVE_CAMPAIGN_KEY);
+      }
+    }
+    setCampaignAction(null);
   }
 
   function connectChatGPT() {
@@ -686,11 +794,11 @@ export default function OracleApp() {
               <b>›</b>
             </button>
 
-            <button className="homeMenuCard" onClick={continueCampaign} disabled={!hasSavedCampaign}>
+            <button className="homeMenuCard" onClick={openCampaignLibrary} disabled={!hasSavedCampaign}>
               <span className="homeMenuIcon">◈</span>
               <div>
                 <strong>Continuar campanha</strong>
-                <small>{hasSavedCampaign ? state.campaign.name : "Nenhuma campanha salva"}</small>
+                <small>{hasSavedCampaign ? `${campaigns.length} ${campaigns.length === 1 ? "campanha salva" : "campanhas salvas"}` : "Nenhuma campanha salva"}</small>
               </div>
               <b>›</b>
             </button>
@@ -712,6 +820,158 @@ export default function OracleApp() {
             <span className={bridge.account?.connected ? "onlineDot connected" : "onlineDot"} />
             {bridge.account?.connected ? "ChatGPT conectado" : "Mestre IA desconectado"}
           </div>
+        </section>
+      </main>
+    );
+  }
+
+  if (screen === "campaigns") {
+    const orderedCampaigns = sortCampaigns(campaigns);
+    const actionTarget = campaignAction
+      ? orderedCampaigns.find((entry) => entry.id === campaignAction.campaignId) || null
+      : null;
+
+    return (
+      <main className="appShell campaignLibraryShell">
+        <div className="ambient ambientOne" />
+        <div className="ambient ambientTwo" />
+        <header className="menuPageHeader">
+          <button className="backButton" onClick={goHome}>‹</button>
+          <div><small>SUAS HISTÓRIAS</small><strong>Continuar campanha</strong></div>
+        </header>
+        <section className="campaignLibraryContent">
+          <div className="campaignLibraryIntro">
+            <div>
+              <small>ARQUIVO DO ORACLE</small>
+              <h1>Escolha uma campanha.</h1>
+              <p>Cada campanha mantém ficha, memória, mensagens e sincronização de forma independente.</p>
+            </div>
+            <button className="campaignLibraryNew" onClick={() => setScreen("newCampaign")}>✦ Nova campanha</button>
+          </div>
+
+          <div className="campaignLibraryList">
+            {orderedCampaigns.map((entry) => {
+              const campaignState = entry.state;
+              const portrait = campaignState.character.daggerheart?.image;
+              const activity = campaignActivityAt(campaignState);
+              const cloudLinked = Boolean(readCloudCredentialsForCampaign(entry.id));
+              return (
+                <article className={"campaignLibraryCard " + (entry.id === activeCampaignId ? "active" : "")} key={entry.id}>
+                  <div className="campaignLibraryPortrait">
+                    {portrait
+                      ? <img src={portrait} alt="" />
+                      : <span>{campaignState.character.name.slice(0, 1).toUpperCase()}</span>}
+                  </div>
+                  <div className="campaignLibraryMain">
+                    <div className="campaignLibraryTitleRow">
+                      <div>
+                        <small>{campaignState.campaign.system} · Sessão {campaignState.campaign.session}</small>
+                        <h2>{campaignState.campaign.name}</h2>
+                      </div>
+                      {cloudLinked && <em>☁ Nuvem</em>}
+                    </div>
+                    <p>{campaignState.character.name} · {campaignState.character.archetype}</p>
+                    <div className="campaignLibraryMeta">
+                      <span>◉ {campaignState.messages.length} mensagens</span>
+                      <span>◇ {campaignState.memories.length} memórias</span>
+                      <span>Última atividade: {new Date(activity).toLocaleString("pt-BR")}</span>
+                    </div>
+                  </div>
+                  <div className="campaignLibraryActions">
+                    <button className="open" onClick={() => openCampaign(entry.id)}>Abrir campanha</button>
+                    <button
+                      className="restart"
+                      onClick={() => {
+                        setCampaignActionError("");
+                        setCampaignAction({ type: "restart", campaignId: entry.id, step: 0 });
+                      }}
+                    >↺ Recomeçar</button>
+                    <button
+                      className="delete"
+                      onClick={() => {
+                        setCampaignActionError("");
+                        setCampaignAction({ type: "delete", campaignId: entry.id, step: 0 });
+                      }}
+                    >Excluir</button>
+                  </div>
+                </article>
+              );
+            })}
+            {!orderedCampaigns.length && (
+              <div className="campaignLibraryEmpty">
+                <b>◇</b>
+                <h3>Nenhuma campanha salva</h3>
+                <p>Crie uma nova campanha para começar uma história.</p>
+              </div>
+            )}
+          </div>
+
+          {actionTarget && campaignAction && (
+            <div className="modalBackdrop" onClick={() => {
+              setCampaignAction(null);
+              setCampaignActionError("");
+            }}>
+              <section className="connectModal campaignActionModal" onClick={(event) => event.stopPropagation()}>
+                <div className={"campaignActionIcon " + campaignAction.type}>{campaignAction.type === "restart" ? "↺" : "×"}</div>
+                <small>{campaignAction.type === "restart" ? "RECOMEÇAR CAMPANHA" : "EXCLUIR CAMPANHA"}</small>
+                <h2>
+                  {campaignAction.type === "restart"
+                    ? campaignAction.step === 0 ? "Voltar esta campanha ao início?" : "Apagar todo o progresso desta campanha?"
+                    : campaignAction.step === 0 ? "Excluir esta campanha?" : "Esta exclusão é permanente."}
+                </h2>
+                {campaignAction.type === "restart" ? (
+                  campaignAction.step === 0 ? (
+                    <>
+                      <p>
+                        <b>{actionTarget.state.campaign.name}</b> voltará ao momento em que a criação do personagem terminou.
+                        As outras campanhas não serão alteradas.
+                      </p>
+                      <div className="restartWhatResets">
+                        <span>✦ Mensagens posteriores serão removidas</span>
+                        <span>◉ Memórias posteriores serão removidas</span>
+                        <span>◇ Ficha, recursos e inventário voltarão ao estado inicial</span>
+                        <span>⌘ NPCs e missões criados depois serão removidos</span>
+                      </div>
+                      <button
+                        className="dangerGhost restartContinue"
+                        onClick={() => setCampaignAction({ ...campaignAction, step: 1 })}
+                      >Continuar</button>
+                    </>
+                  ) : (
+                    <>
+                      <p>Somente <b>{actionTarget.state.campaign.name}</b> será reiniciada. O estado reiniciado será sincronizado com a nuvem quando essa campanha for aberta.</p>
+                      <button className="restartConfirmDanger" onClick={() => restartCampaign(actionTarget.id)}>Sim, recomeçar esta campanha</button>
+                      <button className="ghost" onClick={() => setCampaignAction({ ...campaignAction, step: 0 })}>Voltar</button>
+                    </>
+                  )
+                ) : (
+                  campaignAction.step === 0 ? (
+                    <>
+                      <p>
+                        Isso removerá <b>{actionTarget.state.campaign.name}</b> da lista deste dispositivo
+                        {readCloudCredentialsForCampaign(actionTarget.id) ? " e também tentará remover a cópia sincronizada da nuvem." : "."}
+                      </p>
+                      <button
+                        className="dangerGhost restartContinue"
+                        onClick={() => setCampaignAction({ ...campaignAction, step: 1 })}
+                      >Continuar</button>
+                    </>
+                  ) : (
+                    <>
+                      <p>Ficha, mensagens, memórias e progresso desta campanha serão removidos. As demais campanhas permanecem intactas.</p>
+                      <button className="restartConfirmDanger" onClick={() => void deleteCampaign(actionTarget.id)}>Sim, excluir esta campanha</button>
+                      <button className="ghost" onClick={() => setCampaignAction({ ...campaignAction, step: 0 })}>Voltar</button>
+                    </>
+                  )
+                )}
+                {campaignActionError && <p className="modalNote">{campaignActionError}</p>}
+                <button className="closeText" onClick={() => {
+                  setCampaignAction(null);
+                  setCampaignActionError("");
+                }}>Cancelar</button>
+              </section>
+            </div>
+          )}
         </section>
       </main>
     );
@@ -748,15 +1008,10 @@ export default function OracleApp() {
               <div><strong>ChatGPT</strong><small>{bridge.account?.connected ? bridge.account.name || bridge.account.email || "Conectado" : "Conectar Mestre IA"}</small></div>
               <em className={bridge.account?.connected ? "statusConnected" : ""}>{bridge.account?.connected ? "Conectado" : "Configurar"}</em>
             </button>
-            <button onClick={() => setShowSync(true)}>
+            <button onClick={() => setShowSync(true)} disabled={!activeCampaignId}>
               <span className="settingsIcon">☁</span>
-              <div><strong>Sincronização</strong><small>Campanha entre seus dispositivos</small></div>
-              <em>{cloudLabel}</em>
-            </button>
-            <button className="restartCampaignSetting" onClick={openRestartCampaign} disabled={!hasSavedCampaign}>
-              <span className="settingsIcon">↺</span>
-              <div><strong>Recomeçar campanha</strong><small>Voltar ao estado inicial da criação do personagem</small></div>
-              <em>Apagar progresso</em>
+              <div><strong>Sincronização</strong><small>{activeCampaignId ? "Campanha ativa entre seus dispositivos" : "Abra uma campanha para configurar"}</small></div>
+              <em>{activeCampaignId ? cloudLabel : "Sem campanha"}</em>
             </button>
             <div className="settingsInfo">
               <span className="settingsIcon">ⓘ</span>
@@ -814,45 +1069,6 @@ export default function OracleApp() {
           </div>
         )}
 
-        {showRestart && (
-          <div className="modalBackdrop" onClick={() => {
-            setShowRestart(false);
-            setRestartConfirmStep(0);
-          }}>
-            <section className="connectModal restartModal" onClick={(event) => event.stopPropagation()}>
-              <div className="restartModalIcon">↺</div>
-              <small>RECOMEÇAR CAMPANHA</small>
-              <h2>{restartConfirmStep === 0 ? "Voltar ao início desta história?" : "Esta ação apaga o progresso atual."}</h2>
-              {restartConfirmStep === 0 ? (
-                <>
-                  <p>
-                    O Oracle vai restaurar a campanha para o momento logo após a criação do personagem:
-                    ficha inicial, inventário inicial, companheiros iniciais, mensagem inicial do Mestre e somente as memórias de criação.
-                  </p>
-                  <div className="restartWhatResets">
-                    <span>✦ Mensagens posteriores serão removidas</span>
-                    <span>◉ Memórias posteriores serão removidas</span>
-                    <span>◇ Recursos, condições e inventário voltarão ao início</span>
-                    <span>⌘ NPCs e missões criados depois do começo serão removidos</span>
-                  </div>
-                  <button className="dangerGhost restartContinue" onClick={() => setRestartConfirmStep(1)}>Continuar</button>
-                </>
-              ) : (
-                <>
-                  <p>
-                    Esta é a última confirmação. A campanha <b>{state.campaign.name}</b> será reiniciada e a versão reiniciada passará a ser sincronizada com a nuvem.
-                  </p>
-                  <button className="restartConfirmDanger" onClick={confirmRestartCampaign}>Sim, recomeçar campanha</button>
-                  <button className="ghost" onClick={() => setRestartConfirmStep(0)}>Voltar</button>
-                </>
-              )}
-              <button className="closeText" onClick={() => {
-                setShowRestart(false);
-                setRestartConfirmStep(0);
-              }}>Cancelar</button>
-            </section>
-          </div>
-        )}
       </main>
     );
   }

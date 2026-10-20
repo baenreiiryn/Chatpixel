@@ -82,3 +82,23 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
     return NextResponse.json({ error: "Invalid campaign id." }, { status: 400 });
   }
 }
+
+export async function DELETE(request: Request, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  const key = bearer(request);
+  if (!key) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+
+  try {
+    const sql = db();
+    const rows = await sql`
+      DELETE FROM campaigns
+      WHERE id = ${id}::uuid
+        AND secret_hash = ${sha256(key)}
+      RETURNING id
+    `;
+    if (!rows[0]) return NextResponse.json({ error: "Campaign not found." }, { status: 404 });
+    return new Response(null, { status: 204 });
+  } catch {
+    return NextResponse.json({ error: "Invalid campaign id." }, { status: 400 });
+  }
+}

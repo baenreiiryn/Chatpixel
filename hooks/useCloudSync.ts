@@ -3,8 +3,10 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import type { GameState } from "@/lib/game";
 
-const CLOUD_KEY = "oraclerpg:cloud:v1";
-const RECOVERY_KEY = "oraclerpg:cloud-recovery:v1";
+const LEGACY_CLOUD_KEY = "oraclerpg:cloud:v1";
+const LEGACY_RECOVERY_KEY = "oraclerpg:cloud-recovery:v1";
+const CLOUD_KEY_PREFIX = "oraclerpg:cloud:v2:";
+const RECOVERY_KEY_PREFIX = "oraclerpg:cloud-recovery:v2:";
 
 type Credentials = {
   campaignId: string;
@@ -26,6 +28,29 @@ type Recovery = {
 
 export type CloudState = "local" | "connecting" | "synced" | "syncing" | "offline" | "conflict" | "error";
 
+export function cloudCredentialsStorageKey(localCampaignId: string) {
+  return CLOUD_KEY_PREFIX + localCampaignId;
+}
+
+export function cloudRecoveryStorageKey(localCampaignId: string) {
+  return RECOVERY_KEY_PREFIX + localCampaignId;
+}
+
+export function removeCloudMetadataForCampaign(localCampaignId: string) {
+  localStorage.removeItem(cloudCredentialsStorageKey(localCampaignId));
+  localStorage.removeItem(cloudRecoveryStorageKey(localCampaignId));
+}
+
+export function readCloudCredentialsForCampaign(localCampaignId: string) {
+  const raw = localStorage.getItem(cloudCredentialsStorageKey(localCampaignId));
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as Credentials;
+  } catch {
+    return null;
+  }
+}
+
 function parsePairCode(code: string) {
   const split = code.trim().split(".");
   if (split.length !== 2 || !split[0] || !split[1]) return null;
@@ -45,6 +70,7 @@ export function useCloudSync(
   state: GameState,
   setState: Dispatch<SetStateAction<GameState>>,
   ready: boolean,
+  localCampaignId: string | null,
 ) {
   const [credentials, setCredentials] = useState<Credentials | null>(null);
   const [status, setStatus] = useState<CloudState>("local");
@@ -53,34 +79,44 @@ export function useCloudSync(
   const lastSynced = useRef<string>("");
   const credentialsRef = useRef<Credentials | null>(null);
   const stateRef = useRef(state);
+  const localCampaignIdRef = useRef<string | null>(localCampaignId);
 
   useEffect(() => {
     stateRef.current = state;
   }, [state]);
 
-  const saveCredentials = useCallback((next: Credentials | null) => {
+  useEffect(() => {
+    localCampaignIdRef.current = localCampaignId;
+  }, [localCampaignId]);
+
+  const saveCredentials = useCallback((next: Credentials | null, targetLocalCampaignId = localCampaignIdRef.current) => {
     credentialsRef.current = next;
     setCredentials(next);
-    if (next) localStorage.setItem(CLOUD_KEY, JSON.stringify(next));
-    else localStorage.removeItem(CLOUD_KEY);
+    if (!targetLocalCampaignId) return;
+    const key = cloudCredentialsStorageKey(targetLocalCampaignId);
+    if (next) localStorage.setItem(key, JSON.stringify(next));
+    else localStorage.removeItem(key);
   }, []);
 
-  const saveRecovery = useCallback((next: Exclude<Recovery, null>) => {
+  const saveRecovery = useCallback((next: Exclude<Recovery, null>, targetLocalCampaignId = localCampaignIdRef.current) => {
     setRecovery(next);
+    if (!targetLocalCampaignId) return;
     try {
-      localStorage.setItem(RECOVERY_KEY, JSON.stringify(next));
+      localStorage.setItem(cloudRecoveryStorageKey(targetLocalCampaignId), JSON.stringify(next));
     } catch {
       // The active local state remains untouched even if the browser storage
       // quota is too small for an additional recovery snapshot.
     }
   }, []);
 
-  const clearRecovery = useCallback(() => {
+  const clearRecovery = useCallback((targetLocalCampaignId = localCampaignIdRef.current) => {
     setRecovery(null);
-    localStorage.removeItem(RECOVERY_KEY);
+    if (targetLocalCampaignId) localStorage.removeItem(cloudRecoveryStorageKey(targetLocalCampaignId));
   }, []);
 
   const fetchRemote = useCallback(async (creds: Credentials, forceApply = false) => {
+    const targetLocalCampaignId = localCampaignIdRef.current;
+    if (!targetLocalCampaignId) return null;
     setStatus("connecting");
     try {
       const response = await fetch(`/api/campaigns/${creds.campaignId}`, {
@@ -89,6 +125,7 @@ export function useCloudSync(
       });
       if (!response.ok) throw new Error("Could not open cloud campaign.");
       const data = (await response.json()) as { state: GameState; version: number; updatedAt?: string };
+      if (targetLocalCampaignId !== localCampaignIdRef.current) return null;
       const remoteSerialized = JSON.stringify(data.state);
       const localSerialized = JSON.stringify(stateRef.current);
       const remoteHash = fingerprint(remoteSerialized);
@@ -99,7 +136,7 @@ export function useCloudSync(
           ...creds,
           version: data.version,
           lastSyncedHash: remoteHash,
-        });
+        }, targetLocalCampaignId);
         lastSynced.current = remoteSerialized;
         setState(data.state);
         setConflict(null);
@@ -118,7 +155,7 @@ export function useCloudSync(
           ...creds,
           version: data.version,
           lastSyncedHash: remoteHash,
-        });
+        }, targetLocalCampaignId);
         lastSynced.current = remoteSerialized;
         setConflict(null);
         setStatus("synced");
@@ -161,26 +198,54 @@ export function useCloudSync(
 
   useEffect(() => {
     if (!ready) return;
+    credentialsRef.current = null;
+    setCredentials(null);
+    setConflict(null);
+    setRecovery(null);
+    lastSynced.current = "";
+    setStatus("local");
+    if (!localCampaignId) return;
     try {
-      const saved = localStorage.getItem(CLOUD_KEY);
-      const savedRecovery = localStorage.getItem(RECOVERY_KEY);
+      const scopedCloudKey = cloudCredentialsStorageKey(localCampaignId);
+      const scopedRecoveryKey = cloudRecoveryStorageKey(localCampaignId);
+      let saved = localStorage.getItem(scopedCloudKey);
+      let savedRecovery = localStorage.getItem(scopedRecoveryKey);
+
+      if (!saved) {
+        const legacy = localStorage.getItem(LEGACY_CLOUD_KEY);
+        if (legacy) {
+          saved = legacy;
+          localStorage.setItem(scopedCloudKey, legacy);
+          localStorage.removeItem(LEGACY_CLOUD_KEY);
+        }
+      }
+      if (!savedRecovery) {
+        const legacyRecovery = localStorage.getItem(LEGACY_RECOVERY_KEY);
+        if (legacyRecovery) {
+          savedRecovery = legacyRecovery;
+          localStorage.setItem(scopedRecoveryKey, legacyRecovery);
+          localStorage.removeItem(LEGACY_RECOVERY_KEY);
+        }
+      }
       if (savedRecovery) {
         try {
           setRecovery(JSON.parse(savedRecovery) as Exclude<Recovery, null>);
         } catch {
-          localStorage.removeItem(RECOVERY_KEY);
+          localStorage.removeItem(scopedRecoveryKey);
         }
       }
       if (!saved) return;
       const creds = JSON.parse(saved) as Credentials;
-      saveCredentials(creds);
+      saveCredentials(creds, localCampaignId);
       void fetchRemote(creds);
     } catch {
-      localStorage.removeItem(CLOUD_KEY);
+      localStorage.removeItem(cloudCredentialsStorageKey(localCampaignId));
     }
-  }, [ready, fetchRemote, saveCredentials]);
+  }, [ready, localCampaignId, fetchRemote, saveCredentials]);
 
   const createCloud = useCallback(async () => {
+    const targetLocalCampaignId = localCampaignIdRef.current;
+    if (!targetLocalCampaignId) throw new Error("No active local campaign.");
     setStatus("connecting");
     const response = await fetch("/api/campaigns", {
       method: "POST",
@@ -199,27 +264,30 @@ export function useCloudSync(
       version: data.version,
       lastSyncedHash: fingerprint(serialized),
     };
-    saveCredentials(creds);
+    saveCredentials(creds, targetLocalCampaignId);
     lastSynced.current = serialized;
     setStatus("synced");
     return creds;
   }, [saveCredentials, state]);
 
   const joinCloud = useCallback(async (code: string) => {
+    const targetLocalCampaignId = localCampaignIdRef.current;
+    if (!targetLocalCampaignId) throw new Error("No active local campaign.");
     const creds = parsePairCode(code);
     if (!creds) throw new Error("Código de pareamento inválido.");
-    saveCredentials(creds);
+    saveCredentials(creds, targetLocalCampaignId);
     const result = await fetchRemote(creds, true);
     if (!result) throw new Error("Não foi possível abrir essa campanha.");
     return result;
   }, [fetchRemote, saveCredentials]);
 
   const disconnectCloud = useCallback(() => {
-    saveCredentials(null);
+    saveCredentials(null, localCampaignIdRef.current);
     lastSynced.current = "";
     setConflict(null);
+    clearRecovery(localCampaignIdRef.current);
     setStatus("local");
-  }, [saveCredentials]);
+  }, [clearRecovery, saveCredentials]);
 
   useEffect(() => {
     if (!ready || !credentials || !lastSynced.current || status === "connecting" || status === "conflict") return;
@@ -227,6 +295,7 @@ export function useCloudSync(
     if (serialized === lastSynced.current) return;
     const timer = window.setTimeout(async () => {
       const active = credentialsRef.current;
+      const targetLocalCampaignId = localCampaignIdRef.current;
       if (!active) return;
       setStatus("syncing");
       try {
@@ -238,6 +307,7 @@ export function useCloudSync(
           },
           body: JSON.stringify({ state, expectedVersion: active.version }),
         });
+        if (targetLocalCampaignId !== localCampaignIdRef.current) return;
         if (response.status === 409) {
           const data = (await response.json()) as { state: GameState; version: number; updatedAt?: string };
           setConflict({
@@ -255,32 +325,34 @@ export function useCloudSync(
           ...active,
           version: data.version,
           lastSyncedHash: fingerprint(serialized),
-        });
+        }, targetLocalCampaignId);
         lastSynced.current = serialized;
         setStatus("synced");
       } catch {
+        if (targetLocalCampaignId !== localCampaignIdRef.current) return;
         setStatus(navigator.onLine ? "error" : "offline");
       }
     }, 700);
     return () => window.clearTimeout(timer);
-  }, [credentials, ready, saveCredentials, state, status]);
+  }, [credentials, ready, saveCredentials, state, status, localCampaignId]);
 
   const resolveConflict = useCallback(async (choice: "remote" | "local") => {
     const active = credentialsRef.current;
+    const targetLocalCampaignId = localCampaignIdRef.current;
     if (!active || !conflict) return;
     if (choice === "remote") {
       saveRecovery({
         state: stateRef.current,
         campaignId: active.campaignId,
         savedAt: new Date().toISOString(),
-      });
+      }, targetLocalCampaignId);
       const serialized = JSON.stringify(conflict.state);
       const next = {
         ...active,
         version: conflict.version,
         lastSyncedHash: fingerprint(serialized),
       };
-      saveCredentials(next);
+      saveCredentials(next, targetLocalCampaignId);
       lastSynced.current = serialized;
       setState(conflict.state);
       setConflict(null);
@@ -297,6 +369,7 @@ export function useCloudSync(
       },
       body: JSON.stringify({ state, expectedVersion: conflict.version }),
     });
+    if (targetLocalCampaignId !== localCampaignIdRef.current) return;
     if (response.status === 409) {
       const data = (await response.json()) as { state: GameState; version: number; updatedAt?: string };
       setConflict({
@@ -318,7 +391,7 @@ export function useCloudSync(
       ...active,
       version: data.version,
       lastSyncedHash: fingerprint(serialized),
-    });
+    }, targetLocalCampaignId);
     lastSynced.current = serialized;
     setConflict(null);
     setStatus("synced");
