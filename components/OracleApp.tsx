@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   buildContextPacket,
   createCampaignRestartSnapshot,
@@ -23,6 +23,20 @@ import DaggerheartCompendium from "@/components/DaggerheartCompendium";
 import NewCampaignWizard, { type NewCampaignResult } from "@/components/NewCampaignWizard";
 import { CLASS_CONFIG, TRAIT_LABELS, TRAIT_ORDER } from "@/lib/characterCreation/daggerheart";
 import { daggerheartCompendium, mechanicsSummary, type CompendiumEntry } from "@/lib/compendium/daggerheart";
+import {
+  campaignMinuteFromDate,
+  createCampaignTimeState,
+  deriveCampaignDateTime,
+  formatCampaignDateTime,
+  getMoonPhases,
+  remainingDuration,
+  setCampaignTime,
+  setCampaignWeather,
+  updateCalendarEvent,
+  type CampaignCalendarEvent,
+  type CampaignTimeState,
+  type WeatherCondition,
+} from "@/lib/campaignTime";
 import {
   ACTIVE_CAMPAIGN_KEY,
   campaignActivityAt,
@@ -78,12 +92,206 @@ function AvatarSigil() {
   );
 }
 
-function MessageText({ text }: { text: string }) {
+function ActionInlineText({ text }: { text: string }) {
+  const parts: Array<{ text: string; action: boolean }> = [];
+  let cursor = 0;
+  let action = false;
+
+  while (cursor < text.length) {
+    const marker = text.indexOf("**", cursor);
+    if (marker < 0) {
+      parts.push({ text: text.slice(cursor), action });
+      break;
+    }
+    if (marker > cursor) parts.push({ text: text.slice(cursor, marker), action });
+    action = !action;
+    cursor = marker + 2;
+  }
+
+  return (
+    <>
+      {parts.map((part, index) => (
+        <span className={part.action ? "characterActionText" : undefined} key={index}>{part.text}</span>
+      ))}
+    </>
+  );
+}
+
+function MessageText({ text, actionSyntax = false }: { text: string; actionSyntax?: boolean }) {
   const blocks = text.split(/\n{2,}/).map((block) => block.trim()).filter(Boolean);
   return (
     <div className="messageText">
-      {blocks.map((block, index) => <p key={index}>{block}</p>)}
+      {blocks.map((block, index) => (
+        <p key={index}>{actionSyntax ? <ActionInlineText text={block} /> : block}</p>
+      ))}
     </div>
+  );
+}
+
+function selectionOffsets(root: HTMLElement) {
+  const selection = window.getSelection();
+  if (!selection?.rangeCount) return { start: root.textContent?.length || 0, end: root.textContent?.length || 0 };
+  const range = selection.getRangeAt(0);
+  if (!root.contains(range.startContainer) || !root.contains(range.endContainer)) {
+    const end = root.textContent?.length || 0;
+    return { start: end, end };
+  }
+  const startRange = range.cloneRange();
+  startRange.selectNodeContents(root);
+  startRange.setEnd(range.startContainer, range.startOffset);
+  const endRange = range.cloneRange();
+  endRange.selectNodeContents(root);
+  endRange.setEnd(range.endContainer, range.endOffset);
+  return { start: startRange.toString().length, end: endRange.toString().length };
+}
+
+function restoreCaret(root: HTMLElement, offset: number) {
+  const selection = window.getSelection();
+  if (!selection) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let remaining = Math.max(0, offset);
+  let node = walker.nextNode();
+  while (node) {
+    const size = node.textContent?.length || 0;
+    if (remaining <= size) {
+      const range = document.createRange();
+      range.setStart(node, remaining);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      return;
+    }
+    remaining -= size;
+    node = walker.nextNode();
+  }
+  const range = document.createRange();
+  range.selectNodeContents(root);
+  range.collapse(false);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+
+function renderComposerMarkup(root: HTMLElement, value: string, caret?: number) {
+  root.replaceChildren();
+  let cursor = 0;
+  let action = false;
+  while (cursor < value.length) {
+    const marker = value.indexOf("**", cursor);
+    const chunkEnd = marker < 0 ? value.length : marker;
+    if (chunkEnd > cursor) {
+      const span = document.createElement("span");
+      if (action) span.className = "composerActionText";
+      span.textContent = value.slice(cursor, chunkEnd);
+      root.append(span);
+    }
+    if (marker < 0) break;
+    const delimiter = document.createElement("span");
+    delimiter.className = "composerActionDelimiter";
+    delimiter.textContent = "**";
+    root.append(delimiter);
+    action = !action;
+    cursor = marker + 2;
+  }
+  if (!value) root.append(document.createTextNode(""));
+  if (caret !== undefined) restoreCaret(root, caret);
+}
+
+function ActionComposer({
+  value,
+  onChange,
+  disabled,
+  placeholder,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  disabled: boolean;
+  placeholder: string;
+}) {
+  const editorRef = useRef<HTMLDivElement>(null);
+  const lastDomValue = useRef("");
+  const lastSelection = useRef({ start: 0, end: 0 });
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    if (!editor || value === lastDomValue.current) return;
+    lastDomValue.current = value;
+    renderComposerMarkup(editor, value);
+  }, [value]);
+
+  function syncFromDom() {
+    const editor = editorRef.current;
+    if (!editor) return;
+    const offsets = selectionOffsets(editor);
+    const caret = offsets.start;
+    lastSelection.current = offsets;
+    const next = editor.textContent || "";
+    lastDomValue.current = next;
+    renderComposerMarkup(editor, next, caret);
+    onChange(next);
+  }
+
+  function insertActionMarkers() {
+    const editor = editorRef.current;
+    if (!editor || disabled) return;
+    const savedSelection = lastSelection.current;
+    editor.focus();
+    const currentSelection = selectionOffsets(editor);
+    const { start, end } = currentSelection.start === currentSelection.end && currentSelection.start === 0 && value.length
+      ? savedSelection
+      : currentSelection;
+    const selected = value.slice(start, end);
+    const next = value.slice(0, start) + "**" + selected + "**" + value.slice(end);
+    const nextCaret = selected ? end + 4 : start + 2;
+    lastSelection.current = { start: nextCaret, end: nextCaret };
+    lastDomValue.current = next;
+    renderComposerMarkup(editor, next, nextCaret);
+    onChange(next);
+  }
+
+  function onEditorKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.nativeEvent.isComposing) return;
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      event.currentTarget.closest("form")?.requestSubmit();
+    }
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        className="actionFormatButton"
+        title="Marcar ação do personagem"
+        aria-label="Marcar ação do personagem"
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={insertActionMarkers}
+        disabled={disabled}
+      >*</button>
+      <div
+        ref={editorRef}
+        className={"composerEditor " + (!value ? "empty" : "")}
+        contentEditable={!disabled}
+        role="textbox"
+        aria-multiline="true"
+        aria-label="Mensagem do jogador"
+        data-placeholder={placeholder}
+        onInput={syncFromDom}
+        onKeyUp={() => {
+          const editor = editorRef.current;
+          if (editor) lastSelection.current = selectionOffsets(editor);
+        }}
+        onMouseUp={() => {
+          const editor = editorRef.current;
+          if (editor) lastSelection.current = selectionOffsets(editor);
+        }}
+        onBlur={() => {
+          const editor = editorRef.current;
+          if (editor) lastSelection.current = selectionOffsets(editor);
+        }}
+        onKeyDown={onEditorKeyDown}
+        suppressContentEditableWarning
+      />
+    </>
   );
 }
 
@@ -166,6 +374,240 @@ function syncStateSummary(value: GameState) {
   };
 }
 
+const WEATHER_VISUAL: Record<WeatherCondition, { icon: string; label: string }> = {
+  clear: { icon: "☀", label: "Ensolarado" },
+  "partly-cloudy": { icon: "⛅", label: "Sol entre nuvens" },
+  cloudy: { icon: "☁", label: "Nublado" },
+  rain: { icon: "🌧", label: "Chovendo" },
+  storm: { icon: "⛈", label: "Tempestade" },
+  snow: { icon: "❄", label: "Nevando" },
+  fog: { icon: "≋", label: "Neblina" },
+  wind: { icon: "〰", label: "Ventando" },
+  custom: { icon: "◈", label: "Clima incomum" },
+};
+
+function ensureCampaignTime(state: GameState, seed: string) {
+  if ((state as GameState & { time?: CampaignTimeState }).time) return state;
+  return {
+    ...state,
+    time: createCampaignTimeState({ seed }),
+  };
+}
+
+function createRandomCampaignTime(seed: string) {
+  const base = createCampaignTimeState({ seed });
+  const monthIndex = Math.floor(Math.random() * base.calendar.months.length);
+  const month = base.calendar.months[monthIndex];
+  const year = base.calendar.epochYear + Math.floor(Math.random() * 24);
+  const day = 1 + Math.floor(Math.random() * month.days);
+  const hour = 7 + Math.floor(Math.random() * 13);
+  const minute = [0, 10, 15, 20, 30, 40, 45, 50][Math.floor(Math.random() * 8)];
+  let next = setCampaignTime(base, { year, monthIndex, day, hour, minute });
+  const weatherOptions: Array<{ condition: WeatherCondition; label: string }> = [
+    { condition: "clear", label: "Céu limpo" },
+    { condition: "partly-cloudy", label: "Sol entre nuvens" },
+    { condition: "cloudy", label: "Nublado" },
+    { condition: "fog", label: "Neblina leve" },
+    { condition: "wind", label: "Vento constante" },
+  ];
+  const initialWeather = weatherOptions[Math.floor(Math.random() * weatherOptions.length)];
+  next = setCampaignWeather(next, initialWeather);
+  return next;
+}
+
+function moonGlyph(phase: string) {
+  return ({
+    new: "●",
+    "waxing-crescent": "◔",
+    "first-quarter": "◐",
+    "waxing-gibbous": "◕",
+    full: "○",
+    "waning-gibbous": "◕",
+    "last-quarter": "◑",
+    "waning-crescent": "◒",
+  } as Record<string, string>)[phase] || "○";
+}
+
+function formatCampaignDuration(minutes: number) {
+  const total = Math.max(0, Math.abs(Math.trunc(minutes)));
+  const days = Math.floor(total / 1440);
+  const hours = Math.floor((total % 1440) / 60);
+  const mins = total % 60;
+  const chunks = [];
+  if (days) chunks.push(`${days}d`);
+  if (hours) chunks.push(`${hours}h`);
+  if (mins || !chunks.length) chunks.push(`${mins}min`);
+  return chunks.join(" ");
+}
+
+function shiftCalendarMonth(time: CampaignTimeState, year: number, monthIndex: number, delta: number) {
+  let nextYear = year;
+  let nextMonth = monthIndex + delta;
+  while (nextMonth < 0) {
+    nextYear -= 1;
+    nextMonth += time.calendar.months.length;
+  }
+  while (nextMonth >= time.calendar.months.length) {
+    nextYear += 1;
+    nextMonth -= time.calendar.months.length;
+  }
+  if (nextYear < time.calendar.epochYear) return { year: time.calendar.epochYear, monthIndex: 0 };
+  return { year: nextYear, monthIndex: nextMonth };
+}
+
+function eventsForCalendarDay(time: CampaignTimeState, year: number, monthIndex: number, day: number) {
+  const start = campaignMinuteFromDate(time.calendar, { year, monthIndex, day, hour: 0, minute: 0 });
+  const end = start + 1440;
+  return time.events.filter((event) => {
+    const eventEnd = event.endCampaignMinute ?? event.startCampaignMinute;
+    return event.startCampaignMinute < end && eventEnd >= start;
+  });
+}
+
+function CampaignClockBar({ time, onOpenCalendar }: { time: CampaignTimeState; onOpenCalendar: () => void }) {
+  const current = deriveCampaignDateTime(time);
+  const weatherVisual = WEATHER_VISUAL[time.weather.condition] || WEATHER_VISUAL.custom;
+  const skyIcon = current.period === "night" && time.weather.condition === "clear"
+    ? "☾"
+    : current.period === "night" && time.weather.condition === "partly-cloudy"
+      ? "☾☁"
+      : weatherVisual.icon;
+  const timeLabel = `${String(current.hour).padStart(2, "0")}:${String(current.minute).padStart(2, "0")}`;
+  return (
+    <div className={`campaignClockBar period-${current.period} weather-${time.weather.condition}`}>
+      <button className="campaignClockDate" onClick={onOpenCalendar} title="Abrir calendário da campanha">
+        <span>
+          <small>{time.calendar.name}</small>
+          <strong>{current.day} de {current.month.name}</strong>
+        </span>
+        <b aria-hidden="true">▦</b>
+      </button>
+      <div className="campaignWeatherWindow" title={time.weather.description || time.weather.label}>
+        <span className="campaignWeatherSky">
+          <i>{skyIcon}</i>
+        </span>
+        <small>{time.weather.label || weatherVisual.label}</small>
+      </div>
+      <div className="campaignClockTime">
+        <small>{current.weekday.name}</small>
+        <strong>{timeLabel}</strong>
+      </div>
+    </div>
+  );
+}
+
+function CalendarEventRow({ event, time }: { event: CampaignCalendarEvent; time: CampaignTimeState }) {
+  const starts = formatCampaignDateTime(time, event.startCampaignMinute, { includeWeekday: false, includeTime: true });
+  const ends = event.endCampaignMinute === undefined
+    ? null
+    : formatCampaignDateTime(time, event.endCampaignMinute, { includeWeekday: false, includeTime: true });
+  const remaining = event.endCampaignMinute === undefined ? null : remainingDuration(time, event);
+  return (
+    <article className={`calendarEventRow kind-${event.kind || "custom"} ${event.completed ? "completed" : ""}`}>
+      <b>{event.kind === "quest" ? "!" : event.kind === "effect" ? "✦" : event.kind === "appointment" ? "⌛" : "◉"}</b>
+      <div>
+        <small>{event.kind === "quest" ? "MISSÃO" : event.kind === "effect" ? "EFEITO" : event.kind === "appointment" ? "COMPROMISSO" : "EVENTO"}</small>
+        <strong>{event.title}</strong>
+        <p>{event.description || (ends ? `${starts} → ${ends}` : starts)}</p>
+      </div>
+      {remaining && !event.completed && <span className={remaining.expired ? "expired" : ""}>{remaining.expired ? "Prazo encerrado" : formatCampaignDuration(remaining.signedMinutes)}</span>}
+    </article>
+  );
+}
+
+function CampaignCalendarModal({ time, onClose }: { time: CampaignTimeState; onClose: () => void }) {
+  const current = deriveCampaignDateTime(time);
+  const [cursor, setCursor] = useState(() => ({ year: current.year, monthIndex: current.monthIndex }));
+  const [selectedMinute, setSelectedMinute] = useState(time.campaignMinute);
+  const month = time.calendar.months[cursor.monthIndex];
+  const firstMinute = campaignMinuteFromDate(time.calendar, { year: cursor.year, monthIndex: cursor.monthIndex, day: 1 });
+  const firstWeekday = deriveCampaignDateTime(time.calendar, firstMinute).weekdayIndex;
+  const selectedDate = deriveCampaignDateTime(time, selectedMinute);
+  const selectedEvents = eventsForCalendarDay(time, selectedDate.year, selectedDate.monthIndex, selectedDate.day);
+  const selectedMoons = getMoonPhases(time, selectedMinute);
+  const upcoming = time.events
+    .filter((event) => !event.completed && (event.endCampaignMinute ?? event.startCampaignMinute) >= time.campaignMinute)
+    .sort((a, b) => (a.endCampaignMinute ?? a.startCampaignMinute) - (b.endCampaignMinute ?? b.startCampaignMinute))
+    .slice(0, 6);
+  const calendarColumns = { gridTemplateColumns: `repeat(${time.calendar.weekdays.length}, minmax(0, 1fr))` };
+
+  return (
+    <div className="modalBackdrop calendarBackdrop" onClick={onClose}>
+      <section className="campaignCalendarModal" onClick={(event) => event.stopPropagation()}>
+        <header className="campaignCalendarHeader">
+          <div>
+            <small>CALENDÁRIO DA CAMPANHA</small>
+            <h2>{time.calendar.name}</h2>
+            <p>{time.calendar.weekdays.length} dias por semana · {time.calendar.months.length} meses por ano · {time.calendar.moons.length} {time.calendar.moons.length === 1 ? "lua" : "luas"}</p>
+          </div>
+          <button onClick={onClose} aria-label="Fechar calendário">×</button>
+        </header>
+
+        <div className="campaignCalendarBody">
+          <section className="calendarMonthPanel">
+            <div className="calendarMonthNav">
+              <button onClick={() => setCursor((value) => shiftCalendarMonth(time, value.year, value.monthIndex, -1))}>‹</button>
+              <div><small>ANO {cursor.year}</small><strong>{month.name}</strong><span>{month.days} dias</span></div>
+              <button onClick={() => setCursor((value) => shiftCalendarMonth(time, value.year, value.monthIndex, 1))}>›</button>
+            </div>
+            <div className="calendarWeekdays" style={calendarColumns}>
+              {time.calendar.weekdays.map((weekday) => <span key={weekday.id}>{weekday.name.slice(0, 3)}</span>)}
+            </div>
+            <div className="calendarDays" style={calendarColumns}>
+              {Array.from({ length: firstWeekday }).map((_, index) => <span className="calendarDayBlank" key={`blank-${index}`} />)}
+              {Array.from({ length: month.days }, (_, index) => index + 1).map((day) => {
+                const minute = campaignMinuteFromDate(time.calendar, { year: cursor.year, monthIndex: cursor.monthIndex, day });
+                const dayEvents = eventsForCalendarDay(time, cursor.year, cursor.monthIndex, day);
+                const isToday = cursor.year === current.year && cursor.monthIndex === current.monthIndex && day === current.day;
+                const isSelected = cursor.year === selectedDate.year && cursor.monthIndex === selectedDate.monthIndex && day === selectedDate.day;
+                const hasDeadline = dayEvents.some((event) => event.endCampaignMinute !== undefined && deriveCampaignDateTime(time, event.endCampaignMinute).absoluteDay === deriveCampaignDateTime(time, minute).absoluteDay);
+                return (
+                  <button
+                    className={`calendarDay ${isToday ? "today" : ""} ${isSelected ? "selected" : ""} ${dayEvents.length ? "hasEvents" : ""}`}
+                    onClick={() => setSelectedMinute(minute)}
+                    key={day}
+                  >
+                    <span>{day}</span>
+                    {dayEvents.length > 0 && <i>{hasDeadline ? "!" : "•"}</i>}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          <aside className="calendarDetailPanel">
+            <div className="calendarSelectedDate">
+              <small>{selectedDate.weekday.name.toUpperCase()}</small>
+              <h3>{selectedDate.day} de {selectedDate.month.name}</h3>
+              <span>Ano {selectedDate.year}</span>
+            </div>
+
+            <div className="calendarMoonList">
+              <small>CICLO {selectedMoons.length === 1 ? "DA LUA" : "DAS LUAS"}</small>
+              {selectedMoons.map((moon) => (
+                <div className="calendarMoon" key={moon.moon.id}>
+                  <b>{moonGlyph(moon.phase)}</b>
+                  <span><strong>{moon.moon.name}</strong><small>{moon.label} · {Math.round(moon.illumination * 100)}%</small></span>
+                </div>
+              ))}
+            </div>
+
+            <div className="calendarDayEvents">
+              <div className="calendarDetailTitle"><small>EVENTOS DESTE DIA</small><span>{selectedEvents.length}</span></div>
+              {selectedEvents.length ? selectedEvents.map((event) => <CalendarEventRow event={event} time={time} key={event.id} />) : <p>Nada marcado para este dia.</p>}
+            </div>
+
+            <div className="calendarUpcoming">
+              <div className="calendarDetailTitle"><small>PRÓXIMOS PRAZOS</small><span>{upcoming.length}</span></div>
+              {upcoming.length ? upcoming.map((event) => <CalendarEventRow event={event} time={time} key={event.id} />) : <p>Nenhum prazo futuro registrado.</p>}
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 export default function OracleApp() {
   const [state, setState] = useState<GameState>(initialState);
   const [screen, setScreen] = useState<AppScreen>("home");
@@ -183,6 +625,7 @@ export default function OracleApp() {
   const [gmError, setGmError] = useState("");
   const [imageMessageId, setImageMessageId] = useState<string | null>(null);
   const [imageNote, setImageNote] = useState("");
+  const [showCalendar, setShowCalendar] = useState(false);
   const [campaignAction, setCampaignAction] = useState<CampaignAction>(null);
   const [campaignActionError, setCampaignActionError] = useState("");
 
@@ -192,7 +635,14 @@ export default function OracleApp() {
       const migrated = migrateLegacyCampaign();
       if (migrated) savedCampaigns = [migrated];
     }
-    const sorted = sortCampaigns(savedCampaigns);
+    const normalizedCampaigns = savedCampaigns.map((entry) => {
+      const normalizedState = ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`);
+      return normalizedState === entry.state ? entry : { ...entry, state: normalizedState };
+    });
+    const sorted = sortCampaigns(normalizedCampaigns);
+    if (normalizedCampaigns.some((entry, index) => entry !== savedCampaigns[index])) {
+      writeCampaignLibrary(sorted);
+    }
     campaignsRef.current = sorted;
     setCampaigns(sorted);
 
@@ -207,6 +657,12 @@ export default function OracleApp() {
     }
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    if (!ready || !activeCampaignId) return;
+    if ((state as GameState & { time?: CampaignTimeState }).time) return;
+    setState((current) => ensureCampaignTime(current, `legacy:${current.campaign.name}:${current.campaign.system}`));
+  }, [ready, activeCampaignId, state]);
 
   useEffect(() => {
     campaignsRef.current = campaigns;
@@ -351,8 +807,9 @@ export default function OracleApp() {
   function openCampaign(campaignId: string) {
     const entry = campaignsRef.current.find((campaign) => campaign.id === campaignId);
     if (!entry) return;
+    const normalizedState = ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`);
     setActiveCampaignId(entry.id);
-    setState(entry.state);
+    setState(normalizedState);
     localStorage.setItem(ACTIVE_CAMPAIGN_KEY, entry.id);
     setView("session");
     setScreen("campaign");
@@ -363,9 +820,10 @@ export default function OracleApp() {
     const characterName = result.character.name.trim() || "Novo personagem";
     const campaignName = result.campaignName.trim() || "Nova campanha";
     const scene = "Prólogo · Cena inicial";
+    const campaignTime = createRandomCampaignTime(`${campaignName}:${crypto.randomUUID()}`);
     const memories: GameState["memories"] = [];
     const remember = (kind: GameState["memories"][number]["kind"], text: string) => {
-      memories.push({ id: crypto.randomUUID(), kind, text, createdAt });
+      memories.push({ id: crypto.randomUUID(), kind, text, createdAt, campaignMinute: campaignTime.campaignMinute });
     };
 
     remember(
@@ -446,6 +904,7 @@ export default function OracleApp() {
         session: 1,
         scene,
       },
+      time: campaignTime,
       character: {
         id: "player-character",
         name: characterName,
@@ -513,6 +972,7 @@ export default function OracleApp() {
         role: "gm",
         text: initialMessage,
         createdAt,
+        campaignMinute: campaignTime.campaignMinute,
       }],
       events: [],
     };
@@ -615,6 +1075,23 @@ export default function OracleApp() {
     setState((current) => executeCommand(current, { type: "adjust", resource, amount }));
   }
 
+  function toggleQuestStatus(questId: string) {
+    setState((current) => {
+      const quest = current.quests.find((entry) => entry.id === questId);
+      if (!quest) return current;
+      const nextStatus = quest.status === "active" ? "completed" : "active";
+      let next = executeCommand(current, { type: "quest", questId, status: nextStatus });
+      const linkedEvent = next.time.events.find((entry) => entry.sourceId === questId);
+      if (linkedEvent) {
+        next = {
+          ...next,
+          time: updateCalendarEvent(next.time, linkedEvent.id, { completed: nextStatus === "completed" }),
+        };
+      }
+      return next;
+    });
+  }
+
   async function runGmNarration(working: GameState, text: string, allowTools = true) {
     if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
       setShowConnect(true);
@@ -715,6 +1192,7 @@ export default function OracleApp() {
             role: "gm",
             text: narration,
             createdAt: new Date().toISOString(),
+            campaignMinute: working.time.campaignMinute,
             sceneSnapshot,
           },
         ],
@@ -727,7 +1205,7 @@ export default function OracleApp() {
         ...current,
         messages: [
           ...current.messages,
-          { id: crypto.randomUUID(), role: "system", text: `Mestre IA indisponível: ${message}`, createdAt: new Date().toISOString() },
+          { id: crypto.randomUUID(), role: "system", text: `Mestre IA indisponível: ${message}`, createdAt: new Date().toISOString(), campaignMinute: current.time.campaignMinute },
         ],
       }));
     } finally {
@@ -739,7 +1217,7 @@ export default function OracleApp() {
     e.preventDefault();
     const text = input.trim();
     if (!text || gmBusy) return;
-    const playerMessage = { id: crypto.randomUUID(), role: "player" as const, text, createdAt: new Date().toISOString() };
+    const playerMessage = { id: crypto.randomUUID(), role: "player" as const, text, createdAt: new Date().toISOString(), campaignMinute: state.time.campaignMinute };
     const working: GameState = { ...state, messages: [...state.messages, playerMessage] };
     setState(working);
     setInput("");
@@ -1125,6 +1603,7 @@ export default function OracleApp() {
                   <div><small>CENA ATUAL</small><h1>{state.campaign.scene}</h1></div>
                   <span className="livePill">● AO VIVO</span>
                 </div>
+                <CampaignClockBar time={state.time} onOpenCalendar={() => setShowCalendar(true)} />
                 <div className="sceneArt">
                   <div className="sceneMoon" />
                   <div className="sceneDoor"><span>◈</span></div>
@@ -1137,7 +1616,7 @@ export default function OracleApp() {
                       <div className="messageAvatar">{message.role === "gm" ? "◈" : state.character.name.slice(0, 1).toUpperCase()}</div>
                       <div className="messageBody">
                         <small>{message.role === "gm" ? "ORACLE · MESTRE" : message.role === "player" ? state.character.name : "SISTEMA"}</small>
-                        <MessageText text={message.text} />
+                        <MessageText text={message.text} actionSyntax={message.role === "player"} />
                         {message.role === "gm" && lastGmMessage?.id === message.id && (
                           <button className="sceneImageButton" onClick={() => prepareSceneImage(message)}>
                             <span>✦</span> Gerar imagem da cena
@@ -1153,8 +1632,12 @@ export default function OracleApp() {
                   ))}
                 </div>
                 <form className="composer" onSubmit={submit}>
-                  <button type="button" title="Ações rápidas">＋</button>
-                  <input value={input} onChange={(e) => setInput(e.target.value)} placeholder={gmBusy ? "O Mestre está narrando..." : "O que você faz?"} disabled={gmBusy} />
+                  <ActionComposer
+                    value={input}
+                    onChange={setInput}
+                    placeholder={gmBusy ? "O Mestre está narrando..." : "O que você faz?"}
+                    disabled={gmBusy}
+                  />
                   <button className="send" type="submit" disabled={gmBusy}>{gmBusy ? "…" : "➤"}</button>
                 </form>
                 <div className="composerHint"><span>{gmError ? gmError : "O estado da campanha é salvo no OracleRPG."}</span><span>{bridge.model || "Mestre local"}</span></div>
@@ -1406,7 +1889,35 @@ export default function OracleApp() {
               <h1>NPCs e Missões</h1>
               <div className="worldCols">
                 <div><h3 className="subhead">NPCs conhecidos</h3>{state.npcs.map(npc => <article className="npcCard" key={npc.id}><div className={`relation ${npc.relation}`} /><div><h3>{npc.name}</h3><p>{npc.role}</p><small>{npc.location}</small></div><span>{npc.relation}</span></article>)}</div>
-                <div><h3 className="subhead">Missões</h3>{state.quests.map(quest => <article className="questCard" key={quest.id}><div><small>{quest.status === "active" ? "EM ANDAMENTO" : "CONCLUÍDA"}</small><h3>{quest.title}</h3><p>{quest.stage}</p></div><button onClick={() => setState(s => executeCommand(s, { type: "quest", questId: quest.id, status: quest.status === "active" ? "completed" : "active" }))}>{quest.status === "active" ? "Concluir" : "Reabrir"}</button></article>)}</div>
+                <div>
+                  <h3 className="subhead">Missões</h3>
+                  {state.quests.map((quest) => {
+                    const deadline = quest.deadlineCampaignMinute === undefined ? null : remainingDuration(state.time, quest.deadlineCampaignMinute);
+                    return (
+                      <article className="questCard" key={quest.id}>
+                        <div>
+                          <small>{quest.status === "active" ? "EM ANDAMENTO" : "CONCLUÍDA"}</small>
+                          <h3>{quest.title}</h3>
+                          <p>{quest.stage}</p>
+                          {(quest.acceptedAtCampaignMinute !== undefined || quest.deadlineCampaignMinute !== undefined) && (
+                            <div className="questTiming">
+                              {quest.acceptedAtCampaignMinute !== undefined && (
+                                <span>Início · {formatCampaignDateTime(state.time, quest.acceptedAtCampaignMinute, { includeWeekday: false, includeTime: false })}</span>
+                              )}
+                              {quest.deadlineCampaignMinute !== undefined && (
+                                <span className={deadline?.expired && quest.status === "active" ? "expired" : ""}>
+                                  Prazo · {formatCampaignDateTime(state.time, quest.deadlineCampaignMinute, { includeWeekday: false, includeTime: true })}
+                                  {quest.status === "active" && deadline ? ` · ${deadline.expired ? "encerrado" : `faltam ${formatCampaignDuration(deadline.signedMinutes)}`}` : ""}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        <button onClick={() => toggleQuestStatus(quest.id)}>{quest.status === "active" ? "Concluir" : "Reabrir"}</button>
+                      </article>
+                    );
+                  })}
+                </div>
               </div>
             </section>
           )}
@@ -1415,12 +1926,20 @@ export default function OracleApp() {
             <section className="widePanel panel">
               <div className="eyebrow">MEMÓRIA PERSISTENTE</div>
               <div className="memoryHeader"><div><h1>O Oracle lembra do mundo.</h1><p>Esses dados pertencem à campanha, não à janela de contexto do modelo.</p></div><span>{state.memories.length} registros</span></div>
-              <div className="memoryList">{state.memories.map(memory => <article key={memory.id}><b>{memory.kind === "secret" ? "◇" : memory.kind === "event" ? "✦" : memory.kind === "visual" ? "◐" : "◉"}</b><div><small>{memory.kind.toUpperCase()}</small><p>{memory.text}</p></div></article>)}</div>
+              <div className="memoryList">{state.memories.map((memory) => {
+                const worldDate = memory.campaignMinute === undefined ? null : formatCampaignDateTime(state.time, memory.campaignMinute, { includeWeekday: false, includeTime: true });
+                const elapsed = memory.campaignMinute === undefined ? null : state.time.campaignMinute - memory.campaignMinute;
+                return <article key={memory.id}><b>{memory.kind === "secret" ? "◇" : memory.kind === "event" ? "✦" : memory.kind === "visual" ? "◐" : "◉"}</b><div><small>{memory.kind.toUpperCase()}{worldDate ? ` · ${worldDate}` : ""}{elapsed !== null && elapsed > 0 ? ` · há ${formatCampaignDuration(elapsed)}` : ""}</small><p>{memory.text}</p></div></article>;
+              })}</div>
               <details className="contextPreview"><summary>Prévia do pacote de contexto enviado ao Mestre</summary><pre>{JSON.stringify(contextPreview, null, 2)}</pre></details>
             </section>
           )}
         </section>
       </section>
+
+      {showCalendar && view === "session" && (
+        <CampaignCalendarModal time={state.time} onClose={() => setShowCalendar(false)} />
+      )}
 
       {showSync && (
         <div className="modalBackdrop" onClick={() => setShowSync(false)}>

@@ -1,3 +1,10 @@
+import {
+  CampaignTimeState,
+  MINUTES_PER_DAY,
+  createCampaignTimeState,
+  createDemoCampaignTimeState,
+} from "@/lib/campaignTime";
+
 export type Actor = "player" | "gm-ai";
 
 export type InventoryItem = {
@@ -77,6 +84,9 @@ export type Quest = {
   title: string;
   status: "active" | "completed";
   stage: string;
+  acceptedAtCampaignMinute?: number;
+  deadlineCampaignMinute?: number;
+  completedAtCampaignMinute?: number;
 };
 
 export type Npc = {
@@ -94,6 +104,7 @@ export type Memory = {
   kind: "fact" | "event" | "secret" | "visual";
   text: string;
   createdAt: string;
+  campaignMinute?: number;
 };
 
 export type SceneParticipant = {
@@ -126,6 +137,7 @@ export type Message = {
   role: "gm" | "player" | "system";
   text: string;
   createdAt: string;
+  campaignMinute?: number;
   sceneSnapshot?: SceneSnapshot;
   imageDraft?: SceneImageDraft;
 };
@@ -135,6 +147,7 @@ export type EventRecord = {
   actor: Actor;
   label: string;
   createdAt: string;
+  campaignMinute?: number;
   reverse?: GameCommand;
 };
 
@@ -168,6 +181,7 @@ export type CharacterState = {
 export type CampaignRestartSnapshot = {
   createdAt: string;
   campaign: CampaignCore;
+  time: CampaignTimeState;
   character: CharacterState;
   inventory: InventoryItem[];
   quests: Quest[];
@@ -180,6 +194,7 @@ export type GameState = {
   campaign: CampaignCore & {
     restartSnapshot?: CampaignRestartSnapshot;
   };
+  time: CampaignTimeState;
   character: CharacterState;
   inventory: InventoryItem[];
   quests: Quest[];
@@ -205,6 +220,7 @@ export function createCampaignRestartSnapshot(state: GameState): CampaignRestart
   return {
     createdAt: new Date().toISOString(),
     campaign: structuredClone(campaign),
+    time: structuredClone(state.time ?? createCampaignTimeState({ seed: `campaign:${state.campaign.name}` })),
     character: cloneWithoutEmbeddedImages(state.character),
     inventory: structuredClone(state.inventory),
     quests: structuredClone(state.quests),
@@ -274,6 +290,7 @@ export function inferLegacyRestartSnapshot(state: GameState): CampaignRestartSna
       session: 1,
       scene: "Prólogo · Cena inicial",
     },
+    time: structuredClone(state.time ?? createCampaignTimeState({ seed: `legacy:${state.campaign.name}` })),
     character,
     inventory,
     quests: [],
@@ -297,6 +314,7 @@ export function restartCampaignFromSnapshot(state: GameState): GameState {
       ...structuredClone(snapshot.campaign),
       restartSnapshot: structuredClone(snapshot),
     },
+    time: structuredClone(snapshot.time ?? state.time ?? createCampaignTimeState({ seed: `legacy:${state.campaign.name}` })),
     character,
     inventory: structuredClone(snapshot.inventory),
     quests: structuredClone(snapshot.quests),
@@ -316,6 +334,8 @@ export type GameCommand =
 
 const now = () => new Date().toISOString();
 const id = () => Math.random().toString(36).slice(2, 10);
+const demoTime = createDemoCampaignTimeState();
+const demoMinute = demoTime.campaignMinute;
 
 export const initialState: GameState = {
   campaign: {
@@ -324,6 +344,7 @@ export const initialState: GameState = {
     session: 12,
     scene: "Santuário soterrado · Câmara do Oráculo",
   },
+  time: demoTime,
   character: {
     id: "fuyu",
     name: "Fuyu",
@@ -345,8 +366,8 @@ export const initialState: GameState = {
     { id: "rope", name: "Corda de seda", qty: 1, detail: "15 metros", icon: "⌁" },
   ],
   quests: [
-    { id: "heart", title: "O Coração de Cinzas", status: "active", stage: "Encontre a porta sob o santuário" },
-    { id: "arven", title: "A Promessa de Arven", status: "active", stage: "Recupere o mapa antigo" },
+    { id: "heart", title: "O Coração de Cinzas", status: "active", stage: "Encontre a porta sob o santuário", acceptedAtCampaignMinute: demoMinute - 3 * MINUTES_PER_DAY },
+    { id: "arven", title: "A Promessa de Arven", status: "active", stage: "Recupere o mapa antigo", acceptedAtCampaignMinute: demoMinute - MINUTES_PER_DAY },
   ],
   npcs: [
     { id: "arven", name: "Arven", role: "Cartógrafo exilado", relation: "friendly", location: "Vael'tharos" },
@@ -354,14 +375,14 @@ export const initialState: GameState = {
     { id: "vesh", name: "Vesh", role: "Caçadora da Ordem", relation: "hostile", location: "Desconhecido" },
   ],
   memories: [
-    { id: "m1", kind: "fact", text: "Arven deve ao grupo a vida da filha.", createdAt: now() },
-    { id: "m2", kind: "secret", text: "Ithran reconheceu o selo, mas escondeu sua reação.", createdAt: now() },
-    { id: "m3", kind: "event", text: "A Chave Lunar foi encontrada dentro do observatório quebrado.", createdAt: now() },
+    { id: "m1", kind: "fact", text: "Arven deve ao grupo a vida da filha.", createdAt: now(), campaignMinute: demoMinute - 2 * MINUTES_PER_DAY },
+    { id: "m2", kind: "secret", text: "Ithran reconheceu o selo, mas escondeu sua reação.", createdAt: now(), campaignMinute: demoMinute - 180 },
+    { id: "m3", kind: "event", text: "A Chave Lunar foi encontrada dentro do observatório quebrado.", createdAt: now(), campaignMinute: demoMinute - 95 },
   ],
   messages: [
-    { id: "g1", role: "gm", text: "A porta de pedra não possui fechadura. No centro, um eclipse de prata pulsa no mesmo ritmo que a Chave Lunar em sua mochila.", createdAt: now() },
-    { id: "p1", role: "player", text: "Eu retiro a chave, mas antes verifico se Ithran reage de alguma forma.", createdAt: now() },
-    { id: "g2", role: "gm", text: "Ithran tenta parecer indiferente. Por um instante, porém, os olhos dele descem até a chave. Ele conhece aquele símbolo.", createdAt: now() },
+    { id: "g1", role: "gm", text: "A porta de pedra não possui fechadura. No centro, um eclipse de prata pulsa no mesmo ritmo que a Chave Lunar em sua mochila.", createdAt: now(), campaignMinute: demoMinute - 8 },
+    { id: "p1", role: "player", text: "Eu retiro a chave, mas antes verifico se Ithran reage de alguma forma.", createdAt: now(), campaignMinute: demoMinute - 4 },
+    { id: "g2", role: "gm", text: "Ithran tenta parecer indiferente. Por um instante, porém, os olhos dele descem até a chave. Ele conhece aquele símbolo.", createdAt: now(), campaignMinute: demoMinute },
   ],
   events: [],
 };
@@ -370,6 +391,7 @@ const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(ma
 
 export function executeCommand(state: GameState, command: GameCommand, actor: Actor = "player", record = true): GameState {
   const next = structuredClone(state) as GameState;
+  const campaignMinute = next.time?.campaignMinute ?? 0;
   let label = "";
   let reverse: GameCommand | undefined;
 
@@ -400,6 +422,7 @@ export function executeCommand(state: GameState, command: GameCommand, actor: Ac
     if (quest) {
       const old = quest.status;
       quest.status = command.status;
+      quest.completedAtCampaignMinute = command.status === "completed" ? campaignMinute : undefined;
       label = `${quest.title}: ${command.status === "completed" ? "concluída" : "reativada"}`;
       reverse = { ...command, status: old };
     }
@@ -416,12 +439,12 @@ export function executeCommand(state: GameState, command: GameCommand, actor: Ac
 
   if (command.type === "memory") {
     const memoryId = id();
-    next.memories.unshift({ id: memoryId, kind: command.kind, text: command.text, createdAt: now() });
+    next.memories.unshift({ id: memoryId, kind: command.kind, text: command.text, createdAt: now(), campaignMinute });
     label = "Memória registrada";
   }
 
   if (record && label) {
-    next.events.unshift({ id: id(), actor, label, createdAt: now(), reverse });
+    next.events.unshift({ id: id(), actor, label, createdAt: now(), campaignMinute, reverse });
   }
 
   return next;
@@ -438,6 +461,7 @@ export function undoLatest(state: GameState): GameState {
 export function buildContextPacket(state: GameState) {
   return {
     campaign: state.campaign,
+    time: state.time,
     character: state.character,
     activeQuests: state.quests.filter((quest) => quest.status === "active"),
     presentNpcs: state.npcs.filter((npc) => npc.location === "Santuário soterrado"),

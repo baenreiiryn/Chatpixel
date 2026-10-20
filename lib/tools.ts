@@ -34,6 +34,21 @@ export const oracleTools: OracleTool[] = [
     }
   },
   {
+    name: "quest_add",
+    description: "Registra uma nova missão aceita pelo grupo. Se houver prazo, também cria automaticamente o prazo correspondente no calendário.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        title: { type: "string" },
+        stage: { type: "string" },
+        deadlineMinutes: { type: "integer", minimum: 1 },
+        deadlineDescription: { type: "string" }
+      },
+      required: ["title", "stage"],
+      additionalProperties: false
+    }
+  },
+  {
     name: "quest_set_status",
     description: "Atualiza o estado de uma missão conhecida.",
     inputSchema: {
@@ -58,6 +73,89 @@ export const oracleTools: OracleTool[] = [
         reason: { type: "string" }
       },
       required: ["name", "active", "reason"],
+      additionalProperties: false
+    }
+  },
+  {
+    name: "advance_time",
+    description: "Avança o relógio da campanha pelo número de minutos transcorridos na ficção.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        minutes: { type: "integer", minimum: 1 },
+        reason: { type: "string" }
+      },
+      required: ["minutes"],
+      additionalProperties: false
+    }
+  },
+  {
+    name: "set_weather",
+    description: "Atualiza o clima atual persistido da campanha quando a narração estabelecer uma nova condição.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        condition: {
+          type: "string",
+          enum: ["clear", "partly-cloudy", "cloudy", "rain", "storm", "snow", "fog", "wind", "custom"]
+        },
+        label: { type: "string" },
+        description: { type: "string" },
+        temperatureC: { type: "number" },
+        intensity: { type: "string", enum: ["light", "moderate", "heavy"] }
+      },
+      required: ["condition", "label"],
+      additionalProperties: false
+    }
+  },
+  {
+    name: "calendar_event_add",
+    description: "Adiciona ao calendário um prazo, efeito temporário, compromisso ou acontecimento futuro. Pode usar minutos absolutos da campanha ou tempos relativos ao momento atual.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        title: { type: "string" },
+        startCampaignMinute: { type: "integer", minimum: 0 },
+        startsInMinutes: { type: "integer", minimum: 0 },
+        endCampaignMinute: { type: "integer", minimum: 0 },
+        durationMinutes: { type: "integer", minimum: 1 },
+        kind: { type: "string", enum: ["quest", "effect", "appointment", "world", "custom"] },
+        sourceId: { type: "string" },
+        description: { type: "string" },
+        completed: { type: "boolean" }
+      },
+      required: ["title"],
+      additionalProperties: false
+    }
+  },
+  {
+    name: "calendar_event_update",
+    description: "Atualiza um evento de calendário já conhecido, inclusive prazo, duração ou conclusão.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        eventId: { type: "string" },
+        title: { type: "string" },
+        startCampaignMinute: { type: "integer", minimum: 0 },
+        endCampaignMinute: { type: "integer", minimum: 0 },
+        kind: { type: "string", enum: ["quest", "effect", "appointment", "world", "custom"] },
+        sourceId: { type: "string" },
+        description: { type: "string" },
+        completed: { type: "boolean" }
+      },
+      required: ["eventId"],
+      additionalProperties: false
+    }
+  },
+  {
+    name: "calendar_event_remove",
+    description: "Remove um evento persistido do calendário da campanha.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        eventId: { type: "string" }
+      },
+      required: ["eventId"],
       additionalProperties: false
     }
   },
