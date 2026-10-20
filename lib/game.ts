@@ -138,32 +138,49 @@ export type EventRecord = {
   reverse?: GameCommand;
 };
 
+export type CampaignCore = {
+  name: string;
+  system: string;
+  tone?: string;
+  adventureHook?: string;
+  session: number;
+  scene: string;
+};
+
+export type CharacterState = {
+  id: string;
+  name: string;
+  archetype: string;
+  level: number;
+  hp: number;
+  maxHp: number;
+  hope: number;
+  maxHope: number;
+  stress: number;
+  maxStress: number;
+  armor: number;
+  maxArmor: number;
+  conditions: string[];
+  appearance?: string;
+  daggerheart?: DaggerheartCharacterData;
+};
+
+export type CampaignRestartSnapshot = {
+  createdAt: string;
+  campaign: CampaignCore;
+  character: CharacterState;
+  inventory: InventoryItem[];
+  quests: Quest[];
+  npcs: Npc[];
+  memories: Memory[];
+  messages: Message[];
+};
+
 export type GameState = {
-  campaign: {
-    name: string;
-    system: string;
-    tone?: string;
-    adventureHook?: string;
-    session: number;
-    scene: string;
+  campaign: CampaignCore & {
+    restartSnapshot?: CampaignRestartSnapshot;
   };
-  character: {
-    id: string;
-    name: string;
-    archetype: string;
-    level: number;
-    hp: number;
-    maxHp: number;
-    hope: number;
-    maxHope: number;
-    stress: number;
-    maxStress: number;
-    armor: number;
-    maxArmor: number;
-    conditions: string[];
-    appearance?: string;
-    daggerheart?: DaggerheartCharacterData;
-  };
+  character: CharacterState;
   inventory: InventoryItem[];
   quests: Quest[];
   npcs: Npc[];
@@ -171,6 +188,124 @@ export type GameState = {
   messages: Message[];
   events: EventRecord[];
 };
+
+function cloneWithoutEmbeddedImages(character: CharacterState): CharacterState {
+  const next = structuredClone(character) as CharacterState;
+  if (next.daggerheart) {
+    next.daggerheart.image = undefined;
+    if (next.daggerheart.animalCompanion) {
+      next.daggerheart.animalCompanion.image = undefined;
+    }
+  }
+  return next;
+}
+
+export function createCampaignRestartSnapshot(state: GameState): CampaignRestartSnapshot {
+  const { restartSnapshot: _restartSnapshot, ...campaign } = state.campaign;
+  return {
+    createdAt: new Date().toISOString(),
+    campaign: structuredClone(campaign),
+    character: cloneWithoutEmbeddedImages(state.character),
+    inventory: structuredClone(state.inventory),
+    quests: structuredClone(state.quests),
+    npcs: structuredClone(state.npcs),
+    memories: structuredClone(state.memories),
+    messages: structuredClone(state.messages),
+  };
+}
+
+function creationMemoriesFromLegacy(state: GameState) {
+  const timestamps = state.memories
+    .map((memory) => Date.parse(memory.createdAt))
+    .filter((value) => Number.isFinite(value));
+  if (!timestamps.length) return [] as Memory[];
+  const first = Math.min(...timestamps);
+  return state.memories.filter((memory) => Date.parse(memory.createdAt) === first);
+}
+
+function creationInventoryNames(memories: Memory[]) {
+  const memory = memories.find((entry) => /Equipamento inicial de .+?:/i.test(entry.text));
+  if (!memory) return [] as string[];
+  const match = memory.text.match(/Equipamento inicial de .+?:\s*(.+?)\.?$/i);
+  if (!match?.[1]) return [];
+  return match[1].split(",").map((name) => name.trim()).filter(Boolean);
+}
+
+function creationCompanionNames(memories: Memory[]) {
+  return memories.flatMap((memory) => {
+    const match = memory.text.match(/^(.+?)\s+\([^)]*\)\s+acompanha o grupo/i);
+    return match?.[1] ? [match[1].trim()] : [];
+  });
+}
+
+export function inferLegacyRestartSnapshot(state: GameState): CampaignRestartSnapshot {
+  const creationMemories = creationMemoriesFromLegacy(state);
+  const initialNames = creationInventoryNames(creationMemories);
+  const initialNameSet = new Set(initialNames.map((name) => name.toLocaleLowerCase("pt-BR")));
+  const inventory = initialNames.length
+    ? state.inventory
+        .filter((item) => initialNameSet.has(item.name.toLocaleLowerCase("pt-BR")))
+        .map((item) => ({ ...structuredClone(item), qty: 1 }))
+    : structuredClone(state.inventory);
+  const companionNames = new Set(
+    creationCompanionNames(creationMemories).map((name) => name.toLocaleLowerCase("pt-BR")),
+  );
+  const npcs = companionNames.size
+    ? state.npcs.filter((npc) => companionNames.has(npc.name.toLocaleLowerCase("pt-BR")))
+    : [];
+  const initialMessage = state.messages.find((message) => message.role === "gm") || state.messages[0];
+  const { restartSnapshot: _restartSnapshot, ...campaign } = state.campaign;
+  const character = cloneWithoutEmbeddedImages(state.character);
+  character.level = 1;
+  character.hp = 6;
+  character.maxHp = 6;
+  character.hope = 2;
+  character.maxHope = 6;
+  character.stress = 0;
+  character.maxStress = 6;
+  character.armor = state.character.maxArmor;
+  character.maxArmor = state.character.maxArmor;
+  character.conditions = [];
+
+  return {
+    createdAt: new Date().toISOString(),
+    campaign: {
+      ...structuredClone(campaign),
+      session: 1,
+      scene: "Prólogo · Cena inicial",
+    },
+    character,
+    inventory,
+    quests: [],
+    npcs: structuredClone(npcs),
+    memories: structuredClone(creationMemories),
+    messages: initialMessage ? [structuredClone(initialMessage)] : [],
+  };
+}
+
+export function restartCampaignFromSnapshot(state: GameState): GameState {
+  const snapshot = state.campaign.restartSnapshot || inferLegacyRestartSnapshot(state);
+  const character = structuredClone(snapshot.character);
+  if (character.daggerheart && state.character.daggerheart) {
+    character.daggerheart.image = state.character.daggerheart.image;
+    if (character.daggerheart.animalCompanion && state.character.daggerheart.animalCompanion) {
+      character.daggerheart.animalCompanion.image = state.character.daggerheart.animalCompanion.image;
+    }
+  }
+  return {
+    campaign: {
+      ...structuredClone(snapshot.campaign),
+      restartSnapshot: structuredClone(snapshot),
+    },
+    character,
+    inventory: structuredClone(snapshot.inventory),
+    quests: structuredClone(snapshot.quests),
+    npcs: structuredClone(snapshot.npcs),
+    memories: structuredClone(snapshot.memories),
+    messages: structuredClone(snapshot.messages),
+    events: [],
+  };
+}
 
 export type GameCommand =
   | { type: "adjust"; resource: "hp" | "hope" | "stress" | "armor"; amount: number }

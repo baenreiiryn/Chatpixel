@@ -1,7 +1,16 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { buildContextPacket, executeCommand, GameState, initialState, Message, undoLatest } from "@/lib/game";
+import {
+  buildContextPacket,
+  createCampaignRestartSnapshot,
+  executeCommand,
+  GameState,
+  initialState,
+  Message,
+  restartCampaignFromSnapshot,
+  undoLatest,
+} from "@/lib/game";
 import { useCloudSync } from "@/hooks/useCloudSync";
 import { useOracleBridge } from "@/hooks/useOracleBridge";
 import { buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
@@ -156,6 +165,8 @@ export default function OracleApp() {
   const [gmError, setGmError] = useState("");
   const [imageMessageId, setImageMessageId] = useState<string | null>(null);
   const [imageNote, setImageNote] = useState("");
+  const [showRestart, setShowRestart] = useState(false);
+  const [restartConfirmStep, setRestartConfirmStep] = useState<0 | 1>(0);
 
   useEffect(() => {
     try {
@@ -448,6 +459,7 @@ export default function OracleApp() {
       }],
       events: [],
     };
+    next.campaign.restartSnapshot = createCampaignRestartSnapshot(next);
     setState(next);
     setHasSavedCampaign(true);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
@@ -458,6 +470,28 @@ export default function OracleApp() {
   function goHome() {
     setScreen("home");
     setView("session");
+  }
+
+  function openRestartCampaign() {
+    if (!hasSavedCampaign) return;
+    setRestartConfirmStep(0);
+    setShowRestart(true);
+  }
+
+  function confirmRestartCampaign() {
+    const restarted = restartCampaignFromSnapshot(state);
+    setState(restarted);
+    setInput("");
+    setGmError("");
+    setImageMessageId(null);
+    setImageNote("");
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(restarted));
+    } catch {}
+    setRestartConfirmStep(0);
+    setShowRestart(false);
+    setView("session");
+    setScreen("campaign");
   }
 
   function connectChatGPT() {
@@ -719,6 +753,11 @@ export default function OracleApp() {
               <div><strong>Sincronização</strong><small>Campanha entre seus dispositivos</small></div>
               <em>{cloudLabel}</em>
             </button>
+            <button className="restartCampaignSetting" onClick={openRestartCampaign} disabled={!hasSavedCampaign}>
+              <span className="settingsIcon">↺</span>
+              <div><strong>Recomeçar campanha</strong><small>Voltar ao estado inicial da criação do personagem</small></div>
+              <em>Apagar progresso</em>
+            </button>
             <div className="settingsInfo">
               <span className="settingsIcon">ⓘ</span>
               <div><strong>OracleRPG SWIG</strong><small>Sign in with ChatGPT · canal standalone</small></div>
@@ -771,6 +810,46 @@ export default function OracleApp() {
                 <p>O runtime local do Oracle ainda não foi detectado.</p>
               )}
               <button className="closeText" onClick={() => setShowConnect(false)}>Fechar</button>
+            </section>
+          </div>
+        )}
+
+        {showRestart && (
+          <div className="modalBackdrop" onClick={() => {
+            setShowRestart(false);
+            setRestartConfirmStep(0);
+          }}>
+            <section className="connectModal restartModal" onClick={(event) => event.stopPropagation()}>
+              <div className="restartModalIcon">↺</div>
+              <small>RECOMEÇAR CAMPANHA</small>
+              <h2>{restartConfirmStep === 0 ? "Voltar ao início desta história?" : "Esta ação apaga o progresso atual."}</h2>
+              {restartConfirmStep === 0 ? (
+                <>
+                  <p>
+                    O Oracle vai restaurar a campanha para o momento logo após a criação do personagem:
+                    ficha inicial, inventário inicial, companheiros iniciais, mensagem inicial do Mestre e somente as memórias de criação.
+                  </p>
+                  <div className="restartWhatResets">
+                    <span>✦ Mensagens posteriores serão removidas</span>
+                    <span>◉ Memórias posteriores serão removidas</span>
+                    <span>◇ Recursos, condições e inventário voltarão ao início</span>
+                    <span>⌘ NPCs e missões criados depois do começo serão removidos</span>
+                  </div>
+                  <button className="dangerGhost restartContinue" onClick={() => setRestartConfirmStep(1)}>Continuar</button>
+                </>
+              ) : (
+                <>
+                  <p>
+                    Esta é a última confirmação. A campanha <b>{state.campaign.name}</b> será reiniciada e a versão reiniciada passará a ser sincronizada com a nuvem.
+                  </p>
+                  <button className="restartConfirmDanger" onClick={confirmRestartCampaign}>Sim, recomeçar campanha</button>
+                  <button className="ghost" onClick={() => setRestartConfirmStep(0)}>Voltar</button>
+                </>
+              )}
+              <button className="closeText" onClick={() => {
+                setShowRestart(false);
+                setRestartConfirmStep(0);
+              }}>Cancelar</button>
             </section>
           </div>
         )}
