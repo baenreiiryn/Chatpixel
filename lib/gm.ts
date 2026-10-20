@@ -4,6 +4,7 @@ import {
   type DiceType,
   type GameState,
   type RollKind,
+  type TimelineEntry,
   type TimelineKind,
 } from "@/lib/game";
 import {
@@ -19,6 +20,7 @@ import {
   type WeatherCondition,
 } from "@/lib/campaignTime";
 import { parseDiceFormula, type ParsedDiceFormula } from "@/lib/dice";
+import { formatTimelineEntryDate, timelineEntrySortValue, worldDateOrdinalMinute } from "@/lib/timeline";
 import { oracleTools } from "@/lib/tools";
 
 const WEATHER_CONDITIONS: WeatherCondition[] = [
@@ -77,7 +79,11 @@ export function gmInstructions(system: string) {
     "Em Daggerheart, pedidos de Dualidade devem usar rollKind duality e uma fórmula com exatamente 2d12 para Esperança e Medo; dados auxiliares e modificadores podem ser acrescentados à mesma fórmula.",
     "Faça alterações mecânicas antes de narrar seus efeitos quando isso for necessário.",
     "Registre em memória apenas fatos relevantes que precisem sobreviver ao contexto recente.",
-    "O timeline da aba Memória é a cronologia curta e visível do jogador. Quando algo importante acontecer ou for descoberto — uma pista, encontro decisivo, missão, viagem marcante, mudança de relação ou marco da campanha — registre uma única entrada com timeline_entry_add após o acontecimento estar estabelecido.",
+    "O timeline da aba Memória é a cronologia curta e visível do jogador. Quando algo importante acontecer ou for descoberto — uma pista, encontro decisivo, missão, viagem marcante, mudança de relação ou marco da campanha — registre o acontecimento com timeline_entry_add após ele estar estabelecido.",
+    "Cada entrada do timeline deve conter apenas UM acontecimento ou fato histórico. Se o mesmo trecho revelar vários fatos (por exemplo: alguém salvou um reino e depois fundou uma academia), faça chamadas separadas, mesmo que você atribua a mesma data aos dois.",
+    "Nunca cole o texto inteiro de uma memória, do gancho da aventura ou da história do personagem no timeline. Extraia o acontecimento, dê um título curto e descreva-o em no máximo duas frases objetivas.",
+    "Ao registrar retroativamente um fato histórico sem data exata, estipule uma data plausível e coerente com a cronologia. Use year/monthIndex/day/hour/minute em timeline_entry_add. É permitido estipular anos antigos e usar a mesma data em acontecimentos distintos.",
+    "Um fato histórico descoberto agora deve aparecer na data histórica estimada em que ocorreu; uma descoberta que só existe no presente usa a data atual.",
     "Não transforme cada batida da narração em timeline. Registre apenas acontecimentos que ajudam o jogador a entender a história depois.",
     "Aceitar, concluir ou falhar uma missão normalmente merece uma entrada de timeline quando isso for relevante ao histórico da campanha.",
     "Timeline e memória têm papéis diferentes: timeline é player-facing e cronológico; memory_record é para fatos persistentes, segredos e detalhes úteis ao Mestre. Não duplique o mesmo texto nos dois sem necessidade.",
@@ -491,9 +497,40 @@ export function executeGmTool(
     const kind = String(args.kind || "other") as TimelineKind;
     const importance = args.importance === "major" ? "major" as const : "normal" as const;
     const visibility = args.visibility === "hidden" ? "hidden" as const : "public" as const;
-    const minute = args.campaignMinute === undefined ? state.time.campaignMinute : Number(args.campaignMinute);
+    const hasWorldDate = args.year !== undefined || args.monthIndex !== undefined || args.day !== undefined;
+    const currentDate = deriveCampaignDateTime(state.time);
+    let worldDate: TimelineEntry["worldDate"] | undefined;
+    if (hasWorldDate) {
+      const monthIndex = Number.isInteger(Number(args.monthIndex))
+        ? Math.min(state.time.calendar.months.length - 1, Math.max(0, Number(args.monthIndex)))
+        : currentDate.monthIndex;
+      const month = state.time.calendar.months[monthIndex];
+      worldDate = {
+        year: Number.isInteger(Number(args.year)) ? Number(args.year) : currentDate.year,
+        monthIndex,
+        day: Number.isInteger(Number(args.day)) ? Math.min(month.days, Math.max(1, Number(args.day))) : currentDate.day,
+        hour: Number.isInteger(Number(args.hour)) ? Math.min(23, Math.max(0, Number(args.hour))) : 12,
+        minute: Number.isInteger(Number(args.minute)) ? Math.min(59, Math.max(0, Number(args.minute))) : 0,
+      };
+      const currentOrdinal = worldDateOrdinalMinute(state.time.calendar, {
+        year: currentDate.year,
+        monthIndex: currentDate.monthIndex,
+        day: currentDate.day,
+        hour: currentDate.hour,
+        minute: currentDate.minute,
+      });
+      if (worldDateOrdinalMinute(state.time.calendar, worldDate) > currentOrdinal) {
+        return { state, result: { ok: false, error: "Timeline entries cannot use a future world date. Future events belong to the calendar." } };
+      }
+    }
+    const minute = args.campaignMinute === undefined
+      ? state.time.campaignMinute
+      : Number(args.campaignMinute);
     if (!title || !description || !TIMELINE_KINDS.includes(kind)) {
       return { state, result: { ok: false, error: "Invalid timeline entry." } };
+    }
+    if (title.length > 100 || description.length > 420) {
+      return { state, result: { ok: false, error: "Timeline entries must be atomic: use a title up to 100 characters and a description up to 420 characters. Split multiple facts into separate entries." } };
     }
     if (!Number.isInteger(minute) || minute < 0 || minute > state.time.campaignMinute) {
       return { state, result: { ok: false, error: "Timeline entries must use the current or a past campaign minute. Future events belong to the calendar." } };
@@ -506,13 +543,22 @@ export function executeGmTool(
     ));
     const image = typeof args.image === "string" && args.image.trim() ? args.image.trim() : undefined;
     const signature = normalizeTimelineText(title + " " + description);
-    const duplicate = (state.timeline ?? []).find((entry) =>
-      entry.campaignMinute === minute && normalizeTimelineText(entry.title + " " + entry.description) === signature
-    );
+    const duplicate = (state.timeline ?? []).find((entry) => {
+      const sameText = normalizeTimelineText(entry.title + " " + entry.description) === signature;
+      if (!sameText) return false;
+      if (worldDate && entry.worldDate) {
+        return entry.worldDate.year === worldDate.year
+          && entry.worldDate.monthIndex === worldDate.monthIndex
+          && entry.worldDate.day === worldDate.day
+          && entry.worldDate.hour === worldDate.hour
+          && entry.worldDate.minute === worldDate.minute;
+      }
+      return !worldDate && !entry.worldDate && entry.campaignMinute === minute;
+    });
     if (duplicate) {
       return {
         state,
-        result: { ok: true, duplicate: true, entry: duplicate, dateLabel: formatCampaignDateTime(state.time, duplicate.campaignMinute) },
+        result: { ok: true, duplicate: true, entry: duplicate, dateLabel: formatTimelineEntryDate(state.time, duplicate, true) },
       };
     }
     const entry = {
@@ -520,6 +566,7 @@ export function executeGmTool(
       title,
       description,
       campaignMinute: minute,
+      ...(worldDate ? { worldDate } : {}),
       createdAt: new Date().toISOString(),
       kind,
       tags,
@@ -528,10 +575,10 @@ export function executeGmTool(
       ...(image ? { image } : {}),
     };
     const timeline = [...(state.timeline ?? []), entry]
-      .sort((a, b) => a.campaignMinute - b.campaignMinute || Date.parse(a.createdAt) - Date.parse(b.createdAt));
+      .sort((a, b) => timelineEntrySortValue(state.time, a) - timelineEntrySortValue(state.time, b) || Date.parse(a.createdAt) - Date.parse(b.createdAt));
     return {
       state: { ...state, timeline },
-      result: { ok: true, entry, dateLabel: formatCampaignDateTime(state.time, minute) },
+      result: { ok: true, entry, dateLabel: formatTimelineEntryDate(state.time, entry, true) },
     };
   }
 

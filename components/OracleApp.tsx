@@ -10,6 +10,8 @@ import {
   initialState,
   Message,
   resolvePendingRoll,
+  timelineNeedsNarrativeSynthesis,
+  timelineWithoutLegacyGeneratedEntries,
   type DiceType,
   restartCampaignFromSnapshot,
   undoLatest,
@@ -53,6 +55,12 @@ import {
 import DiceOverlay from "@/components/DiceOverlay";
 import DiceAppearanceSettings from "@/components/DiceAppearanceSettings";
 import CampaignTimeline from "@/components/CampaignTimeline";
+import {
+  buildTimelineSynthesisPrompt,
+  mergeTimelineEntries,
+  parseTimelineSynthesis,
+  TIMELINE_SCHEMA_VERSION,
+} from "@/lib/timeline";
 import {
   dualityFormulaFromCommand,
   normalizeDiceAppearanceFonts,
@@ -792,6 +800,7 @@ export default function OracleApp() {
   const stateRef = useRef(state);
   const [campaignAction, setCampaignAction] = useState<CampaignAction>(null);
   const [campaignActionError, setCampaignActionError] = useState("");
+  const timelineSynthesisInFlightRef = useRef<string | null>(null);
 
   useEffect(() => {
     stateRef.current = state;
@@ -852,8 +861,10 @@ export default function OracleApp() {
 
   useEffect(() => {
     if (!ready || !activeCampaignId) return;
-    if ((state as GameState & { time?: CampaignTimeState; timeline?: unknown[] }).time && Array.isArray((state as GameState & { timeline?: unknown[] }).timeline)) return;
-    setState((current) => ensureGameStateTimeline(ensureCampaignTime(current, `legacy:${current.campaign.name}:${current.campaign.system}`)));
+    const normalized = ensureGameStateTimeline(
+      ensureCampaignTime(state, `legacy:${state.campaign.name}:${state.campaign.system}`),
+    );
+    if (normalized !== state) setState(normalized);
   }, [ready, activeCampaignId, state]);
 
   useEffect(() => {
@@ -897,6 +908,62 @@ export default function OracleApp() {
   const hasSavedCampaign = campaigns.length > 0;
   const cloud = useCloudSync(state, setState, ready, activeCampaignId);
   const bridge = useOracleBridge();
+
+  async function synthesizeTimelineForState(sourceState: GameState) {
+    if (!bridge.account?.connected || !bridge.model) return [];
+    const response = await bridge.respond({
+      model: bridge.model,
+      instructions: [
+        "Você organiza uma cronologia histórica para uma campanha de RPG.",
+        "Retorne somente JSON válido, sem markdown, comentários ou texto fora do JSON.",
+        "Não copie blocos narrativos inteiros: transforme-os em acontecimentos atômicos e datados.",
+      ].join("\n"),
+      input: [{
+        role: "user",
+        content: buildTimelineSynthesisPrompt(sourceState),
+      }],
+    });
+    const text = extractNarration(response).trim();
+    return parseTimelineSynthesis(text, sourceState.time);
+  }
+
+  useEffect(() => {
+    if (!ready || !activeCampaignId || !bridge.account?.connected || !bridge.model) return;
+    if (!timelineNeedsNarrativeSynthesis(state)) return;
+    const requestKey = `${activeCampaignId}:${state.timelineVersion ?? 0}:${state.campaign.name}`;
+    if (timelineSynthesisInFlightRef.current === requestKey) return;
+    timelineSynthesisInFlightRef.current = requestKey;
+    const epoch = campaignEpochRef.current;
+
+    void (async () => {
+      try {
+        const generated = await synthesizeTimelineForState(state);
+        if (!generated.length) return;
+        if (activeCampaignIdRef.current !== activeCampaignId || campaignEpochRef.current !== epoch) return;
+        setState((current) => {
+          if (!timelineNeedsNarrativeSynthesis(current)) return current;
+          return {
+            ...current,
+            timeline: mergeTimelineEntries(current.time, timelineWithoutLegacyGeneratedEntries(current), generated),
+            timelineVersion: TIMELINE_SCHEMA_VERSION,
+          };
+        });
+      } catch {
+        // Keep the cleaned timeline and retry the synthesis on a future connected render.
+      } finally {
+        if (timelineSynthesisInFlightRef.current === requestKey) timelineSynthesisInFlightRef.current = null;
+      }
+    })();
+  }, [
+    ready,
+    activeCampaignId,
+    bridge.account?.connected,
+    bridge.model,
+    state.timelineVersion,
+    state.campaign.adventureHook,
+    state.character.daggerheart?.history,
+    state.memories.length,
+  ]);
 
   const contextPreview = useMemo(() => buildContextPacket(state), [state]);
   const lastGmMessage = useMemo(() => latestGmMessage(state.messages), [state.messages]);
@@ -1017,7 +1084,7 @@ export default function OracleApp() {
     setScreen("campaign");
   }
 
-  function finishNewCampaign(result: NewCampaignResult) {
+  async function finishNewCampaign(result: NewCampaignResult) {
     const createdAt = new Date().toISOString();
     const characterName = result.character.name.trim() || "Novo personagem";
     const campaignName = result.campaignName.trim() || "Nova campanha";
@@ -1096,10 +1163,6 @@ export default function OracleApp() {
     const initialMessage = companionNames.length
       ? `${characterName}, sua jornada em ${campaignName} está pronta. ${companionNames.join(", ")} ${companionNames.length === 1 ? "está" : "estão"} com você no início do prólogo. Descreva sua primeira ação quando quiser começar.`
       : `${characterName}, sua jornada em ${campaignName} está pronta. O prólogo aguarda sua primeira ação.`;
-    const initialTimelineDescription = result.adventureHook?.trim()
-      || result.character.history.trim()
-      || `${characterName} inicia sua jornada em ${campaignName}.`;
-
     const next: GameState = {
       campaign: {
         name: campaignName,
@@ -1172,17 +1235,8 @@ export default function OracleApp() {
         appearance: companion.appearance.trim() || undefined,
       })),
       memories,
-      timeline: [{
-        id: crypto.randomUUID(),
-        title: "Início da jornada",
-        description: initialTimelineDescription,
-        campaignMinute: campaignTime.campaignMinute,
-        createdAt,
-        kind: "milestone",
-        tags: ["Início"],
-        visibility: "public",
-        importance: "major",
-      }],
+      timeline: [],
+      timelineVersion: 1,
       messages: [{
         id: crypto.randomUUID(),
         role: "gm",
@@ -1192,6 +1246,26 @@ export default function OracleApp() {
       }],
       events: [],
     };
+    try {
+      const generatedTimeline = await synthesizeTimelineForState(next);
+      if (generatedTimeline.length) {
+        next.timeline = generatedTimeline;
+        next.timelineVersion = TIMELINE_SCHEMA_VERSION;
+      }
+    } catch {}
+    if (!next.timeline.length) {
+      next.timeline = [{
+        id: crypto.randomUUID(),
+        title: "Início da campanha",
+        description: `${characterName} chega ao ponto em que a aventura de ${campaignName} começa.`,
+        campaignMinute: campaignTime.campaignMinute,
+        createdAt,
+        kind: "milestone",
+        tags: ["Início"],
+        visibility: "public",
+        importance: "major",
+      }];
+    }
     next.campaign.restartSnapshot = createCampaignRestartSnapshot(next);
     const localCampaignId = crypto.randomUUID();
     const record: CampaignLibraryEntry = {
@@ -2475,7 +2549,9 @@ export default function OracleApp() {
           {view === "memory" && (
             memoryMode === "timeline" ? (
               <CampaignTimeline
-                entries={state.timeline ?? []}
+                entries={(state.timelineVersion ?? 0) < TIMELINE_SCHEMA_VERSION
+                  ? timelineWithoutLegacyGeneratedEntries(state)
+                  : state.timeline ?? []}
                 time={state.time}
                 onShowDetails={() => setMemoryMode("details")}
               />

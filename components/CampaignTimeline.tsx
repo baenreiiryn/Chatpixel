@@ -1,8 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { formatCampaignDateTime, type CampaignTimeState } from "@/lib/campaignTime";
+import type { CampaignTimeState } from "@/lib/campaignTime";
 import type { TimelineEntry, TimelineKind } from "@/lib/game";
+import {
+  formatTimelineEntryDate,
+  timelineElapsedMinutes,
+  timelineEntrySortValue,
+} from "@/lib/timeline";
 
 const KIND_META: Record<TimelineKind, { label: string; icon: string }> = {
   discovery: { label: "Descoberta", icon: "✦" },
@@ -15,11 +20,16 @@ const KIND_META: Record<TimelineKind, { label: string; icon: string }> = {
   other: { label: "Evento", icon: "•" },
 };
 
-function elapsedLabel(minutes: number) {
+function elapsedLabel(minutes: number, daysPerYear: number) {
   const total = Math.max(0, Math.trunc(minutes));
   const days = Math.floor(total / 1440);
   const hours = Math.floor((total % 1440) / 60);
   const mins = total % 60;
+  if (daysPerYear > 0 && days >= daysPerYear) {
+    const years = Math.floor(days / daysPerYear);
+    const remainingDays = days % daysPerYear;
+    return `há ${years} ano${years === 1 ? "" : "s"}${remainingDays ? ` e ${remainingDays}d` : ""}`;
+  }
   if (days > 0) return `há ${days}d${hours ? ` ${hours}h` : ""}`;
   if (hours > 0) return `há ${hours}h${mins ? ` ${mins}min` : ""}`;
   return mins > 0 ? `há ${mins}min` : "agora";
@@ -41,8 +51,8 @@ export default function CampaignTimeline({
   const visibleEntries = useMemo(
     () => entries
       .filter((entry) => entry.visibility === "public")
-      .sort((a, b) => a.campaignMinute - b.campaignMinute || Date.parse(a.createdAt) - Date.parse(b.createdAt)),
-    [entries],
+      .sort((a, b) => timelineEntrySortValue(time, a) - timelineEntrySortValue(time, b) || Date.parse(a.createdAt) - Date.parse(b.createdAt)),
+    [entries, time],
   );
 
   const usedKinds = useMemo(() => Array.from(new Set(visibleEntries.map((entry) => entry.kind))), [visibleEntries]);
@@ -98,8 +108,11 @@ export default function CampaignTimeline({
         <div className="verticalTimeline">
           {filtered.map((entry, index) => {
             const meta = KIND_META[entry.kind] || KIND_META.other;
-            const date = formatCampaignDateTime(time, entry.campaignMinute, { includeWeekday: true, includeTime: true });
-            const elapsed = elapsedLabel(time.campaignMinute - entry.campaignMinute);
+            const date = formatTimelineEntryDate(time, entry, true);
+            const elapsed = elapsedLabel(
+              timelineElapsedMinutes(time, entry),
+              time.calendar.months.reduce((total, month) => total + month.days, 0),
+            );
             return (
               <article className={`timelineEntry kind-${entry.kind} ${entry.importance === "major" ? "major" : ""}`} key={entry.id}>
                 <div className="timelineRailCell">

@@ -210,12 +210,12 @@ export const oracleTools: OracleTool[] = [
   },
   {
     name: "timeline_entry_add",
-    description: "Registra no timeline do jogador um acontecimento ou descoberta importante já ocorrida na campanha, usando a data do mundo. Não use para segredos ainda desconhecidos nem para eventos futuros.",
+    description: "Registra UM acontecimento ou fato histórico importante no timeline do jogador. Use título e descrição curtos; nunca cole uma memória, gancho ou história inteira. Para fatos retroativos sem data exata, estipule uma data plausível com year/monthIndex/day. Eventos distintos podem compartilhar a mesma data. Não use para segredos ainda desconhecidos nem para eventos futuros.",
     inputSchema: {
       type: "object",
       properties: {
-        title: { type: "string", minLength: 1 },
-        description: { type: "string", minLength: 1 },
+        title: { type: "string", minLength: 1, maxLength: 100 },
+        description: { type: "string", minLength: 1, maxLength: 420 },
         kind: {
           type: "string",
           enum: ["discovery", "quest", "combat", "travel", "relationship", "world", "milestone", "other"]
@@ -224,7 +224,12 @@ export const oracleTools: OracleTool[] = [
         importance: { type: "string", enum: ["normal", "major"] },
         visibility: { type: "string", enum: ["public", "hidden"] },
         image: { type: "string" },
-        campaignMinute: { type: "integer", minimum: 0, description: "Use apenas para registrar retroativamente algo que já aconteceu. O padrão é o minuto atual da campanha." }
+        campaignMinute: { type: "integer", minimum: 0, description: "Compatibilidade: minuto do relógio da campanha. Prefira year/monthIndex/day para história antiga." },
+        year: { type: "integer", description: "Ano histórico estipulado ou conhecido. Pode ser anterior ao epochYear do relógio atual." },
+        monthIndex: { type: "integer", minimum: 0, description: "Índice zero-based do mês no calendário da campanha." },
+        day: { type: "integer", minimum: 1 },
+        hour: { type: "integer", minimum: 0, maximum: 23 },
+        minute: { type: "integer", minimum: 0, maximum: 59 }
       },
       required: ["title", "description", "kind"],
       additionalProperties: false

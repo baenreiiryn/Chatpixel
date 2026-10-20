@@ -183,6 +183,13 @@ export type TimelineEntry = {
   title: string;
   description: string;
   campaignMinute: number;
+  worldDate?: {
+    year: number;
+    monthIndex: number;
+    day: number;
+    hour: number;
+    minute: number;
+  };
   createdAt: string;
   kind: TimelineKind;
   tags: string[];
@@ -273,6 +280,7 @@ export type CampaignRestartSnapshot = {
   npcs: Npc[];
   memories: Memory[];
   timeline: TimelineEntry[];
+  timelineVersion?: number;
   messages: Message[];
 };
 
@@ -287,6 +295,7 @@ export type GameState = {
   npcs: Npc[];
   memories: Memory[];
   timeline: TimelineEntry[];
+  timelineVersion?: number;
   messages: Message[];
   events: EventRecord[];
   pendingRoll?: PendingPlayerRoll;
@@ -315,55 +324,73 @@ export function createCampaignRestartSnapshot(state: GameState): CampaignRestart
     quests: structuredClone(state.quests),
     npcs: structuredClone(state.npcs),
     memories: structuredClone(state.memories),
-    timeline: structuredClone(state.timeline ?? timelineFromMemories(state.memories)),
+    timeline: structuredClone(state.timeline ?? []),
+    timelineVersion: state.timelineVersion,
     messages: structuredClone(state.messages),
   };
 }
 
-function timelineTitleFromMemory(memory: Memory) {
-  const text = memory.text.trim();
-  const firstSentence = text.split(/[.!?](?:\s|$)/)[0]?.trim() || text;
-  if (firstSentence.length <= 72) return firstSentence;
-  return firstSentence.slice(0, 69).trimEnd() + "…";
+const TIMELINE_SCHEMA_VERSION = 2;
+
+function normalizeTimelineSource(value: string | undefined) {
+  return (value || "")
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase("pt-BR")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
 }
 
-export function timelineFromMemories(memories: Memory[]): TimelineEntry[] {
-  const publicMemories = memories.filter((memory) => memory.kind === "event" || memory.kind === "fact");
-  const datedMinutes = publicMemories
-    .map((memory) => memory.campaignMinute)
-    .filter((value): value is number => Number.isFinite(value));
-  const earliestMinute = datedMinutes.length ? Math.min(...datedMinutes) : undefined;
-  const datedCreatedAt = publicMemories
-    .map((memory) => Date.parse(memory.createdAt))
-    .filter((value) => Number.isFinite(value));
-  const earliestCreatedAt = datedCreatedAt.length ? Math.min(...datedCreatedAt) : undefined;
-  return publicMemories
-    .filter((memory) => {
-      if (memory.kind === "event") return true;
-      if (memory.campaignMinute !== undefined && earliestMinute !== undefined) return memory.campaignMinute > earliestMinute;
-      const createdAt = Date.parse(memory.createdAt);
-      return earliestCreatedAt !== undefined && Number.isFinite(createdAt) && createdAt > earliestCreatedAt;
-    })
-    .map((memory) => ({
-      id: "timeline-" + memory.id,
-      title: timelineTitleFromMemory(memory),
-      description: memory.text,
-      campaignMinute: memory.campaignMinute ?? 0,
-      createdAt: memory.createdAt,
-      kind: memory.kind === "event" ? "milestone" as const : "discovery" as const,
-      tags: memory.kind === "event" ? ["Acontecimento"] : ["Descoberta"],
-      visibility: "public" as const,
-      importance: "normal" as const,
-      memoryId: memory.id,
-    }))
-    .sort((a, b) => a.campaignMinute - b.campaignMinute || Date.parse(a.createdAt) - Date.parse(b.createdAt));
+function isLegacyGeneratedTimelineEntry(state: GameState, entry: TimelineEntry) {
+  const title = normalizeTimelineSource(entry.title);
+  if (title.startsWith("gancho inicial da aventura") || title.startsWith("historia de ")) {
+    return true;
+  }
+  const description = normalizeTimelineSource(entry.description);
+  const hook = normalizeTimelineSource(state.campaign.adventureHook);
+  const history = normalizeTimelineSource(state.character.daggerheart?.history);
+  if (description && ((hook && description === hook) || (history && description === history))) return true;
+  // The first migration copied memory text verbatim. Keep short/atomic migrated
+  // entries because they may represent real session history, but hide clearly
+  // unprocessed narrative blobs until synthesis replaces them.
+  if (entry.memoryId && entry.description.trim().length > 360) return true;
+  return title === "inicio da jornada"
+    && entry.campaignMinute === state.time.campaignMinute
+    && entry.description.trim().length > 180;
+}
+
+export function timelineWithoutLegacyGeneratedEntries(state: GameState) {
+  return (Array.isArray(state.timeline) ? state.timeline : []).filter((entry) => !isLegacyGeneratedTimelineEntry(state, entry));
+}
+
+export function timelineNeedsNarrativeSynthesis(state: GameState) {
+  if ((state.timelineVersion ?? 0) >= TIMELINE_SCHEMA_VERSION) return false;
+  const hasNarrativeSource = Boolean(
+    state.campaign.adventureHook?.trim()
+    || state.character.daggerheart?.history?.trim()
+    || state.memories.some((memory) => (memory.kind === "event" || memory.kind === "fact") && memory.text.trim()),
+  );
+  return hasNarrativeSource;
 }
 
 export function ensureGameStateTimeline(state: GameState): GameState {
-  if (Array.isArray((state as GameState & { timeline?: TimelineEntry[] }).timeline)) return state;
+  const rawTimeline = Array.isArray((state as GameState & { timeline?: TimelineEntry[] }).timeline)
+    ? (state as GameState & { timeline: TimelineEntry[] }).timeline
+    : [];
+  const needsSynthesis = Boolean(
+    state.campaign.adventureHook?.trim()
+    || state.character.daggerheart?.history?.trim()
+    || state.memories.some((memory) => (memory.kind === "event" || memory.kind === "fact") && memory.text.trim()),
+  );
+  const timelineVersion = (state.timelineVersion ?? 0) >= TIMELINE_SCHEMA_VERSION
+    ? state.timelineVersion
+    : needsSynthesis ? 1 : TIMELINE_SCHEMA_VERSION;
+  if (rawTimeline === state.timeline && state.timelineVersion === timelineVersion) return state;
   return {
     ...state,
-    timeline: timelineFromMemories(state.memories ?? []),
+    timeline: rawTimeline,
+    timelineVersion,
   };
 }
 
@@ -433,7 +460,8 @@ export function inferLegacyRestartSnapshot(state: GameState): CampaignRestartSna
     quests: [],
     npcs: structuredClone(npcs),
     memories: structuredClone(creationMemories),
-    timeline: timelineFromMemories(creationMemories),
+    timeline: [],
+    timelineVersion: 1,
     messages: initialMessage ? [structuredClone(initialMessage)] : [],
   };
 }
@@ -458,7 +486,8 @@ export function restartCampaignFromSnapshot(state: GameState): GameState {
     quests: structuredClone(snapshot.quests),
     npcs: structuredClone(snapshot.npcs),
     memories: structuredClone(snapshot.memories),
-    timeline: structuredClone(snapshot.timeline ?? timelineFromMemories(snapshot.memories)),
+    timeline: structuredClone(snapshot.timeline ?? []),
+    timelineVersion: snapshot.timelineVersion ?? 1,
     messages: structuredClone(snapshot.messages),
     events: [],
     pendingRoll: undefined,
@@ -547,6 +576,7 @@ export const initialState: GameState = {
       memoryId: "m3",
     },
   ],
+  timelineVersion: 2,
   messages: [
     { id: "g1", role: "gm", text: "A porta de pedra não possui fechadura. No centro, um eclipse de prata pulsa no mesmo ritmo que a Chave Lunar em sua mochila.", createdAt: now(), campaignMinute: demoMinute - 8 },
     { id: "p1", role: "player", text: "Eu retiro a chave, mas antes verifico se Ithran reage de alguma forma.", createdAt: now(), campaignMinute: demoMinute - 4 },

@@ -91,7 +91,7 @@ export type NewCampaignResult = {
 type Props = {
   ai: NewCampaignAiAdapter;
   onBack: () => void;
-  onComplete: (result: NewCampaignResult) => void;
+  onComplete: (result: NewCampaignResult) => void | Promise<void>;
 };
 
 const STEP_LABELS = [
@@ -278,6 +278,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
   const [animalAppearance, setAnimalAppearance] = useState("");
   const [animalImageBusy, setAnimalImageBusy] = useState(false);
   const [animalImageError, setAnimalImageError] = useState("");
+  const [finishing, setFinishing] = useState(false);
 
   const selectedClass = classes.find((entry) => sourceId(entry) === classId);
   const subclasses = useMemo(() => (classId ? subclassesFor(classId) : []), [classId]);
@@ -642,8 +643,8 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     return sourceItems.map((item) => ({ ...item, id: randomId("item") }));
   }
 
-  function finish() {
-    if (!stepValid || !selectedClass || !selectedSubclass || !selectedAncestryA || !selectedCommunity || !classConfig) return;
+  async function finish() {
+    if (finishing || !stepValid || !selectedClass || !selectedSubclass || !selectedAncestryA || !selectedCommunity || !classConfig) return;
 
     const ancestryFeatures = mixedAncestry
       ? [primaryAncestryFeatures[0], secondaryAncestryFeatures[1]].filter(Boolean)
@@ -654,50 +655,55 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     const tone = toneId === "custom"
       ? customTone.trim()
       : TONE_OPTIONS.find((toneOption) => toneOption.id === toneId)?.name || "Fantasia heroica";
-    onComplete({
-      campaignName: campaignName.trim() || "Nova campanha",
-      tone,
-      adventureHook: toneId === "custom" ? adventureHook.trim() || undefined : undefined,
-      system: "Daggerheart",
-      classEntry: selectedClass,
-      subclassEntry: selectedSubclass,
-      classFeatures: selectedClassFeatures,
-      subclassFeatures: selectedSubclassFeatures,
-      ancestry: {
-        mixed: mixedAncestry,
-        primary: selectedAncestryA,
-        ...(mixedAncestry && selectedAncestryB ? { secondary: selectedAncestryB } : {}),
-        features: ancestryFeatures,
-      },
-      community: { entry: selectedCommunity, features: selectedCommunityFeatures },
-      traits: { ...traits },
-      experiences: experiences.map((experience) => experience.trim()),
-      domainCards: cards,
-      equipment,
-      character: {
-        name: characterName.trim(),
-        pronouns: pronouns.trim(),
-        history: history.trim(),
-        image: characterImage || undefined,
-        appearance: appearance || undefined,
-      },
-      companions: companions.map((companion) => ({
-        id: companion.id,
-        name: companion.name,
-        role: companion.role,
-        appearance: companion.appearance || "",
-        connection: (companionRelations[companion.id] || "").trim(),
-      })),
-      ...(isRanger && (animalName.trim() || animalKind.trim() || animalImage || animalAppearance.trim()) ? {
-        animalCompanion: {
-          name: animalName.trim() || "Companheiro animal",
-          kind: animalKind.trim(),
-          image: animalImage || undefined,
-          appearance: animalAppearance || undefined,
+    setFinishing(true);
+    try {
+      await onComplete({
+        campaignName: campaignName.trim() || "Nova campanha",
+        tone,
+        adventureHook: toneId === "custom" ? adventureHook.trim() || undefined : undefined,
+        system: "Daggerheart",
+        classEntry: selectedClass,
+        subclassEntry: selectedSubclass,
+        classFeatures: selectedClassFeatures,
+        subclassFeatures: selectedSubclassFeatures,
+        ancestry: {
+          mixed: mixedAncestry,
+          primary: selectedAncestryA,
+          ...(mixedAncestry && selectedAncestryB ? { secondary: selectedAncestryB } : {}),
+          features: ancestryFeatures,
         },
-      } : {}),
-      armorSlots: armorSlotsFromItems(equipment),
-    });
+        community: { entry: selectedCommunity, features: selectedCommunityFeatures },
+        traits: { ...traits },
+        experiences: experiences.map((experience) => experience.trim()),
+        domainCards: cards,
+        equipment,
+        character: {
+          name: characterName.trim(),
+          pronouns: pronouns.trim(),
+          history: history.trim(),
+          image: characterImage || undefined,
+          appearance: appearance || undefined,
+        },
+        companions: companions.map((companion) => ({
+          id: companion.id,
+          name: companion.name,
+          role: companion.role,
+          appearance: companion.appearance || "",
+          connection: (companionRelations[companion.id] || "").trim(),
+        })),
+        ...(isRanger && (animalName.trim() || animalKind.trim() || animalImage || animalAppearance.trim()) ? {
+          animalCompanion: {
+            name: animalName.trim() || "Companheiro animal",
+            kind: animalKind.trim(),
+            image: animalImage || undefined,
+            appearance: animalAppearance || undefined,
+          },
+        } : {}),
+        armorSlots: armorSlotsFromItems(equipment),
+      });
+    } finally {
+      setFinishing(false);
+    }
   }
 
   const toneName = toneId === "custom"
@@ -1116,7 +1122,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
             <button className="campaignWizardSecondary" onClick={() => step === 0 ? onBack() : setStep((current) => Math.max(0, current - 1))}>{step === 0 ? "Cancelar" : "Voltar"}</button>
             {step < STEP_LABELS.length - 1
               ? <button className="campaignWizardPrimary" disabled={!stepValid} onClick={() => stepValid && setStep((current) => Math.min(STEP_LABELS.length - 1, current + 1))}>Continuar <span>→</span></button>
-              : <button className="campaignWizardPrimary" disabled={!stepValid} onClick={finish}>Criar campanha <span>✦</span></button>}
+              : <button className="campaignWizardPrimary" disabled={!stepValid || finishing} onClick={() => void finish()}>{finishing ? "Organizando cronologia…" : "Criar campanha"} <span>✦</span></button>}
           </footer>
         </section>
 
