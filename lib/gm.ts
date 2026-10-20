@@ -1,4 +1,10 @@
-import { executeCommand, GameState } from "@/lib/game";
+import {
+  executeCommand,
+  requestPlayerRoll,
+  type DiceType,
+  type GameState,
+  type RollKind,
+} from "@/lib/game";
 import {
   addCalendarEvent,
   advanceCampaignTime,
@@ -11,6 +17,7 @@ import {
   type CalendarEventKind,
   type WeatherCondition,
 } from "@/lib/campaignTime";
+import { parseDiceFormula, type ParsedDiceFormula } from "@/lib/dice";
 import { oracleTools } from "@/lib/tools";
 
 const WEATHER_CONDITIONS: WeatherCondition[] = [
@@ -26,6 +33,8 @@ const WEATHER_CONDITIONS: WeatherCondition[] = [
 ];
 const WEATHER_INTENSITIES = ["light", "moderate", "heavy"] as const;
 const CALENDAR_EVENT_KINDS: CalendarEventKind[] = ["quest", "effect", "appointment", "world", "custom"];
+const DICE_TYPES: DiceType[] = ["d2", "d4", "d6", "d8", "d10", "d12", "d20", "d100"];
+const ROLL_KINDS: RollKind[] = ["attack", "damage", "reaction", "check", "duality", "custom"];
 
 export const responseTools = oracleTools.map((tool) => ({
   type: "function",
@@ -49,6 +58,11 @@ export function gmInstructions(system: string) {
     "Quando o grupo aceitar uma nova missão, registre-a com quest_add; se houver prazo, informe deadlineMinutes para que o Oracle crie o prazo no calendário automaticamente.",
     "Para eventos relativos ao momento atual, prefira startsInMinutes e durationMinutes em vez de calcular datas manualmente.",
     "Não invente valores mecânicos que já estejam no contexto.",
+    "Quando o desfecho depender de uma rolagem do jogador, use request_player_roll. Nunca role pelo jogador nem invente o resultado.",
+    "Ao chamar request_player_roll, encerre a resolução naquele ponto e aguarde o jogador fornecer o resultado. Não narre sucesso, falha, dano ou consequência da rolagem no mesmo turno.",
+    "Se pendingRoll estiver preenchido no estado, a cena está aguardando essa rolagem: não solicite outra e não avance suas consequências até receber o resultado.",
+    "Quando pendingRoll desaparecer e o resultado aparecer em rollHistory, continue a cena a partir daquele resultado. Você pode narrar brevemente a consequência e então pedir outra rolagem quando a sequência exigir, por exemplo ataque acertou e agora requer dano.",
+    "Em Daggerheart, pedidos de Dualidade devem usar rollKind duality e uma fórmula com exatamente 2d12 para Esperança e Medo; dados auxiliares e modificadores podem ser acrescentados à mesma fórmula.",
     "Faça alterações mecânicas antes de narrar seus efeitos quando isso for necessário.",
     "Registre em memória apenas fatos relevantes que precisem sobreviver ao contexto recente.",
     "Quando uma característica visual estável de um personagem for estabelecida pela primeira vez, registre-a como memória visual.",
@@ -56,7 +70,7 @@ export function gmInstructions(system: string) {
     "Formate a resposta em parágrafos curtos. Separe sempre narração e fala em parágrafos distintos.",
     "Quando um NPC falar, coloque a fala em um parágrafo próprio, preferencialmente iniciada por travessão.",
     "Nunca entregue narração e várias falas como um único bloco corrido.",
-    "Depois das ferramentas, produza a narração final e, quando apropriado, pergunte o que o jogador faz.",
+    "Depois das ferramentas, produza a narração final e, quando apropriado, pergunte o que o jogador faz. A exceção é request_player_roll: após essa ferramenta, pare e aguarde a rolagem sem continuar a narração.",
   ].join("\n");
 }
 
@@ -84,6 +98,8 @@ export function buildTurnInput(state: GameState, playerText: string) {
           currentDateLabel: formatCampaignDateTime(campaignTime),
         } : undefined,
         recentDialogue: recent,
+        pendingRoll: state.pendingRoll ?? null,
+        rollHistory: (state.rollHistory ?? []).slice(-12),
       }),
       "",
       `MENSAGEM DO JOGADOR: ${playerText}`,
@@ -101,6 +117,95 @@ export function executeGmTool(
     args = JSON.parse(rawArguments || "{}");
   } catch {
     return { state, result: { ok: false, error: "Invalid JSON arguments." } };
+  }
+
+  if (name === "request_player_roll") {
+    const label = String(args.label || "").trim();
+    const reason = String(args.reason || "").trim();
+    const formula = typeof args.formula === "string" ? args.formula.trim() : "";
+    const allowedDice = Array.isArray(args.allowedDice)
+      ? args.allowedDice.map((die) => String(die) as DiceType)
+      : [];
+    const rollKind = args.rollKind === undefined ? "custom" : String(args.rollKind) as RollKind;
+    const targetArg = args.target === undefined ? undefined : Number(args.target);
+    const dcArg = args.dc === undefined ? undefined : Number(args.dc);
+    let parsedFormula: ParsedDiceFormula | undefined;
+    if (!label || !reason || (!formula && !allowedDice.length)) {
+      return { state, result: { ok: false, error: "Roll request requires label, reason, and a formula or allowed dice." } };
+    }
+    if (allowedDice.some((die) => !DICE_TYPES.includes(die))) {
+      return { state, result: { ok: false, error: "Roll request contains an unsupported die type." } };
+    }
+    if (!ROLL_KINDS.includes(rollKind)) {
+      return { state, result: { ok: false, error: "Invalid roll kind." } };
+    }
+    if (formula) {
+      try {
+        parsedFormula = parseDiceFormula(formula);
+      } catch (error) {
+        return {
+          state,
+          result: {
+            ok: false,
+            error: error instanceof Error ? error.message : "Invalid dice formula.",
+          },
+        };
+      }
+    }
+    if (parsedFormula && allowedDice.length) {
+      const allowed = new Set(allowedDice);
+      const invalidTerm = parsedFormula.terms.find((term) => !allowed.has(`d${term.sides}` as DiceType));
+      if (invalidTerm) {
+        return { state, result: { ok: false, error: "Roll formula uses a die that is not present in allowedDice." } };
+      }
+    }
+    if (rollKind === "duality") {
+      if (!parsedFormula) {
+        return { state, result: { ok: false, error: "Duality rolls require a formula with exactly two positive d12 dice." } };
+      }
+      const positiveD12Count = parsedFormula.terms
+        .filter((term) => term.sign > 0 && term.sides === 12)
+        .reduce((total, term) => total + term.count, 0);
+      if (positiveD12Count !== 2) {
+        return { state, result: { ok: false, error: "Duality rolls require exactly two positive d12 dice for Hope and Fear." } };
+      }
+    }
+    if (targetArg !== undefined && !Number.isFinite(targetArg)) {
+      return { state, result: { ok: false, error: "Invalid roll target." } };
+    }
+    if (dcArg !== undefined && !Number.isFinite(dcArg)) {
+      return { state, result: { ok: false, error: "Invalid roll DC." } };
+    }
+    if (targetArg !== undefined && dcArg !== undefined && targetArg !== dcArg) {
+      return { state, result: { ok: false, error: "Roll target and DC cannot disagree." } };
+    }
+    if (state.pendingRoll) {
+      return {
+        state,
+        result: {
+          ok: false,
+          waitingForPlayerRoll: true,
+          error: "A player roll is already pending and must be resolved first.",
+          pendingRoll: state.pendingRoll,
+        },
+      };
+    }
+    const next = requestPlayerRoll(state, {
+      label,
+      reason,
+      ...(parsedFormula ? { formula: parsedFormula.normalized } : {}),
+      ...(allowedDice.length ? { allowedDice } : {}),
+      ...(targetArg !== undefined || dcArg !== undefined ? { target: targetArg ?? dcArg } : {}),
+      rollKind,
+    });
+    return {
+      state: next,
+      result: {
+        ok: true,
+        waitingForPlayerRoll: true,
+        pendingRoll: next.pendingRoll,
+      },
+    };
   }
 
   if (name === "character_adjust_resource") {

@@ -6,6 +6,42 @@ export type OracleTool = {
 
 export const oracleTools: OracleTool[] = [
   {
+    name: "request_player_roll",
+    description: "Solicita uma rolagem ao jogador e pausa a resolução da cena até o resultado ser fornecido ao OracleRPG.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        label: { type: "string", minLength: 1 },
+        reason: { type: "string", minLength: 1 },
+        formula: {
+          type: "string",
+          minLength: 1,
+          description: "Fórmula de dados válida, por exemplo 1d20+2 ou 2d12. Em rolagens de Dualidade, inclua exatamente 2d12 positivos para Esperança e Medo; dados auxiliares e modificadores podem ser adicionados."
+        },
+        allowedDice: {
+          type: "array",
+          items: { type: "string", enum: ["d2", "d4", "d6", "d8", "d10", "d12", "d20", "d100"] },
+          minItems: 1,
+          uniqueItems: true,
+          description: "Tipos de dado permitidos quando o jogador pode montar a própria rolagem."
+        },
+        target: { type: "number", description: "Valor-alvo ou CD, quando conhecido." },
+        dc: { type: "number", description: "Alias de target para uma Classe de Dificuldade." },
+        rollKind: {
+          type: "string",
+          enum: ["attack", "damage", "reaction", "check", "duality", "custom"],
+          description: "Tipo da rolagem. duality exige formula com exatamente dois d12 positivos."
+        }
+      },
+      required: ["label", "reason"],
+      anyOf: [
+        { required: ["formula"] },
+        { required: ["allowedDice"] }
+      ],
+      additionalProperties: false
+    }
+  },
+  {
     name: "character_adjust_resource",
     description: "Ajusta um recurso mecânico do personagem usando o command bus do OracleRPG.",
     inputSchema: {

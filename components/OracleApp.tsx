@@ -8,6 +8,8 @@ import {
   GameState,
   initialState,
   Message,
+  resolvePendingRoll,
+  type DiceType,
   restartCampaignFromSnapshot,
   undoLatest,
 } from "@/lib/game";
@@ -46,6 +48,17 @@ import {
   sortCampaigns,
   writeCampaignLibrary,
 } from "@/lib/campaignLibrary";
+import DiceOverlay from "@/components/DiceOverlay";
+import {
+  DEFAULT_DICE_APPEARANCES,
+  dualityFormulaFromCommand,
+  parseDiceFormula,
+  rollDice,
+  type DiceAppearanceOverrides,
+  type DiceAppearanceRole,
+  type DiceRollResult,
+  type DieSides,
+} from "@/lib/dice";
 
 type View = "session" | "character" | "world" | "memory";
 type AppScreen = "home" | "campaigns" | "campaign" | "newCampaign" | "compendium" | "settings";
@@ -54,6 +67,209 @@ type CampaignAction = {
   campaignId: string;
   step: 0 | 1;
 } | null;
+
+const DICE_ORDER: Array<{ type: DiceType; sides: DieSides; label: string }> = [
+  { type: "d2", sides: 2, label: "d2 · moeda" },
+  { type: "d4", sides: 4, label: "d4" },
+  { type: "d6", sides: 6, label: "d6" },
+  { type: "d8", sides: 8, label: "d8" },
+  { type: "d10", sides: 10, label: "d10" },
+  { type: "d12", sides: 12, label: "d12" },
+  { type: "d20", sides: 20, label: "d20" },
+  { type: "d100", sides: 100, label: "d100" },
+];
+const DICE_APPEARANCE_STORAGE_KEY = "oraclerpg.dice-appearance.v1";
+
+type DiceCounts = Record<DieSides, number>;
+
+function emptyDiceCounts(): DiceCounts {
+  return { 2: 0, 4: 0, 6: 0, 8: 0, 10: 0, 12: 0, 20: 0, 100: 0 };
+}
+
+function formulaFromDiceCounts(counts: DiceCounts) {
+  return DICE_ORDER
+    .filter(({ sides }) => counts[sides] > 0)
+    .map(({ sides }) => `${counts[sides]}d${sides}`)
+    .join("+");
+}
+
+function countsFromFormula(formula: string) {
+  const counts = emptyDiceCounts();
+  const parsed = parseDiceFormula(formula);
+  for (const term of parsed.terms) {
+    if (term.sign > 0) counts[term.sides] += term.count;
+  }
+  return counts;
+}
+
+function readDiceAppearanceOverrides(): DiceAppearanceOverrides {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = window.localStorage.getItem(DICE_APPEARANCE_STORAGE_KEY);
+    return raw ? JSON.parse(raw) as DiceAppearanceOverrides : {};
+  } catch {
+    return {};
+  }
+}
+
+function appearanceColor(
+  appearances: DiceAppearanceOverrides,
+  role: DiceAppearanceRole,
+  field: "background" | "foreground" | "outline",
+) {
+  const override = appearances[role]?.[field];
+  const fallback = DEFAULT_DICE_APPEARANCES[role][field];
+  const value = override ?? fallback;
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function DiceTray({
+  open,
+  pendingFormula,
+  allowedDice,
+  pendingKind,
+  daggerheart,
+  appearances,
+  onAppearancesChange,
+  onRoll,
+}: {
+  open: boolean;
+  pendingFormula?: string;
+  allowedDice?: DiceType[];
+  pendingKind?: string;
+  daggerheart: boolean;
+  appearances: DiceAppearanceOverrides;
+  onAppearancesChange: (next: DiceAppearanceOverrides) => void;
+  onRoll: (formula: string, duality: boolean) => void;
+}) {
+  const [counts, setCounts] = useState<DiceCounts>(emptyDiceCounts);
+  const [showAppearance, setShowAppearance] = useState(false);
+  const [appearanceRole, setAppearanceRole] = useState<DiceAppearanceRole>("normal");
+  const [duality, setDuality] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    if (pendingFormula) {
+      try {
+        setCounts(countsFromFormula(pendingFormula));
+      } catch {
+        setCounts(emptyDiceCounts());
+      }
+      setDuality(pendingKind === "duality");
+    } else if (allowedDice?.length) {
+      const next = emptyDiceCounts();
+      if (pendingKind === "duality" && allowedDice.includes("d12")) next[12] = 2;
+      setCounts(next);
+      setDuality(pendingKind === "duality");
+    }
+  }, [open, pendingFormula, pendingKind, allowedDice]);
+
+  useEffect(() => {
+    if (!daggerheart && appearanceRole !== "normal") setAppearanceRole("normal");
+  }, [daggerheart, appearanceRole]);
+
+  if (!open) return null;
+
+  const exactPending = Boolean(pendingFormula);
+  const allowedSet = allowedDice?.length ? new Set(allowedDice) : null;
+  const builtFormula = exactPending ? pendingFormula! : formulaFromDiceCounts(counts);
+  const canRoll = Boolean(builtFormula);
+
+  function changeCount(sides: DieSides, amount: number) {
+    if (exactPending) return;
+    const dieType = `d${sides}` as DiceType;
+    if (allowedSet && !allowedSet.has(dieType)) return;
+    if (duality && sides === 12) setDuality(false);
+    setCounts((current) => ({
+      ...current,
+      [sides]: Math.max(0, Math.min(99, current[sides] + amount)),
+    }));
+  }
+
+  function setAppearanceField(
+    role: DiceAppearanceRole,
+    field: "background" | "foreground" | "outline" | "material",
+    value: string,
+  ) {
+    const next: DiceAppearanceOverrides = {
+      ...appearances,
+      [role]: {
+        ...(appearances[role] || {}),
+        [field]: value,
+      },
+    };
+    onAppearancesChange(next);
+  }
+
+  function chooseDuality() {
+    if (!daggerheart || exactPending) return;
+    const next = emptyDiceCounts();
+    next[12] = 2;
+    setCounts(next);
+    setDuality(true);
+  }
+
+  return (
+    <div className="diceTray" onClick={(event) => event.stopPropagation()}>
+      <div className="diceTrayHead">
+        <div><small>ROLADOR</small><strong>{pendingFormula ? "Rolagem solicitada" : "Monte sua rolagem"}</strong></div>
+        <button type="button" className={showAppearance ? "active" : ""} onClick={() => setShowAppearance((value) => !value)} title="Aparência dos dados">✧</button>
+      </div>
+
+      {pendingFormula && <div className="dicePendingFormula"><small>FÓRMULA</small><b>{pendingFormula}</b></div>}
+
+      {!showAppearance ? (
+        <>
+          <div className="diceRows">
+            {DICE_ORDER.map(({ type, sides, label }) => {
+              const disabled = exactPending || Boolean(allowedSet && !allowedSet.has(type));
+              return (
+                <div className={`diceRow ${disabled ? "disabled" : ""}`} key={type}>
+                  <button type="button" onClick={() => changeCount(sides, -1)} disabled={disabled || counts[sides] <= 0}>−</button>
+                  <div><strong>{label}</strong><span>{counts[sides]}</span></div>
+                  <button type="button" onClick={() => changeCount(sides, 1)} disabled={disabled}>+</button>
+                </div>
+              );
+            })}
+          </div>
+          {daggerheart && !exactPending && (
+            <button type="button" className={`dualityQuick ${duality ? "active" : ""}`} onClick={chooseDuality}>
+              <span>◐</span><div><b>Dualidade</b><small>1d12 Esperança + 1d12 Medo · /dr</small></div>
+            </button>
+          )}
+          <button type="button" className="diceRollButton" disabled={!canRoll} onClick={() => canRoll && onRoll(builtFormula, duality || pendingKind === "duality")}>ROLL</button>
+        </>
+      ) : (
+        <div className="diceAppearancePanel">
+          <div className="diceAppearanceTabs">
+            {((daggerheart ? ["normal", "hope", "fear"] : ["normal"]) as DiceAppearanceRole[]).map((role) => (
+              <button type="button" className={appearanceRole === role ? "active" : ""} onClick={() => setAppearanceRole(role)} key={role}>
+                {role === "normal" ? "Normal" : role === "hope" ? "Esperança" : "Medo"}
+              </button>
+            ))}
+          </div>
+          <label><span>Cor do dado</span><input type="color" value={appearanceColor(appearances, appearanceRole, "background")} onChange={(event) => setAppearanceField(appearanceRole, "background", event.target.value)} /></label>
+          <label><span>Números</span><input type="color" value={appearanceColor(appearances, appearanceRole, "foreground")} onChange={(event) => setAppearanceField(appearanceRole, "foreground", event.target.value)} /></label>
+          <label><span>Contorno</span><input type="color" value={appearanceColor(appearances, appearanceRole, "outline")} onChange={(event) => setAppearanceField(appearanceRole, "outline", event.target.value)} /></label>
+          <label>
+            <span>Material</span>
+            <select
+              value={appearances[appearanceRole]?.material || DEFAULT_DICE_APPEARANCES[appearanceRole].material}
+              onChange={(event) => setAppearanceField(appearanceRole, "material", event.target.value)}
+            >
+              <option value="plastic">Plástico</option>
+              <option value="metal">Metal</option>
+              <option value="wood">Madeira</option>
+              <option value="glass">Vidro</option>
+              <option value="none">Fosco</option>
+            </select>
+          </label>
+          <button type="button" className="diceAppearanceBack" onClick={() => setShowAppearance(false)}>Voltar aos dados</button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Resource({
   label,
@@ -616,18 +832,55 @@ export default function OracleApp() {
   const [ready, setReady] = useState(false);
   const [campaigns, setCampaigns] = useState<CampaignLibraryEntry[]>([]);
   const [activeCampaignId, setActiveCampaignId] = useState<string | null>(null);
+  const activeCampaignIdRef = useRef<string | null>(null);
+  const campaignEpochRef = useRef(0);
   const campaignsRef = useRef<CampaignLibraryEntry[]>([]);
   const [showConnect, setShowConnect] = useState(false);
   const [showSync, setShowSync] = useState(false);
   const [pairInput, setPairInput] = useState("");
   const [syncNote, setSyncNote] = useState("");
   const [gmBusy, setGmBusy] = useState(false);
+  const gmRunningRef = useRef(false);
   const [gmError, setGmError] = useState("");
   const [imageMessageId, setImageMessageId] = useState<string | null>(null);
   const [imageNote, setImageNote] = useState("");
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showDiceTray, setShowDiceTray] = useState(false);
+  const [diceAppearances, setDiceAppearances] = useState<DiceAppearanceOverrides>({});
+  const [activeDiceRoll, setActiveDiceRoll] = useState<DiceRollResult | null>(null);
+  const [diceNote, setDiceNote] = useState("");
+  const diceRollSourcesRef = useRef(new Map<string, "tray" | "slash">());
+  const diceRollPendingRefsRef = useRef(new Map<string, string | null>());
+  const diceRollCampaignRefsRef = useRef(new Map<string, { campaignId: string | null; epoch: number }>());
+  const processedDiceRollsRef = useRef(new Set<string>());
+  const stateRef = useRef(state);
   const [campaignAction, setCampaignAction] = useState<CampaignAction>(null);
   const [campaignActionError, setCampaignActionError] = useState("");
+
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+
+  useEffect(() => {
+    if (activeCampaignIdRef.current === activeCampaignId) return;
+    activeCampaignIdRef.current = activeCampaignId;
+    campaignEpochRef.current += 1;
+    setActiveDiceRoll(null);
+    setShowDiceTray(false);
+    diceRollSourcesRef.current.clear();
+    diceRollPendingRefsRef.current.clear();
+    diceRollCampaignRefsRef.current.clear();
+  }, [activeCampaignId]);
+
+  useEffect(() => {
+    setDiceAppearances(readDiceAppearanceOverrides());
+  }, []);
+
+  useEffect(() => {
+    if (view === "session") return;
+    setShowDiceTray(false);
+    setShowCalendar(false);
+  }, [view]);
 
   useEffect(() => {
     let savedCampaigns = readCampaignLibrary();
@@ -808,6 +1061,14 @@ export default function OracleApp() {
     const entry = campaignsRef.current.find((campaign) => campaign.id === campaignId);
     if (!entry) return;
     const normalizedState = ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`);
+    campaignEpochRef.current += 1;
+    activeCampaignIdRef.current = entry.id;
+    setActiveDiceRoll(null);
+    setShowDiceTray(false);
+    diceRollSourcesRef.current.clear();
+    diceRollPendingRefsRef.current.clear();
+    diceRollCampaignRefsRef.current.clear();
+    stateRef.current = normalizedState;
     setActiveCampaignId(entry.id);
     setState(normalizedState);
     localStorage.setItem(ACTIVE_CAMPAIGN_KEY, entry.id);
@@ -989,6 +1250,9 @@ export default function OracleApp() {
     setCampaigns(nextLibrary);
     writeCampaignLibrary(nextLibrary);
     localStorage.setItem(ACTIVE_CAMPAIGN_KEY, localCampaignId);
+    campaignEpochRef.current += 1;
+    activeCampaignIdRef.current = localCampaignId;
+    stateRef.current = next;
     setActiveCampaignId(localCampaignId);
     setState(next);
     setView("session");
@@ -996,6 +1260,11 @@ export default function OracleApp() {
   }
 
   function goHome() {
+    setActiveDiceRoll(null);
+    setShowDiceTray(false);
+    diceRollSourcesRef.current.clear();
+    diceRollPendingRefsRef.current.clear();
+    diceRollCampaignRefsRef.current.clear();
     setScreen("home");
     setView("session");
   }
@@ -1014,6 +1283,13 @@ export default function OracleApp() {
     setCampaigns(next);
     writeCampaignLibrary(next);
     if (activeCampaignId === campaignId) {
+      campaignEpochRef.current += 1;
+      setActiveDiceRoll(null);
+      setShowDiceTray(false);
+      diceRollSourcesRef.current.clear();
+      diceRollPendingRefsRef.current.clear();
+      diceRollCampaignRefsRef.current.clear();
+      stateRef.current = restarted;
       setState(restarted);
       setInput("");
       setGmError("");
@@ -1048,12 +1324,23 @@ export default function OracleApp() {
     writeCampaignLibrary(next);
 
     if (activeCampaignId === campaignId) {
+      setActiveDiceRoll(null);
+      setShowDiceTray(false);
+      diceRollSourcesRef.current.clear();
+      diceRollPendingRefsRef.current.clear();
+      diceRollCampaignRefsRef.current.clear();
       const replacement = sortCampaigns(next)[0] || null;
       if (replacement) {
+        campaignEpochRef.current += 1;
+        activeCampaignIdRef.current = replacement.id;
+        stateRef.current = replacement.state;
         setActiveCampaignId(replacement.id);
         setState(replacement.state);
         localStorage.setItem(ACTIVE_CAMPAIGN_KEY, replacement.id);
       } else {
+        campaignEpochRef.current += 1;
+        activeCampaignIdRef.current = null;
+        stateRef.current = initialState;
         setActiveCampaignId(null);
         setState(initialState);
         localStorage.removeItem(ACTIVE_CAMPAIGN_KEY);
@@ -1073,6 +1360,173 @@ export default function OracleApp() {
 
   function adjust(resource: "hp" | "hope" | "stress" | "armor", amount: number) {
     setState((current) => executeCommand(current, { type: "adjust", resource, amount }));
+  }
+
+  function updateDiceAppearances(next: DiceAppearanceOverrides) {
+    setDiceAppearances(next);
+    try {
+      localStorage.setItem(DICE_APPEARANCE_STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      // Appearance preferences are device-local and non-critical.
+    }
+  }
+
+  function pendingAllowsFormula(formula: string, current: GameState) {
+    const parsed = parseDiceFormula(formula);
+    const pending = current.pendingRoll;
+    if (!pending) return parsed;
+    if (pending.formula) {
+      const requested = parseDiceFormula(pending.formula);
+      if (requested.normalized !== parsed.normalized) {
+        throw new Error(`O Mestre pediu ${requested.normalized}. Use essa fórmula para continuar a cena.`);
+      }
+    }
+    if (pending.allowedDice?.length) {
+      const allowed = new Set(pending.allowedDice);
+      const invalid = parsed.terms.find((term) => !allowed.has(`d${term.sides}` as DiceType));
+      if (invalid) throw new Error(`Essa rolagem aceita apenas: ${pending.allowedDice.join(", ")}.`);
+    }
+    return parsed;
+  }
+
+  function dualityResultLabel(result: DiceRollResult) {
+    const hope = result.dice.find((die) => die.appearance === "hope");
+    const fear = result.dice.find((die) => die.appearance === "fear");
+    if (!hope || !fear) return undefined;
+    if (hope.value === fear.value) return `Crítico de Dualidade · Esperança ${hope.value} / Medo ${fear.value}`;
+    return hope.value > fear.value
+      ? `Com Esperança · ${hope.value} contra ${fear.value}`
+      : `Com Medo · ${fear.value} contra ${hope.value}`;
+  }
+
+  function startDiceRoll(formula: string, source: "tray" | "slash", duality = false) {
+    if (gmRunningRef.current) {
+      setDiceNote("Aguarde o Mestre terminar a narração antes de rolar.");
+      return;
+    }
+    if (activeDiceRoll) {
+      setDiceNote("Aguarde a rolagem atual terminar.");
+      return;
+    }
+    try {
+      const current = stateRef.current;
+      const parsed = pendingAllowsFormula(formula, current);
+      const useDuality = duality || current.pendingRoll?.rollKind === "duality";
+      let appearanceByDie: DiceAppearanceRole[] | undefined;
+      if (useDuality) {
+        const positiveD12Count = parsed.terms
+          .filter((term) => term.sign > 0 && term.sides === 12)
+          .reduce((total, term) => total + term.count, 0);
+        if (positiveD12Count !== 2) {
+          throw new Error("Uma rolagem de Dualidade precisa conter exatamente 2d12: um de Esperança e um de Medo.");
+        }
+        appearanceByDie = [];
+        let d12Index = 0;
+        for (const term of parsed.terms) {
+          for (let die = 0; die < term.count; die += 1) {
+            if (term.sides === 12 && term.sign > 0 && d12Index < 2) {
+              appearanceByDie.push(d12Index === 0 ? "hope" : "fear");
+              d12Index += 1;
+            } else {
+              appearanceByDie.push("normal");
+            }
+          }
+        }
+      }
+      const result = rollDice(parsed, { appearanceByDie });
+      diceRollSourcesRef.current.set(result.id, source);
+      diceRollPendingRefsRef.current.set(result.id, current.pendingRoll?.id ?? null);
+      diceRollCampaignRefsRef.current.set(result.id, {
+        campaignId: activeCampaignIdRef.current,
+        epoch: campaignEpochRef.current,
+      });
+      setDiceNote("");
+      setActiveDiceRoll(result);
+      setShowDiceTray(false);
+    } catch (error) {
+      setDiceNote(error instanceof Error ? error.message : "Não foi possível preparar a rolagem.");
+      setShowDiceTray(true);
+    }
+  }
+
+  async function finishDiceRoll(result: DiceRollResult, visualError?: Error) {
+    if (processedDiceRollsRef.current.has(result.id)) return;
+    processedDiceRollsRef.current.add(result.id);
+    setActiveDiceRoll(null);
+    const source = diceRollSourcesRef.current.get(result.id) || "tray";
+    diceRollSourcesRef.current.delete(result.id);
+    const expectedPendingRollId = diceRollPendingRefsRef.current.get(result.id) ?? null;
+    diceRollPendingRefsRef.current.delete(result.id);
+    const rollCampaign = diceRollCampaignRefsRef.current.get(result.id);
+    diceRollCampaignRefsRef.current.delete(result.id);
+    if (
+      !rollCampaign
+      || rollCampaign.campaignId !== activeCampaignIdRef.current
+      || rollCampaign.epoch !== campaignEpochRef.current
+    ) {
+      setDiceNote("A rolagem foi descartada porque a campanha mudou antes de ela terminar.");
+      return;
+    }
+
+    const current = stateRef.current;
+    const diceSummary = result.dice.map((die) => `d${die.sides}: ${die.value}`).join(", ");
+    const dualityLabel = dualityResultLabel(result);
+    const hopeDie = result.dice.find((die) => die.appearance === "hope");
+    const fearDie = result.dice.find((die) => die.appearance === "fear");
+    const dualityCritical = current.pendingRoll?.rollKind === "duality"
+      && hopeDie !== undefined
+      && fearDie !== undefined
+      && hopeDie.value === fearDie.value;
+    const resultLine = `${result.normalized} → ${result.total}${diceSummary ? ` (${diceSummary})` : ""}${dualityLabel ? ` · ${dualityLabel}` : ""}`;
+    const rollMessage: Message = {
+      id: crypto.randomUUID(),
+      role: "system",
+      text: `🎲 ${resultLine}`,
+      createdAt: new Date().toISOString(),
+      campaignMinute: current.time.campaignMinute,
+    };
+
+    const matchesPendingRoll = current.pendingRoll?.id === expectedPendingRollId && expectedPendingRollId !== null;
+    if (!matchesPendingRoll) {
+      const next = { ...current, messages: [...current.messages, rollMessage] };
+      stateRef.current = next;
+      setState(next);
+      if (current.pendingRoll && expectedPendingRollId !== current.pendingRoll.id) {
+        setDiceNote("A rolagem terminou, mas o Mestre pediu outra rolagem depois que ela começou. Faça a rolagem solicitada para continuar.");
+      }
+      if (visualError) setDiceNote("A animação 3D não pôde ser exibida, mas o resultado da rolagem foi preservado.");
+      return;
+    }
+
+    const next = resolvePendingRoll(current, expectedPendingRollId, {
+      total: result.total,
+      formula: result.normalized,
+      dice: result.dice.map((die) => ({
+        die: `d${die.sides}` as DiceType,
+        value: die.value,
+        label: die.appearance === "hope" ? "Esperança" : die.appearance === "fear" ? "Medo" : undefined,
+      })),
+      modifier: result.modifier,
+      result: dualityLabel,
+      success: dualityCritical ? true : undefined,
+      source,
+    });
+    const withMessage: GameState = { ...next, messages: [...next.messages, rollMessage] };
+    stateRef.current = withMessage;
+    setState(withMessage);
+    if (visualError) setDiceNote("A animação 3D falhou, mas o resultado foi enviado ao Mestre.");
+
+    const latestRoll = withMessage.rollHistory?.at(-1);
+    const outcome = latestRoll?.outcome === "success"
+      ? "SUCESSO"
+      : latestRoll?.outcome === "failure"
+        ? "FALHA"
+        : "SEM DESFECHO AUTOMÁTICO";
+    await runGmNarration(
+      withMessage,
+      `RESULTADO DA ROLAGEM SOLICITADA: ${resultLine}. Resultado contra o alvo: ${outcome}. Continue exatamente do ponto em que a cena aguardava esta rolagem.`,
+      true,
+    );
   }
 
   function toggleQuestStatus(questId: string) {
@@ -1097,8 +1551,16 @@ export default function OracleApp() {
       setShowConnect(true);
       return;
     }
+    if (gmRunningRef.current) return;
 
+    gmRunningRef.current = true;
+    const runCampaignId = activeCampaignIdRef.current;
+    const runCampaignEpoch = campaignEpochRef.current;
+    const runIsCurrent = () =>
+      activeCampaignIdRef.current === runCampaignId
+      && campaignEpochRef.current === runCampaignEpoch;
     setGmBusy(true);
+    setShowDiceTray(false);
     try {
       const conversationInput: unknown[] = buildTurnInput(working, text);
       if (!allowTools) {
@@ -1116,8 +1578,9 @@ export default function OracleApp() {
           model: bridge.model,
           instructions: gmInstructions(working.campaign.system),
           input: conversationInput,
-          ...(allowTools ? { tools: responseTools } : {}),
+          ...(allowTools && !working.pendingRoll ? { tools: responseTools } : {}),
         });
+        if (!runIsCurrent()) return;
         const output = Array.isArray(response.output) ? response.output : [];
         const calls = output.filter((item: Record<string, unknown>) => item.type === "function_call");
         lastOutputTypes = output.map((item: Record<string, unknown>) => String(item.type || "unknown"));
@@ -1140,6 +1603,20 @@ export default function OracleApp() {
 
         for (const call of calls as Array<Record<string, unknown>>) {
           if (!allowTools) continue;
+          if (working.pendingRoll) {
+            conversationInput.push({
+              type: "function_call_output",
+              call_id: call.call_id,
+              output: JSON.stringify({
+                ok: false,
+                waitingForPlayerRoll: true,
+                error: "A cena está aguardando a rolagem do jogador. Nenhuma outra ferramenta foi executada.",
+                pendingRoll: working.pendingRoll,
+              }),
+              ...(call.caller ? { caller: call.caller } : {}),
+            });
+            continue;
+          }
           const executed = executeGmTool(
             working,
             String(call.name || ""),
@@ -1153,12 +1630,27 @@ export default function OracleApp() {
             ...(call.caller ? { caller: call.caller } : {}),
           });
         }
+        stateRef.current = working;
         setState(working);
+        if (working.pendingRoll) {
+          const pending = working.pendingRoll;
+          const diceInstruction = pending.formula
+            ? `Role ${pending.formula}`
+            : `Use ${pending.allowedDice?.join(", ") || "os dados indicados"}`;
+          const rollInstruction = [
+            pending.reason,
+            `${diceInstruction} para ${pending.label}${pending.target !== undefined ? ` · CD ${pending.target}` : ""}.`,
+          ].filter(Boolean).join("\n\n");
+          narration = [narration.trim(), rollInstruction].filter(Boolean).join("\n\n");
+          refusal = "";
+          reachedRoundLimit = false;
+          break;
+        }
       }
 
       // Safety valve: if the model spent every round reasoning/using tools without
       // emitting a message, ask one final pass with tools disabled.
-      if (!narration && !refusal && reachedRoundLimit) {
+      if (!working.pendingRoll && !narration && !refusal && reachedRoundLimit) {
         conversationInput.push({
           role: "developer",
           content: "As alterações solicitadas já foram executadas no OracleRPG. Não use novas ferramentas. Produza agora apenas a narração final coerente com os resultados acima.",
@@ -1168,6 +1660,7 @@ export default function OracleApp() {
           instructions: gmInstructions(working.campaign.system),
           input: conversationInput,
         });
+        if (!runIsCurrent()) return;
         narration = extractNarration(finalResponse);
         refusal = extractRefusal(finalResponse);
         if (Array.isArray(finalResponse.output)) {
@@ -1197,8 +1690,10 @@ export default function OracleApp() {
           },
         ],
       };
+      stateRef.current = working;
       setState(working);
     } catch (error) {
+      if (!runIsCurrent()) return;
       const message = error instanceof Error ? error.message : "Falha ao consultar o Mestre.";
       setGmError(message);
       setState((current) => ({
@@ -1209,6 +1704,7 @@ export default function OracleApp() {
         ],
       }));
     } finally {
+      gmRunningRef.current = false;
       setGmBusy(false);
     }
   }
@@ -1216,12 +1712,48 @@ export default function OracleApp() {
   async function submit(e: FormEvent) {
     e.preventDefault();
     const text = input.trim();
-    if (!text || gmBusy) return;
+    if (!text || gmBusy || gmRunningRef.current) return;
+
+    const dualityFormula = dualityFormulaFromCommand(text);
+    if (dualityFormula) {
+      if (state.campaign.system !== "Daggerheart") {
+        setInput("");
+        setDiceNote("O comando /dr está disponível apenas em campanhas Daggerheart.");
+        return;
+      }
+      setInput("");
+      setGmError("");
+      const requestedFormula = state.pendingRoll?.rollKind === "duality" && state.pendingRoll.formula
+        ? state.pendingRoll.formula
+        : dualityFormula;
+      startDiceRoll(requestedFormula, "slash", true);
+      return;
+    }
+
+    if (/^\/r\b/i.test(text)) {
+      setInput("");
+      setGmError("");
+      startDiceRoll(text, "slash", state.pendingRoll?.rollKind === "duality");
+      return;
+    }
+
+    if (activeDiceRoll) {
+      setDiceNote("Aguarde a rolagem terminar antes de enviar uma nova ação ao Mestre.");
+      return;
+    }
+
+    if (state.pendingRoll) {
+      setGmError(`O Mestre está aguardando: ${state.pendingRoll.label}. Role os dados pelo ícone ou use /r.`);
+      return;
+    }
+
     const playerMessage = { id: crypto.randomUUID(), role: "player" as const, text, createdAt: new Date().toISOString(), campaignMinute: state.time.campaignMinute };
     const working: GameState = { ...state, messages: [...state.messages, playerMessage] };
     setState(working);
+    stateRef.current = working;
     setInput("");
     setGmError("");
+
     if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
       setShowConnect(true);
       return;
@@ -1230,7 +1762,7 @@ export default function OracleApp() {
   }
 
   async function regenerateNarration(message: Message) {
-    if (gmBusy || message.role !== "player") return;
+    if (gmBusy || gmRunningRef.current || activeDiceRoll || message.role !== "player") return;
     if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
       setShowConnect(true);
       return;
@@ -1248,6 +1780,7 @@ export default function OracleApp() {
       messages: state.messages.slice(0, playerIndex + 1),
     };
     setGmError("");
+    stateRef.current = working;
     setState(working);
     await runGmNarration(working, message.text, !persistentChangesAlreadyApplied);
   }
@@ -1597,13 +2130,39 @@ export default function OracleApp() {
 
         <section className="content">
           {view === "session" && (
-            <div className="sessionGrid">
-              <section className="chatPanel panel">
+            <div className="sessionView">
+              <div className="sessionHud">
+                <CampaignClockBar time={state.time} onOpenCalendar={() => setShowCalendar(true)} />
+                <div className="sessionDiceControl">
+                  <button
+                    className={`sessionDiceButton ${showDiceTray ? "active" : ""} ${state.pendingRoll ? "pending" : ""}`}
+                    type="button"
+                    title="Abrir dados"
+                    aria-label="Abrir dados"
+                    disabled={gmBusy || Boolean(activeDiceRoll)}
+                    onClick={() => setShowDiceTray((value) => !value)}
+                  >
+                    <span>⚄</span>
+                    {state.pendingRoll && <i />}
+                  </button>
+                  <DiceTray
+                    open={showDiceTray}
+                    pendingFormula={state.pendingRoll?.formula}
+                    allowedDice={state.pendingRoll?.allowedDice}
+                    pendingKind={state.pendingRoll?.rollKind}
+                    daggerheart={state.campaign.system === "Daggerheart"}
+                    appearances={diceAppearances}
+                    onAppearancesChange={updateDiceAppearances}
+                    onRoll={(formula, duality) => startDiceRoll(formula, "tray", duality)}
+                  />
+                </div>
+              </div>
+              <div className="sessionGrid">
+                <section className="chatPanel panel">
                 <div className="panelHeading">
                   <div><small>CENA ATUAL</small><h1>{state.campaign.scene}</h1></div>
                   <span className="livePill">● AO VIVO</span>
                 </div>
-                <CampaignClockBar time={state.time} onOpenCalendar={() => setShowCalendar(true)} />
                 <div className="sceneArt">
                   <div className="sceneMoon" />
                   <div className="sceneDoor"><span>◈</span></div>
@@ -1622,7 +2181,7 @@ export default function OracleApp() {
                             <span>✦</span> Gerar imagem da cena
                           </button>
                         )}
-                        {message.role === "player" && latestUnansweredPlayer?.id === message.id && (
+                        {message.role === "player" && latestUnansweredPlayer?.id === message.id && !state.pendingRoll && (
                           <button className="regenerateNarrationButton" onClick={() => void regenerateNarration(message)} disabled={gmBusy}>
                             <span>↻</span> {gmBusy ? "Gerando narração…" : "Regenerar narração do Mestre"}
                           </button>
@@ -1631,19 +2190,36 @@ export default function OracleApp() {
                     </article>
                   ))}
                 </div>
+                {state.pendingRoll && (
+                  <div className="pendingRollBanner">
+                    <b>🎲</b>
+                    <div>
+                      <small>AGUARDANDO SUA ROLAGEM</small>
+                      <strong>{state.pendingRoll.label}</strong>
+                      <p>{state.pendingRoll.reason}</p>
+                      <span>
+                        {state.pendingRoll.formula
+                          ? state.pendingRoll.formula
+                          : `Dados permitidos: ${state.pendingRoll.allowedDice?.join(", ") || "livre"}`}
+                        {state.pendingRoll.target !== undefined ? ` · CD ${state.pendingRoll.target}` : ""}
+                      </span>
+                    </div>
+                    <button type="button" disabled={gmBusy || Boolean(activeDiceRoll)} onClick={() => setShowDiceTray(true)}>Rolar agora</button>
+                  </div>
+                )}
                 <form className="composer" onSubmit={submit}>
                   <ActionComposer
                     value={input}
                     onChange={setInput}
-                    placeholder={gmBusy ? "O Mestre está narrando..." : "O que você faz?"}
+                    placeholder={gmBusy ? "O Mestre está narrando..." : state.pendingRoll ? `Role ${state.pendingRoll.formula || "os dados pedidos"} com /r ou pelo ícone de dado` : "O que você faz?"}
                     disabled={gmBusy}
                   />
                   <button className="send" type="submit" disabled={gmBusy}>{gmBusy ? "…" : "➤"}</button>
                 </form>
                 <div className="composerHint"><span>{gmError ? gmError : "O estado da campanha é salvo no OracleRPG."}</span><span>{bridge.model || "Mestre local"}</span></div>
-              </section>
+                </section>
 
-              <aside className="characterPanel panel">
+                <aside className="characterPanel panel">
                 <div className="characterHero">
                   {state.character.daggerheart?.image
                     ? <img className="characterHeroPortrait" src={state.character.daggerheart.image} alt={`Retrato de ${state.character.name}`} />
@@ -1678,7 +2254,8 @@ export default function OracleApp() {
                 {state.events.length > 0 && (
                   <button className="undo" onClick={() => setState((s) => undoLatest(s))}>↶ Desfazer · {state.events[0].label}</button>
                 )}
-              </aside>
+                </aside>
+              </div>
             </div>
           )}
 
@@ -1936,6 +2513,16 @@ export default function OracleApp() {
           )}
         </section>
       </section>
+
+      <DiceOverlay
+        result={activeDiceRoll}
+        appearances={diceAppearances}
+        onComplete={(result) => { void finishDiceRoll(result); }}
+        onError={(error, result) => { void finishDiceRoll(result, error); }}
+      />
+      {diceNote && (
+        <button className="diceToast" type="button" onClick={() => setDiceNote("")}>{diceNote}</button>
+      )}
 
       {showCalendar && view === "session" && (
         <CampaignCalendarModal time={state.time} onClose={() => setShowCalendar(false)} />

@@ -11,6 +11,7 @@
     "import:daggerheart": "node scripts/import-daggerheart-compendium.mjs"
   },
   "dependencies": {
+    "@3d-dice/dice-box-threejs": "^0.0.12",
     "@neondatabase/serverless": "^1.2.0",
     "jose": "^6.2.12",
     "next": "^16.4.0",

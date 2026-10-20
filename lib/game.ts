@@ -7,6 +7,67 @@ import {
 
 export type Actor = "player" | "gm-ai";
 
+export type RollKind = "attack" | "damage" | "reaction" | "check" | "duality" | "custom";
+
+export type RollSource = "tray" | "slash" | "pending";
+
+export type DiceType = "d2" | "d4" | "d6" | "d8" | "d10" | "d12" | "d20" | "d100";
+
+export type RollDieResult = {
+  die: DiceType;
+  value: number;
+  label?: string;
+};
+
+export type PlayerRollRequest = {
+  label: string;
+  reason: string;
+  formula?: string;
+  allowedDice?: DiceType[];
+  target?: number;
+  rollKind?: RollKind;
+};
+
+export type PendingPlayerRoll = PlayerRollRequest & {
+  id: string;
+  rollKind: RollKind;
+  requestedAt: string;
+  campaignMinute: number;
+};
+
+export type RollResolution = {
+  total: number;
+  formula?: string;
+  dice?: RollDieResult[];
+  modifier?: number;
+  result?: string;
+  success?: boolean;
+  source?: RollSource;
+};
+
+export type RollResultRecord = {
+  id: string;
+  pendingRollId: string;
+  label: string;
+  reason: string;
+  rollKind: RollKind;
+  source: RollSource;
+  requestedFormula?: string;
+  formula?: string;
+  allowedDice?: DiceType[];
+  target?: number;
+  dice?: RollDieResult[];
+  modifier?: number;
+  total: number;
+  result?: string;
+  success?: boolean;
+  outcome?: "success" | "failure";
+  requestedAt: string;
+  requestedCampaignMinute: number;
+  resolvedAt: string;
+  campaignMinute: number;
+};
+
 export type InventoryItem = {
   id: string;
   name: string;
@@ -202,6 +263,8 @@ export type GameState = {
   memories: Memory[];
   messages: Message[];
   events: EventRecord[];
+  pendingRoll?: PendingPlayerRoll;
+  rollHistory?: RollResultRecord[];
 };
 
 function cloneWithoutEmbeddedImages(character: CharacterState): CharacterState {
@@ -322,6 +385,8 @@ export function restartCampaignFromSnapshot(state: GameState): GameState {
     memories: structuredClone(snapshot.memories),
     messages: structuredClone(snapshot.messages),
     events: [],
+    pendingRoll: undefined,
+    rollHistory: [],
   };
 }
 
@@ -330,7 +395,8 @@ export type GameCommand =
   | { type: "inventory"; itemId: string; amount: number }
   | { type: "quest"; questId: string; status: Quest["status"] }
   | { type: "condition"; name: string; active: boolean }
-  | { type: "memory"; kind: Memory["kind"]; text: string };
+  | { type: "memory"; kind: Memory["kind"]; text: string }
+  | { type: "resolve-roll"; pendingRollId: string; resolution: RollResolution };
 
 const now = () => new Date().toISOString();
 const id = () => Math.random().toString(36).slice(2, 10);
@@ -385,6 +451,7 @@ export const initialState: GameState = {
     { id: "g2", role: "gm", text: "Ithran tenta parecer indiferente. Por um instante, porém, os olhos dele descem até a chave. Ele conhece aquele símbolo.", createdAt: now(), campaignMinute: demoMinute },
   ],
   events: [],
+  rollHistory: [],
 };
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
@@ -443,11 +510,79 @@ export function executeCommand(state: GameState, command: GameCommand, actor: Ac
     label = "Memória registrada";
   }
 
+  if (command.type === "resolve-roll") {
+    const pending = next.pendingRoll;
+    const total = Number(command.resolution.total);
+    if (pending && pending.id === command.pendingRollId && Number.isFinite(total)) {
+      const resolvedAt = now();
+      const success = command.resolution.success
+        ?? (pending.target === undefined ? undefined : total >= pending.target);
+      const resultRecord: RollResultRecord = {
+        id: id(),
+        pendingRollId: pending.id,
+        label: pending.label,
+        reason: pending.reason,
+        rollKind: pending.rollKind,
+        source: command.resolution.source ?? "pending",
+        requestedFormula: pending.formula,
+        formula: command.resolution.formula?.trim() || pending.formula,
+        allowedDice: pending.allowedDice ? [...pending.allowedDice] : undefined,
+        target: pending.target,
+        dice: command.resolution.dice ? structuredClone(command.resolution.dice) : undefined,
+        modifier: command.resolution.modifier,
+        total,
+        result: command.resolution.result?.trim() || undefined,
+        success,
+        outcome: success === undefined ? undefined : success ? "success" : "failure",
+        requestedAt: pending.requestedAt,
+        requestedCampaignMinute: pending.campaignMinute,
+        resolvedAt,
+        campaignMinute,
+      };
+      next.pendingRoll = undefined;
+      next.rollHistory = [...(next.rollHistory ?? []), resultRecord];
+      label = `Rolagem resolvida: ${pending.label} = ${total}`;
+    }
+  }
+
   if (record && label) {
     next.events.unshift({ id: id(), actor, label, createdAt: now(), campaignMinute, reverse });
   }
 
   return next;
+}
+
+export function requestPlayerRoll(state: GameState, request: PlayerRollRequest): GameState {
+  if (state.pendingRoll) return state;
+  const formula = request.formula?.trim() || undefined;
+  const allowedDice = request.allowedDice?.length
+    ? Array.from(new Set(request.allowedDice))
+    : undefined;
+  const pendingRoll: PendingPlayerRoll = {
+    id: id(),
+    label: request.label.trim(),
+    reason: request.reason.trim(),
+    formula,
+    allowedDice,
+    target: request.target,
+    rollKind: request.rollKind ?? "custom",
+    requestedAt: now(),
+    campaignMinute: state.time?.campaignMinute ?? 0,
+  };
+  return {
+    ...state,
+    pendingRoll,
+    rollHistory: state.rollHistory ?? [],
+  };
+}
+
+export function resolvePendingRoll(
+  state: GameState,
+  pendingRollId: string,
+  resolution: RollResolution,
+  actor: Actor = "player",
+): GameState {
+  return executeCommand(state, { type: "resolve-roll", pendingRollId, resolution }, actor);
 }
 
 export function undoLatest(state: GameState): GameState {
@@ -467,5 +602,7 @@ export function buildContextPacket(state: GameState) {
     presentNpcs: state.npcs.filter((npc) => npc.location === "Santuário soterrado"),
     relevantMemories: state.memories.slice(0, 8),
     recentDialogue: state.messages.slice(-12),
+    pendingRoll: state.pendingRoll ?? null,
+    rollHistory: (state.rollHistory ?? []).slice(-12),
   };
 }
