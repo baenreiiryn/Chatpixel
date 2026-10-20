@@ -113,3 +113,22 @@ test("duality lanes keep auxiliary dice normal while Hope and Fear roll together
     ],
   );
 });
+
+test("face presets only replace compatible dice notation", () => {
+  assert.equal(dice.applyDiceFacePresetToNotation("2d6+1d20", "pips"), "2dpip+1d20");
+  assert.equal(dice.applyDiceFacePresetToNotation("1d6+1d8", "poker"), "1dpoker+1d8");
+  assert.equal(dice.applyDiceFacePresetToNotation("1d8+1d6", "spanish-poker"), "1dspanpoker+1d6");
+  assert.equal(dice.applyDiceFacePresetToNotation("2d4+1d12", "suits"), "2dsuit+1d12");
+  assert.equal(dice.applyDiceFacePresetToNotation("1d20", "pips"), "1d20");
+});
+
+test("font normalization keeps all 3D appearance roles on one engine font", () => {
+  const normalized = dice.normalizeDiceAppearanceFonts({
+    normal: { font: "Arial" },
+    hope: { font: "Georgia" },
+    fear: { font: "monospace" },
+  });
+  assert.equal(normalized.normal.font, "Arial");
+  assert.equal(normalized.hope.font, "Arial");
+  assert.equal(normalized.fear.font, "Arial");
+});

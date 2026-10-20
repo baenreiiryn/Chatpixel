@@ -2,17 +2,21 @@ export const SUPPORTED_DICE = [2, 4, 6, 8, 10, 12, 20, 100] as const;
 
 export type DieSides = (typeof SUPPORTED_DICE)[number];
 export type DiceAppearanceRole = "normal" | "hope" | "fear";
-export type DiceMaterial = "none" | "plastic" | "metal" | "wood" | "glass";
+export type DiceMaterial = "none" | "plastic" | "perfectmetal" | "metal" | "wood" | "glass";
 export type DiceSurface = "default" | "blue-felt" | "red-felt" | "green-felt" | "taverntable" | "mahogany" | "stainless" | "cyberpunk" | "cagetown";
+export type DiceFacePreset = "standard" | "pips" | "poker" | "spanish-poker" | "suits";
 
 export type DiceAppearance = {
   name: string;
   foreground: string;
   background: string | string[];
   outline: string;
+  edge: string;
   texture: string;
   material: DiceMaterial;
   surface: DiceSurface;
+  font: string;
+  preset: DiceFacePreset;
 };
 
 export type DiceAppearanceSettings = Record<DiceAppearanceRole, DiceAppearance>;
@@ -100,29 +104,51 @@ export const DEFAULT_DICE_APPEARANCES: DiceAppearanceSettings = {
     foreground: "#f5efe1",
     background: "#2d2740",
     outline: "#100d18",
+    edge: "#171220",
     texture: "none",
     material: "plastic",
     surface: "green-felt",
+    font: "Georgia",
+    preset: "standard",
   },
   hope: {
     name: "Hope",
     foreground: "#fff6cc",
     background: ["#c98a24", "#e1ad3d", "#f1c85a"],
     outline: "#6d4410",
+    edge: "#8b5a18",
     texture: "none",
     material: "glass",
     surface: "green-felt",
+    font: "Georgia",
+    preset: "standard",
   },
   fear: {
     name: "Fear",
     foreground: "#f8dbe8",
     background: ["#41132e", "#65183f", "#82224f"],
     outline: "#1d0714",
+    edge: "#300a21",
     texture: "none",
     material: "glass",
     surface: "green-felt",
+    font: "Georgia",
+    preset: "standard",
   },
 };
+
+export function normalizeDiceAppearanceFonts(overrides: DiceAppearanceOverrides): DiceAppearanceOverrides {
+  const globalFont = overrides.normal?.font
+    ?? overrides.hope?.font
+    ?? overrides.fear?.font
+    ?? DEFAULT_DICE_APPEARANCES.normal.font;
+  return {
+    ...overrides,
+    normal: { ...(overrides.normal ?? {}), font: globalFont },
+    hope: { ...(overrides.hope ?? {}), font: globalFont },
+    fear: { ...(overrides.fear ?? {}), font: globalFont },
+  };
+}
 
 const SUPPORTED_DICE_SET = new Set<number>(SUPPORTED_DICE);
 const TOKEN_PATTERN = /([+-]?)(?:(\d*)d(\d+)|(\d+))/iy;
@@ -308,6 +334,17 @@ export function buildDiceBoxRoll(result: DiceRollResult, dieIndexes?: number[]):
     notation: notation.join("+"),
     outcomes,
   };
+}
+
+export function applyDiceFacePresetToNotation(notation: string, preset: DiceFacePreset) {
+  if (preset === "standard") return notation;
+  const replacement = ({
+    pips: { sides: 6, type: "dpip" },
+    poker: { sides: 6, type: "dpoker" },
+    "spanish-poker": { sides: 8, type: "dspanpoker" },
+    suits: { sides: 4, type: "dsuit" },
+  } as const)[preset];
+  return notation.replace(new RegExp(`(\\d+)d${replacement.sides}(?!\\d)`, "g"), `$1${replacement.type}`);
 }
 
 export function buildDiceBoxRenderPlan(

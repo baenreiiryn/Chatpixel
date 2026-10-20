@@ -49,9 +49,10 @@ import {
   writeCampaignLibrary,
 } from "@/lib/campaignLibrary";
 import DiceOverlay from "@/components/DiceOverlay";
+import DiceAppearanceSettings from "@/components/DiceAppearanceSettings";
 import {
-  DEFAULT_DICE_APPEARANCES,
   dualityFormulaFromCommand,
+  normalizeDiceAppearanceFonts,
   parseDiceFormula,
   rollDice,
   type DiceAppearanceOverrides,
@@ -61,7 +62,7 @@ import {
 } from "@/lib/dice";
 
 type View = "session" | "character" | "world" | "memory";
-type AppScreen = "home" | "campaigns" | "campaign" | "newCampaign" | "compendium" | "settings";
+type AppScreen = "home" | "campaigns" | "campaign" | "newCampaign" | "compendium" | "settings" | "diceAppearance";
 type CampaignAction = {
   type: "restart" | "delete";
   campaignId: string;
@@ -106,21 +107,10 @@ function readDiceAppearanceOverrides(): DiceAppearanceOverrides {
   if (typeof window === "undefined") return {};
   try {
     const raw = window.localStorage.getItem(DICE_APPEARANCE_STORAGE_KEY);
-    return raw ? JSON.parse(raw) as DiceAppearanceOverrides : {};
+    return normalizeDiceAppearanceFonts(raw ? JSON.parse(raw) as DiceAppearanceOverrides : {});
   } catch {
-    return {};
+    return normalizeDiceAppearanceFonts({});
   }
-}
-
-function appearanceColor(
-  appearances: DiceAppearanceOverrides,
-  role: DiceAppearanceRole,
-  field: "background" | "foreground" | "outline",
-) {
-  const override = appearances[role]?.[field];
-  const fallback = DEFAULT_DICE_APPEARANCES[role][field];
-  const value = override ?? fallback;
-  return Array.isArray(value) ? value[0] : value;
 }
 
 function DiceTray({
@@ -129,8 +119,6 @@ function DiceTray({
   allowedDice,
   pendingKind,
   daggerheart,
-  appearances,
-  onAppearancesChange,
   onRoll,
 }: {
   open: boolean;
@@ -138,13 +126,9 @@ function DiceTray({
   allowedDice?: DiceType[];
   pendingKind?: string;
   daggerheart: boolean;
-  appearances: DiceAppearanceOverrides;
-  onAppearancesChange: (next: DiceAppearanceOverrides) => void;
   onRoll: (formula: string, duality: boolean) => void;
 }) {
   const [counts, setCounts] = useState<DiceCounts>(emptyDiceCounts);
-  const [showAppearance, setShowAppearance] = useState(false);
-  const [appearanceRole, setAppearanceRole] = useState<DiceAppearanceRole>("normal");
   const [duality, setDuality] = useState(false);
 
   useEffect(() => {
@@ -164,10 +148,6 @@ function DiceTray({
     }
   }, [open, pendingFormula, pendingKind, allowedDice]);
 
-  useEffect(() => {
-    if (!daggerheart && appearanceRole !== "normal") setAppearanceRole("normal");
-  }, [daggerheart, appearanceRole]);
-
   if (!open) return null;
 
   const exactPending = Boolean(pendingFormula);
@@ -186,21 +166,6 @@ function DiceTray({
     }));
   }
 
-  function setAppearanceField(
-    role: DiceAppearanceRole,
-    field: "background" | "foreground" | "outline" | "material",
-    value: string,
-  ) {
-    const next: DiceAppearanceOverrides = {
-      ...appearances,
-      [role]: {
-        ...(appearances[role] || {}),
-        [field]: value,
-      },
-    };
-    onAppearancesChange(next);
-  }
-
   function chooseDuality() {
     if (!daggerheart || exactPending) return;
     const next = emptyDiceCounts();
@@ -213,60 +178,27 @@ function DiceTray({
     <div className="diceTray" onClick={(event) => event.stopPropagation()}>
       <div className="diceTrayHead">
         <div><small>ROLADOR</small><strong>{pendingFormula ? "Rolagem solicitada" : "Monte sua rolagem"}</strong></div>
-        <button type="button" className={showAppearance ? "active" : ""} onClick={() => setShowAppearance((value) => !value)} title="Aparência dos dados">✧</button>
       </div>
 
       {pendingFormula && <div className="dicePendingFormula"><small>FÓRMULA</small><b>{pendingFormula}</b></div>}
-
-      {!showAppearance ? (
-        <>
-          <div className="diceRows">
-            {DICE_ORDER.map(({ type, sides, label }) => {
-              const disabled = exactPending || Boolean(allowedSet && !allowedSet.has(type));
-              return (
-                <div className={`diceRow ${disabled ? "disabled" : ""}`} key={type}>
-                  <button type="button" onClick={() => changeCount(sides, -1)} disabled={disabled || counts[sides] <= 0}>−</button>
-                  <div><strong>{label}</strong><span>{counts[sides]}</span></div>
-                  <button type="button" onClick={() => changeCount(sides, 1)} disabled={disabled}>+</button>
-                </div>
-              );
-            })}
-          </div>
-          {daggerheart && !exactPending && (
-            <button type="button" className={`dualityQuick ${duality ? "active" : ""}`} onClick={chooseDuality}>
-              <span>◐</span><div><b>Dualidade</b><small>1d12 Esperança + 1d12 Medo · /dr</small></div>
-            </button>
-          )}
-          <button type="button" className="diceRollButton" disabled={!canRoll} onClick={() => canRoll && onRoll(builtFormula, duality || pendingKind === "duality")}>ROLL</button>
-        </>
-      ) : (
-        <div className="diceAppearancePanel">
-          <div className="diceAppearanceTabs">
-            {((daggerheart ? ["normal", "hope", "fear"] : ["normal"]) as DiceAppearanceRole[]).map((role) => (
-              <button type="button" className={appearanceRole === role ? "active" : ""} onClick={() => setAppearanceRole(role)} key={role}>
-                {role === "normal" ? "Normal" : role === "hope" ? "Esperança" : "Medo"}
-              </button>
-            ))}
-          </div>
-          <label><span>Cor do dado</span><input type="color" value={appearanceColor(appearances, appearanceRole, "background")} onChange={(event) => setAppearanceField(appearanceRole, "background", event.target.value)} /></label>
-          <label><span>Números</span><input type="color" value={appearanceColor(appearances, appearanceRole, "foreground")} onChange={(event) => setAppearanceField(appearanceRole, "foreground", event.target.value)} /></label>
-          <label><span>Contorno</span><input type="color" value={appearanceColor(appearances, appearanceRole, "outline")} onChange={(event) => setAppearanceField(appearanceRole, "outline", event.target.value)} /></label>
-          <label>
-            <span>Material</span>
-            <select
-              value={appearances[appearanceRole]?.material || DEFAULT_DICE_APPEARANCES[appearanceRole].material}
-              onChange={(event) => setAppearanceField(appearanceRole, "material", event.target.value)}
-            >
-              <option value="plastic">Plástico</option>
-              <option value="metal">Metal</option>
-              <option value="wood">Madeira</option>
-              <option value="glass">Vidro</option>
-              <option value="none">Fosco</option>
-            </select>
-          </label>
-          <button type="button" className="diceAppearanceBack" onClick={() => setShowAppearance(false)}>Voltar aos dados</button>
-        </div>
+      <div className="diceRows">
+        {DICE_ORDER.map(({ type, sides, label }) => {
+          const disabled = exactPending || Boolean(allowedSet && !allowedSet.has(type));
+          return (
+            <div className={`diceRow ${disabled ? "disabled" : ""}`} key={type}>
+              <button type="button" onClick={() => changeCount(sides, -1)} disabled={disabled || counts[sides] <= 0}>−</button>
+              <div><strong>{label}</strong><span>{counts[sides]}</span></div>
+              <button type="button" onClick={() => changeCount(sides, 1)} disabled={disabled}>+</button>
+            </div>
+          );
+        })}
+      </div>
+      {daggerheart && !exactPending && (
+        <button type="button" className={`dualityQuick ${duality ? "active" : ""}`} onClick={chooseDuality}>
+          <span>◐</span><div><b>Dualidade</b><small>1d12 Esperança + 1d12 Medo · /dr</small></div>
+        </button>
       )}
+      <button type="button" className="diceRollButton" disabled={!canRoll} onClick={() => canRoll && onRoll(builtFormula, duality || pendingKind === "duality")}>ROLL</button>
     </div>
   );
 }
@@ -1363,9 +1295,10 @@ export default function OracleApp() {
   }
 
   function updateDiceAppearances(next: DiceAppearanceOverrides) {
-    setDiceAppearances(next);
+    const normalized = normalizeDiceAppearanceFonts(next);
+    setDiceAppearances(normalized);
     try {
-      localStorage.setItem(DICE_APPEARANCE_STORAGE_KEY, JSON.stringify(next));
+      localStorage.setItem(DICE_APPEARANCE_STORAGE_KEY, JSON.stringify(normalized));
     } catch {
       // Appearance preferences are device-local and non-critical.
     }
@@ -2002,6 +1935,17 @@ export default function OracleApp() {
     return <DaggerheartCompendium onBack={goHome} />;
   }
 
+  if (screen === "diceAppearance") {
+    return (
+      <DiceAppearanceSettings
+        daggerheart={state.campaign.system === "Daggerheart"}
+        appearances={diceAppearances}
+        onChange={updateDiceAppearances}
+        onBack={() => setScreen("settings")}
+      />
+    );
+  }
+
   if (screen === "settings") {
     return (
       <main className="appShell menuPageShell">
@@ -2023,6 +1967,11 @@ export default function OracleApp() {
               <span className="settingsIcon">☁</span>
               <div><strong>Sincronização</strong><small>{activeCampaignId ? "Campanha ativa entre seus dispositivos" : "Abra uma campanha para configurar"}</small></div>
               <em>{activeCampaignId ? cloudLabel : "Sem campanha"}</em>
+            </button>
+            <button onClick={() => setScreen("diceAppearance")}>
+              <span className="settingsIcon">◆</span>
+              <div><strong>Aparência dos dados</strong><small>Temas, texturas, fontes, materiais e presets 3D</small></div>
+              <em>Personalizar</em>
             </button>
             <div className="settingsInfo">
               <span className="settingsIcon">ⓘ</span>
@@ -2151,8 +2100,6 @@ export default function OracleApp() {
                     allowedDice={state.pendingRoll?.allowedDice}
                     pendingKind={state.pendingRoll?.rollKind}
                     daggerheart={state.campaign.system === "Daggerheart"}
-                    appearances={diceAppearances}
-                    onAppearancesChange={updateDiceAppearances}
                     onRoll={(formula, duality) => startDiceRoll(formula, "tray", duality)}
                   />
                 </div>

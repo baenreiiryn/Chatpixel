@@ -26,6 +26,12 @@ declare module "@3d-dice/dice-box-threejs" {
 
   export default class DiceBox {
     theme_customColorset: Record<string, unknown> | null;
+    DiceFactory: {
+      materials_cache: Record<string, unknown>;
+      get(type: string): {
+        font: string;
+      };
+    };
 
     constructor(selector: string, options?: DiceBoxOptions);
     initialize(): Promise<void>;
