@@ -287,7 +287,7 @@
 
 .stageInner {
   display: grid;
-  grid-template-columns: minmax(330px, 1fr) auto minmax(210px, 0.55fr);
+  grid-template-columns: minmax(390px, 1.08fr) auto minmax(270px, 0.62fr);
   gap: clamp(16px, 3vw, 38px);
   align-items: center;
   padding: clamp(16px, 2.5vw, 28px);
@@ -328,7 +328,7 @@
 }
 
 .craftGrid {
-  width: min(100%, 430px);
+  width: min(100%, 500px);
   aspect-ratio: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -591,6 +591,60 @@
 .resultKnown em[data-rarity="legendary"],
 .recipeTopline em[data-rarity="legendary"] {
   color: #f3c367;
+}
+
+.intentBox {
+  display: grid;
+  gap: 7px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--craft-accent) 18%, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.intentBox > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.intentBox b {
+  font-size: 0.68rem;
+}
+
+.intentBox small {
+  color: var(--craft-muted);
+  font-size: 0.57rem;
+}
+
+.intentBox textarea {
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+  background: rgba(7, 8, 10, 0.72);
+  color: inherit;
+  padding: 9px 10px;
+  font: inherit;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  outline: none;
+}
+
+.intentBox textarea::placeholder {
+  color: color-mix(in srgb, var(--craft-muted) 74%, transparent);
+}
+
+.intentBox textarea:focus {
+  border-color: color-mix(in srgb, var(--craft-accent) 46%, transparent);
+  box-shadow: 0 0 0 2px var(--craft-accent-faint);
+}
+
+.intentBox textarea:disabled {
+  opacity: 0.62;
+  cursor: default;
 }
 
 .craftButton {

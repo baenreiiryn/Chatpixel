@@ -51,6 +51,39 @@ test("GM surface exposes dedicated crafting tools", () => {
   for (const name of ["craft_recipe_learn", "craft_request_roll", "craft_reject_attempt", "craft_award_xp"]) {
     assert.equal(names.has(name), true, `missing ${name}`);
   }
+  assert.equal(names.has("scene_set"), true, "missing scene_set");
+});
+
+test("GM scene_set updates the current scene and invalidates the previous web image", () => {
+  const state = game.ensureGameStateCrafting(structuredClone(game.initialState));
+  state.sceneVisual = {
+    scene: state.campaign.scene,
+    query: "old scene",
+    imageUrl: "https://example.test/old.jpg",
+    sourceUrl: "https://example.test/old",
+    searchedAt: "2026-10-21T00:00:00.000Z",
+  };
+  const result = gm.executeGmTool(state, "scene_set", JSON.stringify({
+    scene: "Rua dos Mercadores · Centro de Varn",
+    reason: "O grupo saiu da estalagem e entrou na rua principal.",
+  }));
+  assert.equal(result.result.ok, true);
+  assert.equal(result.state.campaign.scene, "Rua dos Mercadores · Centro de Varn");
+  assert.equal(result.state.sceneVisual, undefined);
+});
+
+test("GM context resolves present NPCs from the current scene instead of the demo sanctuary", () => {
+  const state = game.ensureGameStateCrafting(structuredClone(game.initialState));
+  state.npcs = [
+    { id: "merchant", name: "Sera", role: "Mercadora", relation: "neutral", location: "Rua dos Mercadores" },
+    { id: "priest", name: "Ithran", role: "Sacerdote", relation: "neutral", location: "Santuário soterrado" },
+  ];
+  const moved = gm.executeGmTool(state, "scene_set", JSON.stringify({
+    scene: "Rua dos Mercadores · Centro de Varn",
+    reason: "O grupo chegou ao centro comercial.",
+  })).state;
+  const context = game.buildContextPacket(moved);
+  assert.deepEqual(context.presentNpcs.map((npc) => npc.id), ["merchant"]);
 });
 
 test("crafting state is included in the GM context packet", () => {
@@ -59,6 +92,24 @@ test("crafting state is included in the GM context packet", () => {
   const context = game.buildContextPacket(state);
   assert.ok(context.crafting);
   assert.deepEqual(Object.keys(context.crafting.progress).sort(), ["alchemy", "enchantment", "mundane"]);
+});
+
+test("player crafting intent persists into the GM context packet", () => {
+  let state = game.ensureGameStateCrafting(structuredClone(game.initialState));
+  const material = state.inventory[0];
+  material.qty = 2;
+  state.crafting = crafting.beginCraftAttempt(state.crafting, state.inventory, {
+    id: "attempt-with-intent",
+    discipline: "mundane",
+    ingredients: [
+      { slot: 0, itemId: material.id, itemName: material.name, quantity: 1 },
+      { slot: 1, itemId: material.id, itemName: material.name, quantity: 1 },
+    ],
+    intent: "Quero criar uma lâmina curta e leve para combate rápido.",
+    requestedAt: "2026-10-21T00:00:00.000Z",
+  }).crafting;
+  const context = game.buildContextPacket(state);
+  assert.equal(context.crafting.pendingAttempt.intent, "Quero criar uma lâmina curta e leve para combate rápido.");
 });
 
 test("GM rejects a crafting attempt cleanly through the dedicated tool", () => {

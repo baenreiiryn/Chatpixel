@@ -77,9 +77,17 @@ O OracleRPG já monta um prompt visual persistente a partir da mensagem do Mestr
 personagens presentes, objetos mencionados e memórias visuais conhecidas.
 
 No preview atual de ChatGPT plan sharing, a OpenAI não oferece a tool hospedada de image
-generation nesse fluxo. Por isso o botão prepara e salva o prompt, mas não envia uma chamada
-de imagem fingindo compatibilidade. A UI foi feita atrás de uma camada separada para receber
-um provider de imagem local/terceiro depois, sem alterar o modelo de memória ou os snapshots.
+generation nesse fluxo. Por isso o botão de geração fica oculto; a infraestrutura de snapshot e
+prompt continua no código para ser reativada quando a tool estiver disponível, sem fingir
+compatibilidade nem alterar o modelo de memória.
+
+Como alternativa disponível hoje, a aba Sessão pode usar a tool hospedada de **Web Search**
+para buscar uma referência visual existente na web. Quando o Mestre muda de ambiente usando
+`scene_set`, o painel fixo da cena busca uma nova imagem e exibe também um link para a fonte.
+
+Ao terminar a criação do personagem — e também ao usar **Recomeçar campanha** — o Mestre inicia
+a primeira cena automaticamente a partir das escolhas de criação. O jogador já entra na Sessão
+com a ficção em andamento; não é mais necessário enviar uma primeira ação apenas para começar o prólogo.
 
 ## Próximas camadas
 

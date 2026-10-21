@@ -48,6 +48,7 @@ export type CraftingWorkshopProps = {
   onCraft: (
     discipline: CraftDiscipline,
     selectedSlots: CraftingWorkshopSlot[],
+    intent: string,
   ) => void | Promise<void>;
   onCancelAttempt?: () => void;
 };
@@ -209,6 +210,7 @@ export default function CraftingWorkshop({
   const [armedItemId, setArmedItemId] = useState<string | null>(null);
   const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
   const [recipeNotice, setRecipeNotice] = useState("");
+  const [craftIntent, setCraftIntent] = useState("");
   const [touchDrag, setTouchDrag] = useState<{
     itemId: string;
     x: number;
@@ -250,6 +252,7 @@ export default function CraftingWorkshop({
     if (!pendingAttempt) return;
     setDiscipline(pendingAttempt.discipline);
     setSelectedRecipeId(pendingAttempt.recipeId ?? null);
+    setCraftIntent(pendingAttempt.intent ?? "");
     setSlots(
       pendingAttempt.ingredients.map((ingredient) => ({
         slot: ingredient.slot,
@@ -557,6 +560,7 @@ export default function CraftingWorkshop({
     void onCraft(
       discipline,
       slots.map((slot) => ({ ...slot })).sort((a, b) => a.slot - b.slot),
+      craftIntent.trim().slice(0, 500),
     );
   }
 
@@ -771,6 +775,20 @@ export default function CraftingWorkshop({
                 </>
               )}
             </div>
+            <label className={styles.intentBox}>
+              <span>
+                <b>O que você está tentando criar?</b>
+                <small>{craftIntent.length}/500</small>
+              </span>
+              <textarea
+                value={craftIntent}
+                maxLength={500}
+                rows={3}
+                disabled={locked}
+                placeholder="Ex.: quero transformar estes materiais em uma espada leve que canalize eletricidade."
+                onChange={(event) => setCraftIntent(event.target.value)}
+              />
+            </label>
             <button
               type="button"
               className={styles.craftButton}

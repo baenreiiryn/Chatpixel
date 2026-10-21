@@ -23,8 +23,9 @@ import {
   useCloudSync,
 } from "@/hooks/useCloudSync";
 import { useOracleBridge } from "@/hooks/useOracleBridge";
-import { buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
+import { buildCampaignOpeningPrompt, buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
 import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestGmMessage } from "@/lib/scene";
+import { buildSceneWebImageSearchPrompt, extractSceneWebImage } from "@/lib/sceneWebImage";
 import DaggerheartCompendium from "@/components/DaggerheartCompendium";
 import CompendiumArt from "@/components/CompendiumArt";
 import NewCampaignWizard, { type NewCampaignResult } from "@/components/NewCampaignWizard";
@@ -108,6 +109,9 @@ const DICE_ORDER: Array<{ type: DiceType; sides: DieSides; label: string }> = [
   { type: "d100", sides: 100, label: "d100" },
 ];
 const DICE_APPEARANCE_STORAGE_KEY = "oraclerpg.dice-appearance.v1";
+// Sign in with GPT plan sharing does not expose image generation yet.
+// Re-enable this flag when the tool becomes available; the underlying scene-image flow remains intact.
+const SCENE_IMAGE_BUTTON_ENABLED = false;
 
 type DiceCounts = Record<DieSides, number>;
 
@@ -803,8 +807,12 @@ export default function OracleApp() {
   const [gmBusy, setGmBusy] = useState(false);
   const gmRunningRef = useRef(false);
   const [gmError, setGmError] = useState("");
+  const [openingNarrationError, setOpeningNarrationError] = useState("");
   const [imageMessageId, setImageMessageId] = useState<string | null>(null);
   const [imageNote, setImageNote] = useState("");
+  const [sceneImageBusy, setSceneImageBusy] = useState(false);
+  const [sceneImageError, setSceneImageError] = useState("");
+  const [sceneImageRetryNonce, setSceneImageRetryNonce] = useState(0);
   const [showCalendar, setShowCalendar] = useState(false);
   const [showDiceTray, setShowDiceTray] = useState(false);
   const [diceAppearances, setDiceAppearances] = useState<DiceAppearanceOverrides>({});
@@ -818,6 +826,10 @@ export default function OracleApp() {
   const [campaignAction, setCampaignAction] = useState<CampaignAction>(null);
   const [campaignActionError, setCampaignActionError] = useState("");
   const timelineSynthesisInFlightRef = useRef<string | null>(null);
+  const sceneImageSearchInFlightRef = useRef<string | null>(null);
+  const sceneImageFailedRef = useRef<string | null>(null);
+  const openingNarrationAttemptRef = useRef<string | null>(null);
+  const openingNarrationFailedRef = useRef<string | null>(null);
 
   useEffect(() => {
     stateRef.current = state;
@@ -829,6 +841,14 @@ export default function OracleApp() {
     campaignEpochRef.current += 1;
     setActiveDiceRoll(null);
     setShowDiceTray(false);
+    setSceneImageBusy(false);
+    setSceneImageError("");
+    setSceneImageRetryNonce(0);
+    sceneImageSearchInFlightRef.current = null;
+    sceneImageFailedRef.current = null;
+    openingNarrationAttemptRef.current = null;
+    openingNarrationFailedRef.current = null;
+    setOpeningNarrationError("");
     diceRollSourcesRef.current.clear();
     diceRollPendingRefsRef.current.clear();
     diceRollCampaignRefsRef.current.clear();
@@ -946,6 +966,7 @@ export default function OracleApp() {
 
   useEffect(() => {
     if (!ready || !activeCampaignId || !bridge.account?.connected || !bridge.model) return;
+    if (!state.messages.some((message) => message.role === "gm")) return;
     if (!timelineNeedsNarrativeSynthesis(state)) return;
     const requestKey = `${activeCampaignId}:${state.timelineVersion ?? 0}:${state.campaign.name}`;
     if (timelineSynthesisInFlightRef.current === requestKey) return;
@@ -976,6 +997,7 @@ export default function OracleApp() {
     activeCampaignId,
     bridge.account?.connected,
     bridge.model,
+    state.messages.length,
     state.timelineVersion,
     state.campaign.adventureHook,
     state.character.daggerheart?.history,
@@ -984,6 +1006,8 @@ export default function OracleApp() {
 
   const contextPreview = useMemo(() => buildContextPacket(state), [state]);
   const lastGmMessage = useMemo(() => latestGmMessage(state.messages), [state.messages]);
+  const hasGmNarration = useMemo(() => state.messages.some((message) => message.role === "gm"), [state.messages]);
+  const currentSceneVisual = state.sceneVisual?.scene === state.campaign.scene ? state.sceneVisual : null;
   const imageMessage = useMemo(
     () => state.messages.find((message) => message.id === imageMessageId),
     [imageMessageId, state.messages],
@@ -1000,6 +1024,112 @@ export default function OracleApp() {
     const answered = state.messages.slice(playerIndex + 1).some((message) => message.role === "gm");
     return answered ? null : state.messages[playerIndex];
   }, [state.messages]);
+
+  useEffect(() => {
+    if (!ready || screen !== "campaign" || view !== "session" || !activeCampaignId) return;
+    if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model || gmBusy || gmRunningRef.current) return;
+    if (hasGmNarration) return;
+    const key = `${activeCampaignId}:${campaignEpochRef.current}:opening`;
+    if (openingNarrationAttemptRef.current === key) return;
+    void startCampaignOpening(state, "creation");
+  }, [
+    activeCampaignId,
+    bridge.account?.connected,
+    bridge.model,
+    bridge.status,
+    gmBusy,
+    ready,
+    screen,
+    hasGmNarration,
+    view,
+  ]);
+
+  useEffect(() => {
+    if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) return;
+    if (!activeCampaignId || screen !== "campaign" || view !== "session") return;
+    if (hasGmNarration) return;
+    const key = `${activeCampaignId}:${campaignEpochRef.current}:opening`;
+    if (openingNarrationFailedRef.current !== key) return;
+    openingNarrationFailedRef.current = null;
+    openingNarrationAttemptRef.current = null;
+    setOpeningNarrationError("");
+    void startCampaignOpening(stateRef.current, "creation");
+  }, [bridge.status, bridge.account?.connected, bridge.model, hasGmNarration]);
+
+  useEffect(() => {
+    if (!ready || screen !== "campaign" || view !== "session" || !activeCampaignId) return;
+    if (!bridge.account?.connected || !bridge.model) return;
+    if (gmBusy || gmRunningRef.current) return;
+    if (!hasGmNarration) return;
+    if (state.sceneVisual?.scene === state.campaign.scene) return;
+
+    const scene = state.campaign.scene.trim();
+    if (!scene) return;
+    const requestKey = `${activeCampaignId}:${campaignEpochRef.current}:${bridge.model}:${scene}`;
+    if (sceneImageSearchInFlightRef.current === requestKey || sceneImageFailedRef.current === requestKey) return;
+
+    const runCampaignId = activeCampaignId;
+    const runCampaignEpoch = campaignEpochRef.current;
+    const query = buildSceneWebImageSearchPrompt({
+      scene,
+      narration: lastGmMessage?.text,
+      tone: state.campaign.tone,
+    });
+    sceneImageSearchInFlightRef.current = requestKey;
+    setSceneImageBusy(true);
+    setSceneImageError("");
+
+    void (async () => {
+      try {
+        const response = await bridge.respond({
+          model: bridge.model,
+          instructions: [
+            "Você seleciona referências visuais reais da web para o painel de cena de um RPG.",
+            "Use obrigatoriamente a ferramenta de busca web fornecida. Não invente URLs.",
+            "Priorize imagens do ambiente/local, sem procurar uma representação exata dos personagens do jogador.",
+          ].join("\n"),
+          input: [{ role: "user", content: query }],
+          tools: [{
+            type: "web_search",
+            search_content_types: ["image"],
+            image_settings: { max_results: 6, caption: true },
+          }],
+          include: ["web_search_call.results"],
+          toolChoice: "required",
+        });
+        const visual = extractSceneWebImage(response, scene, query);
+        if (!visual) throw new Error("A busca não retornou uma imagem utilizável.");
+        if (activeCampaignIdRef.current !== runCampaignId || campaignEpochRef.current !== runCampaignEpoch) return;
+        sceneImageFailedRef.current = null;
+        setState((current) => current.campaign.scene === scene
+          ? { ...current, sceneVisual: visual }
+          : current);
+      } catch (error) {
+        if (activeCampaignIdRef.current !== runCampaignId || campaignEpochRef.current !== runCampaignEpoch) return;
+        sceneImageFailedRef.current = requestKey;
+        setSceneImageError(error instanceof Error ? error.message : "Não foi possível buscar uma imagem para esta cena.");
+      } finally {
+        if (sceneImageSearchInFlightRef.current === requestKey) sceneImageSearchInFlightRef.current = null;
+        if (activeCampaignIdRef.current === runCampaignId && campaignEpochRef.current === runCampaignEpoch) {
+          setSceneImageBusy(false);
+        }
+      }
+    })();
+  }, [
+    activeCampaignId,
+    bridge.account?.connected,
+    bridge.model,
+    gmBusy,
+    hasGmNarration,
+    lastGmMessage?.id,
+    ready,
+    screen,
+    state.campaign.scene,
+    state.campaign.tone,
+    state.sceneVisual?.scene,
+    view,
+    sceneImageRetryNonce,
+  ]);
 
   const cloudLabel = ({
     local: "somente local",
@@ -1090,6 +1220,14 @@ export default function OracleApp() {
     activeCampaignIdRef.current = entry.id;
     setActiveDiceRoll(null);
     setShowDiceTray(false);
+    setSceneImageBusy(false);
+    setSceneImageError("");
+    setSceneImageRetryNonce(0);
+    setOpeningNarrationError("");
+    sceneImageSearchInFlightRef.current = null;
+    sceneImageFailedRef.current = null;
+    openingNarrationAttemptRef.current = null;
+    openingNarrationFailedRef.current = null;
     diceRollSourcesRef.current.clear();
     diceRollPendingRefsRef.current.clear();
     diceRollCampaignRefsRef.current.clear();
@@ -1176,10 +1314,6 @@ export default function OracleApp() {
       }
     }
 
-    const companionNames = result.companions.map((companion) => companion.name);
-    const initialMessage = companionNames.length
-      ? `${characterName}, sua jornada em ${campaignName} está pronta. ${companionNames.join(", ")} ${companionNames.length === 1 ? "está" : "estão"} com você no início do prólogo. Descreva sua primeira ação quando quiser começar.`
-      : `${characterName}, sua jornada em ${campaignName} está pronta. O prólogo aguarda sua primeira ação.`;
     const next: GameState = {
       campaign: {
         name: campaignName,
@@ -1255,13 +1389,7 @@ export default function OracleApp() {
       memories,
       timeline: [],
       timelineVersion: 1,
-      messages: [{
-        id: crypto.randomUUID(),
-        role: "gm",
-        text: initialMessage,
-        createdAt,
-        campaignMinute: campaignTime.campaignMinute,
-      }],
+      messages: [],
       events: [],
     };
     try {
@@ -1299,11 +1427,20 @@ export default function OracleApp() {
     localStorage.setItem(ACTIVE_CAMPAIGN_KEY, localCampaignId);
     campaignEpochRef.current += 1;
     activeCampaignIdRef.current = localCampaignId;
+    setSceneImageBusy(false);
+    setSceneImageError("");
+    setSceneImageRetryNonce(0);
+    setOpeningNarrationError("");
+    sceneImageSearchInFlightRef.current = null;
+    sceneImageFailedRef.current = null;
+    openingNarrationAttemptRef.current = null;
+    openingNarrationFailedRef.current = null;
     stateRef.current = next;
     setActiveCampaignId(localCampaignId);
     setState(next);
     setView("session");
     setScreen("campaign");
+    await startCampaignOpening(next, "creation");
   }
 
   function goHome() {
@@ -1316,7 +1453,7 @@ export default function OracleApp() {
     setView("session");
   }
 
-  function restartCampaign(campaignId: string) {
+  async function restartCampaign(campaignId: string) {
     const target = campaignsRef.current.find((entry) => entry.id === campaignId);
     if (!target) return;
     const restarted = restartCampaignFromSnapshot(target.state);
@@ -1329,21 +1466,34 @@ export default function OracleApp() {
     campaignsRef.current = next;
     setCampaigns(next);
     writeCampaignLibrary(next);
-    if (activeCampaignId === campaignId) {
-      campaignEpochRef.current += 1;
-      setActiveDiceRoll(null);
-      setShowDiceTray(false);
-      diceRollSourcesRef.current.clear();
-      diceRollPendingRefsRef.current.clear();
-      diceRollCampaignRefsRef.current.clear();
-      stateRef.current = restarted;
-      setState(restarted);
-      setInput("");
-      setGmError("");
-      setImageMessageId(null);
-      setImageNote("");
-    }
+    campaignEpochRef.current += 1;
+    activeCampaignIdRef.current = campaignId;
+    timelineSynthesisInFlightRef.current = null;
+    sceneImageSearchInFlightRef.current = null;
+    sceneImageFailedRef.current = null;
+    openingNarrationAttemptRef.current = null;
+    openingNarrationFailedRef.current = null;
+    setActiveCampaignId(campaignId);
+    localStorage.setItem(ACTIVE_CAMPAIGN_KEY, campaignId);
+    setActiveDiceRoll(null);
+    setShowDiceTray(false);
+    setSceneImageBusy(false);
+    setSceneImageError("");
+    setSceneImageRetryNonce(0);
+    setOpeningNarrationError("");
+    diceRollSourcesRef.current.clear();
+    diceRollPendingRefsRef.current.clear();
+    diceRollCampaignRefsRef.current.clear();
+    stateRef.current = restarted;
+    setState(restarted);
+    setInput("");
+    setGmError("");
+    setImageMessageId(null);
+    setImageNote("");
+    setView("session");
+    setScreen("campaign");
     setCampaignAction(null);
+    await startCampaignOpening(restarted, "restart");
   }
 
   async function deleteCampaign(campaignId: string) {
@@ -1629,7 +1779,7 @@ export default function OracleApp() {
     });
   }
 
-  async function startCraftAttempt(discipline: CraftDiscipline, selectedSlots: CraftingWorkshopSlot[]) {
+  async function startCraftAttempt(discipline: CraftDiscipline, selectedSlots: CraftingWorkshopSlot[], intent: string) {
     if (gmBusy || gmRunningRef.current || activeDiceRoll || stateRef.current.pendingRoll) return;
     if (countOccupiedCraftSlots(selectedSlots) < 2) return;
     if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
@@ -1650,6 +1800,7 @@ export default function OracleApp() {
         id: crypto.randomUUID(),
         discipline,
         ingredients,
+        ...(intent.trim() ? { intent: intent.trim().slice(0, 500) } : {}),
         ...(knownRecipe ? { recipeId: knownRecipe.id } : {}),
         requestedAt: new Date().toISOString(),
       });
@@ -1683,6 +1834,9 @@ export default function OracleApp() {
           "SOLICITAÇÃO DE CRAFTING DO JOGADOR.",
           `Disciplina: ${discipline}. Nível de craft: ${craftLevel}.`,
           `Grid exato: ${exactGrid}.`,
+          started.attempt.intent
+            ? `INTENÇÃO DECLARADA PELO JOGADOR: ${started.attempt.intent}`
+            : "O jogador não descreveu uma intenção específica; avalie apenas pelos materiais e pela disciplina.",
           `Chances de sucesso permitidas pelo nível atual: ${chanceTable}.`,
           knownRecipe
             ? `A combinação corresponde à receita conhecida ${knownRecipe.name} (recipeId=${knownRecipe.id}). Valide o estado e use craft_request_roll.`
@@ -1709,7 +1863,48 @@ export default function OracleApp() {
     }
   }
 
-  async function runGmNarration(working: GameState, text: string, allowTools = true) {
+  async function startCampaignOpening(working: GameState, source: "creation" | "restart") {
+    if (working.messages.some((message) => message.role === "gm")) return;
+    if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
+      setShowConnect(true);
+      return;
+    }
+    const campaignId = activeCampaignIdRef.current;
+    if (!campaignId) return;
+    const key = `${campaignId}:${campaignEpochRef.current}:opening`;
+    if (openingNarrationAttemptRef.current === key || gmRunningRef.current) return;
+    openingNarrationAttemptRef.current = key;
+    openingNarrationFailedRef.current = null;
+    setOpeningNarrationError("");
+    setGmError("");
+    await runGmNarration(
+      working,
+      buildCampaignOpeningPrompt(working, source),
+      true,
+      ["scene_set", "set_weather"],
+    );
+    if (stateRef.current.messages.some((message) => message.role === "gm")) {
+      openingNarrationFailedRef.current = null;
+      setOpeningNarrationError("");
+      return;
+    }
+    openingNarrationFailedRef.current = key;
+    setOpeningNarrationError("Não foi possível iniciar a primeira cena. Você pode tentar novamente.");
+  }
+
+  function retryCampaignOpening() {
+    openingNarrationAttemptRef.current = null;
+    openingNarrationFailedRef.current = null;
+    setOpeningNarrationError("");
+    void startCampaignOpening(stateRef.current, "creation");
+  }
+
+  async function runGmNarration(
+    working: GameState,
+    text: string,
+    allowTools = true,
+    allowedToolNames?: string[],
+  ) {
     if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
       setShowConnect(true);
       return;
@@ -1736,12 +1931,15 @@ export default function OracleApp() {
       let refusal = "";
       let lastOutputTypes: string[] = [];
       let reachedRoundLimit = true;
+      const availableTools = allowedToolNames?.length
+        ? responseTools.filter((tool) => allowedToolNames.includes(tool.name))
+        : responseTools;
       for (let round = 0; round < 12; round += 1) {
         const response = await bridge.respond({
           model: bridge.model,
           instructions: gmInstructions(working.campaign.system),
           input: conversationInput,
-          ...(allowTools && !working.pendingRoll ? { tools: responseTools } : {}),
+          ...(allowTools && !working.pendingRoll && availableTools.length ? { tools: availableTools } : {}),
         });
         if (!runIsCurrent()) return;
         const output = Array.isArray(response.output) ? response.output : [];
@@ -2117,7 +2315,7 @@ export default function OracleApp() {
                   ) : (
                     <>
                       <p>Somente <b>{actionTarget.state.campaign.name}</b> será reiniciada. O estado reiniciado será sincronizado com a nuvem quando essa campanha for aberta.</p>
-                      <button className="restartConfirmDanger" onClick={() => restartCampaign(actionTarget.id)}>Sim, recomeçar esta campanha</button>
+                      <button className="restartConfirmDanger" onClick={() => void restartCampaign(actionTarget.id)}>Sim, recomeçar esta campanha</button>
                       <button className="ghost" onClick={() => setCampaignAction({ ...campaignAction, step: 0 })}>Voltar</button>
                     </>
                   )
@@ -2345,11 +2543,52 @@ export default function OracleApp() {
                   <div><small>CENA ATUAL</small><h1>{state.campaign.scene}</h1></div>
                   <span className="livePill">● AO VIVO</span>
                 </div>
-                <div className="sceneArt">
-                  <div className="sceneMoon" />
-                  <div className="sceneDoor"><span>◈</span></div>
-                  <div className="sceneFog" />
-                  <p>O SANTUÁRIO RESPIRA</p>
+                <div className={`sceneArt ${currentSceneVisual ? "hasSceneImage" : ""}`}>
+                  {currentSceneVisual ? (
+                    <>
+                      <img
+                        src={currentSceneVisual.imageUrl}
+                        alt={currentSceneVisual.caption || `Referência visual para ${state.campaign.scene}`}
+                        referrerPolicy="no-referrer"
+                        onError={(event) => {
+                          const fallback = currentSceneVisual.thumbnailUrl;
+                          if (fallback && event.currentTarget.src !== fallback) {
+                            event.currentTarget.src = fallback;
+                          } else {
+                            event.currentTarget.style.display = "none";
+                          }
+                        }}
+                      />
+                      <div className="sceneImageShade" aria-hidden="true" />
+                      <div className="sceneImageMeta">
+                        <span>REFERÊNCIA VISUAL · WEB</span>
+                        <a href={currentSceneVisual.sourceUrl} target="_blank" rel="noreferrer noopener">
+                          Fonte ↗
+                        </a>
+                      </div>
+                      {currentSceneVisual.caption && <p className="sceneImageCaption">{currentSceneVisual.caption}</p>}
+                    </>
+                  ) : (
+                    <>
+                      <div className="sceneMoon" />
+                      <div className="sceneDoor"><span>◈</span></div>
+                      <div className="sceneFog" />
+                      <p>{sceneImageBusy ? "BUSCANDO REFERÊNCIA DA CENA…" : sceneImageError ? "REFERÊNCIA VISUAL INDISPONÍVEL" : "AGUARDANDO REFERÊNCIA DA CENA"}</p>
+                      {sceneImageError && !sceneImageBusy && (
+                        <button
+                          type="button"
+                          className="sceneImageRetryButton"
+                          onClick={() => {
+                            sceneImageFailedRef.current = null;
+                            setSceneImageError("");
+                            setSceneImageRetryNonce((value) => value + 1);
+                          }}
+                        >
+                          Tentar novamente
+                        </button>
+                      )}
+                    </>
+                  )}
                 </div>
                 <div className="messages">
                   {state.messages.map((message) => (
@@ -2358,7 +2597,7 @@ export default function OracleApp() {
                       <div className="messageBody">
                         <small>{message.role === "gm" ? "ORACLE · MESTRE" : message.role === "player" ? state.character.name : "SISTEMA"}</small>
                         <MessageText text={message.text} actionSyntax={message.role === "player"} />
-                        {message.role === "gm" && lastGmMessage?.id === message.id && (
+                        {SCENE_IMAGE_BUTTON_ENABLED && message.role === "gm" && lastGmMessage?.id === message.id && (
                           <button className="sceneImageButton" onClick={() => prepareSceneImage(message)}>
                             <span>✦</span> Gerar imagem da cena
                           </button>
@@ -2371,6 +2610,12 @@ export default function OracleApp() {
                       </div>
                     </article>
                   ))}
+                  {!hasGmNarration && openingNarrationError && !gmBusy && (
+                    <button type="button" className="openingRetryButton" onClick={retryCampaignOpening}>
+                      <span>↻</span>
+                      Tentar iniciar a primeira cena novamente
+                    </button>
+                  )}
                 </div>
                 {state.pendingRoll && (
                   <div className="pendingRollBanner">
@@ -2393,10 +2638,16 @@ export default function OracleApp() {
                   <ActionComposer
                     value={input}
                     onChange={setInput}
-                    placeholder={gmBusy ? "O Mestre está narrando..." : state.pendingRoll ? `Role ${state.pendingRoll.formula || "os dados pedidos"} com /r ou pelo ícone de dado` : "O que você faz?"}
-                    disabled={gmBusy}
+                    placeholder={gmBusy
+                      ? "O Mestre está narrando..."
+                      : !hasGmNarration
+                        ? "Aguardando a primeira cena do Mestre..."
+                        : state.pendingRoll
+                          ? `Role ${state.pendingRoll.formula || "os dados pedidos"} com /r ou pelo ícone de dado`
+                          : "O que você faz?"}
+                    disabled={gmBusy || !hasGmNarration}
                   />
-                  <button className="send" type="submit" disabled={gmBusy}>{gmBusy ? "…" : "➤"}</button>
+                  <button className="send" type="submit" disabled={gmBusy || !hasGmNarration}>{gmBusy ? "…" : "➤"}</button>
                 </form>
                 <div className="composerHint"><span>{gmError ? gmError : "O estado da campanha é salvo no OracleRPG."}</span><span>{bridge.model || "Mestre local"}</span></div>
                 </section>

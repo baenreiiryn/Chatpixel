@@ -132,6 +132,23 @@ test("beginCraftAttempt reserves inventory without allowing the same stack to be
   }), /tentativa|pendente|andamento|avali/i, "a review attempt must not be overwritten by a second attempt");
 });
 
+test("beginCraftAttempt preserves a trimmed player crafting intent with a safe length cap", () => {
+  const state = createInitialCraftingState();
+  const inventory = [item({ qty: 2 })];
+  const longIntent = `  Quero criar uma lâmina ritual ${"muito ".repeat(120)}resistente.  `;
+  const started = beginCraftAttempt(state, inventory, {
+    id: "attempt-intent",
+    discipline: "mundane",
+    ingredients: [ingredient({ slot: 0 }), ingredient({ slot: 1 })],
+    requestedAt: at,
+    intent: longIntent,
+  });
+  assert.ok(started.attempt.intent);
+  assert.equal(started.attempt.intent, started.attempt.intent.trim());
+  assert.ok(started.attempt.intent.length <= 500);
+  assert.match(started.attempt.intent, /^Quero criar uma lâmina ritual/);
+});
+
 test("recipe matching honors shaped slots, shapeless composition, and canonical identity priority", () => {
   const shaped = recipe({
     id: "shaped",

@@ -83,6 +83,8 @@ export function useOracleBridge() {
     instructions: string;
     input: unknown[];
     tools?: unknown[];
+    include?: string[];
+    toolChoice?: unknown;
   }) => {
     const response = await fetch(`${BRIDGE_URL}/responses`, {
       method: "POST",

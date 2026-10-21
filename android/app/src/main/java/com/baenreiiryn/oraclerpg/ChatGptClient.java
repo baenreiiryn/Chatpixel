@@ -309,6 +309,8 @@ public final class ChatGptClient {
         if (payload.has("instructions")) requestJson.put("instructions", payload.get("instructions"));
         requestJson.put("input", payload.getJSONArray("input"));
         if (payload.has("tools")) requestJson.put("tools", payload.getJSONArray("tools"));
+        if (payload.has("include")) requestJson.put("include", payload.getJSONArray("include"));
+        if (payload.has("toolChoice")) requestJson.put("tool_choice", payload.get("toolChoice"));
         requestJson.put("store", false);
         requestJson.put("stream", true);
 
@@ -385,8 +387,17 @@ public final class ChatGptClient {
             if (completed == null) throw new IllegalStateException("Stream ended before response.completed.");
 
             JSONArray rebuilt = new JSONArray();
-            for (JSONObject item : completedItems.values()) rebuilt.put(item);
             JSONArray original = completed.optJSONArray("output");
+            for (Map.Entry<Integer, JSONObject> entry : completedItems.entrySet()) {
+                JSONObject item = entry.getValue();
+                if (original != null && entry.getKey() < original.length()) {
+                    JSONObject fullItem = original.optJSONObject(entry.getKey());
+                    if (fullItem != null && "web_search_call".equals(fullItem.optString("type")) && fullItem.has("results")) {
+                        item.put("results", fullItem.get("results"));
+                    }
+                }
+                rebuilt.put(item);
+            }
             if (rebuilt.length() > 0) {
                 completed.put("output", rebuilt);
             } else if ((original == null || original.length() == 0) && completedText.length() > 0) {

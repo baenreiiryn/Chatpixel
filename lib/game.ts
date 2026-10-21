@@ -234,6 +234,16 @@ export type SceneImageDraft = {
   createdAt: string;
 };
 
+export type SceneWebImage = {
+  scene: string;
+  query: string;
+  imageUrl: string;
+  thumbnailUrl?: string;
+  sourceUrl: string;
+  caption?: string;
+  searchedAt: string;
+};
+
 export type Message = {
   id: string;
   role: "gm" | "player" | "system";
@@ -293,6 +303,7 @@ export type CampaignRestartSnapshot = {
   timeline: TimelineEntry[];
   timelineVersion?: number;
   messages: Message[];
+  sceneVisual?: SceneWebImage;
 };
 
 export type GameState = {
@@ -309,6 +320,7 @@ export type GameState = {
   timeline: TimelineEntry[];
   timelineVersion?: number;
   messages: Message[];
+  sceneVisual?: SceneWebImage;
   events: EventRecord[];
   pendingRoll?: PendingPlayerRoll;
   rollHistory?: RollResultRecord[];
@@ -340,6 +352,7 @@ export function createCampaignRestartSnapshot(state: GameState): CampaignRestart
     timeline: structuredClone(state.timeline ?? []),
     timelineVersion: state.timelineVersion,
     messages: structuredClone(state.messages),
+    ...(state.sceneVisual ? { sceneVisual: structuredClone(state.sceneVisual) } : {}),
   };
 }
 
@@ -453,7 +466,6 @@ export function inferLegacyRestartSnapshot(state: GameState): CampaignRestartSna
   const npcs = companionNames.size
     ? state.npcs.filter((npc) => companionNames.has(npc.name.toLocaleLowerCase("pt-BR")))
     : [];
-  const initialMessage = state.messages.find((message) => message.role === "gm") || state.messages[0];
   const { restartSnapshot: _restartSnapshot, ...campaign } = state.campaign;
   const character = cloneWithoutEmbeddedImages(state.character);
   character.level = 1;
@@ -483,7 +495,7 @@ export function inferLegacyRestartSnapshot(state: GameState): CampaignRestartSna
     memories: structuredClone(creationMemories),
     timeline: [],
     timelineVersion: 1,
-    messages: initialMessage ? [structuredClone(initialMessage)] : [],
+    messages: [],
   };
 }
 
@@ -510,7 +522,7 @@ export function restartCampaignFromSnapshot(state: GameState): GameState {
     memories: structuredClone(snapshot.memories),
     timeline: structuredClone(snapshot.timeline ?? []),
     timelineVersion: snapshot.timelineVersion ?? 1,
-    messages: structuredClone(snapshot.messages),
+    messages: [],
     events: [],
     pendingRoll: undefined,
     rollHistory: [],
@@ -749,13 +761,18 @@ export function undoLatest(state: GameState): GameState {
 }
 
 export function buildContextPacket(state: GameState) {
+  const normalizedScene = state.campaign.scene.toLocaleLowerCase("pt-BR");
+  const sceneRoot = normalizedScene.split("·")[0].trim();
   return {
     campaign: state.campaign,
     time: state.time,
     character: state.character,
     crafting: ensureCraftingState(state.crafting),
     activeQuests: state.quests.filter((quest) => quest.status === "active"),
-    presentNpcs: state.npcs.filter((npc) => npc.location === "Santuário soterrado"),
+    presentNpcs: state.npcs.filter((npc) => {
+      const location = npc.location.toLocaleLowerCase("pt-BR").trim();
+      return Boolean(location) && (normalizedScene.includes(location) || location.includes(sceneRoot));
+    }),
     relevantMemories: state.memories.slice(0, 8),
     timeline: (state.timeline ?? []).slice(-20),
     recentDialogue: state.messages.slice(-12),

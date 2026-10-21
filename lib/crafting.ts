@@ -56,6 +56,7 @@ export type CraftAttempt = {
   id: string;
   discipline: CraftDiscipline;
   ingredients: CraftIngredient[];
+  intent?: string;
   recipeId?: string;
   stage: "review" | "awaiting-roll";
   requestedAt: string;
@@ -64,6 +65,10 @@ export type CraftAttempt = {
   successChance?: number;
   pendingRollId?: string;
 };
+
+export function normalizeCraftIntent(value: unknown) {
+  return typeof value === "string" ? value.trim().slice(0, 500) : "";
+}
 
 export type CraftingState = {
   version: 1;
@@ -299,6 +304,7 @@ export function beginCraftAttempt(
   const attempt: CraftAttempt = {
     ...clone(input),
     ingredients: clone(input.ingredients),
+    ...(normalizeCraftIntent(input.intent) ? { intent: normalizeCraftIntent(input.intent) } : {}),
     stage: input.stage ?? "review",
   };
   crafting.pendingAttempt = attempt;

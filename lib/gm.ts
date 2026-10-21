@@ -83,6 +83,8 @@ export function gmInstructions(system: string) {
     "O OracleRPG é a fonte da verdade para estado mecânico, inventário, missões e memória.",
     "Use ferramentas sempre que uma ação alterar dados persistentes ou quando precisar consultar memória.",
     "Quando a narração indicar passagem de tempo, avance o relógio da campanha pelo tempo transcorrido descrito, inclusive minutos, horas ou dias.",
+    "CENA ATUAL: quando o grupo entrar em uma sala diferente, sair para uma rua, viajar para outra área, chegar a uma cidade, floresta, ruína ou qualquer ambiente fisicamente distinto, use scene_set com um rótulo curto e visual do novo local. Não use scene_set para pequenas ações ou mudanças de enquadramento dentro do mesmo ambiente.",
+    "O campo de cena alimenta o painel visual fixo da Sessão: uma mudança via scene_set invalida a imagem anterior e o OracleRPG buscará automaticamente uma nova referência de ambiente na web.",
     "Se advance_time retornar reachedEvents, esses prazos ou efeitos chegaram ao fim durante a passagem de tempo e devem ser considerados na narração e no estado.",
     "Quando a narração mudar o clima, atualize o clima persistido da campanha para refletir a nova condição.",
     "Use eventos do calendário para prazos de missões, buffs, efeitos temporários e acontecimentos futuros que dependam do tempo da campanha.",
@@ -95,6 +97,7 @@ export function gmInstructions(system: string) {
     "Quando pendingRoll desaparecer e o resultado aparecer em rollHistory, continue a cena a partir daquele resultado. Você pode narrar brevemente a consequência e então pedir outra rolagem quando a sequência exigir, por exemplo ataque acertou e agora requer dano.",
     "Em Daggerheart, pedidos de Dualidade devem usar rollKind duality e uma fórmula com exatamente 2d12 para Esperança e Medo; dados auxiliares e modificadores podem ser acrescentados à mesma fórmula.",
     "CRAFTING: quando crafting.pendingAttempt estiver em stage=review, o jogador acabou de colocar itens no grid. Avalie a combinação exata por slot e a disciplina escolhida.",
+    "Se crafting.pendingAttempt.intent existir, trate esse texto como a intenção declarada pelo jogador: use-o para entender o objetivo pretendido, sem transformar automaticamente uma combinação incoerente em receita válida.",
     "Se uma combinação de crafting desconhecida não fizer sentido, use craft_reject_attempt e explique brevemente por quê. Não consuma materiais.",
     "Se a combinação desconhecida fizer sentido como receita, primeiro registre a receita com craft_recipe_learn usando learnedFrom=discovery e fromPendingAttempt=true; escolha shaped quando a posição importar e shapeless quando só a composição importar. Depois use craft_request_roll para a receita criada.",
     "Em receitas de Encantamento, informe baseSlot apontando o item exato que será encantado e use result.patch para descrever as alterações aplicadas a esse item-base; os demais ingredientes são reagentes.",
@@ -122,6 +125,25 @@ export function gmInstructions(system: string) {
     "Quando um NPC falar, coloque a fala em um parágrafo próprio, preferencialmente iniciada por travessão.",
     "Nunca entregue narração e várias falas como um único bloco corrido.",
     "Depois das ferramentas, produza a narração final e, quando apropriado, pergunte o que o jogador faz. A exceção é request_player_roll: após essa ferramenta, pare e aguarde a rolagem sem continuar a narração.",
+  ].join("\n");
+}
+
+export function buildCampaignOpeningPrompt(state: GameState, source: "creation" | "restart") {
+  const companionNames = state.npcs.map((npc) => npc.name).filter(Boolean);
+  return [
+    "ABERTURA AUTOMÁTICA DA CAMPANHA.",
+    source === "restart"
+      ? "Esta é uma nova abertura a partir do estado inicial da criação. Trate como um novo início e não mencione que a campanha foi reiniciada, recomeçada ou que existiu uma versão anterior."
+      : "O jogador acabou de concluir a criação do personagem e ainda não realizou nenhuma ação na ficção.",
+    "Inicie a aventura agora, sem esperar o jogador escrever a primeira ação.",
+    "Use como base a história do personagem, ancestralidade, classe/subclasse, comunidade, experiências, equipamentos, gancho da aventura, tom da campanha, memórias de criação e companheiros presentes.",
+    companionNames.length
+      ? `Companheiros inicialmente disponíveis no contexto: ${companionNames.join(", ")}. Inclua apenas quem fizer sentido estar presente na abertura.`
+      : "Não há companheiros NPC registrados para esta abertura.",
+    "Antes da narração final, use obrigatoriamente scene_set para registrar um local físico curto e concreto que represente a primeira cena (sala, rua, floresta, cidade, ruína etc.). Esse local será usado para buscar automaticamente a imagem da cena.",
+    "Narre a primeira cena em alguns parágrafos curtos: estabeleça o ambiente, a atmosfera, a situação imediata e um elemento que convide o personagem a agir.",
+    "Não escolha ações pelo personagem, não resolva decisões por ele e não peça nenhuma rolagem nesta abertura, pois o jogador ainda não declarou uma ação.",
+    "Não diga apenas que a jornada está pronta. A ficção já deve estar acontecendo quando a resposta terminar.",
   ].join("\n");
 }
 
@@ -170,6 +192,23 @@ export function executeGmTool(
     args = JSON.parse(rawArguments || "{}");
   } catch {
     return { state, result: { ok: false, error: "Invalid JSON arguments." } };
+  }
+
+  if (name === "scene_set") {
+    const scene = String(args.scene || "").trim().slice(0, 140);
+    const reason = String(args.reason || "").trim().slice(0, 240);
+    if (scene.length < 2 || !reason) {
+      return { state, result: { ok: false, error: "Scene update requires a scene label and reason." } };
+    }
+    if (normalizeTimelineText(scene) === normalizeTimelineText(state.campaign.scene)) {
+      return { state, result: { ok: true, unchanged: true, scene: state.campaign.scene, reason } };
+    }
+    const next: GameState = {
+      ...state,
+      campaign: { ...state.campaign, scene },
+      sceneVisual: undefined,
+    };
+    return { state: next, result: { ok: true, scene, reason, imageRefreshRequired: true } };
   }
 
   if (name === "craft_reject_attempt") {

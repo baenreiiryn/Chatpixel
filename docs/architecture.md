@@ -83,6 +83,34 @@ e não o estado futuro da campanha.
 A geração de imagem não é enviada pela credencial de plan sharing enquanto a limitação
 oficial da OpenAI mantiver image generation entre as Responses tools não suportadas nesse fluxo.
 
+## Referência visual da cena via Web Search
+
+O painel visual fixo da aba Sessão usa Web Search da Responses API para buscar uma imagem
+existente na web que represente o ambiente atual. O Mestre atualiza mudanças físicas de local
+com `scene_set`; isso invalida a referência anterior. O cliente então faz uma chamada separada
+com `web_search`, solicita resultados de imagem e persiste apenas um resultado HTTPS com:
+
+- URL da imagem e thumbnail opcional;
+- página-fonte clicável;
+- caption, quando fornecida pela busca;
+- cena e prompt de busca usados.
+
+O painel não faz parte do scroll das mensagens. Se Web Search não estiver disponível para o
+modelo/conta/workspace, a sessão continua funcionando e o painel mantém o placeholder.
+
+## Abertura automática da campanha
+
+Ao concluir a criação de personagem, o OracleRPG salva primeiro um snapshot de reinício com
+o estado de criação (ficha, história, companheiros, equipamentos, memórias e timeline), mas sem
+mensagem narrativa ou imagem de cena. Em seguida o Mestre recebe uma instrução especial de
+abertura: deve iniciar a ficção imediatamente, usar `scene_set` para registrar o primeiro local
+concreto e narrar a primeira situação sem escolher ações nem pedir rolagens pelo personagem.
+
+`Recomeçar campanha` restaura esse estado inicial e repete a mesma abertura como um novo começo.
+Mensagens e referência visual da execução anterior não são reaproveitadas. Se o ChatGPT estiver
+desconectado no momento da criação/reinício, a abertura é disparada quando a conta voltar a estar
+conectada e a aba Sessão estiver ativa.
+
 ## Persistência
 
 O navegador mantém `localStorage` como cache offline. A sincronização opcional usa Postgres:

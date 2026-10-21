@@ -313,6 +313,8 @@ async function runResponse(payload) {
     instructions: payload.instructions,
     input: payload.input,
     tools: payload.tools,
+    include: payload.include,
+    tool_choice: payload.toolChoice,
     store: false,
     stream: true,
   };
@@ -381,9 +383,16 @@ async function runResponse(payload) {
   }
   if (!completed) throw new Error("Stream ended without response.completed.");
   if (completedItems.size) {
+    const originalOutput = Array.isArray(completed.output) ? completed.output : [];
     completed.output = [...completedItems.entries()]
       .sort(([a], [b]) => a - b)
-      .map(([, item]) => item);
+      .map(([index, item]) => {
+        const original = originalOutput[index];
+        if (original && original.type === "web_search_call" && Array.isArray(original.results)) {
+          return { ...item, results: original.results };
+        }
+        return item;
+      });
   } else if ((!Array.isArray(completed.output) || completed.output.length === 0) && completedText.length) {
     completed.output = [{
       type: "message",

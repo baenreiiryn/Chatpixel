@@ -6,6 +6,24 @@ export type OracleTool = {
 
 export const oracleTools: OracleTool[] = [
   {
+    name: "scene_set",
+    description: "Atualiza a cena/local físico atual quando o grupo entra em um ambiente significativamente diferente. Isso também solicita uma nova referência visual da web para o painel fixo da Sessão. Não use para pequenas ações dentro do mesmo local.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        scene: {
+          type: "string",
+          minLength: 2,
+          maxLength: 140,
+          description: "Rótulo curto e visual do local atual, por exemplo 'Mercado de Varn · Rua dos Ferreiros'.",
+        },
+        reason: { type: "string", minLength: 1, maxLength: 240 },
+      },
+      required: ["scene", "reason"],
+      additionalProperties: false,
+    },
+  },
+  {
     name: "request_player_roll",
     description: "Solicita uma rolagem ao jogador e pausa a resolução da cena até o resultado ser fornecido ao OracleRPG.",
     inputSchema: {
