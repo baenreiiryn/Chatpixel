@@ -21,6 +21,7 @@ export type CompendiumEntry = {
   category: string;
   source: string;
   parent?: string | null;
+  tier?: "foundation" | "specialization" | "mastery";
   description: string;
   mechanics: CompendiumMechanics;
   art?: string | null;
@@ -28,6 +29,17 @@ export type CompendiumEntry = {
   artLicense?: string;
   motivesAndTactics?: string;
 };
+
+export type SubclassFeatureTier = NonNullable<CompendiumEntry["tier"]>;
+
+export function subclassFeatureTierLabel(tier?: CompendiumEntry["tier"]) {
+  if (!tier) return "";
+  return ({
+    foundation: "Fundação",
+    specialization: "Especialização",
+    mastery: "Maestria",
+  } as const)[tier];
+}
 
 export type CompendiumCategory = {
   id: string;

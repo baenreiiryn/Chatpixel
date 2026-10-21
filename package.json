@@ -10,6 +10,7 @@
     "test": "node --test --test-concurrency=1 scripts/*.test.mjs",
     "bridge": "node bridge/server.mjs",
     "sync:foundryborne-art": "node scripts/sync-foundryborne-art.mjs",
+    "sync:foundryborne-subclasses": "node scripts/sync-foundryborne-subclasses.mjs",
     "import:daggerheart": "node scripts/import-daggerheart-compendium.mjs"
   },
   "dependencies": {

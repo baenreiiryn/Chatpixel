@@ -1,4 +1,4 @@
-import { daggerheartCompendium, type CompendiumEntry } from "@/lib/compendium/daggerheart";
+import { daggerheartCompendium, type CompendiumEntry, type SubclassFeatureTier } from "@/lib/compendium/daggerheart";
 import type { CharacterTraitName, InventoryItem } from "@/lib/game";
 
 export type ToneOption = {
@@ -291,9 +291,11 @@ export function classFeaturesFor(classId: string) {
   );
 }
 
-export function subclassFeaturesFor(subclassId: string) {
+export function subclassFeaturesFor(subclassId: string, tier: SubclassFeatureTier | "all" = "foundation") {
   return daggerheartCompendium.entries.filter((entry) =>
-    entry.type === "subclassFeature" && entry.parent === subclassId,
+    entry.type === "subclassFeature"
+      && entry.parent === subclassId
+      && (tier === "all" || entry.tier === tier),
   );
 }
 

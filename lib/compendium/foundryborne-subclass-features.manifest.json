@@ -1,0 +1,954 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "name": "Foundryborne Daggerheart subclass metadata",
+    "url": "https://github.com/Foundryborne/daggerheart",
+    "license": "Darrington Press Community Gaming License (DPCGL)"
+  },
+  "entries": [
+    {
+      "type": "subclassFeature",
+      "name": "Companion",
+      "normalizedName": "companion",
+      "parent": "Beastbound",
+      "normalizedParent": "beastbound",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Advanced Training",
+      "normalizedName": "advancedtraining",
+      "parent": "Beastbound",
+      "normalizedParent": "beastbound",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Loyal Friend",
+      "normalizedName": "loyalfriend",
+      "parent": "Beastbound",
+      "normalizedParent": "beastbound",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Battle-Bonded",
+      "normalizedName": "battlebonded",
+      "parent": "Beastbound",
+      "normalizedParent": "beastbound",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Expert Training",
+      "normalizedName": "experttraining",
+      "parent": "Beastbound",
+      "normalizedParent": "beastbound",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Battle Ritual",
+      "normalizedName": "battleritual",
+      "parent": "Call Of The Brave",
+      "normalizedParent": "callofthebrave",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Courage",
+      "normalizedName": "courage",
+      "parent": "Call Of The Brave",
+      "normalizedParent": "callofthebrave",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Comaraderie",
+      "normalizedName": "comaraderie",
+      "parent": "Call Of The Brave",
+      "normalizedParent": "callofthebrave",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Rise to the Challenge",
+      "normalizedName": "risetothechallenge",
+      "parent": "Call Of The Brave",
+      "normalizedParent": "callofthebrave",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Slayer",
+      "normalizedName": "slayer",
+      "parent": "Call Of The Slayer",
+      "normalizedParent": "calloftheslayer",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Martial Preparation",
+      "normalizedName": "martialpreparation",
+      "parent": "Call Of The Slayer",
+      "normalizedParent": "calloftheslayer",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Weapon Specialist",
+      "normalizedName": "weaponspecialist",
+      "parent": "Call Of The Slayer",
+      "normalizedParent": "calloftheslayer",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Sparing Touch",
+      "normalizedName": "sparingtouch",
+      "parent": "Divine Wielder",
+      "normalizedParent": "divinewielder",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Spirit Weapon",
+      "normalizedName": "spiritweapon",
+      "parent": "Divine Wielder",
+      "normalizedParent": "divinewielder",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Sacred Resonance",
+      "normalizedName": "sacredresonance",
+      "parent": "Divine Wielder",
+      "normalizedParent": "divinewielder",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Devout",
+      "normalizedName": "devout",
+      "parent": "Divine Wielder",
+      "normalizedParent": "divinewielder",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Elementalist",
+      "normalizedName": "elementalist",
+      "parent": "Elemental Origin",
+      "normalizedParent": "elementalorigin",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Transcendence",
+      "normalizedName": "transcendence",
+      "parent": "Elemental Origin",
+      "normalizedParent": "elementalorigin",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Natural Evasion",
+      "normalizedName": "naturalevasion",
+      "parent": "Elemental Origin",
+      "normalizedParent": "elementalorigin",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Ambush",
+      "normalizedName": "ambush",
+      "parent": "Executioners Guild",
+      "normalizedParent": "executionersguild",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "First Strike",
+      "normalizedName": "firststrike",
+      "parent": "Executioners Guild",
+      "normalizedParent": "executionersguild",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Backstab",
+      "normalizedName": "backstab",
+      "parent": "Executioners Guild",
+      "normalizedParent": "executionersguild",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "True Strike",
+      "normalizedName": "truestrike",
+      "parent": "Executioners Guild",
+      "normalizedParent": "executionersguild",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Death Strike",
+      "normalizedName": "deathstrike",
+      "parent": "Executioners Guild",
+      "normalizedParent": "executionersguild",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Scorpion's Poise",
+      "normalizedName": "scorpionspoise",
+      "parent": "Executioners Guild",
+      "normalizedParent": "executionersguild",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Enchanted Talisman",
+      "normalizedName": "enchantedtalisman",
+      "parent": "Hedge",
+      "normalizedParent": "hedge",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Herbal Remedies",
+      "normalizedName": "herbalremedies",
+      "parent": "Hedge",
+      "normalizedParent": "hedge",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Circle of Power",
+      "normalizedName": "circleofpower",
+      "parent": "Hedge",
+      "normalizedParent": "hedge",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Vexing Malison",
+      "normalizedName": "vexingmalison",
+      "parent": "Hedge",
+      "normalizedParent": "hedge",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Walk Between Worlds",
+      "normalizedName": "walkbetweenworlds",
+      "parent": "Hedge",
+      "normalizedParent": "hedge",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Overwhelm",
+      "normalizedName": "overwhelm",
+      "parent": "Juggernaut",
+      "normalizedParent": "juggernaut",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Rugged",
+      "normalizedName": "rugged",
+      "parent": "Juggernaut",
+      "normalizedParent": "juggernaut",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Not Done Yet",
+      "normalizedName": "notdoneyet",
+      "parent": "Juggernaut",
+      "normalizedParent": "juggernaut",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Pummeljoy",
+      "normalizedName": "pummeljoy",
+      "parent": "Juggernaut",
+      "normalizedParent": "juggernaut",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Eye for an Eye",
+      "normalizedName": "eyeforaneye",
+      "parent": "Juggernaut",
+      "normalizedParent": "juggernaut",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Surrounded",
+      "normalizedName": "surrounded",
+      "parent": "Juggernaut",
+      "normalizedParent": "juggernaut",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Stance Fighter",
+      "normalizedName": "stancefighter",
+      "parent": "Martial Artist",
+      "normalizedParent": "martialartist",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Flow State",
+      "normalizedName": "flowstate",
+      "parent": "Martial Artist",
+      "normalizedParent": "martialartist",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Limit Breaker",
+      "normalizedName": "limitbreaker",
+      "parent": "Martial Artist",
+      "normalizedParent": "martialartist",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Focus Cannon",
+      "normalizedName": "focuscannon",
+      "parent": "Martial Artist",
+      "normalizedParent": "martialartist",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Keen Defenses",
+      "normalizedName": "keendefenses",
+      "parent": "Martial Artist",
+      "normalizedParent": "martialartist",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Night's Glamour",
+      "normalizedName": "nightsglamour",
+      "parent": "Moon",
+      "normalizedParent": "moon",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Lunar Phases",
+      "normalizedName": "lunarphases",
+      "parent": "Moon",
+      "normalizedParent": "moon",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Ire of Pale Light",
+      "normalizedName": "ireofpalelight",
+      "parent": "Moon",
+      "normalizedParent": "moon",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Moonbeam",
+      "normalizedName": "moonbeam",
+      "parent": "Moon",
+      "normalizedParent": "moon",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Shadow Stepper",
+      "normalizedName": "shadowstepper",
+      "parent": "Nightwalker",
+      "normalizedParent": "nightwalker",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Fleeting Shadow",
+      "normalizedName": "fleetingshadow",
+      "parent": "Nightwalker",
+      "normalizedParent": "nightwalker",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Vanishing Act",
+      "normalizedName": "vanishingact",
+      "parent": "Nightwalker",
+      "normalizedParent": "nightwalker",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Adrenaline",
+      "normalizedName": "adrenaline",
+      "parent": "Nightwalker",
+      "normalizedParent": "nightwalker",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Dark Cloud",
+      "normalizedName": "darkcloud",
+      "parent": "Nightwalker",
+      "normalizedParent": "nightwalker",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Deathless Embrace",
+      "normalizedName": "deathlessembrace",
+      "parent": "Pact of the Endless",
+      "normalizedParent": "pactoftheendless",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Patron's Mantle",
+      "normalizedName": "patronsmantle",
+      "parent": "Pact of the Endless",
+      "normalizedParent": "pactoftheendless",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Dark Aegis",
+      "normalizedName": "darkaegis",
+      "parent": "Pact of the Endless",
+      "normalizedParent": "pactoftheendless",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Draining Bane",
+      "normalizedName": "drainingbane",
+      "parent": "Pact of the Endless",
+      "normalizedParent": "pactoftheendless",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Damage Sink",
+      "normalizedName": "damagesink",
+      "parent": "Pact of the Endless",
+      "normalizedParent": "pactoftheendless",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Harrowing Invocation",
+      "normalizedName": "harrowinginvocation",
+      "parent": "Pact of the Endless",
+      "normalizedParent": "pactoftheendless",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Deadly Vengeance",
+      "normalizedName": "deadlyvengeance",
+      "parent": "Pact of the Wrathful",
+      "normalizedParent": "pactofthewrathful",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Patron's Fury",
+      "normalizedName": "patronsfury",
+      "parent": "Pact of the Wrathful",
+      "normalizedParent": "pactofthewrathful",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Fearsome Attack",
+      "normalizedName": "fearsomeattack",
+      "parent": "Pact of the Wrathful",
+      "normalizedParent": "pactofthewrathful",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Otherworldly Ire",
+      "normalizedName": "otherworldlyire",
+      "parent": "Pact of the Wrathful",
+      "normalizedParent": "pactofthewrathful",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Diminish My Foes",
+      "normalizedName": "diminishmyfoes",
+      "parent": "Pact of the Wrathful",
+      "normalizedParent": "pactofthewrathful",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Menacing Reach",
+      "normalizedName": "menacingreach",
+      "parent": "Pact of the Wrathful",
+      "normalizedParent": "pactofthewrathful",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Toxic Concoctions",
+      "normalizedName": "toxicconcoctions",
+      "parent": "Poisoners Guild",
+      "normalizedParent": "poisonersguild",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Adder's Blessing",
+      "normalizedName": "addersblessing",
+      "parent": "Poisoners Guild",
+      "normalizedParent": "poisonersguild",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Venomancer",
+      "normalizedName": "venomancer",
+      "parent": "Poisoners Guild",
+      "normalizedParent": "poisonersguild",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Poison Compendium",
+      "normalizedName": "poisoncompendium",
+      "parent": "Poisoners Guild",
+      "normalizedParent": "poisonersguild",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Twin Fang",
+      "normalizedName": "twinfang",
+      "parent": "Poisoners Guild",
+      "normalizedParent": "poisonersguild",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Manipulate Magic",
+      "normalizedName": "manipulatemagic",
+      "parent": "Primal Origin",
+      "normalizedParent": "primalorigin",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Arcane Charge",
+      "normalizedName": "arcanecharge",
+      "parent": "Primal Origin",
+      "normalizedParent": "primalorigin",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Enchanted Aid",
+      "normalizedName": "enchantedaid",
+      "parent": "Primal Origin",
+      "normalizedParent": "primalorigin",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Adept",
+      "normalizedName": "adept",
+      "parent": "School Of Knowledge",
+      "normalizedParent": "schoolofknowledge",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Prepared",
+      "normalizedName": "prepared",
+      "parent": "School Of Knowledge",
+      "normalizedParent": "schoolofknowledge",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Brilliant",
+      "normalizedName": "brilliant",
+      "parent": "School Of Knowledge",
+      "normalizedParent": "schoolofknowledge",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Honed Expertise",
+      "normalizedName": "honedexpertise",
+      "parent": "School Of Knowledge",
+      "normalizedParent": "schoolofknowledge",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Accomplished",
+      "normalizedName": "accomplished",
+      "parent": "School Of Knowledge",
+      "normalizedParent": "schoolofknowledge",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Perfect Recall",
+      "normalizedName": "perfectrecall",
+      "parent": "School Of Knowledge",
+      "normalizedParent": "schoolofknowledge",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Battlemage",
+      "normalizedName": "battlemage",
+      "parent": "School Of War",
+      "normalizedParent": "schoolofwar",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Face Your Fear",
+      "normalizedName": "faceyourfear",
+      "parent": "School Of War",
+      "normalizedParent": "schoolofwar",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Have No Fear",
+      "normalizedName": "havenofear",
+      "parent": "School Of War",
+      "normalizedParent": "schoolofwar",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Thrive in Chaos",
+      "normalizedName": "thriveinchaos",
+      "parent": "School Of War",
+      "normalizedParent": "schoolofwar",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Conjure Shield",
+      "normalizedName": "conjureshield",
+      "parent": "School Of War",
+      "normalizedParent": "schoolofwar",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Fueled by Fear",
+      "normalizedName": "fueledbyfear",
+      "parent": "School Of War",
+      "normalizedParent": "schoolofwar",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Iron Will",
+      "normalizedName": "ironwill",
+      "parent": "Stalwart",
+      "normalizedParent": "stalwart",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Unwavering",
+      "normalizedName": "unwavering",
+      "parent": "Stalwart",
+      "normalizedParent": "stalwart",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Loyal Protector",
+      "normalizedName": "loyalprotector",
+      "parent": "Stalwart",
+      "normalizedParent": "stalwart",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Undaunted",
+      "normalizedName": "undaunted",
+      "parent": "Stalwart",
+      "normalizedParent": "stalwart",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Partner-in-Arms",
+      "normalizedName": "partnerinarms",
+      "parent": "Stalwart",
+      "normalizedParent": "stalwart",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Unrelenting",
+      "normalizedName": "unrelenting",
+      "parent": "Stalwart",
+      "normalizedParent": "stalwart",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Well-Connected",
+      "normalizedName": "wellconnected",
+      "parent": "Syndicate",
+      "normalizedParent": "syndicate",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Reliable Backup",
+      "normalizedName": "reliablebackup",
+      "parent": "Syndicate",
+      "normalizedParent": "syndicate",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Contacts Everywhere",
+      "normalizedName": "contactseverywhere",
+      "parent": "Syndicate",
+      "normalizedParent": "syndicate",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Gifted Performer",
+      "normalizedName": "giftedperformer",
+      "parent": "Troubadour",
+      "normalizedParent": "troubadour",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Virtuoso",
+      "normalizedName": "virtuoso",
+      "parent": "Troubadour",
+      "normalizedParent": "troubadour",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Maestro",
+      "normalizedName": "maestro",
+      "parent": "Troubadour",
+      "normalizedParent": "troubadour",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "At Ease",
+      "normalizedName": "atease",
+      "parent": "Vengeance",
+      "normalizedParent": "vengeance",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Revenge",
+      "normalizedName": "revenge",
+      "parent": "Vengeance",
+      "normalizedParent": "vengeance",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Nemesis",
+      "normalizedName": "nemesis",
+      "parent": "Vengeance",
+      "normalizedParent": "vengeance",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Act of Reprisal",
+      "normalizedName": "actofreprisal",
+      "parent": "Vengeance",
+      "normalizedParent": "vengeance",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Clarity of Nature",
+      "normalizedName": "clarityofnature",
+      "parent": "Warden of Renewal",
+      "normalizedParent": "wardenofrenewal",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Regeneration",
+      "normalizedName": "regeneration",
+      "parent": "Warden of Renewal",
+      "normalizedParent": "wardenofrenewal",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Defender",
+      "normalizedName": "defender",
+      "parent": "Warden of Renewal",
+      "normalizedParent": "wardenofrenewal",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Regenerative Reach",
+      "normalizedName": "regenerativereach",
+      "parent": "Warden of Renewal",
+      "normalizedParent": "wardenofrenewal",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Warden's Protection",
+      "normalizedName": "wardensprotection",
+      "parent": "Warden of Renewal",
+      "normalizedParent": "wardenofrenewal",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Elemental Incarnation",
+      "normalizedName": "elementalincarnation",
+      "parent": "Warden of the Elements",
+      "normalizedParent": "wardenoftheelements",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Elemental Dominion",
+      "normalizedName": "elementaldominion",
+      "parent": "Warden of the Elements",
+      "normalizedParent": "wardenoftheelements",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Elemental Aura",
+      "normalizedName": "elementalaura",
+      "parent": "Warden of the Elements",
+      "normalizedParent": "wardenoftheelements",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Path Forward",
+      "normalizedName": "pathforward",
+      "parent": "Wayfinder",
+      "normalizedParent": "wayfinder",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Ruthless Predator",
+      "normalizedName": "ruthlesspredator",
+      "parent": "Wayfinder",
+      "normalizedParent": "wayfinder",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Apex Predator",
+      "normalizedName": "apexpredator",
+      "parent": "Wayfinder",
+      "normalizedParent": "wayfinder",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Elusive Predator",
+      "normalizedName": "elusivepredator",
+      "parent": "Wayfinder",
+      "normalizedParent": "wayfinder",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Wings of Light",
+      "normalizedName": "wingsoflight",
+      "parent": "Winged Sentinel",
+      "normalizedParent": "wingedsentinel",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Ascendant",
+      "normalizedName": "ascendant",
+      "parent": "Winged Sentinel",
+      "normalizedParent": "wingedsentinel",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Power of the Gods",
+      "normalizedName": "powerofthegods",
+      "parent": "Winged Sentinel",
+      "normalizedParent": "wingedsentinel",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Ethereal Visage",
+      "normalizedName": "etherealvisage",
+      "parent": "Winged Sentinel",
+      "normalizedParent": "wingedsentinel",
+      "tier": "specialization"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Heart of a Poet",
+      "normalizedName": "heartofapoet",
+      "parent": "Wordsmith",
+      "normalizedParent": "wordsmith",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Rousing Speech",
+      "normalizedName": "rousingspeech",
+      "parent": "Wordsmith",
+      "normalizedParent": "wordsmith",
+      "tier": "foundation"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Epic Poetry",
+      "normalizedName": "epicpoetry",
+      "parent": "Wordsmith",
+      "normalizedParent": "wordsmith",
+      "tier": "mastery"
+    },
+    {
+      "type": "subclassFeature",
+      "name": "Eloquent",
+      "normalizedName": "eloquent",
+      "parent": "Wordsmith",
+      "normalizedParent": "wordsmith",
+      "tier": "specialization"
+    }
+  ]
+}

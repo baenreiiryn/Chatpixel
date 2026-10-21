@@ -6,6 +6,7 @@ import {
   daggerheartCompendium,
   entryTypeLabel,
   mechanicsSummary,
+  subclassFeatureTierLabel,
   type CompendiumEntry,
 } from "@/lib/compendium/daggerheart";
 
@@ -33,6 +34,12 @@ const TYPE_ORDER: Record<string, number> = {
   armor: 1,
   consumable: 2,
   loot: 3,
+};
+
+const SUBCLASS_TIER_ORDER: Record<string, number> = {
+  foundation: 0,
+  specialization: 1,
+  mastery: 2,
 };
 
 function normalize(value: string) {
@@ -84,6 +91,7 @@ function EntryCard({ entry, onOpen }: { entry: CompendiumEntry; onOpen: () => vo
       <div className="compEntryBody">
         <div className="compEntryMeta">
           <span>{entryTypeLabel(entry.type)}</span>
+          {entry.type === "subclassFeature" && entry.tier && <em>{subclassFeatureTierLabel(entry.tier)}</em>}
           {entry.source === "expansion" && <em>Expansão</em>}
         </div>
         <h3>{entry.name}</h3>
@@ -125,6 +133,7 @@ function EntryDetail({
         <div className="compDetailContent">
           <div className="compDetailMeta">
             <span>{entryTypeLabel(entry.type)}</span>
+            {entry.type === "subclassFeature" && entry.tier && <i>{subclassFeatureTierLabel(entry.tier)}</i>}
             <i>{entry.source === "expansion" ? "Conteúdo de expansão" : entry.source === "srd2" ? "SRD 2.0" : entry.source === "srd" ? "SRD" : "Daggerheart"}</i>
             {entry.artSource?.includes("Foundryborne/daggerheart") && <i>Arte de domínio · Foundryborne · DPCGL</i>}
           </div>
@@ -173,7 +182,12 @@ export default function DaggerheartCompendium({ onBack }: Props) {
   );
   const related = useMemo(
     () => selected?.sourceId
-      ? daggerheartCompendium.entries.filter((entry) => entry.parent === selected.sourceId)
+      ? daggerheartCompendium.entries
+          .filter((entry) => entry.parent === selected.sourceId)
+          .sort((a, b) => {
+            const tier = (SUBCLASS_TIER_ORDER[a.tier || ""] ?? 99) - (SUBCLASS_TIER_ORDER[b.tier || ""] ?? 99);
+            return tier || a.name.localeCompare(b.name, "pt-BR");
+          })
       : [],
     [selected],
   );
@@ -198,6 +212,7 @@ export default function DaggerheartCompendium({ onBack }: Props) {
           entry.description,
           entry.motivesAndTactics || "",
           entryTypeLabel(entry.type),
+          entry.type === "subclassFeature" ? subclassFeatureTierLabel(entry.tier) : "",
         ].join(" "));
         return haystack.includes(normalizedQuery);
       })

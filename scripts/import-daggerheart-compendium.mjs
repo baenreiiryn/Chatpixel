@@ -15,6 +15,7 @@ const langPath = path.join(translationRoot, "lang", "pt-BR.json");
 const outputPath = path.join(root, "lib", "compendium", "daggerheart.generated.json");
 const artOutputRoot = path.join(root, "public", "compendium", "daggerheart", "adversaries");
 const foundryborneManifestPath = path.join(root, "lib", "compendium", "foundryborne-art.manifest.json");
+const foundryborneSubclassManifestPath = path.join(root, "lib", "compendium", "foundryborne-subclass-features.manifest.json");
 
 const CORE_CLASSES = new Set([
   "Bard", "Druid", "Guardian", "Ranger", "Rogue", "Seraph", "Sorcerer", "Warrior", "Wizard",
@@ -373,7 +374,7 @@ function extractMechanics(description) {
   };
 }
 
-function makeEntry({ key, data, type, category, source = "core", parent = null, art = null, artSource = null, artLicense = null }) {
+function makeEntry({ key, data, type, category, source = "core", parent = null, tier = null, art = null, artSource = null, artLicense = null }) {
   const description = cleanText(data.description || "");
   const entry = {
     id: source + "-" + type + "-" + slug(key),
@@ -388,6 +389,7 @@ function makeEntry({ key, data, type, category, source = "core", parent = null, 
     mechanics: extractMechanics(description),
     art,
   };
+  if (tier) entry.tier = tier;
   if (artSource) entry.artSource = artSource;
   if (artLicense) entry.artLicense = artLicense;
   return entry;
@@ -413,6 +415,79 @@ for (const entry of foundryborneManifest.entries || []) {
 
 function domainArtFor(key) {
   return foundryborneDomainArt.get(normalizeSourceArtName(key)) || null;
+}
+
+if (!fs.existsSync(foundryborneSubclassManifestPath)) {
+  throw new Error(`Missing subclass metadata manifest: ${foundryborneSubclassManifestPath}. Run npm run sync:foundryborne-subclasses.`);
+}
+const foundryborneSubclassManifest = readJson(foundryborneSubclassManifestPath);
+const subclassFeatureMetadata = new Map();
+for (const entry of foundryborneSubclassManifest.entries || []) {
+  if (entry.type !== "subclassFeature") continue;
+  if (!entry.normalizedName || entry.normalizedName !== normalizeSourceArtName(entry.name)) {
+    throw new Error(`Invalid Foundryborne subclass manifest feature: ${entry.name || "<unnamed>"}`);
+  }
+  if (!entry.normalizedParent || entry.normalizedParent !== normalizeSourceArtName(entry.parent)) {
+    throw new Error(`Invalid Foundryborne subclass manifest parent: ${entry.parent || "<unnamed>"}`);
+  }
+  if (!["foundation", "specialization", "mastery"].includes(entry.tier)) {
+    throw new Error(`Invalid Foundryborne subclass tier for ${entry.name}: ${entry.tier || "<missing>"}`);
+  }
+  const list = subclassFeatureMetadata.get(entry.normalizedName) || [];
+  list.push(entry);
+  subclassFeatureMetadata.set(entry.normalizedName, list);
+}
+
+const subclassFeatureAliases = new Map([
+  [normalizeSourceArtName("Elemental Origin"), normalizeSourceArtName("Elementalist")],
+]);
+const coreSubclassByNormalizedName = new Map(
+  [...CORE_SUBCLASSES].map((name) => [normalizeSourceArtName(name), name]),
+);
+const expansionSubclassByNormalizedName = new Map(
+  Object.keys(EXPANSION_SUBCLASS_PARENT).map((name) => [normalizeSourceArtName(name), name]),
+);
+const subclassParentAliases = new Map([
+  [normalizeSourceArtName("Elemental Origin"), "Elementalist"],
+]);
+const legacyExpansionSubclassTiers = new Map(Object.entries({
+  // Blood Hunter · The Void v1.5
+  "Chasing Death": "foundation",
+  "Shadowed Grit": "foundation",
+  Veilwalker: "specialization",
+  "Spectral Form": "mastery",
+  Mutagens: "foundation",
+  "Improved Mutagens": "specialization",
+  "Volatile Toxins": "specialization",
+  "Mastered Mutagens": "mastery",
+  Werewolf: "foundation",
+  "Control the Beast": "foundation",
+  "Feral Hide": "specialization",
+  "Lycan Regeneration": "specialization",
+  "Master the Beast": "mastery",
+  // Warlock · The Void v1.5 names retained by the PT-BR translation.
+  "Deadly Devotion": "foundation",
+  "Draining Invocation": "specialization",
+  "Favored Weapon": "foundation",
+  "Herald of Death": "foundation",
+  "Divine Ire": "mastery",
+}).map(([name, tier]) => [normalizeSourceArtName(name), tier]));
+
+function localSubclassSourceId(parent) {
+  const normalized = normalizeSourceArtName(parent);
+  return subclassParentAliases.get(normalized)
+    || coreSubclassByNormalizedName.get(normalized)
+    || expansionSubclassByNormalizedName.get(normalized)
+    || parent;
+}
+
+function subclassFeatureMetaFor(key, expectedParent = null) {
+  const rawNormalized = normalizeSourceArtName(key);
+  const normalized = subclassFeatureAliases.get(rawNormalized) || rawNormalized;
+  const candidates = subclassFeatureMetadata.get(normalized) || [];
+  if (!expectedParent) return candidates.length === 1 ? candidates[0] : null;
+  const expected = normalizeSourceArtName(expectedParent);
+  return candidates.find((entry) => entry.normalizedParent === expected) || null;
 }
 
 const entries = [];
@@ -479,6 +554,10 @@ for (const [key, rawData] of expansionClassSourceEntries) {
   if (!key.trim() || CLASS_ITEMS.has(key)) continue;
   const isClass = EXPANSION_CLASSES.has(key);
   const subclassParent = EXPANSION_SUBCLASS_FEATURE_PARENT[key];
+  const subclassMeta = subclassParent ? subclassFeatureMetaFor(key, subclassParent) : null;
+  const legacySubclassTier = subclassParent
+    ? legacyExpansionSubclassTiers.get(normalizeSourceArtName(key)) || null
+    : null;
   const data = {
     ...rawData,
     description: rawData.description || EXPANSION_CLASS_DESCRIPTION_FALLBACK[key] || "",
@@ -490,6 +569,7 @@ for (const [key, rawData] of expansionClassSourceEntries) {
     category: subclassParent ? "subclasses" : "classes",
     source: "expansion",
     parent: isClass ? null : subclassParent || EXPANSION_CLASS_FEATURE_PARENT[key] || null,
+    tier: subclassMeta?.tier || legacySubclassTier,
   }));
 }
 for (const fallback of EXPANSION_FALLBACK_CLASS_FEATURES) {
@@ -505,12 +585,19 @@ for (const fallback of EXPANSION_FALLBACK_CLASS_FEATURES) {
 }
 for (const [key, data] of loadEntries("daggerheart.subclasses.json")) {
   const isSubclass = CORE_SUBCLASSES.has(key);
+  const subclassMeta = isSubclass ? null : subclassFeatureMetaFor(key);
+  if (!isSubclass && !subclassMeta) throw new Error(`Missing subclass metadata for core feature ${key}.`);
+  const subclassParent = subclassMeta ? localSubclassSourceId(subclassMeta.parent) : null;
+  if (subclassParent && !CORE_SUBCLASSES.has(subclassParent)) {
+    throw new Error(`Core subclass feature ${key} resolved to unknown parent ${subclassParent}.`);
+  }
   entries.push(makeEntry({
     key,
     data,
     type: isSubclass ? "subclass" : "subclassFeature",
     category: "subclasses",
-    parent: isSubclass ? SUBCLASS_CLASS_PARENT[key] || null : null,
+    parent: isSubclass ? SUBCLASS_CLASS_PARENT[key] || null : subclassParent,
+    tier: subclassMeta?.tier || null,
   }));
 }
 for (const [key, rawData] of loadEntries("daggerheart-expansion-content.subclasses.json")) {
