@@ -25,7 +25,7 @@ import {
 import { useOracleBridge } from "@/hooks/useOracleBridge";
 import { buildCampaignOpeningPrompt, buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
 import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestGmMessage } from "@/lib/scene";
-import { buildSceneWebImageSearchPrompt, extractSceneWebImage } from "@/lib/sceneWebImage";
+import { buildSceneWebImageSearchPrompt, describeSceneWebImageError, extractSceneWebImage } from "@/lib/sceneWebImage";
 import DaggerheartCompendium from "@/components/DaggerheartCompendium";
 import CompendiumArt from "@/components/CompendiumArt";
 import NewCampaignWizard, { type NewCampaignResult } from "@/components/NewCampaignWizard";
@@ -1007,6 +1007,10 @@ export default function OracleApp() {
   const contextPreview = useMemo(() => buildContextPacket(state), [state]);
   const lastGmMessage = useMemo(() => latestGmMessage(state.messages), [state.messages]);
   const hasGmNarration = useMemo(() => state.messages.some((message) => message.role === "gm"), [state.messages]);
+  const sceneImageErrorInfo = useMemo(
+    () => sceneImageError ? describeSceneWebImageError(sceneImageError) : null,
+    [sceneImageError],
+  );
   const currentSceneVisual = state.sceneVisual?.scene === state.campaign.scene ? state.sceneVisual : null;
   const imageMessage = useMemo(
     () => state.messages.find((message) => message.id === imageMessageId),
@@ -2574,6 +2578,12 @@ export default function OracleApp() {
                       <div className="sceneDoor"><span>◈</span></div>
                       <div className="sceneFog" />
                       <p>{sceneImageBusy ? "BUSCANDO REFERÊNCIA DA CENA…" : sceneImageError ? "REFERÊNCIA VISUAL INDISPONÍVEL" : "AGUARDANDO REFERÊNCIA DA CENA"}</p>
+                      {sceneImageErrorInfo && !sceneImageBusy && (
+                        <div className="sceneImageErrorDetail" data-category={sceneImageErrorInfo.category} title={sceneImageErrorInfo.detail}>
+                          <strong>{sceneImageErrorInfo.title}</strong>
+                          <small>{sceneImageErrorInfo.detail}</small>
+                        </div>
+                      )}
                       {sceneImageError && !sceneImageBusy && (
                         <button
                           type="button"

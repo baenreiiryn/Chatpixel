@@ -41,3 +41,18 @@ test("scene image extraction accepts only HTTPS image results with a source page
 test("scene image extraction returns null when the search produced no safe image", () => {
   assert.equal(sceneWebImage.extractSceneWebImage({ output: [{ type: "message" }] }, "Sala", "sala"), null);
 });
+
+test("scene image error diagnostics distinguish no-results from API and permission failures", () => {
+  assert.equal(
+    sceneWebImage.describeSceneWebImageError("A busca não retornou uma imagem utilizável.").category,
+    "no-results",
+  );
+  assert.equal(
+    sceneWebImage.describeSceneWebImageError("Responses request failed (400): bad request").category,
+    "api",
+  );
+  assert.equal(
+    sceneWebImage.describeSceneWebImageError("Responses request failed (403): policy denied").category,
+    "permission",
+  );
+});

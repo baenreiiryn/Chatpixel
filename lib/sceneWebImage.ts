@@ -8,6 +8,63 @@ export type SceneWebImage = {
   searchedAt: string;
 };
 
+export type SceneWebImageErrorInfo = {
+  category: "no-results" | "permission" | "rate-limit" | "network" | "api" | "unknown";
+  title: string;
+  detail: string;
+};
+
+function compactErrorMessage(value: string) {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+export function describeSceneWebImageError(message: string): SceneWebImageErrorInfo {
+  const detail = compactErrorMessage(message).slice(0, 280);
+  if (/não retornou uma imagem utilizável/i.test(detail)) {
+    return {
+      category: "no-results",
+      title: "A busca terminou sem uma imagem utilizável.",
+      detail,
+    };
+  }
+
+  const status = detail.match(/(?:failed|falhou).*?\((\d{3})\)|\bHTTP\s*(\d{3})\b/i);
+  const code = Number(status?.[1] || status?.[2] || 0);
+  if (code === 401 || code === 403) {
+    return {
+      category: "permission",
+      title: "O Web Search não foi autorizado para esta conta/modelo.",
+      detail,
+    };
+  }
+  if (code === 429) {
+    return {
+      category: "rate-limit",
+      title: "O limite temporário de uso da busca foi atingido.",
+      detail,
+    };
+  }
+  if (code >= 400) {
+    return {
+      category: "api",
+      title: `A API rejeitou a busca de imagem (HTTP ${code}).`,
+      detail,
+    };
+  }
+  if (/network|failed to fetch|timeout|timed out|socket|connection|offline/i.test(detail)) {
+    return {
+      category: "network",
+      title: "A busca falhou por conexão ou timeout.",
+      detail,
+    };
+  }
+  return {
+    category: "unknown",
+    title: "A busca de imagem falhou antes de retornar um resultado.",
+    detail: detail || "Erro sem detalhes retornados pelo bridge.",
+  };
+}
+
 type WebImageResult = {
   type?: unknown;
   image_url?: unknown;
