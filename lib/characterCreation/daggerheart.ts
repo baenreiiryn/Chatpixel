@@ -54,12 +54,30 @@ const commonPack: Array<Omit<InventoryItem, "id">> = [
   { name: "Poção de Vida Menor", qty: 1, detail: "Consumível inicial", icon: "◒" },
 ];
 
+function compendiumEquipment(
+  type: "weapon" | "armor",
+  name: string,
+  detail: string,
+  icon: string,
+): Omit<InventoryItem, "id"> {
+  const entry = daggerheartCompendium.entries.find((candidate) =>
+    candidate.type === type && candidate.name === name,
+  );
+  return {
+    name: entry?.name || name,
+    qty: 1,
+    detail,
+    icon,
+    ...(entry?.sourceId ? { sourceId: entry.sourceId } : {}),
+  };
+}
+
 function weapon(name: string, detail: string): Omit<InventoryItem, "id"> {
-  return { name, qty: 1, detail, icon: "⚔" };
+  return compendiumEquipment("weapon", name, detail, "⚔");
 }
 
 function armor(name: string, detail: string): Omit<InventoryItem, "id"> {
-  return { name, qty: 1, detail, icon: "⬡" };
+  return compendiumEquipment("armor", name, detail, "⬡");
 }
 
 function trinket(name: string, detail = "Item inicial de classe"): Omit<InventoryItem, "id"> {
@@ -74,8 +92,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     suggestedTraits: { agility: 0, strength: -1, finesse: 1, instinct: 0, presence: 2, knowledge: 1 },
     suggestedEquipment: [
       weapon("Rapieira", "Presença · Corpo-a-Corpo · d8 físico · uma mão"),
-      weapon("Adaga pequena", "Acuidade · Corpo-a-Corpo · d8 físico"),
-      armor("Gambesão", "Limiares 5/11 · Armadura 3 · Flexível (+1 Evasão)"),
+      weapon("Adaga Pequena", "Acuidade · Corpo-a-Corpo · d8 físico"),
+      armor("Gibão", "Limiares 5/11 · Armadura 3 · Flexível (+1 Evasão)"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Romance"), trinket("Carta nunca aberta")]],
@@ -86,9 +104,9 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "core",
     suggestedTraits: { agility: 1, strength: 0, finesse: 1, instinct: 2, presence: -1, knowledge: 0 },
     suggestedEquipment: [
-      weapon("Bastão curto", "Instinto · Próximo · d8+1 mágico · uma mão"),
-      weapon("Escudo redondo", "Força · Corpo-a-Corpo · d4 físico · Protetor"),
-      armor("Couro", "Limiares 6/13 · Armadura 3"),
+      weapon("Cajado Curto", "Instinto · Próximo · d8+1 mágico · uma mão"),
+      weapon("Escudo Redondo", "Força · Corpo-a-Corpo · d4 físico · Protetor"),
+      armor("Armadura de Couro", "Limiares 6/13 · Armadura 3"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Bolsa de pedras e ossos"), trinket("Pingente estranho encontrado na terra")]],
@@ -99,8 +117,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "core",
     suggestedTraits: { agility: 1, strength: 2, finesse: -1, instinct: 0, presence: 1, knowledge: 0 },
     suggestedEquipment: [
-      weapon("Machado de batalha", "Força · Corpo-a-Corpo · d10+3 físico · duas mãos"),
-      armor("Cota de malha", "Limiares 7/15 · Armadura 4 · Pesada"),
+      weapon("Machado de Batalha", "Força · Corpo-a-Corpo · d10+3 físico · duas mãos"),
+      armor("Cota de Malha", "Limiares 7/15 · Armadura 4 · Pesada"),
       ...commonPack,
     ],
   },
@@ -110,8 +128,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "core",
     suggestedTraits: { agility: 2, strength: 0, finesse: 1, instinct: 1, presence: -1, knowledge: 0 },
     suggestedEquipment: [
-      weapon("Arco curto", "Agilidade · Distante · d6+3 físico · duas mãos"),
-      armor("Couro", "Limiares 6/13 · Armadura 3"),
+      weapon("Arco Curto", "Agilidade · Distante · d6+3 físico · duas mãos"),
+      armor("Armadura de Couro", "Limiares 6/13 · Armadura 3"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Troféu da primeira caçada"), trinket("Bússola aparentemente quebrada")]],
@@ -123,8 +141,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     suggestedTraits: { agility: 1, strength: -1, finesse: 2, instinct: 0, presence: 1, knowledge: 0 },
     suggestedEquipment: [
       weapon("Adaga", "Acuidade · Corpo-a-Corpo · d8+1 físico · uma mão"),
-      weapon("Adaga pequena", "Acuidade · Corpo-a-Corpo · d8 físico"),
-      armor("Gambesão", "Limiares 5/11 · Armadura 3 · Flexível (+1 Evasão)"),
+      weapon("Adaga Pequena", "Acuidade · Corpo-a-Corpo · d8 físico"),
+      armor("Gibão", "Limiares 5/11 · Armadura 3 · Flexível (+1 Evasão)"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Ferramentas de falsificação"), trinket("Gancho de escalada")]],
@@ -135,9 +153,9 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "core",
     suggestedTraits: { agility: 0, strength: 2, finesse: 0, instinct: 1, presence: 1, knowledge: -1 },
     suggestedEquipment: [
-      weapon("Machado sagrado", "Força · Corpo-a-Corpo · d8+1 mágico · uma mão"),
-      weapon("Escudo redondo", "Força · Corpo-a-Corpo · d4 físico · Protetor"),
-      armor("Cota de malha", "Limiares 7/15 · Armadura 4 · Pesada"),
+      weapon("Machado Sagrado", "Força · Corpo-a-Corpo · d8+1 mágico · uma mão"),
+      weapon("Escudo Redondo", "Força · Corpo-a-Corpo · d4 físico · Protetor"),
+      armor("Cota de Malha", "Limiares 7/15 · Armadura 4 · Pesada"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Conjunto de oferendas"), trinket("Símbolo da divindade")]],
@@ -148,8 +166,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "core",
     suggestedTraits: { agility: 0, strength: -1, finesse: 1, instinct: 2, presence: 1, knowledge: 0 },
     suggestedEquipment: [
-      weapon("Bastão duplo", "Instinto · Distante · d6+3 mágico · duas mãos"),
-      armor("Gambesão", "Limiares 5/11 · Armadura 3 · Flexível (+1 Evasão)"),
+      weapon("Cajado Duplo", "Instinto · Distante · d6+3 mágico · duas mãos"),
+      armor("Gibão", "Limiares 5/11 · Armadura 3 · Flexível (+1 Evasão)"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Orbe sussurrante"), trinket("Relíquia de família")]],
@@ -160,8 +178,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "core",
     suggestedTraits: { agility: 2, strength: 1, finesse: 0, instinct: 1, presence: -1, knowledge: 0 },
     suggestedEquipment: [
-      weapon("Espada longa", "Agilidade · Corpo-a-Corpo · d10+3 físico"),
-      armor("Cota de malha", "Limiares 7/15 · Armadura 4 · Pesada"),
+      weapon("Espada Longa", "Agilidade · Corpo-a-Corpo · d10+3 físico"),
+      armor("Cota de Malha", "Limiares 7/15 · Armadura 4 · Pesada"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Desenho de alguém amado"), trinket("Pedra de amolar")]],
@@ -172,8 +190,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "core",
     suggestedTraits: { agility: -1, strength: 0, finesse: 0, instinct: 1, presence: 1, knowledge: 2 },
     suggestedEquipment: [
-      weapon("Cajado grande", "Conhecimento · Muito Distante · d6 mágico · Poderoso"),
-      armor("Couro", "Limiares 6/13 · Armadura 3"),
+      weapon("Cajado Grande", "Conhecimento · Muito Distante · d6 mágico · Poderoso"),
+      armor("Armadura de Couro", "Limiares 6/13 · Armadura 3"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Livro não traduzido"), trinket("Pequeno elemental inofensivo")]],
@@ -185,8 +203,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     suggestedTraits: { agility: 1, strength: -1, finesse: 2, instinct: 1, presence: 0, knowledge: 0 },
     suggestedEquipment: [
       weapon("Adaga", "Acuidade · Corpo-a-Corpo · d8+1 físico · uma mão"),
-      weapon("Besta de mão", "Acuidade · Distante · d6+1 físico"),
-      armor("Couro", "Limiares 6/13 · Armadura 3"),
+      weapon("Besta de Mão", "Acuidade · Distante · d6+1 físico"),
+      armor("Armadura de Couro", "Limiares 6/13 · Armadura 3"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Lista de nomes riscados"), trinket("Pilão com insígnia misteriosa")]],
@@ -197,8 +215,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "expansion",
     suggestedTraits: { agility: 1, strength: 1, finesse: 0, instinct: 2, presence: 0, knowledge: -1 },
     suggestedEquipment: [
-      weapon("Bastão", "Instinto · Corpo-a-Corpo · d10+3 físico · duas mãos"),
-      armor("Couro", "Limiares 6/13 · Armadura 3"),
+      weapon("Bordão", "Instinto · Corpo-a-Corpo · d10+3 físico · duas mãos"),
+      armor("Armadura de Couro", "Limiares 6/13 · Armadura 3"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Faixas de mão de um mentor"), trinket("Livro sobre um passatempo secreto")]],
@@ -210,7 +228,7 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     suggestedTraits: { agility: 1, strength: -1, finesse: 0, instinct: 1, presence: 2, knowledge: 0 },
     suggestedEquipment: [
       weapon("Cetro", "Presença · Distante · d6 físico · Versátil"),
-      armor("Couro", "Limiares 6/13 · Armadura 3"),
+      armor("Armadura de Couro", "Limiares 6/13 · Armadura 3"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Escultura que simboliza o patrono"), trinket("Anel que não pode ser removido")]],
@@ -221,8 +239,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "expansion",
     suggestedTraits: { agility: 0, strength: -1, finesse: 0, instinct: 2, presence: 1, knowledge: 1 },
     suggestedEquipment: [
-      weapon("Bastão duplo", "Instinto · Distante · d6+3 mágico · duas mãos"),
-      armor("Gambesão", "Limiares 5/11 · Armadura 3 · Flexível (+1 Evasão)"),
+      weapon("Cajado Duplo", "Instinto · Distante · d6+3 mágico · duas mãos"),
+      armor("Gibão", "Limiares 5/11 · Armadura 3 · Flexível (+1 Evasão)"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Vassoura artesanal"), trinket("Bolsa de ossos de animais")]],
@@ -233,8 +251,8 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
     source: "playtest",
     suggestedTraits: { agility: 2, strength: -1, finesse: 1, instinct: 1, presence: 0, knowledge: 0 },
     suggestedEquipment: [
-      weapon("Espada longa", "Agilidade · Corpo-a-Corpo · d10+3 físico · duas mãos"),
-      armor("Couro", "Limiares 6/13 · Armadura 3"),
+      weapon("Espada Longa", "Agilidade · Corpo-a-Corpo · d10+3 físico · duas mãos"),
+      armor("Armadura de Couro", "Limiares 6/13 · Armadura 3"),
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Agulha de aço"), trinket("Frasco com sangue de um inimigo")]],
