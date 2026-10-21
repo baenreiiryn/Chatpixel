@@ -22,6 +22,23 @@ import {
 import { parseDiceFormula, type ParsedDiceFormula } from "@/lib/dice";
 import { formatTimelineEntryDate, timelineEntrySortValue, worldDateOrdinalMinute } from "@/lib/timeline";
 import { oracleTools } from "@/lib/tools";
+import {
+  attachCraftPendingRoll,
+  awardCraftXp,
+  buildCraftRollPlan,
+  craftLevelForXp,
+  ensureCraftingState,
+  findMatchingRecipe,
+  learnCraftRecipe,
+  rejectCraftAttempt,
+  rarityCapForLevel,
+  type CraftDiscipline,
+  type CraftIngredient,
+  type CraftLearnedFrom,
+  type CraftRecipe,
+  type CraftRecipeLayout,
+  type CraftRarity,
+} from "@/lib/crafting";
 
 const WEATHER_CONDITIONS: WeatherCondition[] = [
   "clear",
@@ -77,6 +94,16 @@ export function gmInstructions(system: string) {
     "Se pendingRoll estiver preenchido no estado, a cena está aguardando essa rolagem: não solicite outra e não avance suas consequências até receber o resultado.",
     "Quando pendingRoll desaparecer e o resultado aparecer em rollHistory, continue a cena a partir daquele resultado. Você pode narrar brevemente a consequência e então pedir outra rolagem quando a sequência exigir, por exemplo ataque acertou e agora requer dano.",
     "Em Daggerheart, pedidos de Dualidade devem usar rollKind duality e uma fórmula com exatamente 2d12 para Esperança e Medo; dados auxiliares e modificadores podem ser acrescentados à mesma fórmula.",
+    "CRAFTING: quando crafting.pendingAttempt estiver em stage=review, o jogador acabou de colocar itens no grid. Avalie a combinação exata por slot e a disciplina escolhida.",
+    "Se uma combinação de crafting desconhecida não fizer sentido, use craft_reject_attempt e explique brevemente por quê. Não consuma materiais.",
+    "Se a combinação desconhecida fizer sentido como receita, primeiro registre a receita com craft_recipe_learn usando learnedFrom=discovery e fromPendingAttempt=true; escolha shaped quando a posição importar e shapeless quando só a composição importar. Depois use craft_request_roll para a receita criada.",
+    "Em receitas de Encantamento, informe baseSlot apontando o item exato que será encantado e use result.patch para descrever as alterações aplicadas a esse item-base; os demais ingredientes são reagentes.",
+    "Se a tentativa corresponder a uma receita já conhecida, use diretamente craft_request_roll com o recipeId conhecido.",
+    "Nunca invente fórmula, CD ou chance de crafting: craft_request_roll calcula tudo pelo nível, raridade e sistema. Não use request_player_roll genérico para crafting.",
+    "Não narre sucesso/falha do crafting antes da rolagem. Em falha, os materiais não são consumidos automaticamente. Em crítico, o motor eleva o produto em uma categoria de raridade.",
+    "Receitas-base Lendárias não existem: Lendário só pode surgir por crítico de uma receita Muito rara.",
+    "Quando um professor, livro ou pergaminho ensinar uma receita, use craft_recipe_learn com ingredients explícitos e learnedFrom apropriado. Um professor também pode conceder craft_award_xp quando houver treino real; livro/pergaminho não concede XP técnico automaticamente.",
+    "Para treinamento de crafting, use craft_award_xp de forma parcimoniosa: 25–50 XP para dica/técnica curta, 50–100 para aula relevante, 100–150 para instrução intensiva e até 200 apenas para treinamento excepcional.",
     "Faça alterações mecânicas antes de narrar seus efeitos quando isso for necessário.",
     "Registre em memória apenas fatos relevantes que precisem sobreviver ao contexto recente.",
     "O timeline da aba Memória é a cronologia curta e visível do jogador. Quando algo importante acontecer ou for descoberto — uma pista, encontro decisivo, missão, viagem marcante, mudança de relação ou marco da campanha — registre o acontecimento com timeline_entry_add após ele estar estabelecido.",
@@ -113,6 +140,7 @@ export function buildTurnInput(state: GameState, playerText: string) {
         campaign: state.campaign,
         character: state.character,
         inventory: state.inventory,
+        crafting: ensureCraftingState(state.crafting),
         activeQuests: state.quests.filter((quest) => quest.status === "active"),
         npcs: state.npcs,
         memories: state.memories.slice(0, 20),
@@ -142,6 +170,172 @@ export function executeGmTool(
     args = JSON.parse(rawArguments || "{}");
   } catch {
     return { state, result: { ok: false, error: "Invalid JSON arguments." } };
+  }
+
+  if (name === "craft_reject_attempt") {
+    const reason = String(args.reason || "").trim();
+    const crafting = ensureCraftingState(state.crafting);
+    if (!reason || !crafting.pendingAttempt) {
+      return { state, result: { ok: false, error: "Craft rejection requires a reason and an active attempt." } };
+    }
+    const attemptId = crafting.pendingAttempt.id;
+    return {
+      state: { ...state, crafting: rejectCraftAttempt(crafting, attemptId) },
+      result: { ok: true, attemptId, reason },
+    };
+  }
+
+  if (name === "craft_award_xp") {
+    const discipline = String(args.discipline || "") as CraftDiscipline;
+    const amount = Number(args.amount);
+    const reason = String(args.reason || "").trim();
+    if (!reason || !["mundane", "enchantment", "alchemy"].includes(discipline) || !Number.isInteger(amount)) {
+      return { state, result: { ok: false, error: "Craft XP requires a valid discipline, whole-number amount, and reason." } };
+    }
+    try {
+      const crafting = awardCraftXp(ensureCraftingState(state.crafting), discipline, amount);
+      const xp = crafting.progress[discipline].xp;
+      return {
+        state: { ...state, crafting },
+        result: { ok: true, discipline, amount, xp, level: craftLevelForXp(xp), rarityCap: rarityCapForLevel(craftLevelForXp(xp)), reason },
+      };
+    } catch (error) {
+      return { state, result: { ok: false, error: error instanceof Error ? error.message : "Invalid craft XP award." } };
+    }
+  }
+
+  if (name === "craft_recipe_learn") {
+    const crafting = ensureCraftingState(state.crafting);
+    const discipline = String(args.discipline || "") as CraftDiscipline;
+    const layout = String(args.layout || "") as CraftRecipeLayout;
+    const learnedFrom = String(args.learnedFrom || "") as CraftLearnedFrom;
+    const nameValue = String(args.name || "").trim();
+    const resultArg = args.result && typeof args.result === "object" ? args.result as Record<string, unknown> : null;
+    const fromPendingAttempt = args.fromPendingAttempt === true;
+    if (!nameValue || !["mundane", "enchantment", "alchemy"].includes(discipline)
+      || !["shaped", "shapeless"].includes(layout)
+      || !["discovery", "teacher", "book", "scroll", "other"].includes(learnedFrom)
+      || !resultArg) {
+      return { state, result: { ok: false, error: "Invalid crafting recipe metadata." } };
+    }
+    if (fromPendingAttempt && learnedFrom !== "discovery") {
+      return { state, result: { ok: false, error: "Recipes learned from the pending grid must use learnedFrom=discovery." } };
+    }
+    if (learnedFrom === "discovery" && !fromPendingAttempt) {
+      return { state, result: { ok: false, error: "Discovery recipes require fromPendingAttempt=true so the exact grid is preserved." } };
+    }
+    const rarity = String(resultArg.rarity || "") as CraftRarity;
+    if (!["common", "uncommon", "rare", "very-rare"].includes(rarity)) {
+      return { state, result: { ok: false, error: "Craft recipes must use Common through Very Rare rarity. Legendary is critical-only." } };
+    }
+    const resultName = String(resultArg.name || "").trim();
+    const resultDetail = String(resultArg.detail || "").trim();
+    const resultIcon = String(resultArg.icon || "✦").trim() || "✦";
+    const resultQuantity = Math.max(1, Math.trunc(Number(resultArg.quantity) || 1));
+    if (!resultName) return { state, result: { ok: false, error: "Craft recipe result requires a name." } };
+
+    let ingredients: CraftIngredient[] = [];
+    if (fromPendingAttempt) {
+      const pending = crafting.pendingAttempt;
+      if (!pending || pending.discipline !== discipline || pending.stage !== "review") {
+        return { state, result: { ok: false, error: "No matching craft attempt is waiting for discovery." } };
+      }
+      ingredients = structuredClone(pending.ingredients);
+    } else if (Array.isArray(args.ingredients)) {
+      ingredients = args.ingredients.map((raw) => {
+        const ingredient = raw as Record<string, unknown>;
+        return {
+          slot: Math.max(0, Math.min(8, Math.trunc(Number(ingredient.slot) || 0))),
+          ...(typeof ingredient.sourceId === "string" && ingredient.sourceId.trim() ? { sourceId: ingredient.sourceId.trim() } : {}),
+          ...(typeof ingredient.itemId === "string" && ingredient.itemId.trim() ? { itemId: ingredient.itemId.trim() } : {}),
+          itemName: String(ingredient.itemName || "").trim(),
+          quantity: Math.max(1, Math.trunc(Number(ingredient.quantity) || 1)),
+        };
+      }).filter((ingredient) => ingredient.itemName);
+    }
+    if (!ingredients.length) {
+      return { state, result: { ok: false, error: "Craft recipe requires ingredients or fromPendingAttempt=true." } };
+    }
+    const existing = crafting.recipes.find((recipe) =>
+      recipe.discipline === discipline
+      && normalizeTimelineText(recipe.name) === normalizeTimelineText(nameValue)
+      && normalizeTimelineText(recipe.result.name) === normalizeTimelineText(resultName)
+      && Boolean(findMatchingRecipe([recipe], discipline, ingredients))
+    );
+    if (existing) {
+      const nextCrafting = structuredClone(crafting);
+      if (fromPendingAttempt && nextCrafting.pendingAttempt) nextCrafting.pendingAttempt.recipeId = existing.id;
+      return { state: { ...state, crafting: nextCrafting }, result: { ok: true, duplicate: true, recipe: existing } };
+    }
+    const recipe: CraftRecipe = {
+      id: globalThis.crypto?.randomUUID?.() || `craft-recipe-${Math.random().toString(36).slice(2, 10)}`,
+      name: nameValue,
+      discipline,
+      layout,
+      ingredients,
+      ...(args.baseSlot !== undefined ? { baseSlot: Math.max(0, Math.min(8, Math.trunc(Number(args.baseSlot)))) } : {}),
+      result: {
+        ...(typeof resultArg.sourceId === "string" && resultArg.sourceId.trim() ? { sourceId: resultArg.sourceId.trim() } : {}),
+        name: resultName,
+        detail: resultDetail,
+        icon: resultIcon,
+        ...(typeof resultArg.art === "string" && resultArg.art.trim() ? { art: resultArg.art.trim() } : {}),
+        rarity: rarity as Exclude<CraftRarity, "legendary">,
+        quantity: resultQuantity,
+        ...(resultArg.patch && typeof resultArg.patch === "object" ? { patch: structuredClone(resultArg.patch as Record<string, unknown>) } : {}),
+      },
+      learnedFrom,
+      learnedAt: new Date().toISOString(),
+    };
+    try {
+      const learned = learnCraftRecipe(crafting, recipe);
+      if (fromPendingAttempt && learned.crafting.pendingAttempt) learned.crafting.pendingAttempt.recipeId = recipe.id;
+      return {
+        state: { ...state, crafting: learned.crafting },
+        result: { ok: true, recipe, learned: learned.learned, xpAwarded: learned.xpAwarded },
+      };
+    } catch (error) {
+      return { state, result: { ok: false, error: error instanceof Error ? error.message : "Invalid crafting recipe." } };
+    }
+  }
+
+  if (name === "craft_request_roll") {
+    const recipeId = String(args.recipeId || "").trim();
+    if (!recipeId) return { state, result: { ok: false, error: "Craft roll requires recipeId." } };
+    if (state.pendingRoll) {
+      return { state, result: { ok: false, waitingForPlayerRoll: true, error: "A player roll is already pending.", pendingRoll: state.pendingRoll } };
+    }
+    try {
+      const system = state.campaign.system.toLocaleLowerCase("pt-BR").includes("daggerheart") ? "daggerheart" as const : "d20" as const;
+      const planned = buildCraftRollPlan(ensureCraftingState(state.crafting), state.inventory, recipeId, system);
+      const requested = requestPlayerRoll(state, {
+        label: planned.request.label,
+        reason: planned.request.reason,
+        formula: planned.request.formula,
+        ...(planned.request.allowedDice ? { allowedDice: [...planned.request.allowedDice] as DiceType[] } : {}),
+        target: planned.request.target,
+        rollKind: planned.request.rollKind,
+      });
+      if (!requested.pendingRoll) throw new Error("Não foi possível criar a rolagem de craft.");
+      const crafting = attachCraftPendingRoll(planned.crafting, requested.pendingRoll.id);
+      const next = { ...requested, crafting };
+      return {
+        state: next,
+        result: {
+          ok: true,
+          waitingForPlayerRoll: true,
+          recipeId,
+          level: planned.plan.level,
+          rarity: planned.plan.rarity,
+          dc: planned.plan.dc,
+          successChance: planned.plan.successChance,
+          formula: planned.plan.formula,
+          pendingRoll: next.pendingRoll,
+        },
+      };
+    } catch (error) {
+      return { state, result: { ok: false, error: error instanceof Error ? error.message : "Could not prepare craft roll." } };
+    }
   }
 
   if (name === "request_player_roll") {

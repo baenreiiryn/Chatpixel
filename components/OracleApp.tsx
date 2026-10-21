@@ -4,6 +4,7 @@ import { FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "
 import {
   buildContextPacket,
   createCampaignRestartSnapshot,
+  ensureGameStateCrafting,
   ensureGameStateTimeline,
   executeCommand,
   GameState,
@@ -55,6 +56,7 @@ import {
 import DiceOverlay from "@/components/DiceOverlay";
 import DiceAppearanceSettings from "@/components/DiceAppearanceSettings";
 import CampaignTimeline from "@/components/CampaignTimeline";
+import CraftingWorkshop, { type CraftingWorkshopSlot } from "@/components/CraftingWorkshop";
 import {
   buildTimelineSynthesisPrompt,
   mergeTimelineEntries,
@@ -62,6 +64,20 @@ import {
   TIMELINE_SCHEMA_VERSION,
   upsertManualTimelineEntry,
 } from "@/lib/timeline";
+import {
+  beginCraftAttempt,
+  canCraftRarity,
+  craftLevelForXp,
+  craftSuccessChanceFor,
+  createInitialCraftingState,
+  findMatchingRecipe,
+  rejectCraftAttempt,
+  resolveCraftAttempt,
+  type CraftDiscipline,
+  type CraftIngredient,
+  type CraftRarity,
+} from "@/lib/crafting";
+import { countOccupiedCraftSlots } from "@/lib/craftingUi";
 import {
   dualityFormulaFromCommand,
   normalizeDiceAppearanceFonts,
@@ -73,7 +89,7 @@ import {
   type DieSides,
 } from "@/lib/dice";
 
-type View = "session" | "character" | "world" | "memory";
+type View = "session" | "character" | "craft" | "world" | "memory";
 type AppScreen = "home" | "campaigns" | "campaign" | "newCampaign" | "compendium" | "settings" | "diceAppearance";
 type CampaignAction = {
   type: "restart" | "delete";
@@ -836,9 +852,9 @@ export default function OracleApp() {
       if (migrated) savedCampaigns = [migrated];
     }
     const normalizedCampaigns = savedCampaigns.map((entry) => {
-      const normalizedState = ensureGameStateTimeline(
+      const normalizedState = ensureGameStateCrafting(ensureGameStateTimeline(
         ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`),
-      );
+      ));
       return normalizedState === entry.state ? entry : { ...entry, state: normalizedState };
     });
     const sorted = sortCampaigns(normalizedCampaigns);
@@ -862,9 +878,9 @@ export default function OracleApp() {
 
   useEffect(() => {
     if (!ready || !activeCampaignId) return;
-    const normalized = ensureGameStateTimeline(
+    const normalized = ensureGameStateCrafting(ensureGameStateTimeline(
       ensureCampaignTime(state, `legacy:${state.campaign.name}:${state.campaign.system}`),
-    );
+    ));
     if (normalized !== state) setState(normalized);
   }, [ready, activeCampaignId, state]);
 
@@ -1067,9 +1083,9 @@ export default function OracleApp() {
   function openCampaign(campaignId: string) {
     const entry = campaignsRef.current.find((campaign) => campaign.id === campaignId);
     if (!entry) return;
-    const normalizedState = ensureGameStateTimeline(
+    const normalizedState = ensureGameStateCrafting(ensureGameStateTimeline(
       ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`),
-    );
+    ));
     campaignEpochRef.current += 1;
     activeCampaignIdRef.current = entry.id;
     setActiveDiceRoll(null);
@@ -1226,6 +1242,7 @@ export default function OracleApp() {
         },
       },
       inventory: result.equipment,
+      crafting: createInitialCraftingState(),
       quests: [],
       npcs: result.companions.map((companion) => ({
         id: companion.id,
@@ -1529,7 +1546,14 @@ export default function OracleApp() {
       return;
     }
 
-    const next = resolvePendingRoll(current, expectedPendingRollId, {
+    const craftAttempt = current.crafting?.pendingAttempt;
+    const resolvesCraft = Boolean(
+      craftAttempt
+      && craftAttempt.stage === "awaiting-roll"
+      && craftAttempt.pendingRollId === expectedPendingRollId
+      && craftAttempt.recipeId,
+    );
+    let next = resolvePendingRoll(current, expectedPendingRollId, {
       total: result.total,
       formula: result.normalized,
       dice: result.dice.map((die) => ({
@@ -1542,6 +1566,34 @@ export default function OracleApp() {
       success: dualityCritical ? true : undefined,
       source,
     });
+    let craftNarration = "";
+    if (resolvesCraft && craftAttempt?.recipeId) {
+      const recipe = current.crafting.recipes.find((entry) => entry.id === craftAttempt.recipeId);
+      if (recipe) {
+        try {
+          const craftSystem = current.campaign.system.toLocaleLowerCase("pt-BR").includes("daggerheart")
+            ? "daggerheart" as const
+            : "d20" as const;
+          const craftDice = craftSystem === "daggerheart"
+            ? result.dice.filter((die) => die.sides === 12).map((die) => die.value).slice(0, 2)
+            : result.dice.filter((die) => die.sides === 20).map((die) => die.value).slice(0, 1);
+          const resolvedCraft = resolveCraftAttempt(current.crafting, current.inventory, recipe, {
+            system: craftSystem,
+            dice: craftDice,
+          });
+          const crafting = resolvedCraft.success
+            ? resolvedCraft.crafting
+            : rejectCraftAttempt(resolvedCraft.crafting, craftAttempt.id);
+          next = { ...next, crafting, inventory: resolvedCraft.inventory };
+          craftNarration = resolvedCraft.success
+            ? `CRAFT RESOLVIDO PELO MOTOR: SUCESSO${resolvedCraft.critical ? " CRÍTICO" : ""}. ${recipe.name} foi produzido como ${resolvedCraft.finalRarity}; ${resolvedCraft.xpAwarded} XP de ${recipe.discipline} foram concedidos. Os ingredientes já foram consumidos e o resultado já está no inventário. Narre apenas a consequência, sem repetir ferramentas.`
+            : `CRAFT RESOLVIDO PELO MOTOR: FALHA. Nenhum material foi consumido e nenhum XP foi concedido. Narre a falha sem alterar inventário ou pedir nova rolagem automaticamente.`;
+        } catch (error) {
+          next = { ...next, crafting: rejectCraftAttempt(current.crafting, craftAttempt.id) };
+          craftNarration = `A resolução do craft foi cancelada com segurança porque o estado mudou: ${error instanceof Error ? error.message : "erro de validação"}. Não consuma materiais.`;
+        }
+      }
+    }
     const withMessage: GameState = { ...next, messages: [...next.messages, rollMessage] };
     stateRef.current = withMessage;
     setState(withMessage);
@@ -1555,8 +1607,8 @@ export default function OracleApp() {
         : "SEM DESFECHO AUTOMÁTICO";
     await runGmNarration(
       withMessage,
-      `RESULTADO DA ROLAGEM SOLICITADA: ${resultLine}. Resultado contra o alvo: ${outcome}. Continue exatamente do ponto em que a cena aguardava esta rolagem.`,
-      true,
+      `RESULTADO DA ROLAGEM SOLICITADA: ${resultLine}. Resultado contra o alvo: ${outcome}. ${craftNarration} Continue exatamente do ponto em que a cena aguardava esta rolagem.`,
+      !craftNarration,
     );
   }
 
@@ -1575,6 +1627,86 @@ export default function OracleApp() {
       }
       return next;
     });
+  }
+
+  async function startCraftAttempt(discipline: CraftDiscipline, selectedSlots: CraftingWorkshopSlot[]) {
+    if (gmBusy || gmRunningRef.current || activeDiceRoll || stateRef.current.pendingRoll) return;
+    if (countOccupiedCraftSlots(selectedSlots) < 2) return;
+    if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
+      setShowConnect(true);
+      return;
+    }
+    const current = ensureGameStateCrafting(stateRef.current);
+    const ingredients: CraftIngredient[] = selectedSlots.map((slot) => ({
+      slot: slot.slot,
+      ...(slot.sourceId ? { sourceId: slot.sourceId } : {}),
+      ...(slot.itemId ? { itemId: slot.itemId } : {}),
+      itemName: slot.itemName,
+      quantity: slot.quantity,
+    }));
+    try {
+      const knownRecipe = findMatchingRecipe(current.crafting.recipes, discipline, ingredients);
+      const started = beginCraftAttempt(current.crafting, current.inventory, {
+        id: crypto.randomUUID(),
+        discipline,
+        ingredients,
+        ...(knownRecipe ? { recipeId: knownRecipe.id } : {}),
+        requestedAt: new Date().toISOString(),
+      });
+      const working: GameState = { ...current, crafting: started.crafting };
+      stateRef.current = working;
+      setState(working);
+      setView("session");
+      const exactGrid = ingredients
+        .sort((a, b) => a.slot - b.slot)
+        .map((ingredient) => `slot ${ingredient.slot + 1}: ${ingredient.itemName} ×${ingredient.quantity}`)
+        .join("; ");
+      const craftSystem = current.campaign.system.toLocaleLowerCase("pt-BR").includes("daggerheart") ? "daggerheart" as const : "d20" as const;
+      const craftLevel = craftLevelForXp(current.crafting.progress[discipline].xp);
+      const rarityLabels: Record<CraftRarity, string> = {
+        common: "Comum",
+        uncommon: "Incomum",
+        rare: "Raro",
+        "very-rare": "Muito raro",
+        legendary: "Lendário",
+      };
+      const chanceTable = (["common", "uncommon", "rare", "very-rare"] as CraftRarity[])
+        .filter((rarity) => canCraftRarity(craftLevel, rarity))
+        .map((rarity) => {
+          const profile = craftSuccessChanceFor(craftLevel, rarity, craftSystem);
+          return `${rarityLabels[rarity]}: ${profile.successChance}% (${profile.formula}, CD ${profile.dc})`;
+        })
+        .join("; ");
+      await runGmNarration(
+        working,
+        [
+          "SOLICITAÇÃO DE CRAFTING DO JOGADOR.",
+          `Disciplina: ${discipline}. Nível de craft: ${craftLevel}.`,
+          `Grid exato: ${exactGrid}.`,
+          `Chances de sucesso permitidas pelo nível atual: ${chanceTable}.`,
+          knownRecipe
+            ? `A combinação corresponde à receita conhecida ${knownRecipe.name} (recipeId=${knownRecipe.id}). Valide o estado e use craft_request_roll.`
+            : "A combinação não corresponde a uma receita conhecida. Avalie se ela faz sentido. Se fizer, registre a descoberta com craft_recipe_learn usando fromPendingAttempt=true e depois use craft_request_roll. Se não fizer, use craft_reject_attempt.",
+          "Não narre sucesso ou falha antes de a rolagem ser resolvida.",
+        ].join("\n"),
+        true,
+      );
+      const afterNarration = stateRef.current;
+      if (
+        afterNarration.crafting.pendingAttempt?.id === started.attempt.id
+        && afterNarration.crafting.pendingAttempt.stage === "review"
+        && !afterNarration.pendingRoll
+      ) {
+        const unlocked = {
+          ...afterNarration,
+          crafting: rejectCraftAttempt(afterNarration.crafting, started.attempt.id),
+        };
+        stateRef.current = unlocked;
+        setState(unlocked);
+      }
+    } catch (error) {
+      setGmError(error instanceof Error ? error.message : "Não foi possível iniciar o crafting.");
+    }
   }
 
   async function runGmNarration(working: GameState, text: string, allowTools = true) {
@@ -1729,6 +1861,9 @@ export default function OracleApp() {
       setGmError(message);
       setState((current) => ({
         ...current,
+        ...(current.crafting.pendingAttempt?.stage === "review" && !current.pendingRoll
+          ? { crafting: rejectCraftAttempt(current.crafting, current.crafting.pendingAttempt.id) }
+          : {}),
         messages: [
           ...current.messages,
           { id: crypto.randomUUID(), role: "system", text: `Mestre IA indisponível: ${message}`, createdAt: new Date().toISOString(), campaignMinute: current.time.campaignMinute },
@@ -2159,6 +2294,7 @@ export default function OracleApp() {
         {([
           ["session", "✦", "Sessão"],
           ["character", "◇", "Ficha"],
+          ["craft", "⚒", "Craft"],
           ["world", "⌘", "Mundo"],
           ["memory", "◉", "Memória"],
         ] as const).map(([id, icon, label]) => (
@@ -2170,6 +2306,7 @@ export default function OracleApp() {
         <aside className="rail">
           <button className={view === "session" ? "active" : ""} onClick={() => setView("session")}><b>✦</b><span>Sessão</span></button>
           <button className={view === "character" ? "active" : ""} onClick={() => setView("character")}><b>◇</b><span>Personagem</span></button>
+          <button className={view === "craft" ? "active" : ""} onClick={() => setView("craft")}><b>⚒</b><span>Craft</span></button>
           <button className={view === "world" ? "active" : ""} onClick={() => setView("world")}><b>⌘</b><span>Mundo</span></button>
           <button className={view === "memory" ? "active" : ""} onClick={() => setView("memory")}><b>◉</b><span>Memória</span></button>
           <div className="railBottom"><button onClick={() => setShowSync(true)}><b>⚙</b><span>Configurar</span></button></div>
@@ -2506,6 +2643,29 @@ export default function OracleApp() {
                 })}
               </div>
             </section>
+          )}
+
+          {view === "craft" && (
+            <CraftingWorkshop
+              crafting={state.crafting}
+              inventory={state.inventory}
+              busy={gmBusy}
+              disabled={Boolean(activeDiceRoll || state.pendingRoll)}
+              statusText={state.crafting.pendingAttempt?.stage === "awaiting-roll"
+                ? "Aguardando a rolagem de crafting."
+                : state.crafting.pendingAttempt
+                  ? "O Mestre está avaliando a combinação."
+                  : undefined}
+              onCraft={startCraftAttempt}
+              onCancelAttempt={() => {
+                const current = stateRef.current;
+                const attempt = current.crafting.pendingAttempt;
+                if (!attempt || attempt.stage !== "review" || gmBusy || current.pendingRoll) return;
+                const next = { ...current, crafting: rejectCraftAttempt(current.crafting, attempt.id) };
+                stateRef.current = next;
+                setState(next);
+              }}
+            />
           )}
 
           {view === "world" && (

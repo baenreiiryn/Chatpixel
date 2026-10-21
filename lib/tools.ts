@@ -196,6 +196,96 @@ export const oracleTools: OracleTool[] = [
     }
   },
   {
+    name: "craft_recipe_learn",
+    description: "Ensina ou registra UMA receita de crafting para o personagem. Use fromPendingAttempt=true quando a receita foi descoberta pela combinação atualmente no grid; para professor/livro/pergaminho forneça ingredients explicitamente. Não crie receitas-base Lendárias: Lendário só pode surgir por crítico.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        name: { type: "string", minLength: 1, maxLength: 80 },
+        discipline: { type: "string", enum: ["mundane", "enchantment", "alchemy"] },
+        layout: { type: "string", enum: ["shaped", "shapeless"] },
+        learnedFrom: { type: "string", enum: ["discovery", "teacher", "book", "scroll", "other"] },
+        fromPendingAttempt: { type: "boolean" },
+        baseSlot: { type: "integer", minimum: 0, maximum: 8 },
+        ingredients: {
+          type: "array",
+          maxItems: 9,
+          items: {
+            type: "object",
+            properties: {
+              slot: { type: "integer", minimum: 0, maximum: 8 },
+              sourceId: { type: "string" },
+              itemId: { type: "string" },
+              itemName: { type: "string", minLength: 1 },
+              quantity: { type: "integer", minimum: 1 },
+            },
+            required: ["slot", "itemName", "quantity"],
+            additionalProperties: false,
+          },
+        },
+        result: {
+          type: "object",
+          properties: {
+            sourceId: { type: "string" },
+            name: { type: "string", minLength: 1 },
+            detail: { type: "string" },
+            icon: { type: "string" },
+            art: { type: "string" },
+            rarity: { type: "string", enum: ["common", "uncommon", "rare", "very-rare"] },
+            quantity: { type: "integer", minimum: 1, maximum: 99 },
+            patch: {
+              type: "object",
+              description: "Principalmente para Encantamentos: alterações explícitas a aplicar ao item-base (por exemplo detail, name, icon, art ou campos de efeito). id, sourceId, qty, rarity e crafted são protegidos pelo motor e não podem ser sobrescritos."
+            },
+          },
+          required: ["name", "detail", "icon", "rarity", "quantity"],
+          additionalProperties: false,
+        },
+      },
+      required: ["name", "discipline", "layout", "learnedFrom", "result"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "craft_request_roll",
+    description: "Solicita a rolagem da tentativa de crafting atual. O Oracle calcula automaticamente fórmula, CD e chance pelo nível e raridade; nunca invente esses números manualmente.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        recipeId: { type: "string", minLength: 1 },
+        reason: { type: "string" },
+      },
+      required: ["recipeId"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "craft_reject_attempt",
+    description: "Rejeita a combinação desconhecida atualmente no grid quando ela não forma uma receita coerente. Nenhum material é consumido.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        reason: { type: "string", minLength: 1 },
+      },
+      required: ["reason"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "craft_award_xp",
+    description: "Concede experiência em uma disciplina de crafting quando professor, treino ou instrução narrativa justificar. Máximo de 200 XP por chamada.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        discipline: { type: "string", enum: ["mundane", "enchantment", "alchemy"] },
+        amount: { type: "integer", minimum: 1, maximum: 200 },
+        reason: { type: "string", minLength: 1 },
+      },
+      required: ["discipline", "amount", "reason"],
+      additionalProperties: false,
+    },
+  },
+  {
     name: "memory_search",
     description: "Busca fatos, eventos e segredos relevantes da campanha persistida no OracleRPG.",
     inputSchema: {

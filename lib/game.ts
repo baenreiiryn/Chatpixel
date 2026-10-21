@@ -4,6 +4,12 @@ import {
   createDemoCampaignTimeState,
 } from "@/lib/campaignTime";
 import type { CampaignTimeState } from "@/lib/campaignTime";
+import {
+  createInitialCraftingState,
+  ensureCraftingState,
+  type CraftingState,
+  type CraftRarity,
+} from "@/lib/crafting";
 
 export type Actor = "player" | "gm-ai";
 
@@ -74,6 +80,10 @@ export type InventoryItem = {
   qty: number;
   detail: string;
   icon: string;
+  sourceId?: string;
+  rarity?: CraftRarity;
+  art?: string;
+  crafted?: boolean;
 };
 
 export type CharacterTraitName =
@@ -276,6 +286,7 @@ export type CampaignRestartSnapshot = {
   time: CampaignTimeState;
   character: CharacterState;
   inventory: InventoryItem[];
+  crafting: CraftingState;
   quests: Quest[];
   npcs: Npc[];
   memories: Memory[];
@@ -291,6 +302,7 @@ export type GameState = {
   time: CampaignTimeState;
   character: CharacterState;
   inventory: InventoryItem[];
+  crafting: CraftingState;
   quests: Quest[];
   npcs: Npc[];
   memories: Memory[];
@@ -321,6 +333,7 @@ export function createCampaignRestartSnapshot(state: GameState): CampaignRestart
     time: structuredClone(state.time ?? createCampaignTimeState({ seed: `campaign:${state.campaign.name}` })),
     character: cloneWithoutEmbeddedImages(state.character),
     inventory: structuredClone(state.inventory),
+    crafting: structuredClone(ensureCraftingState(state.crafting)),
     quests: structuredClone(state.quests),
     npcs: structuredClone(state.npcs),
     memories: structuredClone(state.memories),
@@ -328,6 +341,13 @@ export function createCampaignRestartSnapshot(state: GameState): CampaignRestart
     timelineVersion: state.timelineVersion,
     messages: structuredClone(state.messages),
   };
+}
+
+export function ensureGameStateCrafting(state: GameState): GameState {
+  const current = (state as GameState & { crafting?: CraftingState }).crafting;
+  const crafting = ensureCraftingState(current);
+  if (current === crafting) return state;
+  return { ...state, crafting };
 }
 
 const TIMELINE_SCHEMA_VERSION = 2;
@@ -457,6 +477,7 @@ export function inferLegacyRestartSnapshot(state: GameState): CampaignRestartSna
     time: structuredClone(state.time ?? createCampaignTimeState({ seed: `legacy:${state.campaign.name}` })),
     character,
     inventory,
+    crafting: createInitialCraftingState(),
     quests: [],
     npcs: structuredClone(npcs),
     memories: structuredClone(creationMemories),
@@ -483,6 +504,7 @@ export function restartCampaignFromSnapshot(state: GameState): GameState {
     time: structuredClone(snapshot.time ?? state.time ?? createCampaignTimeState({ seed: `legacy:${state.campaign.name}` })),
     character,
     inventory: structuredClone(snapshot.inventory),
+    crafting: structuredClone(ensureCraftingState(snapshot.crafting)),
     quests: structuredClone(snapshot.quests),
     npcs: structuredClone(snapshot.npcs),
     memories: structuredClone(snapshot.memories),
@@ -536,6 +558,7 @@ export const initialState: GameState = {
     { id: "healing", name: "Poção Rubra", qty: 2, detail: "Recuperação", icon: "◒" },
     { id: "rope", name: "Corda de seda", qty: 1, detail: "15 metros", icon: "⌁" },
   ],
+  crafting: createInitialCraftingState(),
   quests: [
     { id: "heart", title: "O Coração de Cinzas", status: "active", stage: "Encontre a porta sob o santuário", acceptedAtCampaignMinute: demoMinute - 3 * MINUTES_PER_DAY },
     { id: "arven", title: "A Promessa de Arven", status: "active", stage: "Recupere o mapa antigo", acceptedAtCampaignMinute: demoMinute - MINUTES_PER_DAY },
@@ -730,6 +753,7 @@ export function buildContextPacket(state: GameState) {
     campaign: state.campaign,
     time: state.time,
     character: state.character,
+    crafting: ensureCraftingState(state.crafting),
     activeQuests: state.quests.filter((quest) => quest.status === "active"),
     presentNpcs: state.npcs.filter((npc) => npc.location === "Santuário soterrado"),
     relevantMemories: state.memories.slice(0, 8),
