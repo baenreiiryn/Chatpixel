@@ -37,9 +37,11 @@ test("importer links every existing subclass feature to its subclass and progres
   expectFeature("Elemental Origin", "Elementalist", "foundation");
   expectFeature("Conjure Shield", "School Of War", "specialization");
   expectFeature("Have No Fear", "School Of War", "mastery");
-  expectFeature("Chasing Death", "Order of the Ghost Slayer", "foundation");
-  expectFeature("Veilwalker", "Order of the Ghost Slayer", "specialization");
-  expectFeature("Spectral Form", "Order of the Ghost Slayer", "mastery");
+  expectFeature("Shadowed Grit", "Order of the Specter", "foundation");
+  expectFeature("Veilwalker", "Order of the Specter", "foundation");
+  expectFeature("Veilstalker", "Order of the Specter", "specialization");
+  expectFeature("Spectral Form", "Order of the Specter", "mastery");
+  expectFeature("Horror Honed", "Order of the Specter", "mastery");
   expectFeature("Favored Weapon", "Pact of the Wrathful", "foundation");
   expectFeature("Menacing Reach", "Pact of the Wrathful", "specialization");
   expectFeature("Divine Ire", "Pact of the Wrathful", "mastery");

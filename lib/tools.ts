@@ -60,8 +60,31 @@ export const oracleTools: OracleTool[] = [
     }
   },
   {
+    name: "campaign_milestone_level_up",
+    description: "Declara que a campanha de Daggerheart alcançou um milestone narrativo que concede exatamente um nível. Cria um level-up pendente para o jogador escolher os dois avanços e a carta de domínio; não use XP de crafting nem qualquer XP genérico para subir o personagem.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        reason: {
+          type: "string",
+          minLength: 1,
+          maxLength: 300,
+          description: "Motivo narrativo concreto do milestone alcançado.",
+        },
+        title: {
+          type: "string",
+          minLength: 1,
+          maxLength: 120,
+          description: "Título curto opcional do milestone para histórico da campanha.",
+        },
+      },
+      required: ["reason"],
+      additionalProperties: false,
+    },
+  },
+  {
     name: "character_adjust_resource",
-    description: "Ajusta um recurso mecânico do personagem usando o command bus do OracleRPG.",
+    description: "Ajusta um recurso mecânico do personagem usando o command bus do OracleRPG. Para hp, o valor representa Pontos de Vida MARCADOS: amount positivo marca dano e amount negativo limpa dano; 0 significa intacto e maxHp dispara o movimento de morte.",
     inputSchema: {
       type: "object",
       properties: {
@@ -70,6 +93,58 @@ export const oracleTools: OracleTool[] = [
         reason: { type: "string" }
       },
       required: ["resource", "amount", "reason"],
+      additionalProperties: false
+    }
+  },
+  {
+    name: "character_tracker_set",
+    description: "Atualiza um tracker persistente de classe, subclasse, domínio ou habilidade. Use sempre que a regra/narração gastar, ganhar, ativar ou alterar um contador/dado exibido na ficha ou acima do chat.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        trackerId: { type: "string", minLength: 1 },
+        value: { type: "integer" },
+        mode: { type: "string", enum: ["set", "adjust"] },
+        dieIndex: { type: "integer", minimum: 0 },
+        reason: { type: "string", minLength: 1 }
+      },
+      required: ["trackerId", "value", "mode", "reason"],
+      additionalProperties: false
+    }
+  },
+  {
+    name: "character_transformation_set",
+    description: "Ativa ou encerra uma transformação temporária do personagem sem sobrescrever os atributos-base. Use especialmente para Forma de Fera do Druida; ao encerrar, a ficha volta automaticamente aos valores normais.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        active: { type: "boolean" },
+        kind: { type: "string", enum: ["beastform", "other"] },
+        name: { type: "string" },
+        evasionBonus: { type: "integer" },
+        agility: { type: "integer" },
+        strength: { type: "integer" },
+        finesse: { type: "integer" },
+        instinct: { type: "integer" },
+        presence: { type: "integer" },
+        knowledge: { type: "integer" },
+        notes: { type: "string" },
+        reason: { type: "string", minLength: 1 }
+      },
+      required: ["active", "reason"],
+      additionalProperties: false
+    }
+  },
+  {
+    name: "animal_companion_adjust_stress",
+    description: "Marca ou limpa Fadiga do companheiro animal do Patrulheiro. Valores positivos marcam Fadiga; valores negativos limpam.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        amount: { type: "integer" },
+        reason: { type: "string", minLength: 1 }
+      },
+      required: ["amount", "reason"],
       additionalProperties: false
     }
   },

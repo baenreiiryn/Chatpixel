@@ -247,7 +247,7 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
   },
   "Blood Hunter": {
     id: "Blood Hunter",
-    domains: ["Blade", "Blood"],
+    domains: ["Blood", "Bone"],
     source: "playtest",
     suggestedTraits: { agility: 2, strength: -1, finesse: 1, instinct: 1, presence: 0, knowledge: 0 },
     suggestedEquipment: [
@@ -256,6 +256,22 @@ export const CLASS_CONFIG: Record<string, ClassCreationConfig> = {
       ...commonPack,
     ],
     equipmentChoices: [[trinket("Agulha de aço"), trinket("Frasco com sangue de um inimigo")]],
+  },
+  Summoner: {
+    id: "Summoner",
+    domains: ["Blood", "Splendor"],
+    source: "playtest",
+    suggestedTraits: { agility: 0, strength: -1, finesse: 1, instinct: 1, presence: 0, knowledge: 2 },
+    suggestedEquipment: [
+      weapon("Cajado Curto", "Conhecimento · Próximo · d8+1 mágico · uma mão"),
+      armor("Armadura de Couro", "Limiares 6/13 · Armadura 3"),
+      trinket("Corda de 15 Metros"),
+      ...commonPack.filter((item) => item.name !== "Corda"),
+    ],
+    equipmentChoices: [[
+      trinket("Espírito Inofensivo Preso em uma Garrafa de Vidro"),
+      trinket("Par de Moedas Misteriosas"),
+    ]],
   },
 };
 

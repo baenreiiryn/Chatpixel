@@ -41,6 +41,7 @@ export default function CompendiumArt({
 
   const imageClassName = [
     className,
+    entry?.type === "class" ? "classIconArt" : "",
     entry?.type === "classFeature" ? "classFeatureIconArt" : "",
   ].filter(Boolean).join(" ");
 

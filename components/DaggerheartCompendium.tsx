@@ -93,6 +93,7 @@ function EntryCard({ entry, onOpen }: { entry: CompendiumEntry; onOpen: () => vo
           <span>{entryTypeLabel(entry.type)}</span>
           {entry.type === "subclassFeature" && entry.tier && <em>{subclassFeatureTierLabel(entry.tier)}</em>}
           {entry.source === "expansion" && <em>Expansão</em>}
+          {entry.source === "void-unofficial" && <em>The Void</em>}
         </div>
         <h3>{entry.name}</h3>
         <p>{shortDescription(entry.description || entry.motivesAndTactics || "Sem descrição.")}</p>
@@ -134,7 +135,7 @@ function EntryDetail({
           <div className="compDetailMeta">
             <span>{entryTypeLabel(entry.type)}</span>
             {entry.type === "subclassFeature" && entry.tier && <i>{subclassFeatureTierLabel(entry.tier)}</i>}
-            <i>{entry.source === "expansion" ? "Conteúdo de expansão" : entry.source === "srd2" ? "SRD 2.0" : entry.source === "srd" ? "SRD" : "Daggerheart"}</i>
+            <i>{entry.source === "expansion" ? "Conteúdo de expansão" : entry.source === "void-unofficial" ? "The Void · conteúdo não oficial" : entry.source === "srd2" ? "SRD 2.0" : entry.source === "srd" ? "SRD" : "Daggerheart"}</i>
             {entry.artSource?.includes("Foundryborne/daggerheart") && <i>Arte de domínio · Foundryborne · DPCGL</i>}
           </div>
           <h2>{entry.name}</h2>

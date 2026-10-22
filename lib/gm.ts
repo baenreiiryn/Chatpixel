@@ -22,6 +22,7 @@ import {
 import { parseDiceFormula, type ParsedDiceFormula } from "@/lib/dice";
 import { formatTimelineEntryDate, timelineEntrySortValue, worldDateOrdinalMinute } from "@/lib/timeline";
 import { oracleTools } from "@/lib/tools";
+import { triggerCampaignMilestoneLevelUp } from "@/lib/daggerheartAdvancement";
 import {
   attachCraftPendingRoll,
   awardCraftXp,
@@ -91,6 +92,12 @@ export function gmInstructions(system: string) {
     "Quando o grupo aceitar uma nova missão, registre-a com quest_add; se houver prazo, informe deadlineMinutes para que o Oracle crie o prazo no calendário automaticamente.",
     "Para eventos relativos ao momento atual, prefira startsInMinutes e durationMinutes em vez de calcular datas manualmente.",
     "Não invente valores mecânicos que já estejam no contexto.",
+    "PONTOS DE VIDA EM DAGGERHEART: character.hp representa espaços de PV MARCADOS, exatamente como Fadiga marcada. 0 PV marcados significa personagem intacto; maxHp PV marcados dispara o movimento de morte. Em character_adjust_resource, amount positivo em hp MARCA dano e amount negativo LIMPA dano. Nunca some PV para representar cura.",
+    "TRACKERS: se uma característica, subclasse ou carta possuir contador/dado persistente, use character_tracker_set imediatamente quando a ação ou regra gastar, ganhar, ativar ou alterar esse recurso. O tracker do OracleRPG é a fonte da verdade; não deixe a alteração apenas na narração.",
+    "AVANÇO EM DAGGERHEART: níveis são concedidos somente por milestone narrativo, nunca por XP. Quando decidir que o grupo alcançou um milestone que concede nível, use campaign_milestone_level_up uma única vez; a ferramenta cria o level-up pendente e a interface coleta os avanços do jogador antes de alterar o nível.",
+    "FORMA DE FERA E OUTRAS TRANSFORMAÇÕES: ao Druida entrar em Forma de Fera, use character_transformation_set com os modificadores/atributos da forma. Ao sair da forma, chame a mesma ferramenta com active=false. Nunca sobrescreva permanentemente os atributos-base do personagem para representar uma forma temporária.",
+    "COMPANHEIRO ANIMAL: quando o companheiro do Patrulheiro sofrer ou limpar Fadiga, atualize-a com animal_companion_adjust_stress.",
+    "MORTE: quando todos os PV estiverem marcados, não escolha um movimento de morte pelo jogador e não contorne a interface do OracleRPG. O jogador escolhe Evitar a Morte, Glória Final ou Arriscar Tudo. Se o estado indicar Glória Final, trate a próxima ação declarada do personagem como um crítico automático, conclua sua consequência e então encerre a vida do personagem.",
     "Quando o desfecho depender de uma rolagem do jogador, use request_player_roll. Nunca role pelo jogador nem invente o resultado.",
     "Ao chamar request_player_roll, encerre a resolução naquele ponto e aguarde o jogador fornecer o resultado. Não narre sucesso, falha, dano ou consequência da rolagem no mesmo turno.",
     "Se pendingRoll estiver preenchido no estado, a cena está aguardando essa rolagem: não solicite outra e não avance suas consequências até receber o resultado.",
@@ -175,6 +182,8 @@ export function buildTurnInput(state: GameState, playerText: string) {
         recentDialogue: recent,
         pendingRoll: state.pendingRoll ?? null,
         rollHistory: (state.rollHistory ?? []).slice(-12),
+        milestones: (state.milestones ?? []).slice(-12),
+        pendingLevelUp: state.pendingLevelUp ?? null,
       }),
       "",
       `MENSAGEM DO JOGADOR: ${playerText}`,
@@ -209,6 +218,12 @@ export function executeGmTool(
       sceneVisual: undefined,
     };
     return { state: next, result: { ok: true, scene, reason, imageRefreshRequired: true } };
+  }
+
+  if (name === "campaign_milestone_level_up") {
+    const reason = String(args.reason || "").trim();
+    const title = String(args.title || "").trim();
+    return triggerCampaignMilestoneLevelUp(state, reason, title || undefined);
   }
 
   if (name === "craft_reject_attempt") {
@@ -478,6 +493,64 @@ export function executeGmTool(
       "gm-ai",
     );
     return { state: next, result: { ok: true, character: next.character } };
+  }
+
+  if (name === "character_tracker_set") {
+    const trackerId = String(args.trackerId || "").trim();
+    const value = Number(args.value);
+    const mode = args.mode === "adjust" ? "adjust" : "set";
+    const dieIndex = args.dieIndex === undefined ? undefined : Number(args.dieIndex);
+    const tracker = state.character.daggerheart?.trackers?.find((entry) => entry.id === trackerId);
+    if (!tracker || !Number.isInteger(value) || (dieIndex !== undefined && (!Number.isInteger(dieIndex) || dieIndex < 0))) {
+      return { state, result: { ok: false, error: "Unknown tracker or invalid tracker value." } };
+    }
+    const next = executeCommand(
+      state,
+      { type: "tracker", trackerId, value, mode, ...(dieIndex !== undefined ? { dieIndex } : {}) },
+      "gm-ai",
+    );
+    return {
+      state: next,
+      result: { ok: true, tracker: next.character.daggerheart?.trackers?.find((entry) => entry.id === trackerId) },
+    };
+  }
+
+  if (name === "character_transformation_set") {
+    const active = Boolean(args.active);
+    if (!active) {
+      const next = executeCommand(state, { type: "transformation", transformation: undefined }, "gm-ai");
+      return { state: next, result: { ok: true, active: false } };
+    }
+    const nameValue = String(args.name || "Forma temporária").trim().slice(0, 100) || "Forma temporária";
+    const traitOverrides: Record<string, number> = {};
+    for (const trait of ["agility", "strength", "finesse", "instinct", "presence", "knowledge"] as const) {
+      const raw = args[trait];
+      if (raw !== undefined && Number.isFinite(Number(raw))) traitOverrides[trait] = Number(raw);
+    }
+    const evasionBonus = args.evasionBonus === undefined ? undefined : Number(args.evasionBonus);
+    const next = executeCommand(state, {
+      type: "transformation",
+      transformation: {
+        kind: args.kind === "beastform" ? "beastform" : "other",
+        name: nameValue,
+        ...(Number.isFinite(evasionBonus) ? { evasionBonus } : {}),
+        ...(Object.keys(traitOverrides).length ? { traitOverrides } : {}),
+        ...(String(args.notes || "").trim() ? { notes: String(args.notes).trim().slice(0, 400) } : {}),
+      },
+    }, "gm-ai");
+    return { state: next, result: { ok: true, transformation: next.character.daggerheart?.transformation } };
+  }
+
+  if (name === "animal_companion_adjust_stress") {
+    const amount = Number(args.amount);
+    const companion = state.character.daggerheart?.animalCompanion;
+    if (!companion || !Number.isInteger(amount)) {
+      return { state, result: { ok: false, error: "No animal companion or invalid stress adjustment." } };
+    }
+    const next = structuredClone(state) as GameState;
+    const current = next.character.daggerheart!.animalCompanion!;
+    current.stress = Math.max(0, Math.min(current.maxStress, current.stress + amount));
+    return { state: next, result: { ok: true, animalCompanion: current } };
   }
 
   if (name === "inventory_adjust") {

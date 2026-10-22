@@ -10,6 +10,22 @@ import {
   type CraftingState,
   type CraftRarity,
 } from "@/lib/crafting";
+import {
+  baseProficiencyForLevel,
+  classStatsFor,
+  daggerheartTierForLevel,
+  equipmentEvasionBonus,
+  initialTrackersForCharacter,
+  markedHitPointsAfterLegacyMigration,
+  thresholdsFromEquipment,
+} from "@/lib/daggerheartCharacter";
+import {
+  ensureDaggerheartProgressionState,
+  reconcileDaggerheartAdvancementTrackers,
+  type CampaignMilestone,
+  type DaggerheartProgressionState,
+  type PendingDaggerheartLevelUp,
+} from "@/lib/daggerheartAdvancement";
 
 export type Actor = "player" | "gm-ai";
 
@@ -32,6 +48,7 @@ export type PlayerRollRequest = {
   allowedDice?: DiceType[];
   target?: number;
   rollKind?: RollKind;
+  purpose?: "death-avoid" | "death-risk" | string;
 };
 
 export type PendingPlayerRoll = PlayerRollRequest & {
@@ -125,11 +142,53 @@ export type CharacterConnection = {
   text: string;
 };
 
+export type DaggerheartTier = 1 | 2 | 3 | 4;
+
+export type CharacterTracker = {
+  id: string;
+  name: string;
+  kind: "counter" | "die" | "dicePool";
+  value: number;
+  min: number;
+  max: number;
+  dieSides?: number;
+  dice?: number[];
+  active?: boolean;
+  description?: string;
+  source: {
+    type: "classFeature" | "subclassFeature" | "domainCard" | "custom";
+    id: string;
+  };
+};
+
+export type CharacterTransformation = {
+  kind: "beastform" | "other";
+  name: string;
+  evasionBonus?: number;
+  traitOverrides?: Partial<Record<CharacterTraitName, number>>;
+  notes?: string;
+};
+
+export type CharacterDeathState = {
+  status: "choice" | "avoiding" | "risking" | "risk-recovery" | "last-glory" | "resolved" | "dead";
+  move?: "avoid" | "glory" | "risk";
+  recoveryPoints?: number;
+  resolvedAt?: string;
+};
+
 export type AnimalCompanion = {
   name: string;
   kind?: string;
   image?: string;
   appearance?: string;
+  evasion: number;
+  stress: number;
+  maxStress: number;
+  damageDie: DiceType;
+  range: string;
+  damageType: "physical" | "magic";
+  experiences: CharacterExperience[];
+  training?: string[];
 };
 
 export type DaggerheartCharacterData = {
@@ -148,6 +207,8 @@ export type DaggerheartCharacterData = {
   pronouns?: string;
   image?: string;
   animalCompanion?: AnimalCompanion;
+  trackers?: CharacterTracker[];
+  transformation?: CharacterTransformation;
 };
 
 export type Quest = {
@@ -277,6 +338,13 @@ export type CharacterState = {
   name: string;
   archetype: string;
   level: number;
+  tier: DaggerheartTier;
+  evasion: number;
+  damageThresholds: {
+    major: number;
+    severe: number;
+  };
+  proficiency: number;
   hp: number;
   maxHp: number;
   hope: number;
@@ -286,8 +354,11 @@ export type CharacterState = {
   armor: number;
   maxArmor: number;
   conditions: string[];
+  scars?: number;
+  death?: CharacterDeathState;
   appearance?: string;
   daggerheart?: DaggerheartCharacterData;
+  progression?: DaggerheartProgressionState;
 };
 
 export type CampaignRestartSnapshot = {
@@ -307,6 +378,7 @@ export type CampaignRestartSnapshot = {
 };
 
 export type GameState = {
+  resourceModelVersion?: number;
   campaign: CampaignCore & {
     restartSnapshot?: CampaignRestartSnapshot;
   };
@@ -324,6 +396,8 @@ export type GameState = {
   events: EventRecord[];
   pendingRoll?: PendingPlayerRoll;
   rollHistory?: RollResultRecord[];
+  milestones?: CampaignMilestone[];
+  pendingLevelUp?: PendingDaggerheartLevelUp;
 };
 
 function cloneWithoutEmbeddedImages(character: CharacterState): CharacterState {
@@ -361,6 +435,82 @@ export function ensureGameStateCrafting(state: GameState): GameState {
   const crafting = ensureCraftingState(current);
   if (current === crafting) return state;
   return { ...state, crafting };
+}
+
+const RESOURCE_MODEL_VERSION = 2;
+
+export function ensureGameStateCharacterModel(state: GameState): GameState {
+  const sourceClass = state.character.daggerheart?.class?.name || state.character.archetype.split("·")[0]?.trim() || "";
+  const level = Math.max(1, Math.min(10, Math.trunc(state.character.level || 1)));
+  const stats = classStatsFor(sourceClass);
+  const legacyHp = (state.resourceModelVersion ?? 0) < RESOURCE_MODEL_VERSION;
+  const currentTrackers = state.character.daggerheart?.trackers;
+  const progression = state.character.daggerheart
+    ? ensureDaggerheartProgressionState(state.character.progression)
+    : state.character.progression;
+  const character: CharacterState = {
+    ...state.character,
+    level,
+    tier: daggerheartTierForLevel(level),
+    evasion: Number.isFinite(state.character.evasion) ? state.character.evasion : stats.evasion + equipmentEvasionBonus(state.inventory),
+    damageThresholds: state.character.damageThresholds && Number.isFinite(state.character.damageThresholds.major) && Number.isFinite(state.character.damageThresholds.severe)
+      ? state.character.damageThresholds
+      : thresholdsFromEquipment(state.inventory, level),
+    proficiency: Number.isFinite(state.character.proficiency) && state.character.proficiency > 0 ? state.character.proficiency : baseProficiencyForLevel(level),
+    hp: legacyHp
+      ? markedHitPointsAfterLegacyMigration(state.character.hp, state.character.maxHp)
+      : Math.max(0, Math.min(state.character.maxHp, state.character.hp)),
+    maxHp: Number.isFinite(state.character.maxHp) && state.character.maxHp > 0 ? state.character.maxHp : stats.hitPoints,
+    daggerheart: state.character.daggerheart,
+    progression,
+  };
+  if (character.daggerheart?.animalCompanion) {
+    const companion = character.daggerheart.animalCompanion;
+    const nextCompanion: AnimalCompanion = {
+      ...companion,
+      evasion: Number.isFinite(companion.evasion) ? companion.evasion : 10,
+      stress: Number.isFinite(companion.stress) ? companion.stress : 0,
+      maxStress: Number.isFinite(companion.maxStress) && companion.maxStress > 0 ? companion.maxStress : 3,
+      damageDie: companion.damageDie || "d6",
+      range: companion.range || "Corpo a Corpo",
+      damageType: companion.damageType || "physical",
+      experiences: Array.isArray(companion.experiences) ? companion.experiences : [],
+      training: Array.isArray(companion.training) ? companion.training : [],
+    };
+    const companionChanged = companion.evasion !== nextCompanion.evasion
+      || companion.stress !== nextCompanion.stress
+      || companion.maxStress !== nextCompanion.maxStress
+      || companion.damageDie !== nextCompanion.damageDie
+      || companion.range !== nextCompanion.range
+      || companion.damageType !== nextCompanion.damageType
+      || companion.experiences !== nextCompanion.experiences
+      || companion.training !== nextCompanion.training;
+    if (companionChanged) {
+      character.daggerheart = { ...character.daggerheart, animalCompanion: nextCompanion };
+    }
+  }
+  const trackers = character.daggerheart
+    ? reconcileDaggerheartAdvancementTrackers(character)
+    : currentTrackers;
+  if (character.daggerheart && trackers !== currentTrackers) {
+    character.daggerheart = { ...character.daggerheart, trackers };
+  }
+  const death = character.hp >= character.maxHp && character.death?.status !== "dead" && character.death?.status !== "resolved"
+    ? character.death || { status: "choice" as const }
+    : character.death;
+  if (death !== character.death) character.death = death;
+  const changed = legacyHp
+    || state.resourceModelVersion !== RESOURCE_MODEL_VERSION
+    || level !== state.character.level
+    || character.tier !== state.character.tier
+    || character.evasion !== state.character.evasion
+    || character.damageThresholds !== state.character.damageThresholds
+    || character.proficiency !== state.character.proficiency
+    || character.progression !== state.character.progression
+    || trackers !== currentTrackers
+    || character.daggerheart !== state.character.daggerheart
+    || character.death !== state.character.death;
+  return changed ? { ...state, resourceModelVersion: RESOURCE_MODEL_VERSION, character } : state;
 }
 
 const TIMELINE_SCHEMA_VERSION = 2;
@@ -468,9 +618,16 @@ export function inferLegacyRestartSnapshot(state: GameState): CampaignRestartSna
     : [];
   const { restartSnapshot: _restartSnapshot, ...campaign } = state.campaign;
   const character = cloneWithoutEmbeddedImages(state.character);
+  const sourceClass = character.daggerheart?.class?.name || character.archetype.split("·")[0]?.trim() || "";
+  const sourceSubclass = character.daggerheart?.subclass?.name;
+  const classStats = classStatsFor(sourceClass);
   character.level = 1;
-  character.hp = 6;
-  character.maxHp = 6;
+  character.tier = 1;
+  character.hp = 0;
+  character.maxHp = classStats.hitPoints;
+  character.evasion = classStats.evasion + equipmentEvasionBonus(inventory);
+  character.damageThresholds = thresholdsFromEquipment(inventory, 1);
+  character.proficiency = 1;
   character.hope = 2;
   character.maxHope = 6;
   character.stress = 0;
@@ -478,6 +635,16 @@ export function inferLegacyRestartSnapshot(state: GameState): CampaignRestartSna
   character.armor = state.character.maxArmor;
   character.maxArmor = state.character.maxArmor;
   character.conditions = [];
+  character.scars = 0;
+  character.death = undefined;
+  character.progression = undefined;
+  if (character.daggerheart) {
+    character.daggerheart.transformation = undefined;
+    character.daggerheart.trackers = initialTrackersForCharacter(sourceClass, 1, sourceSubclass);
+    if (character.daggerheart.animalCompanion) {
+      character.daggerheart.animalCompanion.stress = 0;
+    }
+  }
 
   return {
     createdAt: new Date().toISOString(),
@@ -509,6 +676,7 @@ export function restartCampaignFromSnapshot(state: GameState): GameState {
     }
   }
   return {
+    resourceModelVersion: RESOURCE_MODEL_VERSION,
     campaign: {
       ...structuredClone(snapshot.campaign),
       restartSnapshot: structuredClone(snapshot),
@@ -526,11 +694,15 @@ export function restartCampaignFromSnapshot(state: GameState): GameState {
     events: [],
     pendingRoll: undefined,
     rollHistory: [],
+    milestones: [],
+    pendingLevelUp: undefined,
   };
 }
 
 export type GameCommand =
   | { type: "adjust"; resource: "hp" | "hope" | "stress" | "armor"; amount: number }
+  | { type: "tracker"; trackerId: string; value: number; mode?: "set" | "adjust"; dieIndex?: number }
+  | { type: "transformation"; transformation?: CharacterTransformation }
   | { type: "inventory"; itemId: string; amount: number }
   | { type: "quest"; questId: string; status: Quest["status"] }
   | { type: "condition"; name: string; active: boolean }
@@ -555,7 +727,11 @@ export const initialState: GameState = {
     name: "Fuyu",
     archetype: "Ranger · Nível 5",
     level: 5,
-    hp: 5,
+    tier: 3,
+    evasion: 12,
+    damageThresholds: { major: 10, severe: 17 },
+    proficiency: 3,
+    hp: 2,
     maxHp: 7,
     hope: 3,
     maxHope: 6,
@@ -619,6 +795,7 @@ export const initialState: GameState = {
   ],
   events: [],
   rollHistory: [],
+  resourceModelVersion: RESOURCE_MODEL_VERSION,
 };
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
@@ -636,8 +813,64 @@ export function executeCommand(state: GameState, command: GameCommand, actor: Ac
     const updated = clamp(current + command.amount, 0, maximum);
     const actual = updated - current;
     next.character[command.resource] = updated;
-    label = `${command.resource.toUpperCase()} ${actual >= 0 ? "+" : ""}${actual}`;
+    if (command.resource === "hp") {
+      label = `PV marcados ${actual >= 0 ? "+" : ""}${actual}`;
+      if (updated >= maximum && next.character.death?.status !== "dead" && next.character.death?.status !== "resolved") {
+        next.character.death = next.character.death || { status: "choice" };
+      } else if (updated < maximum && next.character.death && next.character.death.status !== "dead" && next.character.death.status !== "last-glory") {
+        next.character.death = undefined;
+      }
+      if (actual < 0 && next.character.conditions.includes("Inconsciente")) {
+        next.character.conditions = next.character.conditions.filter((condition) => condition !== "Inconsciente");
+      }
+    } else {
+      label = `${command.resource.toUpperCase()} ${actual >= 0 ? "+" : ""}${actual}`;
+    }
     reverse = { ...command, amount: -actual };
+  }
+
+  if (command.type === "tracker") {
+    const trackers = next.character.daggerheart?.trackers;
+    const tracker = trackers?.find((entry) => entry.id === command.trackerId);
+    if (tracker) {
+      if (tracker.kind === "dicePool" && command.dieIndex !== undefined) {
+        tracker.dice = tracker.dice || [];
+        const before = tracker.dice[command.dieIndex] ?? 0;
+        const updated = clamp(command.mode === "adjust" ? before + command.value : command.value, 0, tracker.dieSides || tracker.max);
+        tracker.dice[command.dieIndex] = updated;
+        tracker.value = tracker.dice.filter((value) => value > 0).length;
+        label = `${tracker.name}: dado ${command.dieIndex + 1} = ${updated}`;
+        reverse = { ...command, value: before, mode: "set" };
+      } else {
+        const before = tracker.value;
+        let requested = command.mode === "adjust" ? before + command.value : command.value;
+        if (tracker.id.startsWith("summoner-circle-") && trackers) {
+          const total = trackers.find((entry) => entry.id === "summoner-total");
+          if (total) {
+            const delta = requested - before;
+            const allowedDelta = delta > 0 ? Math.min(delta, total.max - total.value) : delta;
+            requested = before + allowedDelta;
+            total.value = clamp(total.value + allowedDelta, total.min, total.max);
+          }
+        }
+        const updated = clamp(requested, tracker.min, tracker.max);
+        tracker.value = updated;
+        if (tracker.kind === "die") tracker.active = updated > 0;
+        label = `${tracker.name}: ${updated}`;
+        reverse = { ...command, value: before, mode: "set" };
+      }
+    }
+  }
+
+  if (command.type === "transformation") {
+    const previous = next.character.daggerheart?.transformation;
+    if (next.character.daggerheart) {
+      next.character.daggerheart.transformation = command.transformation
+        ? structuredClone(command.transformation)
+        : undefined;
+      label = command.transformation ? `Transformação: ${command.transformation.name}` : "Transformação encerrada";
+      reverse = { type: "transformation", transformation: previous ? structuredClone(previous) : undefined };
+    }
   }
 
   if (command.type === "inventory") {
@@ -733,6 +966,7 @@ export function requestPlayerRoll(state: GameState, request: PlayerRollRequest):
     allowedDice,
     target: request.target,
     rollKind: request.rollKind ?? "custom",
+    purpose: request.purpose,
     requestedAt: now(),
     campaignMinute: state.time?.campaignMinute ?? 0,
   };
@@ -743,13 +977,106 @@ export function requestPlayerRoll(state: GameState, request: PlayerRollRequest):
   };
 }
 
+export function chooseDeathMove(state: GameState, move: "avoid" | "glory" | "risk"): GameState {
+  if (state.character.hp < state.character.maxHp || state.character.death?.status === "dead") return state;
+  const character = structuredClone(state.character);
+  if (move === "glory") {
+    character.death = { status: "last-glory", move: "glory" };
+    return { ...state, character };
+  }
+  character.death = { status: move === "avoid" ? "avoiding" : "risking", move };
+  const prepared = { ...state, character, pendingRoll: undefined };
+  return requestPlayerRoll(prepared, move === "avoid" ? {
+    label: "Evitar a Morte",
+    reason: "Role seu Dado de Esperança. Se o resultado for igual ou inferior ao seu nível, você recebe uma Cicatriz.",
+    formula: "1d12",
+    allowedDice: ["d12"],
+    rollKind: "custom",
+    purpose: "death-avoid",
+  } : {
+    label: "Arriscar Tudo",
+    reason: "Role os Dados de Dualidade para determinar se você retorna à luta ou atravessa o véu da morte.",
+    formula: "2d12",
+    allowedDice: ["d12"],
+    rollKind: "duality",
+    purpose: "death-risk",
+  });
+}
+
+function resolveDeathRollState(state: GameState, pending: PendingPlayerRoll, resolution: RollResolution) {
+  const next = structuredClone(state) as GameState;
+  if (pending.purpose === "death-avoid") {
+    const hope = resolution.dice?.find((die) => die.label === "Esperança")?.value
+      ?? resolution.dice?.find((die) => die.die === "d12")?.value
+      ?? resolution.total;
+    if (hope <= next.character.level) {
+      next.character.scars = (next.character.scars || 0) + 1;
+      next.character.maxHope = Math.max(0, next.character.maxHope - 1);
+      next.character.hope = Math.min(next.character.hope, next.character.maxHope);
+      if (next.character.maxHope <= 0) {
+        next.character.death = { status: "dead", move: "avoid", resolvedAt: now() };
+        return next;
+      }
+    }
+    next.character.conditions = Array.from(new Set([...next.character.conditions, "Inconsciente"]));
+    next.character.death = { status: "resolved", move: "avoid", resolvedAt: now() };
+  }
+  if (pending.purpose === "death-risk") {
+    const hope = resolution.dice?.find((die) => die.label === "Esperança")?.value;
+    const fear = resolution.dice?.find((die) => die.label === "Medo")?.value;
+    if (hope !== undefined && fear !== undefined) {
+      if (hope === fear) {
+        next.character.hp = 0;
+        next.character.stress = 0;
+        next.character.death = { status: "resolved", move: "risk", resolvedAt: now() };
+      } else if (hope > fear) {
+        next.character.death = { status: "risk-recovery", move: "risk", recoveryPoints: hope };
+      } else {
+        next.character.death = { status: "dead", move: "risk", resolvedAt: now() };
+      }
+    }
+  }
+  return next;
+}
+
+export function spendDeathRecoveryPoint(state: GameState, resource: "hp" | "stress") {
+  const death = state.character.death;
+  if (death?.status !== "risk-recovery" || !death.recoveryPoints || death.recoveryPoints <= 0) return state;
+  const current = state.character[resource];
+  const next = structuredClone(state) as GameState;
+  if (current > 0) next.character[resource] = current - 1;
+  const actuallySpent = current > 0 ? 1 : 0;
+  const remaining = Math.max(0, death.recoveryPoints - actuallySpent);
+  const noResourcesLeft = next.character.hp <= 0 && next.character.stress <= 0;
+  next.character.death = remaining <= 0 || noResourcesLeft
+    ? { status: "resolved", move: "risk", recoveryPoints: 0, resolvedAt: now() }
+    : { ...death, recoveryPoints: remaining };
+  return next;
+}
+
+export function resolveLastGloryDeath(state: GameState) {
+  if (state.character.death?.status !== "last-glory") return state;
+  return {
+    ...state,
+    character: {
+      ...state.character,
+      death: { status: "dead", move: "glory", resolvedAt: now() },
+    },
+  } as GameState;
+}
+
 export function resolvePendingRoll(
   state: GameState,
   pendingRollId: string,
   resolution: RollResolution,
   actor: Actor = "player",
 ): GameState {
-  return executeCommand(state, { type: "resolve-roll", pendingRollId, resolution }, actor);
+  const pending = state.pendingRoll;
+  let next = executeCommand(state, { type: "resolve-roll", pendingRollId, resolution }, actor);
+  if (pending?.id === pendingRollId && pending.purpose?.startsWith("death-")) {
+    next = resolveDeathRollState(next, pending, resolution);
+  }
+  return next;
 }
 
 export function undoLatest(state: GameState): GameState {

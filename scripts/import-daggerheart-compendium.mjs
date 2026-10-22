@@ -9,6 +9,9 @@ const translationRoot = process.env.DAGGERHEART_TRANSLATION
 const artRoot = process.env.DAGGERHEART_ART
   ? path.resolve(process.env.DAGGERHEART_ART)
   : path.resolve(root, "..", "art-for-daggerheart");
+const foundryborneDomainRoot = process.env.DAGGERHEART_FOUNDRYBORNE_DOMAINS
+  ? path.resolve(process.env.DAGGERHEART_FOUNDRYBORNE_DOMAINS)
+  : path.resolve(root, "..", "daggerheart-foundryborne", "src", "packs", "domains");
 
 const compendiumRoot = path.join(translationRoot, "compendium");
 const langPath = path.join(translationRoot, "lang", "pt-BR.json");
@@ -16,6 +19,7 @@ const outputPath = path.join(root, "lib", "compendium", "daggerheart.generated.j
 const artOutputRoot = path.join(root, "public", "compendium", "daggerheart", "adversaries");
 const foundryborneManifestPath = path.join(root, "lib", "compendium", "foundryborne-art.manifest.json");
 const foundryborneSubclassManifestPath = path.join(root, "lib", "compendium", "foundryborne-subclass-features.manifest.json");
+const voidPtBrPath = path.join(root, "lib", "compendium", "void-unofficial.pt-BR.json");
 
 const CORE_CLASSES = new Set([
   "Bard", "Druid", "Guardian", "Ranger", "Rogue", "Seraph", "Sorcerer", "Warrior", "Wizard",
@@ -294,6 +298,24 @@ function slug(value) {
 }
 
 const CLASS_FEATURE_ART_ROOT = "/compendium/daggerheart/class-features";
+const CLASS_ART_ROOT = "/compendium/daggerheart/classes";
+const CLASS_ART_SLUGS = new Map(Object.entries({
+  Bard: "bardo",
+  Druid: "druida",
+  Guardian: "guardiao",
+  Ranger: "patrulheiro",
+  Rogue: "ladino",
+  Seraph: "serafim",
+  Sorcerer: "feiticeiro",
+  Warrior: "guerreiro",
+  Wizard: "mago",
+  Assassin: "assassino",
+  Brawler: "pugilista",
+  Warlock: "ocultista",
+  Witch: "bruxo",
+  "Blood Hunter": "cacador-de-sangue",
+  Summoner: "invocador",
+}));
 const CLASS_FEATURE_ART_SLUGS = new Set([
   "alicerce-da-vida", "ataque-de-oportunidade", "ataque-furtivo", "bencao-do-patrono",
   "canalizar-poder-bruto", "comunhao", "dadiva-da-natureza", "dados-de-oracao",
@@ -315,6 +337,11 @@ function classFeatureArtFor(data, key) {
   const displaySlug = slug(cleanText(data.name || key));
   const artSlug = CLASS_FEATURE_ART_ALIASES.get(displaySlug) || displaySlug;
   return CLASS_FEATURE_ART_SLUGS.has(artSlug) ? `${CLASS_FEATURE_ART_ROOT}/${artSlug}.webp` : null;
+}
+
+function classArtFor(key) {
+  const file = CLASS_ART_SLUGS.get(key);
+  return file ? `${CLASS_ART_ROOT}/${file}.webp` : null;
 }
 
 function wordNumber(value) {
@@ -398,7 +425,7 @@ function extractMechanics(description) {
   };
 }
 
-function makeEntry({ key, data, type, category, source = "core", parent = null, tier = null, art = null, artSource = null, artLicense = null }) {
+function makeEntry({ key, data, type, category, source = "core", parent = null, tier = null, art = null, artSource = null, artLicense = null, level = null, domain = null, recallCost = null }) {
   const description = cleanText(data.description || "");
   const entry = {
     id: source + "-" + type + "-" + slug(key),
@@ -414,6 +441,9 @@ function makeEntry({ key, data, type, category, source = "core", parent = null, 
     art,
   };
   if (tier) entry.tier = tier;
+  if (level !== null && level !== undefined) entry.level = Number(level);
+  if (domain) entry.domain = domain;
+  if (recallCost !== null && recallCost !== undefined) entry.recallCost = Number(recallCost);
   if (artSource) entry.artSource = artSource;
   if (artLicense) entry.artLicense = artLicense;
   return entry;
@@ -439,6 +469,24 @@ for (const entry of foundryborneManifest.entries || []) {
 
 function domainArtFor(key) {
   return foundryborneDomainArt.get(normalizeSourceArtName(key)) || null;
+}
+
+const foundryborneDomainMetadata = new Map();
+if (fs.existsSync(foundryborneDomainRoot)) {
+  for (const file of fs.readdirSync(foundryborneDomainRoot)) {
+    if (!file.endsWith(".json")) continue;
+    const source = readJson(path.join(foundryborneDomainRoot, file));
+    if (source?.type !== "domainCard" || !source?.name) continue;
+    foundryborneDomainMetadata.set(normalizeSourceArtName(source.name), {
+      level: Number(source.system?.level) || 1,
+      domain: source.system?.domain ? String(source.system.domain) : null,
+      recallCost: Number.isFinite(Number(source.system?.recallCost)) ? Number(source.system.recallCost) : null,
+    });
+  }
+}
+
+function domainMetadataFor(key) {
+  return foundryborneDomainMetadata.get(normalizeSourceArtName(key)) || null;
 }
 
 if (!fs.existsSync(foundryborneSubclassManifestPath)) {
@@ -569,7 +617,7 @@ for (const [key, data] of loadEntries("daggerheart.classes.json")) {
       type: isClass ? "class" : "classFeature",
       category: "classes",
       parent: isClass ? null : CLASS_FEATURE_PARENT[key] || null,
-      art: isClass ? null : classFeatureArtFor(data, key),
+      art: isClass ? classArtFor(key) : classFeatureArtFor(data, key),
     }));
   }
 }
@@ -595,7 +643,7 @@ for (const [key, rawData] of expansionClassSourceEntries) {
     source: "expansion",
     parent: isClass ? null : subclassParent || EXPANSION_CLASS_FEATURE_PARENT[key] || null,
     tier: subclassMeta?.tier || legacySubclassTier,
-    art: !isClass && !subclassParent ? classFeatureArtFor(data, key) : null,
+    art: isClass ? classArtFor(key) : !subclassParent ? classFeatureArtFor(data, key) : null,
   }));
 }
 for (const fallback of EXPANSION_FALLBACK_CLASS_FEATURES) {
@@ -644,6 +692,7 @@ for (const [key, rawData] of loadEntries("daggerheart-expansion-content.subclass
 }
 for (const [key, data] of loadEntries("daggerheart.domains.json")) {
   const sourceArt = domainArtFor(key);
+  const metadata = domainMetadataFor(key);
   entries.push(makeEntry({
     key,
     data,
@@ -652,11 +701,15 @@ for (const [key, data] of loadEntries("daggerheart.domains.json")) {
     art: sourceArt?.art || null,
     artSource: sourceArt?.artSource || null,
     artLicense: sourceArt?.artLicense || null,
+    level: metadata?.level,
+    domain: metadata?.domain,
+    recallCost: metadata?.recallCost,
   }));
 }
 for (const [key, data] of loadEntries("daggerheart-expansion-content.domains.json")) {
   if (key.trim()) {
     const sourceArt = domainArtFor(key);
+    const metadata = domainMetadataFor(key);
     entries.push(makeEntry({
       key,
       data,
@@ -666,6 +719,9 @@ for (const [key, data] of loadEntries("daggerheart-expansion-content.domains.jso
       art: sourceArt?.art || null,
       artSource: sourceArt?.artSource || null,
       artLicense: sourceArt?.artLicense || null,
+      level: metadata?.level,
+      domain: metadata?.domain,
+      recallCost: metadata?.recallCost,
     }));
   }
 }
@@ -679,6 +735,54 @@ for (const [file, type] of [
   for (const [key, data] of loadEntries(file)) {
     entries.push(makeEntry({ key, data, type, category: "equipment" }));
   }
+}
+
+const voidContent = readJson(voidPtBrPath);
+for (const metadata of voidContent.domainMetadata || []) {
+  const existing = entries.find((entry) => entry.type === "domainCard" && entry.sourceId === metadata.sourceId);
+  if (!existing) continue;
+  existing.domain = metadata.domain;
+  existing.level = Number(metadata.level);
+  existing.recallCost = Number(metadata.recallCost);
+}
+const voidReplacedSourceIds = new Set([
+  "Order of the Ghost Slayer",
+  "Chasing Death",
+  "Shadowed Grit",
+  "Veilwalker",
+  "Spectral Form",
+  "Werewolf",
+  "Control the Beast",
+  "Feral Hide",
+  "Lycan Regeneration",
+  "Master the Beast",
+  "Vitality Manipulation",
+  "Burning Blood",
+  "Mutual Suffering",
+  "Life Leash",
+  "Runic Adrenaline",
+  "Bloodbath",
+  "Glyph of Hermorrhaging",
+  "Crimson Adamance",
+]);
+for (let index = entries.length - 1; index >= 0; index -= 1) {
+  if (voidReplacedSourceIds.has(entries[index].sourceId)) entries.splice(index, 1);
+}
+for (const item of voidContent.entries || []) {
+  const key = item.sourceId || item.name;
+  entries.push(makeEntry({
+    key,
+    data: { name: item.name, description: item.description || "" },
+    type: item.type,
+    category: item.category,
+    source: "void-unofficial",
+    parent: item.parent || null,
+    tier: item.tier || null,
+    art: item.art || (item.type === "class" ? classArtFor(key) : null),
+    level: item.level,
+    domain: item.domain,
+    recallCost: item.recallCost,
+  }));
 }
 
 const portraitDir = path.join(artRoot, "adversaries", "portraits");
@@ -840,6 +944,7 @@ const payload = {
     art: "https://github.com/mordachai/art-for-daggerheart",
     foundryborne: FOUNDRYBORNE_SOURCE_URL,
     srd: "https://www.daggerheart.com/srd/",
+    voidUnofficial: voidContent.source,
   },
   categories,
   entries,

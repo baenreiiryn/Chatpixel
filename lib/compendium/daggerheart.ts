@@ -22,6 +22,9 @@ export type CompendiumEntry = {
   source: string;
   parent?: string | null;
   tier?: "foundation" | "specialization" | "mastery";
+  level?: number;
+  domain?: string;
+  recallCost?: number;
   description: string;
   mechanics: CompendiumMechanics;
   art?: string | null;

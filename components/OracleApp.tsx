@@ -4,16 +4,22 @@ import { FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "
 import {
   buildContextPacket,
   createCampaignRestartSnapshot,
+  chooseDeathMove,
   ensureGameStateCrafting,
+  ensureGameStateCharacterModel,
   ensureGameStateTimeline,
   executeCommand,
   GameState,
   initialState,
   Message,
+  resolveLastGloryDeath,
   resolvePendingRoll,
+  spendDeathRecoveryPoint,
   timelineNeedsNarrativeSynthesis,
   timelineWithoutLegacyGeneratedEntries,
   type DiceType,
+  type CharacterState,
+  type CharacterTracker,
   restartCampaignFromSnapshot,
   undoLatest,
 } from "@/lib/game";
@@ -29,7 +35,16 @@ import { buildSceneWebImageSearchPrompt, describeSceneWebImageError, extractScen
 import DaggerheartCompendium from "@/components/DaggerheartCompendium";
 import CompendiumArt from "@/components/CompendiumArt";
 import NewCampaignWizard, { type NewCampaignResult } from "@/components/NewCampaignWizard";
-import { CLASS_CONFIG, TRAIT_LABELS, TRAIT_ORDER } from "@/lib/characterCreation/daggerheart";
+import DaggerheartLevelUpWizard from "@/components/DaggerheartLevelUpWizard";
+import { TRAIT_LABELS, TRAIT_ORDER } from "@/lib/characterCreation/daggerheart";
+import {
+  effectiveCharacterEvasion,
+  effectiveCharacterTraits,
+} from "@/lib/daggerheartCharacter";
+import {
+  completePendingDaggerheartLevelUp,
+  type DaggerheartLevelUpPlan,
+} from "@/lib/daggerheartAdvancement";
 import { daggerheartCompendium, mechanicsSummary, type CompendiumEntry } from "@/lib/compendium/daggerheart";
 import {
   campaignMinuteFromDate,
@@ -808,6 +823,11 @@ export default function OracleApp() {
   const gmRunningRef = useRef(false);
   const [gmError, setGmError] = useState("");
   const [openingNarrationError, setOpeningNarrationError] = useState("");
+  const [replacementCampaignId, setReplacementCampaignId] = useState<string | null>(null);
+  const [trackerInfo, setTrackerInfo] = useState<CharacterTracker | null>(null);
+  const [trackerEditor, setTrackerEditor] = useState<CharacterTracker | null>(null);
+  const trackerPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const trackerLongPressRef = useRef(false);
   const [imageMessageId, setImageMessageId] = useState<string | null>(null);
   const [imageNote, setImageNote] = useState("");
   const [sceneImageBusy, setSceneImageBusy] = useState(false);
@@ -872,9 +892,9 @@ export default function OracleApp() {
       if (migrated) savedCampaigns = [migrated];
     }
     const normalizedCampaigns = savedCampaigns.map((entry) => {
-      const normalizedState = ensureGameStateCrafting(ensureGameStateTimeline(
+      const normalizedState = ensureGameStateCrafting(ensureGameStateTimeline(ensureGameStateCharacterModel(
         ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`),
-      ));
+      )));
       return normalizedState === entry.state ? entry : { ...entry, state: normalizedState };
     });
     const sorted = sortCampaigns(normalizedCampaigns);
@@ -898,9 +918,9 @@ export default function OracleApp() {
 
   useEffect(() => {
     if (!ready || !activeCampaignId) return;
-    const normalized = ensureGameStateCrafting(ensureGameStateTimeline(
+    const normalized = ensureGameStateCrafting(ensureGameStateTimeline(ensureGameStateCharacterModel(
       ensureCampaignTime(state, `legacy:${state.campaign.name}:${state.campaign.system}`),
-    ));
+    )));
     if (normalized !== state) setState(normalized);
   }, [ready, activeCampaignId, state]);
 
@@ -1007,6 +1027,15 @@ export default function OracleApp() {
   const contextPreview = useMemo(() => buildContextPacket(state), [state]);
   const lastGmMessage = useMemo(() => latestGmMessage(state.messages), [state.messages]);
   const hasGmNarration = useMemo(() => state.messages.some((message) => message.role === "gm"), [state.messages]);
+  const characterTrackers = state.character.daggerheart?.trackers || [];
+  const diceTrackers = characterTrackers.filter((tracker) => tracker.kind === "die" || tracker.kind === "dicePool");
+  const effectiveTraits = useMemo(() => effectiveCharacterTraits(state.character), [state.character]);
+  const effectiveEvasion = useMemo(() => effectiveCharacterEvasion(state.character), [state.character]);
+  const deathBlocksActions = Boolean(
+    state.character.conditions.includes("Inconsciente")
+    || ["choice", "avoiding", "risking", "risk-recovery", "dead"].includes(state.character.death?.status || ""),
+  );
+  const playerActionsBlocked = deathBlocksActions || Boolean(state.pendingLevelUp);
   const sceneImageErrorInfo = useMemo(
     () => sceneImageError ? describeSceneWebImageError(sceneImageError) : null,
     [sceneImageError],
@@ -1217,9 +1246,9 @@ export default function OracleApp() {
   function openCampaign(campaignId: string) {
     const entry = campaignsRef.current.find((campaign) => campaign.id === campaignId);
     if (!entry) return;
-    const normalizedState = ensureGameStateCrafting(ensureGameStateTimeline(
+    const normalizedState = ensureGameStateCrafting(ensureGameStateTimeline(ensureGameStateCharacterModel(
       ensureCampaignTime(entry.state, `legacy:${entry.state.campaign.name}:${entry.state.campaign.system}`),
-    ));
+    )));
     campaignEpochRef.current += 1;
     activeCampaignIdRef.current = entry.id;
     setActiveDiceRoll(null);
@@ -1241,6 +1270,10 @@ export default function OracleApp() {
     localStorage.setItem(ACTIVE_CAMPAIGN_KEY, entry.id);
     setView("session");
     setScreen("campaign");
+  }
+
+  function characterFromNewCampaignResult(result: NewCampaignResult): CharacterState {
+    return structuredClone(result.resolvedCharacter) as CharacterState;
   }
 
   async function finishNewCampaign(result: NewCampaignResult) {
@@ -1319,6 +1352,7 @@ export default function OracleApp() {
     }
 
     const next: GameState = {
+      resourceModelVersion: 2,
       campaign: {
         name: campaignName,
         system: result.system,
@@ -1328,57 +1362,7 @@ export default function OracleApp() {
         scene,
       },
       time: campaignTime,
-      character: {
-        id: "player-character",
-        name: characterName,
-        archetype: `${result.classEntry.name} · ${result.subclassEntry.name}`,
-        level: 1,
-        hp: 6,
-        maxHp: 6,
-        hope: 2,
-        maxHope: 6,
-        stress: 0,
-        maxStress: 6,
-        armor: result.armorSlots,
-        maxArmor: result.armorSlots,
-        conditions: [],
-        appearance: result.character.appearance?.trim() || undefined,
-        daggerheart: {
-          class: { id: result.classEntry.id, name: result.classEntry.name },
-          subclass: { id: result.subclassEntry.id, name: result.subclassEntry.name },
-          classFeatures: result.classFeatures.map((feature) => ({ id: feature.id, name: feature.name })),
-          subclassFeatures: result.subclassFeatures.map((feature) => ({ id: feature.id, name: feature.name })),
-          ancestry: {
-            mixed: result.ancestry.mixed,
-            primary: { id: result.ancestry.primary.id, name: result.ancestry.primary.name },
-            secondary: result.ancestry.secondary
-              ? { id: result.ancestry.secondary.id, name: result.ancestry.secondary.name }
-              : undefined,
-            features: result.ancestry.features.map((feature) => ({ id: feature.id, name: feature.name })),
-          },
-          community: {
-            id: result.community.entry.id,
-            name: result.community.entry.name,
-            features: result.community.features.map((feature) => ({ id: feature.id, name: feature.name })),
-          },
-          traits: result.traits,
-          experiences: result.experiences.map((name) => ({ name: name.trim(), bonus: 2 })),
-          domains: [...(CLASS_CONFIG[result.classEntry.sourceId || ""]?.domains || Array.from(new Set(result.domainCards.map((card) => card.domain))))],
-          domainCards: result.domainCards.map((card) => ({
-            id: card.id,
-            name: card.name,
-            domain: card.domain,
-            level: 1,
-          })),
-          connections: result.companions
-            .filter((companion) => companion.connection.trim())
-            .map((companion) => ({ npcId: companion.id, text: companion.connection.trim() })),
-          history: result.character.history.trim(),
-          pronouns: result.character.pronouns.trim() || undefined,
-          image: result.character.image || undefined,
-          animalCompanion: result.animalCompanion,
-        },
-      },
+      character: characterFromNewCampaignResult(result),
       inventory: result.equipment,
       crafting: createInitialCraftingState(),
       quests: [],
@@ -1445,6 +1429,92 @@ export default function OracleApp() {
     setView("session");
     setScreen("campaign");
     await startCampaignOpening(next, "creation");
+  }
+
+  async function finishCharacterReplacement(result: NewCampaignResult) {
+    const current = stateRef.current;
+    const oldCharacter = current.character;
+    const createdAt = new Date().toISOString();
+    const replacement = characterFromNewCampaignResult(result);
+    const deathMemory = {
+      id: crypto.randomUUID(),
+      kind: "event" as const,
+      text: `${oldCharacter.name} morreu durante a campanha. A história continua sem apagar o que aconteceu.`,
+      createdAt,
+      campaignMinute: current.time.campaignMinute,
+    };
+    const arrivalMemory = {
+      id: crypto.randomUUID(),
+      kind: "event" as const,
+      text: `${replacement.name}, ${replacement.archetype} de nível ${replacement.level}, passa a integrar a campanha após a morte de ${oldCharacter.name}.`,
+      createdAt,
+      campaignMinute: current.time.campaignMinute,
+    };
+    const newNpcs = result.companions.map((companion) => ({
+      id: companion.id,
+      name: companion.name,
+      role: companion.role,
+      relation: "friendly" as const,
+      location: current.campaign.scene,
+      appearance: companion.appearance.trim() || undefined,
+    }));
+    const existingNpcIds = new Set(newNpcs.map((npc) => npc.id));
+    const next: GameState = {
+      ...current,
+      resourceModelVersion: 2,
+      character: replacement,
+      inventory: result.equipment,
+      crafting: createInitialCraftingState(),
+      npcs: [...current.npcs.filter((npc) => !existingNpcIds.has(npc.id)), ...newNpcs],
+      memories: [arrivalMemory, deathMemory, ...current.memories],
+      timeline: [
+        ...(current.timeline || []),
+        {
+          id: crypto.randomUUID(),
+          title: `Morte de ${oldCharacter.name}`,
+          description: `${oldCharacter.name} atravessou o véu da morte.`,
+          campaignMinute: current.time.campaignMinute,
+          createdAt,
+          kind: "milestone",
+          tags: ["Morte"],
+          visibility: "public",
+          importance: "major",
+        },
+        {
+          id: crypto.randomUUID(),
+          title: `Chegada de ${replacement.name}`,
+          description: `${replacement.name} entra na história no nível ${replacement.level}.`,
+          campaignMinute: current.time.campaignMinute,
+          createdAt,
+          kind: "relationship",
+          tags: ["Personagem"],
+          visibility: "public",
+          importance: "major",
+        },
+      ],
+      pendingRoll: undefined,
+    };
+    replacementCampaignId && setReplacementCampaignId(null);
+    stateRef.current = next;
+    setState(next);
+    setInput("");
+    setGmError("");
+    setView("session");
+    setScreen("campaign");
+    if (bridge.status === "ready" && bridge.account?.connected && bridge.model) {
+      await runGmNarration(
+        next,
+        [
+          "ENTRADA DE NOVO PERSONAGEM APÓS A MORTE DO PERSONAGEM ANTERIOR.",
+          `${oldCharacter.name} morreu e não deve ser ressuscitado ou tratado como se ainda estivesse agindo.`,
+          `O novo personagem é ${replacement.name}, ${replacement.archetype}, nível ${replacement.level}.`,
+          result.character.history.trim() ? `História do novo personagem: ${result.character.history.trim()}` : "",
+          `A cena atual permanece ${current.campaign.scene}. Integre ${replacement.name} organicamente à história em andamento, preservando missões, NPCs, memória, tempo e consequências da campanha.`,
+          "O jogador ainda não declarou uma ação com o novo personagem. Não peça uma rolagem e não decida ações por ele; narre apenas uma entrada plausível que devolva o controle ao jogador.",
+        ].filter(Boolean).join("\n"),
+        false,
+      );
+    }
   }
 
   function goHome() {
@@ -1561,6 +1631,103 @@ export default function OracleApp() {
 
   function adjust(resource: "hp" | "hope" | "stress" | "armor", amount: number) {
     setState((current) => executeCommand(current, { type: "adjust", resource, amount }));
+  }
+
+  function updateTrackerAsPlayer(trackerId: string, amount: number) {
+    const current = stateRef.current;
+    const currentTracker = current.character.daggerheart?.trackers?.find((entry) => entry.id === trackerId);
+    const effectiveAmount = currentTracker?.kind === "die" && amount > 0 && currentTracker.value >= currentTracker.max
+      ? -currentTracker.value
+      : amount;
+    const next = executeCommand(current, { type: "tracker", trackerId, value: effectiveAmount, mode: "adjust" }, "player");
+    stateRef.current = next;
+    setState(next);
+    const refreshed = next.character.daggerheart?.trackers?.find((entry) => entry.id === trackerId) || null;
+    setTrackerEditor(refreshed);
+  }
+
+  function beginTrackerPress(tracker: CharacterTracker) {
+    if (trackerPressTimerRef.current) clearTimeout(trackerPressTimerRef.current);
+    trackerLongPressRef.current = false;
+    trackerPressTimerRef.current = setTimeout(() => {
+      trackerLongPressRef.current = true;
+      setTrackerInfo(null);
+      setTrackerEditor(stateRef.current.character.daggerheart?.trackers?.find((entry) => entry.id === tracker.id) || tracker);
+    }, 1000);
+  }
+
+  function endTrackerPress(tracker: CharacterTracker) {
+    if (trackerPressTimerRef.current) clearTimeout(trackerPressTimerRef.current);
+    trackerPressTimerRef.current = null;
+    if (!trackerLongPressRef.current) setTrackerInfo(tracker);
+    trackerLongPressRef.current = false;
+  }
+
+  function cancelTrackerPress() {
+    if (trackerPressTimerRef.current) clearTimeout(trackerPressTimerRef.current);
+    trackerPressTimerRef.current = null;
+    trackerLongPressRef.current = false;
+  }
+
+  function selectDeathMove(move: "avoid" | "glory" | "risk") {
+    const next = chooseDeathMove(stateRef.current, move);
+    stateRef.current = next;
+    setState(next);
+    if (next.pendingRoll?.purpose === "death-avoid") startDiceRoll(next.pendingRoll.formula || "1d12", "tray", false);
+    if (next.pendingRoll?.purpose === "death-risk") startDiceRoll(next.pendingRoll.formula || "2d12", "tray", true);
+  }
+
+  function completeMilestoneLevelUp(plan: DaggerheartLevelUpPlan) {
+    const current = stateRef.current;
+    const pending = current.pendingLevelUp;
+    const choice = plan[0];
+    if (!pending || !choice) return;
+    const completed = completePendingDaggerheartLevelUp(current, choice);
+    if (completed.result.ok !== true) {
+      const errors = Array.isArray(completed.result.errors)
+        ? completed.result.errors.map(String).join(" ")
+        : String(completed.result.error || "Não foi possível concluir a subida de nível.");
+      setGmError(errors);
+      return;
+    }
+    const nextLevel = completed.state.character.level;
+    const milestone = completed.state.milestones?.find((entry) => entry.id === pending.milestoneId);
+    const next: GameState = {
+      ...completed.state,
+      messages: [
+        ...completed.state.messages,
+        {
+          id: crypto.randomUUID(),
+          role: "system",
+          text: `Milestone concluído: ${completed.state.character.name} alcançou o nível ${nextLevel}.`,
+          createdAt: new Date().toISOString(),
+          campaignMinute: completed.state.time.campaignMinute,
+        },
+      ],
+      timeline: [
+        ...(completed.state.timeline || []),
+        {
+          id: crypto.randomUUID(),
+          title: milestone?.title || `Nível ${nextLevel}`,
+          description: milestone?.reason || `${completed.state.character.name} alcançou o nível ${nextLevel}.`,
+          campaignMinute: completed.state.time.campaignMinute,
+          createdAt: new Date().toISOString(),
+          kind: "milestone",
+          tags: ["Milestone", `Nível ${nextLevel}`],
+          visibility: "public",
+          importance: "major",
+        },
+      ],
+    };
+    stateRef.current = next;
+    setState(next);
+    setGmError("");
+  }
+
+  function spendRiskRecovery(resource: "hp" | "stress") {
+    const next = spendDeathRecoveryPoint(stateRef.current, resource);
+    stateRef.current = next;
+    setState(next);
   }
 
   function updateDiceAppearances(next: DiceAppearanceOverrides) {
@@ -1908,6 +2075,7 @@ export default function OracleApp() {
     text: string,
     allowTools = true,
     allowedToolNames?: string[],
+    finalizeLastGlory = false,
   ) {
     if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
       setShowConnect(true);
@@ -1925,6 +2093,12 @@ export default function OracleApp() {
     setShowDiceTray(false);
     try {
       const conversationInput: unknown[] = buildTurnInput(working, text);
+      if (finalizeLastGlory && working.character.death?.status === "last-glory") {
+        conversationInput.push({
+          role: "developer",
+          content: "GLÓRIA FINAL: esta é a ação final do personagem. Ela é um CRÍTICO AUTOMÁTICO com aprovação do Mestre. Não peça rolagem para determinar sucesso; narre o feito final e suas consequências. Depois desta ação, o personagem atravessa o véu da morte.",
+        });
+      }
       if (!allowTools) {
         conversationInput.push({
           role: "developer",
@@ -2055,6 +2229,9 @@ export default function OracleApp() {
           },
         ],
       };
+      if (finalizeLastGlory && working.character.death?.status === "last-glory") {
+        working = resolveLastGloryDeath(working);
+      }
       stateRef.current = working;
       setState(working);
     } catch (error) {
@@ -2080,7 +2257,7 @@ export default function OracleApp() {
   async function submit(e: FormEvent) {
     e.preventDefault();
     const text = input.trim();
-    if (!text || gmBusy || gmRunningRef.current) return;
+    if (!text || gmBusy || gmRunningRef.current || playerActionsBlocked) return;
 
     const dualityFormula = dualityFormulaFromCommand(text);
     if (dualityFormula) {
@@ -2126,7 +2303,7 @@ export default function OracleApp() {
       setShowConnect(true);
       return;
     }
-    await runGmNarration(working, text, true);
+    await runGmNarration(working, text, true, undefined, working.character.death?.status === "last-glory");
   }
 
   async function regenerateNarration(message: Message) {
@@ -2357,11 +2534,26 @@ export default function OracleApp() {
   }
 
   if (screen === "newCampaign") {
+    const replacing = Boolean(replacementCampaignId);
+    const replacementState = replacementCampaignId
+      ? campaignsRef.current.find((entry) => entry.id === replacementCampaignId)?.state || stateRef.current
+      : null;
     return (
       <NewCampaignWizard
         ai={newCampaignAi}
-        onBack={goHome}
-        onComplete={finishNewCampaign}
+        mode={replacing ? "replacement" : "new"}
+        fixedLevel={replacementState?.character.level}
+        campaignDefaults={replacementState ? {
+          name: replacementState.campaign.name,
+          tone: replacementState.campaign.tone || "Personalizado",
+          adventureHook: replacementState.campaign.adventureHook,
+        } : undefined}
+        onBack={replacing ? () => {
+          setReplacementCampaignId(null);
+          setView("session");
+          setScreen("campaign");
+        } : goHome}
+        onComplete={replacing ? finishCharacterReplacement : finishNewCampaign}
       />
     );
   }
@@ -2644,20 +2836,88 @@ export default function OracleApp() {
                     <button type="button" disabled={gmBusy || Boolean(activeDiceRoll)} onClick={() => setShowDiceTray(true)}>Rolar agora</button>
                   </div>
                 )}
+                {diceTrackers.length > 0 && (
+                  <div className="sessionTrackerStrip" aria-label="Trackers de dados do personagem">
+                    {diceTrackers.map((tracker) => (
+                      <button
+                        type="button"
+                        className={`sessionTrackerDie ${tracker.active || tracker.kind === "dicePool" ? "active" : ""}`}
+                        key={tracker.id}
+                        aria-label={`${tracker.name}. Toque para detalhes; segure por um segundo para editar.`}
+                        onPointerDown={() => beginTrackerPress(tracker)}
+                        onPointerUp={() => endTrackerPress(tracker)}
+                        onPointerLeave={cancelTrackerPress}
+                        onPointerCancel={cancelTrackerPress}
+                        onContextMenu={(event) => event.preventDefault()}
+                      >
+                        <span>d{tracker.dieSides || tracker.max}</span>
+                        <b>
+                          {tracker.kind === "dicePool"
+                            ? tracker.dice?.length
+                              ? tracker.dice.join(" · ")
+                              : `×${tracker.value}`
+                            : tracker.active
+                              ? tracker.value
+                              : "—"}
+                        </b>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {state.character.death?.status === "choice" && (
+                  <div className="deathMovePrompt" role="dialog" aria-modal="true" aria-label="Movimento de morte">
+                    <small>MOVIMENTO DE MORTE</small>
+                    <h2>Seu último Ponto de Vida foi marcado.</h2>
+                    <p>Escolha como seu personagem encara o véu da morte.</p>
+                    <div className="deathMoveChoices">
+                      <button type="button" onClick={() => selectDeathMove("avoid")}>
+                        <strong>Evitar a Morte</strong>
+                        <span>Caia inconsciente e role o Dado de Esperança; uma Cicatriz pode reduzir permanentemente seus espaços de Esperança.</span>
+                      </button>
+                      <button type="button" onClick={() => selectDeathMove("glory")}>
+                        <strong>Glória Final</strong>
+                        <span>Faça uma última ação com crítico automático e então atravesse o véu.</span>
+                      </button>
+                      <button type="button" onClick={() => selectDeathMove("risk")}>
+                        <strong>Arriscar Tudo</strong>
+                        <span>Role os Dados de Dualidade: Esperança pode mantê-lo de pé; Medo significa morte.</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {state.character.death?.status === "risk-recovery" && (
+                  <div className="deathMovePrompt recovery" role="dialog" aria-modal="true" aria-label="Recuperação de Arriscar Tudo">
+                    <small>ARRISCAR TUDO · ESPERANÇA</small>
+                    <h2>Distribua {state.character.death.recoveryPoints || 0} ponto(s) de recuperação.</h2>
+                    <p>Escolha, ponto a ponto, entre limpar PV marcado ou Fadiga.</p>
+                    <div className="riskRecoveryChoices">
+                      <button type="button" disabled={state.character.hp <= 0} onClick={() => spendRiskRecovery("hp")}>−1 PV marcado <b>{state.character.hp}/{state.character.maxHp}</b></button>
+                      <button type="button" disabled={state.character.stress <= 0} onClick={() => spendRiskRecovery("stress")}>−1 Fadiga <b>{state.character.stress}/{state.character.maxStress}</b></button>
+                    </div>
+                  </div>
+                )}
                 <form className="composer" onSubmit={submit}>
                   <ActionComposer
                     value={input}
                     onChange={setInput}
                     placeholder={gmBusy
                       ? "O Mestre está narrando..."
-                      : !hasGmNarration
-                        ? "Aguardando a primeira cena do Mestre..."
+                      : state.pendingLevelUp
+                        ? `Conclua a subida para o nível ${state.pendingLevelUp.targetLevel} antes de agir.`
+                      : state.character.death?.status === "dead"
+                        ? "A jornada deste personagem terminou."
+                        : state.character.conditions.includes("Inconsciente")
+                          ? "Seu personagem está inconsciente."
+                          : ["choice", "avoiding", "risking", "risk-recovery"].includes(state.character.death?.status || "")
+                            ? "Resolva o movimento de morte antes de agir."
+                            : !hasGmNarration
+                              ? "Aguardando a primeira cena do Mestre..."
                         : state.pendingRoll
                           ? `Role ${state.pendingRoll.formula || "os dados pedidos"} com /r ou pelo ícone de dado`
                           : "O que você faz?"}
-                    disabled={gmBusy || !hasGmNarration}
+                    disabled={gmBusy || !hasGmNarration || playerActionsBlocked}
                   />
-                  <button className="send" type="submit" disabled={gmBusy || !hasGmNarration}>{gmBusy ? "…" : "➤"}</button>
+                  <button className="send" type="submit" disabled={gmBusy || !hasGmNarration || playerActionsBlocked}>{gmBusy ? "…" : "➤"}</button>
                 </form>
                 <div className="composerHint"><span>{gmError ? gmError : "O estado da campanha é salvo no OracleRPG."}</span><span>{bridge.model || "Mestre local"}</span></div>
                 </section>
@@ -2711,21 +2971,56 @@ export default function OracleApp() {
               <div className="profileTop">
                 {state.character.daggerheart?.image ? (
                   <img
+                    className="characterSheetPortrait"
                     src={state.character.daggerheart.image}
                     alt={`Retrato de ${state.character.name}`}
-                    style={{ width: 88, height: 88, borderRadius: 20, objectFit: "cover" }}
                   />
                 ) : <AvatarSigil />}
                 <div><h1>{state.character.name}</h1><p>{state.character.archetype} · {state.campaign.system}</p></div>
               </div>
+              <div className="characterCoreStats">
+                <article><small>NÍVEL</small><strong>{state.character.level}</strong></article>
+                <article><small>PATAMAR</small><strong>{state.character.tier}</strong></article>
+                <article><small>EVASÃO</small><strong>{effectiveEvasion}</strong></article>
+                <article><small>PROFICIÊNCIA</small><strong>{state.character.proficiency}</strong></article>
+              </div>
+              <div className="damageThresholdRuler">
+                <div><small>LIMIARES DE DANO</small><strong>Menor</strong><span>&lt; {state.character.damageThresholds.major}</span></div>
+                <i />
+                <div><strong>Maior</strong><span>{state.character.damageThresholds.major}–{state.character.damageThresholds.severe - 1}</span></div>
+                <i />
+                <div><strong>Grave</strong><span>≥ {state.character.damageThresholds.severe}</span></div>
+              </div>
+              {state.character.daggerheart?.transformation && (
+                <div className="transformationBanner">
+                  <span>✦</span>
+                  <div><small>FORMA ATIVA</small><strong>{state.character.daggerheart.transformation.name}</strong><p>{state.character.daggerheart.transformation.notes || "A ficha está exibindo os modificadores temporários desta forma."}</p></div>
+                </div>
+              )}
               <div className="fourCols">
-                <Resource label="PV" value={state.character.hp} max={state.character.maxHp} kind="hp" onAdjust={adjust} />
+                <Resource label="PV marcados" value={state.character.hp} max={state.character.maxHp} kind="hp" onAdjust={adjust} />
                 <Resource label="Esperança" value={state.character.hope} max={state.character.maxHope} kind="hope" onAdjust={adjust} />
                 <Resource label={state.campaign.system === "Daggerheart" ? "Fadiga" : "Estresse"} value={state.character.stress} max={state.character.maxStress} kind="stress" onAdjust={adjust} />
                 <Resource label="Armadura" value={state.character.armor} max={state.character.maxArmor} kind="armor" onAdjust={adjust} />
               </div>
               {state.character.daggerheart && (
                 <>
+                  {characterTrackers.length > 0 && (
+                    <>
+                      <h3 className="subhead">Trackers</h3>
+                      <div className="characterTrackerGrid">
+                        {characterTrackers.map((tracker) => (
+                          <article className="characterTrackerCard" key={tracker.id}>
+                            <div>
+                              <small>{tracker.source.type === "classFeature" ? "CLASSE" : tracker.source.type === "subclassFeature" ? "SUBCLASSE" : tracker.source.type === "domainCard" ? "DOMÍNIO" : "TRACKER"}</small>
+                              <strong>{tracker.name}</strong>
+                            </div>
+                            <b>{tracker.kind === "die" ? `d${tracker.dieSides} · ${tracker.active ? tracker.value : "—"}` : tracker.kind === "dicePool" ? `${tracker.value} × d${tracker.dieSides}` : `${tracker.value} / ${tracker.max}`}</b>
+                          </article>
+                        ))}
+                      </div>
+                    </>
+                  )}
                   <h3 className="subhead">Daggerheart</h3>
                   <div className="cardGrid">
                     <SheetExpandableCard
@@ -2764,11 +3059,12 @@ export default function OracleApp() {
                   <h3 className="subhead">Traços</h3>
                   <div className="cardGrid">
                     {TRAIT_ORDER.map((trait) => {
-                      const value = state.character.daggerheart!.traits[trait];
+                      const value = effectiveTraits?.[trait] ?? state.character.daggerheart!.traits[trait];
+                      const transformed = effectiveTraits?.[trait] !== undefined && effectiveTraits[trait] !== state.character.daggerheart!.traits[trait];
                       return (
-                        <article className="miniCard" key={trait}>
+                        <article className={`miniCard ${transformed ? "transformedStat" : ""}`} key={trait}>
                           <b>{value >= 0 ? "+" : ""}{value}</b>
-                          <div><h3>{TRAIT_LABELS[trait]}</h3><p>Traço de personagem</p></div>
+                          <div><h3>{TRAIT_LABELS[trait]}</h3><p>{transformed ? "Modificado pela forma ativa" : "Traço de personagem"}</p></div>
                         </article>
                       );
                     })}
@@ -2861,12 +3157,12 @@ export default function OracleApp() {
                           );
                         })}
                         {state.character.daggerheart.animalCompanion && (
-                          <article className="miniCard">
+                          <article className="miniCard animalCompanionSheetCard">
                             {state.character.daggerheart.animalCompanion.image ? (
                               <img
                                 src={state.character.daggerheart.animalCompanion.image}
                                 alt={`Retrato de ${state.character.daggerheart.animalCompanion.name}`}
-                                style={{ width: 48, height: 48, borderRadius: 12, objectFit: "cover" }}
+                                className="animalCompanionPortrait"
                               />
                             ) : <b>◒</b>}
                             <div>
@@ -2875,6 +3171,18 @@ export default function OracleApp() {
                                 {state.character.daggerheart.animalCompanion.kind || "Companheiro animal"}
                                 {state.character.daggerheart.animalCompanion.appearance ? ` · ${state.character.daggerheart.animalCompanion.appearance}` : ""}
                               </p>
+                              <div className="animalCompanionStats">
+                                <span><small>EVASÃO</small><b>{state.character.daggerheart.animalCompanion.evasion}</b></span>
+                                <span><small>FADIGA</small><b>{state.character.daggerheart.animalCompanion.stress}/{state.character.daggerheart.animalCompanion.maxStress}</b></span>
+                                <span><small>DANO</small><b>{state.character.proficiency} × {state.character.daggerheart.animalCompanion.damageDie}</b></span>
+                                <span><small>ALCANCE</small><b>{state.character.daggerheart.animalCompanion.range}</b></span>
+                                <span><small>TIPO</small><b>{state.character.daggerheart.animalCompanion.damageType === "magic" ? "Mágico" : "Físico"}</b></span>
+                              </div>
+                              {state.character.daggerheart.animalCompanion.experiences.length > 0 && (
+                                <div className="animalCompanionExperiences">
+                                  {state.character.daggerheart.animalCompanion.experiences.map((experience) => <span key={experience.name}>{experience.name} +{experience.bonus}</span>)}
+                                </div>
+                              )}
                             </div>
                           </article>
                         )}
@@ -3011,6 +3319,69 @@ export default function OracleApp() {
           )}
         </section>
       </section>
+
+      {trackerInfo && (
+        <div className="trackerOverlay" role="presentation" onClick={() => setTrackerInfo(null)}>
+          <section className="trackerInfoCard" role="dialog" aria-modal="true" aria-label={trackerInfo.name}>
+            <div className="trackerInfoDie">d{trackerInfo.dieSides || trackerInfo.max}</div>
+            <small>{trackerInfo.source.type === "classFeature" ? "CARACTERÍSTICA DE CLASSE" : trackerInfo.source.type === "subclassFeature" ? "CARACTERÍSTICA DE SUBCLASSE" : trackerInfo.source.type === "domainCard" ? "CARTA DE DOMÍNIO" : "TRACKER"}</small>
+            <h2>{trackerInfo.name}</h2>
+            <p>{trackerInfo.description || "Este dado acompanha um recurso persistente da sua característica. O Mestre atualiza o valor conforme as regras e a ficção."}</p>
+            <strong>{trackerInfo.kind === "dicePool" ? `${trackerInfo.value} dado(s) disponível(is)` : trackerInfo.active ? `Valor atual: ${trackerInfo.value}` : "Inativo"}</strong>
+            <span>Toque em qualquer lugar para fechar.</span>
+          </section>
+        </div>
+      )}
+
+      {trackerEditor && (
+        <div className="trackerOverlay" role="presentation" onClick={() => setTrackerEditor(null)}>
+          <section className="trackerEditorCard" role="dialog" aria-modal="true" aria-label={`Editar ${trackerEditor.name}`} onClick={(event) => event.stopPropagation()}>
+            <small>AJUSTE MANUAL · PRESSÃO LONGA</small>
+            <h2>{trackerEditor.name}</h2>
+            <p>Use apenas quando o Mestre não tiver atualizado este tracker automaticamente.</p>
+            <div className="trackerEditorControls">
+              <button type="button" onClick={() => updateTrackerAsPlayer(trackerEditor.id, -1)}>−</button>
+              <strong>{trackerEditor.kind === "dicePool" ? trackerEditor.value : trackerEditor.active ? trackerEditor.value : 0}</strong>
+              <button type="button" onClick={() => updateTrackerAsPlayer(trackerEditor.id, 1)}>+</button>
+            </div>
+            <button type="button" className="trackerEditorDone" onClick={() => setTrackerEditor(null)}>Concluir</button>
+          </section>
+        </div>
+      )}
+
+      {state.pendingLevelUp && state.character.death?.status !== "dead" && (
+        <DaggerheartLevelUpWizard
+          baseCharacter={state.character}
+          inventory={state.inventory}
+          targetLevel={state.pendingLevelUp.targetLevel}
+          mode="modal"
+          onComplete={(plan) => completeMilestoneLevelUp(plan)}
+        />
+      )}
+
+      {state.character.death?.status === "dead" && (
+        <div className="characterDeathOverlay" role="dialog" aria-modal="true" aria-label="Personagem morto">
+          <section className="characterDeathCard">
+            <small>A JORNADA DE {state.character.name.toLocaleUpperCase("pt-BR")} TERMINOU</small>
+            <h2>O véu da morte foi atravessado.</h2>
+            <p>Esta janela não pode ser fechada. Escolha como a campanha continua.</p>
+            <div className="characterDeathActions">
+              <button type="button" onClick={() => activeCampaignId && void restartCampaign(activeCampaignId)} disabled={!activeCampaignId}>
+                <strong>Recomeçar a campanha</strong>
+                <span>Restaura a campanha ao ponto inicial e gera uma nova abertura.</span>
+              </button>
+              <button type="button" onClick={() => {
+                if (!activeCampaignId) return;
+                setReplacementCampaignId(activeCampaignId);
+                setScreen("newCampaign");
+              }} disabled={!activeCampaignId}>
+                <strong>Continuar com outro personagem</strong>
+                <span>Crie um novo personagem de nível {state.character.level} e preserve o mundo, as missões e as consequências.</span>
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
 
       <DiceOverlay
         result={activeDiceRoll}

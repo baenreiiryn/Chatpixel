@@ -1,0 +1,443 @@
+{
+  "source": "https://github.com/brunocalado/the-void-unofficial",
+  "version": "1.5.0",
+  "domainMetadata": [
+    { "sourceId": "Blood Spike", "domain": "Blood", "level": 1, "recallCost": 1 },
+    { "sourceId": "Lifeblood Talisman", "domain": "Blood", "level": 1, "recallCost": 0 },
+    { "sourceId": "Power Through Pain", "domain": "Blood", "level": 1, "recallCost": 1 },
+    { "sourceId": "Blood Puppet", "domain": "Blood", "level": 2, "recallCost": 2 },
+    { "sourceId": "Brand of Castigation", "domain": "Blood", "level": 2, "recallCost": 1 },
+    { "sourceId": "Grisly Harpoon", "domain": "Blood", "level": 3, "recallCost": 1 },
+    { "sourceId": "Weave the Flesh", "domain": "Blood", "level": 4, "recallCost": 1 },
+    { "sourceId": "Parasite of the Will", "domain": "Blood", "level": 5, "recallCost": 2 },
+    { "sourceId": "Blood Bind", "domain": "Blood", "level": 6, "recallCost": 1 },
+    { "sourceId": "Blood-Touched", "domain": "Blood", "level": 6, "recallCost": 0 },
+    { "sourceId": "Vampiric Strike", "domain": "Blood", "level": 7, "recallCost": 2 },
+    { "sourceId": "Vital Ward", "domain": "Blood", "level": 8, "recallCost": 1 },
+    { "sourceId": "Sanguine Feast", "domain": "Blood", "level": 10, "recallCost": 2 }
+  ],
+  "entries": [
+    {
+      "sourceId": "Summoner",
+      "name": "Invocador",
+      "type": "class",
+      "category": "classes",
+      "description": "Invocadores dedicam seu treinamento a práticas ocultistas capazes de chamar e comandar entidades de outros mundos. Em vez de depender apenas da própria força, eles constroem um séquito sobrenatural e aprendem a empregar cada entidade no momento certo.",
+      "art": "/compendium/daggerheart/classes/invocador.webp"
+    },
+    {
+      "sourceId": "Aid of the Spirits",
+      "name": "Auxílio dos Espíritos",
+      "type": "classFeature",
+      "category": "classes",
+      "parent": "Summoner",
+      "description": "Gaste 3 Pontos de Esperança para distribuir 2 Pontos de Esperança entre personagens jogadores em alcance Distante e, em seguida, limpe 1 Ponto de Fadiga."
+    },
+    {
+      "sourceId": "Summon Entity",
+      "name": "Invocar Entidade",
+      "type": "classFeature",
+      "category": "classes",
+      "parent": "Summoner",
+      "description": "Marque 1 Ponto de Fadiga para invocar um número de Entidades igual ao seu patamar. Você pode manter um total de Entidades invocadas igual ao seu nível. Elas permanecem Muito Próximas de você, são intangíveis e não podem ser alvo direto; quando uma tarefa arriscada depender delas, faça um Teste de Conjuração. Entidades do 1º Círculo são Espíritos do Destino: depois que um adversário obtiver sucesso em um ataque contra você ou um aliado Muito Próximo, você pode fazer um Espírito do Destino desaparecer para obrigar o adversário a repetir a rolagem e usar o novo resultado. Subclasses liberam entidades dos círculos superiores."
+    },
+    {
+      "sourceId": "Necromancy",
+      "name": "Necromancia",
+      "type": "subclass",
+      "category": "subclasses",
+      "parent": "Summoner",
+      "description": "Comande mortos inquietos e aparições, transformando cadáveres cambaleantes, fantasmas e cavaleiros da morte em extensões da sua vontade. Seu atributo de Conjuração é Conhecimento."
+    },
+    {
+      "sourceId": "Second Circle - Shambling Corpse",
+      "name": "2º Círculo — Cadáver Cambaleante",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Necromancy",
+      "tier": "foundation",
+      "description": "Você pode invocar Cadáveres Cambaleantes usando seu 2º Círculo."
+    },
+    {
+      "sourceId": "Hunger of the Grave",
+      "name": "Fome da Sepultura",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Necromancy",
+      "tier": "foundation",
+      "description": "Faça um Teste de Conjuração contra um alvo em alcance Distante. Em um sucesso, seus Cadáveres Cambaleantes avançam sobre o alvo, causando 5 de dano físico para cada Cadáver invocado antes de retornarem até você. Depois, um dos Cadáveres Cambaleantes desaparece."
+    },
+    {
+      "sourceId": "Grim Harvest",
+      "name": "Colheita Sombria",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Necromancy",
+      "tier": "foundation",
+      "description": "Quando um adversário em alcance Distante marcar seu último Ponto de Vida, você pode invocar um Cadáver Cambaleante sem marcar Fadiga."
+    },
+    {
+      "sourceId": "Third Circle - Ghosts",
+      "name": "3º Círculo — Fantasmas",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Necromancy",
+      "tier": "specialization",
+      "description": "Você pode invocar Fantasmas usando seu 3º Círculo."
+    },
+    {
+      "sourceId": "Ghostly Protectors",
+      "name": "Protetores Fantasmagóricos",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Necromancy",
+      "tier": "specialization",
+      "description": "Enquanto você tiver ao menos um Fantasma invocado, sua Evasão recebe +1 enquanto os espíritos circulam ao seu redor para protegê-lo."
+    },
+    {
+      "sourceId": "Spectral Terror",
+      "name": "Terror Espectral",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Necromancy",
+      "tier": "specialization",
+      "description": "Faça um Teste de Conjuração contra um alvo em alcance Distante. Em um sucesso, um de seus Fantasmas investe contra o alvo para aterrorizá-lo, fazendo-o marcar 1 Ponto de Fadiga. Depois, esse Fantasma desaparece."
+    },
+    {
+      "sourceId": "Fourth Circle - Death Knight",
+      "name": "4º Círculo — Cavaleiro da Morte",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Necromancy",
+      "tier": "mastery",
+      "description": "Você pode manter um único Cavaleiro da Morte por vez usando seu 4º Círculo."
+    },
+    {
+      "sourceId": "Deathly Warrior",
+      "name": "Guerreiro Mortal",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Necromancy",
+      "tier": "mastery",
+      "description": "Quando obtiver sucesso com Esperança em um teste de ataque, você pode transformar o resultado em sucesso com Medo para fazer seu Cavaleiro da Morte avançar sobre o alvo, somar 2d12 ao dano do ataque e então retornar até você."
+    },
+    {
+      "sourceId": "Knightly Bulwark",
+      "name": "Baluarte do Cavaleiro",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Necromancy",
+      "tier": "mastery",
+      "description": "Quando você sofrer dano Grave, seu Cavaleiro da Morte pode absorver um dos Pontos de Vida que seriam marcados. Depois disso, ele desaparece."
+    },
+    {
+      "sourceId": "Theurgy",
+      "name": "Teurgia",
+      "type": "subclass",
+      "category": "subclasses",
+      "parent": "Summoner",
+      "description": "Invoque seres celestiais e canalize sua presença divina. Anjos, arcanjos e manifestações divinas apoiam seus aliados e punem seus adversários."
+    },
+    {
+      "sourceId": "Second Circle - Angel",
+      "name": "2º Círculo — Anjo",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Theurgy",
+      "tier": "foundation",
+      "description": "Você pode invocar Anjos usando seu 2º Círculo."
+    },
+    {
+      "sourceId": "Angelic Presence",
+      "name": "Presença Angelical",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Theurgy",
+      "tier": "foundation",
+      "description": "Enquanto você tiver ao menos um Anjo invocado, recebe vantagem em testes de Presença para influenciar outras pessoas, pois o poder angelical ao seu redor inspira reverência e temor."
+    },
+    {
+      "sourceId": "Hopeful Strike",
+      "name": "Golpe de Esperança",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Theurgy",
+      "tier": "foundation",
+      "description": "Quando obtiver sucesso com Esperança em um teste de ataque, você pode ordenar que um Anjo cause 1d10 de dano mágico adicional ao alvo. Depois, o Anjo desaparece."
+    },
+    {
+      "sourceId": "Third Circle - Archangel",
+      "name": "3º Círculo — Arcanjo",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Theurgy",
+      "tier": "specialization",
+      "description": "Você pode invocar Arcanjos usando seu 3º Círculo."
+    },
+    {
+      "sourceId": "Divine Commander",
+      "name": "Comandante Divino",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Theurgy",
+      "tier": "specialization",
+      "description": "Enquanto você tiver ao menos um Arcanjo invocado, o dano adicional de Golpe de Esperança aumenta de d10 para d12."
+    },
+    {
+      "sourceId": "Heavenly Aid",
+      "name": "Auxílio Celestial",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Theurgy",
+      "tier": "specialization",
+      "description": "Você pode ordenar a um Arcanjo que faça uma destas ações: transportar voando você ou um aliado Muito Próximo para um ponto em alcance Distante; ou Ajudar um aliado em alcance Próximo sem gastar Esperança. Depois, o Arcanjo desaparece."
+    },
+    {
+      "sourceId": "Fourth Circle - Divine Manifestation",
+      "name": "4º Círculo — Manifestação Divina",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Theurgy",
+      "tier": "mastery",
+      "description": "Você pode manter uma única Manifestação Divina por vez usando seu 4º Círculo."
+    },
+    {
+      "sourceId": "Hallowed Hope",
+      "name": "Esperança Consagrada",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Theurgy",
+      "tier": "mastery",
+      "description": "Ao invocar uma Manifestação Divina, coloque três Dados de Esperança adicionais nesta característica. Ao fazer um teste de ação ou reação, você pode rolar e gastar um desses dados junto do seu Dado de Esperança normal e usar o maior resultado. Quando não houver mais dados nesta característica, a Manifestação Divina desaparece."
+    },
+    {
+      "sourceId": "Order of the Specter",
+      "name": "Ordem do Espectro",
+      "type": "subclass",
+      "category": "subclasses",
+      "parent": "Blood Hunter",
+      "description": "Caminhe pelo véu entre vivos e mortos, atravessando matéria e assumindo uma forma espectral quando a morte se aproxima. Seu atributo de Conjuração é Agilidade."
+    },
+    {
+      "sourceId": "Shadowed Grit",
+      "name": "Determinação Sombria",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Specter",
+      "tier": "foundation",
+      "description": "Quando obtiver sucesso com Medo em um teste de ação, você pode gastar 1 Ponto de Esperança para limpar 1 Ponto de Fadiga."
+    },
+    {
+      "sourceId": "Veilwalker",
+      "name": "Caminhante do Véu",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Specter",
+      "tier": "foundation",
+      "description": "Você pode deslizar brevemente pelo reino entre vivos e mortos. Marque 1 Ponto de Fadiga para se mover até alcance Próximo atravessando criaturas e objetos."
+    },
+    {
+      "sourceId": "Veilstalker",
+      "name": "Caçador do Véu",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Specter",
+      "tier": "specialization",
+      "description": "Quando usar Caminhante do Véu, você pode se mover para um ponto em alcance Distante e recebe vantagem no próximo teste de ação que fizer nesta cena."
+    },
+    {
+      "sourceId": "Spectral Form",
+      "name": "Forma Espectral",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Specter",
+      "tier": "mastery",
+      "description": "Uma vez por descanso longo, quando fosse marcar seu último Ponto de Vida, você pode marcar 1 Ponto de Fadiga e entrar em Forma Espectral. Nessa forma, pode atravessar matéria física e tem resistência a dano físico. Sempre que fosse marcar um Ponto de Vida, marque Fadiga no lugar. A forma termina quando você marcar seu último Ponto de Fadiga ou limpar um Ponto de Vida."
+    },
+    {
+      "sourceId": "Horror Honed",
+      "name": "Horror Lapidado",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Specter",
+      "tier": "mastery",
+      "description": "Você não pode ficar Vulnerável a menos que todos os seus Pontos de Fadiga estejam marcados."
+    },
+    {
+      "sourceId": "Hybrid Form",
+      "name": "Forma Híbrida",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Lycan",
+      "tier": "foundation",
+      "description": "Marque 1 Ponto de Fadiga para assumir uma Forma Híbrida lupina até todos os seus Pontos de Fadiga estarem marcados ou a cena terminar. Enquanto estiver nessa forma, receba um bônus de d4 em testes de ação e rolagens de dano."
+    },
+    {
+      "sourceId": "The Beast Within",
+      "name": "A Fera Interior",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Lycan",
+      "tier": "foundation",
+      "description": "Sempre que receber 1 Ponto de Esperança enquanto estiver em Forma Híbrida, você também marca 1 Ponto de Fadiga."
+    },
+    {
+      "sourceId": "Bestial Focus",
+      "name": "Foco Bestial",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Lycan",
+      "tier": "specialization",
+      "description": "Uma vez por descanso, você pode colocar uma carta de domínio na reserva e limpar um número de Pontos de Fadiga igual ao Custo de Recuperação da carta."
+    },
+    {
+      "sourceId": "Feral Empowerment",
+      "name": "Fortalecimento Feral",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Lycan",
+      "tier": "specialization",
+      "description": "O dado de bônus da sua Forma Híbrida aumenta de d4 para d6."
+    },
+    {
+      "sourceId": "Regeneration",
+      "name": "Regeneração",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Lycan",
+      "tier": "mastery",
+      "description": "Quando obtiver sucesso com Esperança enquanto estiver em Forma Híbrida, role 1d4. Se o resultado for maior que o número atual de espaços de Ponto de Vida desmarcados, limpe 1 Ponto de Vida."
+    },
+    {
+      "sourceId": "Apex Hunter",
+      "name": "Predador Supremo",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "parent": "Order of the Lycan",
+      "tier": "mastery",
+      "description": "O dado de bônus da sua Forma Híbrida aumenta de d6 para d8."
+    },
+    {
+      "sourceId": "Palpitations",
+      "name": "Palpitações",
+      "type": "domainCard",
+      "category": "domains",
+      "domain": "Blood",
+      "level": 2,
+      "recallCost": 2,
+      "description": "Quando você ou um aliado fizer um teste de ação para assustar ou intimidar uma criatura em alcance Próximo, você pode gastar 1 Ponto de Esperança para dar vantagem ao teste. Em um sucesso, o alvo marca 1 Ponto de Fadiga. Além disso, uma vez por descanso longo, você pode gastar 1 Ponto de Esperança para acalmar a si mesmo ou uma criatura voluntária em alcance Próximo, permitindo que o alvo limpe 2 Pontos de Fadiga."
+    },
+    {
+      "sourceId": "Burning Gore",
+      "name": "Sangue em Chamas",
+      "type": "domainCard",
+      "category": "domains",
+      "domain": "Blood",
+      "level": 3,
+      "recallCost": 3,
+      "description": "Faça um Teste de Conjuração (13). Em um sucesso, marque 1 Ponto de Vida para incendiar o sangue de um grupo em alcance Distante, fazendo cada alvo marcar 1 Ponto de Vida. Se você tiver ao menos 3 Pontos de Vida marcados, cada alvo marca 2 Pontos de Vida no lugar."
+    },
+    {
+      "sourceId": "Viscous Form",
+      "name": "Forma Viscosa",
+      "type": "domainCard",
+      "category": "domains",
+      "domain": "Blood",
+      "level": 5,
+      "recallCost": 1,
+      "description": "Marque 1 Ponto de Fadiga para colocar nesta carta um número de marcadores igual ao seu atributo de Conjuração e se transformar em uma poça de sangue. Remova um marcador sempre que fizer um teste de ação ou sofrer dano. Você sai da forma quando remover o último marcador. Nessa forma, tem resistência a dano físico e pode atravessar qualquer espaço por onde um líquido conseguiria passar."
+    },
+    {
+      "sourceId": "Life Link",
+      "name": "Elo Vital",
+      "type": "domainCard",
+      "category": "domains",
+      "domain": "Blood",
+      "level": 6,
+      "recallCost": 0,
+      "description": "Faça um Teste de Conjuração (14). Uma vez por descanso, em um sucesso, crie um elo mágico entre você e um alvo voluntário em alcance Próximo até o fim da cena. Quando qualquer uma das criaturas ligadas fosse marcar um Ponto de Vida, a outra pode marcar esse Ponto de Vida no lugar."
+    },
+    {
+      "sourceId": "Bleeding Tree",
+      "name": "Árvore Sangrenta",
+      "type": "domainCard",
+      "category": "domains",
+      "domain": "Blood",
+      "level": 7,
+      "recallCost": 2,
+      "description": "Uma vez por descanso longo, quando um adversário em alcance Próximo for derrotado, faça o corpo dele irromper em uma árvore retorcida que exsuda força vital. Coloque nesta carta marcadores iguais ao seu atributo de Conjuração. Um personagem em alcance Corpo a Corpo da árvore pode gastar um marcador para drenar essa força e limpar 1 Ponto de Vida."
+    },
+    {
+      "sourceId": "Glyph of Hemorrhaging",
+      "name": "Glifo de Hemorragia",
+      "type": "domainCard",
+      "category": "domains",
+      "domain": "Blood",
+      "level": 8,
+      "recallCost": 2,
+      "description": "Faça um Teste de Conjuração contra um alvo em alcance Próximo. Em um sucesso, gaste 1 Ponto de Esperança para marcá-lo com um glifo mágico que provoca sangramento intenso. Até o glifo desaparecer, o dano que o alvo sofre aumenta uma categoria de limiar. O glifo desaparece quando você descansa, lança esta magia novamente ou o alvo sofre dano Grave ou maior."
+    },
+    {
+      "sourceId": "Ichor Wave",
+      "name": "Onda de Ícor",
+      "type": "domainCard",
+      "category": "domains",
+      "domain": "Blood",
+      "level": 9,
+      "recallCost": 3,
+      "description": "Marque 1 Ponto de Vida para fazer um Teste de Conjuração contra todos os alvos à sua frente em alcance Próximo. Em um sucesso, cause d10 de dano mágico usando o número de Pontos de Vida que você tem marcados no lugar da sua Proficiência. Em uma falha, cause metade do dano."
+    },
+    {
+      "sourceId": "Scabrous Adamance",
+      "name": "Tenacidade Escabrosa",
+      "type": "domainCard",
+      "category": "domains",
+      "domain": "Blood",
+      "level": 10,
+      "recallCost": 1,
+      "description": "Suas feridas se fecham em crostas semelhantes a uma armadura. Quando um ataque fizer você marcar 2 ou mais Pontos de Vida, limpe 1 Espaço de Armadura."
+    },
+    {
+      "sourceId": "50ft of Rope",
+      "name": "Corda de 15 Metros",
+      "type": "loot",
+      "category": "equipment",
+      "description": "Uma corda resistente de aproximadamente 15 metros, parte do equipamento inicial do Invocador."
+    },
+    {
+      "sourceId": "a harmless spirit trapped inside a glass bottle",
+      "name": "Espírito Inofensivo Preso em uma Garrafa de Vidro",
+      "type": "loot",
+      "category": "equipment",
+      "description": "Uma pequena garrafa de vidro que contém um espírito inofensivo; pode ser escolhida como item inicial do Invocador."
+    },
+    {
+      "sourceId": "a pair of mysterious coins",
+      "name": "Par de Moedas Misteriosas",
+      "type": "loot",
+      "category": "equipment",
+      "description": "Duas moedas de origem e significado incertos; podem ser escolhidas como item inicial do Invocador."
+    },
+    {
+      "sourceId": "Steel Needle",
+      "name": "Agulha de Aço",
+      "type": "loot",
+      "category": "equipment",
+      "description": "Uma agulha de aço usada nos preparos e rituais do Caçador de Sangue."
+    },
+    {
+      "sourceId": "Vial Holding a Foe's Blood",
+      "name": "Frasco com Sangue de um Inimigo",
+      "type": "loot",
+      "category": "equipment",
+      "description": "Um pequeno frasco contendo o sangue de um inimigo, escolhido como item inicial do Caçador de Sangue."
+    },
+    {
+      "sourceId": "Lifeblood Talisman (Consumable)",
+      "name": "Talismã de Sangue Vital",
+      "type": "consumable",
+      "category": "equipment",
+      "description": "Talismã criado pela carta de domínio Sangue Vital. Quando seu portador sofrer dano Grave ou maior, ele pode destruir o talismã para reduzir a gravidade do dano em duas categorias. O talismã desaparece se seu criador descansar ou conjurar Sangue Vital novamente."
+    }
+  ]
+}

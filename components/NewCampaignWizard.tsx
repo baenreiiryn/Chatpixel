@@ -22,7 +22,16 @@ import {
 } from "@/lib/characterCreation/daggerheart";
 import { daggerheartCompendium, entryTypeLabel, type CompendiumEntry } from "@/lib/compendium/daggerheart";
 import { extractNarration } from "@/lib/gm";
-import type { CharacterTraitName, InventoryItem } from "@/lib/game";
+import {
+  classStatsFor,
+  daggerheartTierForLevel,
+  equipmentEvasionBonus,
+  reconcileCharacterTrackers,
+  thresholdsFromEquipment,
+} from "@/lib/daggerheartCharacter";
+import { reconcileDaggerheartAdvancementTrackers, type DaggerheartLevelUpPlan } from "@/lib/daggerheartAdvancement";
+import DaggerheartLevelUpWizard from "@/components/DaggerheartLevelUpWizard";
+import type { CharacterState, CharacterTraitName, InventoryItem } from "@/lib/game";
 
 type AiResponse = { output?: unknown[]; output_text?: unknown };
 
@@ -46,6 +55,7 @@ type CompanionDraft = {
 };
 
 export type NewCampaignResult = {
+  level: number;
   campaignName: string;
   tone: string;
   adventureHook?: string;
@@ -84,14 +94,33 @@ export type NewCampaignResult = {
     kind: string;
     image?: string;
     appearance?: string;
+    evasion: number;
+    stress: number;
+    maxStress: number;
+    damageDie: "d6" | "d8" | "d10" | "d12";
+    range: string;
+    damageType: "physical" | "magic";
+    experiences: Array<{ name: string; bonus: number }>;
+    training: string[];
   };
   armorSlots: number;
+  advancementPlan: DaggerheartLevelUpPlan;
+  resolvedCharacter: CharacterState;
 };
+
+type NewCampaignBaseResult = Omit<NewCampaignResult, "advancementPlan" | "resolvedCharacter">;
 
 type Props = {
   ai: NewCampaignAiAdapter;
   onBack: () => void;
   onComplete: (result: NewCampaignResult) => void | Promise<void>;
+  mode?: "new" | "replacement";
+  fixedLevel?: number;
+  campaignDefaults?: {
+    name: string;
+    tone: string;
+    adventureHook?: string;
+  };
 };
 
 const STEP_LABELS = [
@@ -214,7 +243,7 @@ function sourceId(entry: CompendiumEntry | undefined) {
   return entry?.sourceId || "";
 }
 
-export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
+export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new", fixedLevel, campaignDefaults }: Props) {
   const classes = useMemo(() => classEntries(), []);
   const ancestries = useMemo(() => ancestryEntries(), []);
   const communities = useMemo(() => communityEntries(), []);
@@ -223,11 +252,12 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     [],
   );
 
-  const [step, setStep] = useState(0);
-  const [campaignName, setCampaignName] = useState("");
-  const [toneId, setToneId] = useState(TONE_OPTIONS[0]?.id || "heroic");
-  const [customTone, setCustomTone] = useState("");
-  const [adventureHook, setAdventureHook] = useState("");
+  const [step, setStep] = useState(mode === "replacement" ? 1 : 0);
+  const [level, setLevel] = useState(Math.max(1, Math.min(10, fixedLevel || 1)));
+  const [campaignName, setCampaignName] = useState(campaignDefaults?.name || "");
+  const [toneId, setToneId] = useState(campaignDefaults ? "custom" : TONE_OPTIONS[0]?.id || "heroic");
+  const [customTone, setCustomTone] = useState(campaignDefaults?.tone || "");
+  const [adventureHook, setAdventureHook] = useState(campaignDefaults?.adventureHook || "");
 
   const [classId, setClassId] = useState("");
   const [subclassId, setSubclassId] = useState("");
@@ -278,7 +308,14 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
   const [animalAppearance, setAnimalAppearance] = useState("");
   const [animalImageBusy, setAnimalImageBusy] = useState(false);
   const [animalImageError, setAnimalImageError] = useState("");
+  const [animalExperienceA, setAnimalExperienceA] = useState("");
+  const [animalExperienceB, setAnimalExperienceB] = useState("");
+  const [animalDamageType, setAnimalDamageType] = useState<"physical" | "magic">("physical");
   const [finishing, setFinishing] = useState(false);
+  const [pendingAdvancement, setPendingAdvancement] = useState<{
+    result: NewCampaignBaseResult;
+    baseCharacter: CharacterState;
+  } | null>(null);
 
   const selectedClass = classes.find((entry) => sourceId(entry) === classId);
   const subclasses = useMemo(() => (classId ? subclassesFor(classId) : []), [classId]);
@@ -579,7 +616,16 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
       return manualEquipmentIds.size > 0 || Boolean(customEquipment.trim());
     }
     if (step === 8) {
-      return Boolean(characterName.trim() && history.trim()) && !historyBusy && !characterImageBusy && !animalImageBusy;
+      const companionReady = !isBeastbound || Boolean(
+        animalName.trim()
+        && animalExperienceA.trim()
+        && animalExperienceB.trim(),
+      );
+      return Boolean(characterName.trim() && history.trim())
+        && companionReady
+        && !historyBusy
+        && !characterImageBusy
+        && !animalImageBusy;
     }
     return false;
   }, [
@@ -600,6 +646,10 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     manualEquipmentIds,
     mixedAncestry,
     animalImageBusy,
+    animalExperienceA,
+    animalExperienceB,
+    animalName,
+    isBeastbound,
     primaryAncestryFeatures,
     secondaryAncestryFeatures,
     step,
@@ -643,6 +693,71 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     return sourceItems.map((item) => ({ ...item, id: randomId("item") }));
   }
 
+  function levelOneCharacterFromResult(result: NewCampaignBaseResult): CharacterState {
+    const sourceClass = result.classEntry.sourceId || result.classEntry.name;
+    const sourceSubclass = result.subclassEntry.sourceId || result.subclassEntry.name;
+    const classStats = classStatsFor(sourceClass);
+    const base: CharacterState = {
+      id: "player-character",
+      name: result.character.name.trim() || "Novo personagem",
+      archetype: `${result.classEntry.name} · ${result.subclassEntry.name}`,
+      level: 1,
+      tier: 1,
+      evasion: classStats.evasion + equipmentEvasionBonus(result.equipment),
+      damageThresholds: thresholdsFromEquipment(result.equipment, 1),
+      proficiency: 1,
+      hp: 0,
+      maxHp: classStats.hitPoints,
+      hope: 2,
+      maxHope: 6,
+      stress: 0,
+      maxStress: 6,
+      armor: 0,
+      maxArmor: result.armorSlots,
+      conditions: [],
+      scars: 0,
+      appearance: result.character.appearance?.trim() || undefined,
+      daggerheart: {
+        class: { id: result.classEntry.id, name: result.classEntry.name },
+        subclass: { id: result.subclassEntry.id, name: result.subclassEntry.name },
+        classFeatures: result.classFeatures.map((feature) => ({ id: feature.id, name: feature.name })),
+        subclassFeatures: result.subclassFeatures.map((feature) => ({ id: feature.id, name: feature.name })),
+        ancestry: {
+          mixed: result.ancestry.mixed,
+          primary: { id: result.ancestry.primary.id, name: result.ancestry.primary.name },
+          secondary: result.ancestry.secondary
+            ? { id: result.ancestry.secondary.id, name: result.ancestry.secondary.name }
+            : undefined,
+          features: result.ancestry.features.map((feature) => ({ id: feature.id, name: feature.name })),
+        },
+        community: {
+          id: result.community.entry.id,
+          name: result.community.entry.name,
+          features: result.community.features.map((feature) => ({ id: feature.id, name: feature.name })),
+        },
+        traits: { ...result.traits },
+        experiences: result.experiences.map((name) => ({ name: name.trim(), bonus: 2 })),
+        domains: [...(CLASS_CONFIG[sourceClass]?.domains || Array.from(new Set(result.domainCards.map((card) => card.domain))))],
+        domainCards: result.domainCards.map((card) => ({
+          id: card.id,
+          name: card.name,
+          domain: card.domain,
+          level: card.level || 1,
+        })),
+        connections: result.companions
+          .filter((companion) => companion.connection.trim())
+          .map((companion) => ({ npcId: companion.id, text: companion.connection.trim() })),
+        history: result.character.history.trim(),
+        pronouns: result.character.pronouns.trim() || undefined,
+        image: result.character.image || undefined,
+        animalCompanion: result.animalCompanion,
+        trackers: reconcileCharacterTrackers(undefined, sourceClass, 1, sourceSubclass),
+      },
+    };
+    base.daggerheart!.trackers = reconcileDaggerheartAdvancementTrackers(base);
+    return base;
+  }
+
   async function finish() {
     if (finishing || !stepValid || !selectedClass || !selectedSubclass || !selectedAncestryA || !selectedCommunity || !classConfig) return;
 
@@ -655,52 +770,70 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     const tone = toneId === "custom"
       ? customTone.trim()
       : TONE_OPTIONS.find((toneOption) => toneOption.id === toneId)?.name || "Fantasia heroica";
+    const result: NewCampaignBaseResult = {
+      level,
+      campaignName: campaignName.trim() || "Nova campanha",
+      tone,
+      adventureHook: toneId === "custom" ? adventureHook.trim() || undefined : undefined,
+      system: "Daggerheart",
+      classEntry: selectedClass,
+      subclassEntry: selectedSubclass,
+      classFeatures: selectedClassFeatures,
+      subclassFeatures: selectedSubclassFeatures,
+      ancestry: {
+        mixed: mixedAncestry,
+        primary: selectedAncestryA,
+        ...(mixedAncestry && selectedAncestryB ? { secondary: selectedAncestryB } : {}),
+        features: ancestryFeatures,
+      },
+      community: { entry: selectedCommunity, features: selectedCommunityFeatures },
+      traits: { ...traits },
+      experiences: experiences.map((experience) => experience.trim()),
+      domainCards: cards,
+      equipment,
+      character: {
+        name: characterName.trim(),
+        pronouns: pronouns.trim(),
+        history: history.trim(),
+        image: characterImage || undefined,
+        appearance: appearance || undefined,
+      },
+      companions: companions.map((companion) => ({
+        id: companion.id,
+        name: companion.name,
+        role: companion.role,
+        appearance: companion.appearance || "",
+        connection: (companionRelations[companion.id] || "").trim(),
+      })),
+      ...(isRanger && (animalName.trim() || animalKind.trim() || animalImage || animalAppearance.trim()) ? {
+        animalCompanion: {
+          name: animalName.trim() || "Companheiro animal",
+          kind: animalKind.trim(),
+          image: animalImage || undefined,
+          appearance: animalAppearance || undefined,
+          evasion: 10,
+          stress: 0,
+          maxStress: 3,
+          damageDie: "d6",
+          range: "Corpo a Corpo",
+          damageType: animalDamageType,
+          experiences: [animalExperienceA, animalExperienceB]
+            .map((name) => name.trim())
+            .filter(Boolean)
+            .map((name) => ({ name, bonus: 2 })),
+          training: [],
+        },
+      } : {}),
+      armorSlots: armorSlotsFromItems(equipment),
+    };
+    const baseCharacter = levelOneCharacterFromResult(result);
+    if (level > 1) {
+      setPendingAdvancement({ result, baseCharacter });
+      return;
+    }
     setFinishing(true);
     try {
-      await onComplete({
-        campaignName: campaignName.trim() || "Nova campanha",
-        tone,
-        adventureHook: toneId === "custom" ? adventureHook.trim() || undefined : undefined,
-        system: "Daggerheart",
-        classEntry: selectedClass,
-        subclassEntry: selectedSubclass,
-        classFeatures: selectedClassFeatures,
-        subclassFeatures: selectedSubclassFeatures,
-        ancestry: {
-          mixed: mixedAncestry,
-          primary: selectedAncestryA,
-          ...(mixedAncestry && selectedAncestryB ? { secondary: selectedAncestryB } : {}),
-          features: ancestryFeatures,
-        },
-        community: { entry: selectedCommunity, features: selectedCommunityFeatures },
-        traits: { ...traits },
-        experiences: experiences.map((experience) => experience.trim()),
-        domainCards: cards,
-        equipment,
-        character: {
-          name: characterName.trim(),
-          pronouns: pronouns.trim(),
-          history: history.trim(),
-          image: characterImage || undefined,
-          appearance: appearance || undefined,
-        },
-        companions: companions.map((companion) => ({
-          id: companion.id,
-          name: companion.name,
-          role: companion.role,
-          appearance: companion.appearance || "",
-          connection: (companionRelations[companion.id] || "").trim(),
-        })),
-        ...(isRanger && (animalName.trim() || animalKind.trim() || animalImage || animalAppearance.trim()) ? {
-          animalCompanion: {
-            name: animalName.trim() || "Companheiro animal",
-            kind: animalKind.trim(),
-            image: animalImage || undefined,
-            appearance: animalAppearance || undefined,
-          },
-        } : {}),
-        armorSlots: armorSlotsFromItems(equipment),
-      });
+      await onComplete({ ...result, advancementPlan: [], resolvedCharacter: baseCharacter });
     } finally {
       setFinishing(false);
     }
@@ -711,6 +844,30 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
     : TONE_OPTIONS.find((tone) => tone.id === toneId)?.name || "—";
   const selectedDomains = classConfig?.domains || [];
 
+  if (pendingAdvancement) {
+    return (
+      <DaggerheartLevelUpWizard
+        baseCharacter={pendingAdvancement.baseCharacter}
+        inventory={pendingAdvancement.result.equipment}
+        targetLevel={pendingAdvancement.result.level}
+        mode="inline"
+        onCancel={() => setPendingAdvancement(null)}
+        onComplete={async (advancementPlan, finalCharacter) => {
+          setFinishing(true);
+          try {
+            await onComplete({
+              ...pendingAdvancement.result,
+              advancementPlan,
+              resolvedCharacter: finalCharacter,
+            });
+          } finally {
+            setFinishing(false);
+          }
+        }}
+      />
+    );
+  }
+
   return (
     <main className="campaignWizardShell">
       <div className="campaignWizardAmbient campaignWizardAmbientA" />
@@ -718,7 +875,7 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
       <header className="campaignWizardHeader">
         <button className="campaignWizardBack" onClick={onBack} aria-label="Voltar">‹</button>
         <div>
-          <small>NOVA CAMPANHA</small>
+          <small>{mode === "replacement" ? "NOVO PERSONAGEM" : "NOVA CAMPANHA"}</small>
           <strong>Daggerheart</strong>
         </div>
         <span>{step + 1} / {STEP_LABELS.length}</span>
@@ -786,6 +943,26 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
           {step === 1 && (
             <div className="campaignWizardStep">
               <div className="campaignWizardIntro"><small>PASSO 2</small><h1>Escolha sua classe.</h1><p>A classe define seus dois domínios e oferece os traços e equipamentos sugeridos usados nos próximos passos.</p></div>
+              <div className="campaignWizardLevelBlock">
+                <div className="campaignWizardSectionTitle"><small>NÍVEL INICIAL</small><strong>Nível {level} · Patamar {daggerheartTierForLevel(level)}</strong></div>
+                <div className="campaignWizardLevelGrid">
+                  {Array.from({ length: 10 }, (_, index) => index + 1).map((candidate) => (
+                    <button
+                      type="button"
+                      key={candidate}
+                      className={candidate === level ? "selected" : ""}
+                      disabled={fixedLevel !== undefined && candidate !== fixedLevel}
+                      onClick={() => fixedLevel === undefined && setLevel(candidate)}
+                    >
+                      <b>{candidate}</b>
+                      <span>P{daggerheartTierForLevel(candidate)}</span>
+                    </button>
+                  ))}
+                </div>
+                <p className="campaignWizardHint">
+                  O nível define seu patamar e ajusta os limiares de dano. A Proficiência-base acompanha o patamar (1/2/3/4); aumentos opcionais comprados como avanços não são escolhidos automaticamente.
+                </p>
+              </div>
               <div className="campaignWizardChoiceGrid classGrid">
                 {classes.map((entry) => {
                   const id = sourceId(entry);
@@ -1078,6 +1255,23 @@ export default function NewCampaignWizard({ ai, onBack, onComplete }: Props) {
                     <label className="campaignWizardField"><span>Nome</span><input value={animalName} onChange={(event) => setAnimalName(event.target.value)} placeholder="Nome do animal" /></label>
                     <label className="campaignWizardField"><span>Tipo <em>opcional</em></span><input value={animalKind} onChange={(event) => setAnimalKind(event.target.value)} placeholder="Ex.: lobo, falcão, lagarto" /></label>
                   </div>
+                  {isBeastbound && (
+                    <div className="campaignWizardAnimalStats">
+                      <div><small>EVASÃO</small><strong>10</strong></div>
+                      <div><small>FADIGA</small><strong>0 / 3</strong></div>
+                      <div><small>DANO</small><strong>Proficiência × d6</strong></div>
+                      <div><small>ALCANCE</small><strong>Corpo a Corpo</strong></div>
+                      <label className="campaignWizardField">
+                        <span>Tipo de dano</span>
+                        <select value={animalDamageType} onChange={(event) => setAnimalDamageType(event.target.value as "physical" | "magic")}>
+                          <option value="physical">Físico</option>
+                          <option value="magic">Mágico</option>
+                        </select>
+                      </label>
+                      <label className="campaignWizardField"><span>Experiência 1 <em>+2</em></span><input value={animalExperienceA} onChange={(event) => setAnimalExperienceA(event.target.value)} placeholder="Ex.: Farejador incansável" /></label>
+                      <label className="campaignWizardField"><span>Experiência 2 <em>+2</em></span><input value={animalExperienceB} onChange={(event) => setAnimalExperienceB(event.target.value)} placeholder="Ex.: Protetor feroz" /></label>
+                    </div>
+                  )}
                   <div className="campaignWizardUploadRow">
                     <div className={`campaignWizardImagePreview animal ${animalImage ? "hasImage" : ""}`}>{animalImage ? <img src={animalImage} alt="Referência do companheiro animal" /> : <span>✦</span>}</div>
                     <div>
