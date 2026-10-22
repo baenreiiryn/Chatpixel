@@ -42,6 +42,22 @@ test("legacy remaining HP migrates once into marked HP and stays stable", () => 
   assert.strictEqual(game.ensureGameStateCharacterModel(migrated), migrated);
 });
 
+test("legacy restart snapshot also migrates full remaining HP into zero marked HP", () => {
+  const state = structuredClone(game.initialState);
+  delete state.resourceModelVersion;
+  state.character.hp = state.character.maxHp;
+  state.campaign.restartSnapshot = game.createCampaignRestartSnapshot(state);
+  state.campaign.restartSnapshot.character.hp = state.campaign.restartSnapshot.character.maxHp;
+
+  const migrated = game.ensureGameStateCharacterModel(state);
+  assert.equal(migrated.character.hp, 0);
+  assert.equal(migrated.campaign.restartSnapshot.character.hp, 0);
+
+  const restarted = game.restartCampaignFromSnapshot(migrated);
+  assert.equal(restarted.character.hp, 0);
+  assert.equal(restarted.character.death, undefined);
+});
+
 test("marked HP reaches the death choice at max and healing clears unconscious", () => {
   const state = structuredClone(game.initialState);
   state.character.hp = state.character.maxHp - 1;

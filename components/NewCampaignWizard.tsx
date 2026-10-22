@@ -1256,21 +1256,31 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
                     <label className="campaignWizardField"><span>Tipo <em>opcional</em></span><input value={animalKind} onChange={(event) => setAnimalKind(event.target.value)} placeholder="Ex.: lobo, falcão, lagarto" /></label>
                   </div>
                   {isBeastbound && (
-                    <div className="campaignWizardAnimalStats">
-                      <div><small>EVASÃO</small><strong>10</strong></div>
-                      <div><small>FADIGA</small><strong>0 / 3</strong></div>
-                      <div><small>DANO</small><strong>Proficiência × d6</strong></div>
-                      <div><small>ALCANCE</small><strong>Corpo a Corpo</strong></div>
-                      <label className="campaignWizardField">
-                        <span>Tipo de dano</span>
-                        <select value={animalDamageType} onChange={(event) => setAnimalDamageType(event.target.value as "physical" | "magic")}>
-                          <option value="physical">Físico</option>
-                          <option value="magic">Mágico</option>
-                        </select>
-                      </label>
-                      <label className="campaignWizardField"><span>Experiência 1 <em>+2</em></span><input value={animalExperienceA} onChange={(event) => setAnimalExperienceA(event.target.value)} placeholder="Ex.: Farejador incansável" /></label>
-                      <label className="campaignWizardField"><span>Experiência 2 <em>+2</em></span><input value={animalExperienceB} onChange={(event) => setAnimalExperienceB(event.target.value)} placeholder="Ex.: Protetor feroz" /></label>
-                    </div>
+                    <>
+                      <div className="campaignWizardAnimalStats">
+                        <div><small>EVASÃO</small><strong>10</strong></div>
+                        <div><small>FADIGA</small><strong>0 / 3</strong></div>
+                        <div><small>DANO</small><strong>Proficiência × d6</strong></div>
+                        <div><small>ALCANCE</small><strong>Corpo a Corpo</strong></div>
+                        <label className="campaignWizardField">
+                          <span>Tipo de dano</span>
+                          <select value={animalDamageType} onChange={(event) => setAnimalDamageType(event.target.value as "physical" | "magic")}>
+                            <option value="physical">Físico</option>
+                            <option value="magic">Mágico</option>
+                          </select>
+                        </label>
+                      </div>
+                      <div className="campaignWizardCompanionExperiences">
+                        <div className="campaignWizardSectionTitle">
+                          <small>EXPERIÊNCIAS DO COMPANHEIRO</small>
+                          <strong>Defina as duas Experiências iniciais</strong>
+                        </div>
+                        <div className="campaignWizardIdentityGrid">
+                          <label className="campaignWizardField"><span>Experiência 1 <em>+2</em></span><input value={animalExperienceA} onChange={(event) => setAnimalExperienceA(event.target.value)} placeholder="Ex.: Farejador incansável" /></label>
+                          <label className="campaignWizardField"><span>Experiência 2 <em>+2</em></span><input value={animalExperienceB} onChange={(event) => setAnimalExperienceB(event.target.value)} placeholder="Ex.: Protetor feroz" /></label>
+                        </div>
+                      </div>
+                    </>
                   )}
                   <div className="campaignWizardUploadRow">
                     <div className={`campaignWizardImagePreview animal ${animalImage ? "hasImage" : ""}`}>{animalImage ? <img src={animalImage} alt="Referência do companheiro animal" /> : <span>✦</span>}</div>

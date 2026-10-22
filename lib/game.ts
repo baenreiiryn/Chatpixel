@@ -444,6 +444,22 @@ export function ensureGameStateCharacterModel(state: GameState): GameState {
   const level = Math.max(1, Math.min(10, Math.trunc(state.character.level || 1)));
   const stats = classStatsFor(sourceClass);
   const legacyHp = (state.resourceModelVersion ?? 0) < RESOURCE_MODEL_VERSION;
+  const legacyRestartSnapshot = state.campaign.restartSnapshot;
+  const migratedRestartSnapshot = legacyHp && legacyRestartSnapshot
+    ? {
+        ...legacyRestartSnapshot,
+        character: {
+          ...legacyRestartSnapshot.character,
+          hp: markedHitPointsAfterLegacyMigration(
+            legacyRestartSnapshot.character.hp,
+            legacyRestartSnapshot.character.maxHp,
+          ),
+        },
+      }
+    : legacyRestartSnapshot;
+  const campaign = migratedRestartSnapshot !== legacyRestartSnapshot
+    ? { ...state.campaign, restartSnapshot: migratedRestartSnapshot }
+    : state.campaign;
   const currentTrackers = state.character.daggerheart?.trackers;
   const progression = state.character.daggerheart
     ? ensureDaggerheartProgressionState(state.character.progression)
@@ -509,8 +525,9 @@ export function ensureGameStateCharacterModel(state: GameState): GameState {
     || character.progression !== state.character.progression
     || trackers !== currentTrackers
     || character.daggerheart !== state.character.daggerheart
-    || character.death !== state.character.death;
-  return changed ? { ...state, resourceModelVersion: RESOURCE_MODEL_VERSION, character } : state;
+    || character.death !== state.character.death
+    || campaign !== state.campaign;
+  return changed ? { ...state, resourceModelVersion: RESOURCE_MODEL_VERSION, campaign, character } : state;
 }
 
 const TIMELINE_SCHEMA_VERSION = 2;

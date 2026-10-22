@@ -807,6 +807,7 @@ export default function OracleApp() {
   const [state, setState] = useState<GameState>(initialState);
   const [screen, setScreen] = useState<AppScreen>("home");
   const [view, setView] = useState<View>("session");
+  const [characterSheetMode, setCharacterSheetMode] = useState<"character" | "companion">("character");
   const [memoryMode, setMemoryMode] = useState<"timeline" | "details">("timeline");
   const [input, setInput] = useState("");
   const [ready, setReady] = useState(false);
@@ -854,6 +855,10 @@ export default function OracleApp() {
   useEffect(() => {
     stateRef.current = state;
   }, [state]);
+
+  useEffect(() => {
+    setCharacterSheetMode("character");
+  }, [activeCampaignId, state.character.name]);
 
   useEffect(() => {
     if (activeCampaignIdRef.current === activeCampaignId) return;
@@ -1031,6 +1036,8 @@ export default function OracleApp() {
   const diceTrackers = characterTrackers.filter((tracker) => tracker.kind === "die" || tracker.kind === "dicePool");
   const effectiveTraits = useMemo(() => effectiveCharacterTraits(state.character), [state.character]);
   const effectiveEvasion = useMemo(() => effectiveCharacterEvasion(state.character), [state.character]);
+  const animalCompanion = state.character.daggerheart?.animalCompanion;
+  const showingCompanionSheet = Boolean(animalCompanion && characterSheetMode === "companion");
   const deathBlocksActions = Boolean(
     state.character.conditions.includes("Inconsciente")
     || ["choice", "avoiding", "risking", "risk-recovery", "dead"].includes(state.character.death?.status || ""),
@@ -2967,7 +2974,90 @@ export default function OracleApp() {
 
           {view === "character" && (
             <section className="widePanel panel">
-              <div className="eyebrow">PERSONAGEM</div>
+              {animalCompanion ? (
+                <div className="characterSheetTabs" role="tablist" aria-label="Ficha ativa">
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={!showingCompanionSheet}
+                    className={!showingCompanionSheet ? "active" : ""}
+                    onClick={() => setCharacterSheetMode("character")}
+                  >Personagem</button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={showingCompanionSheet}
+                    className={showingCompanionSheet ? "active" : ""}
+                    onClick={() => setCharacterSheetMode("companion")}
+                  >Companheiro</button>
+                </div>
+              ) : <div className="eyebrow">PERSONAGEM</div>}
+              {showingCompanionSheet && animalCompanion && (
+                <div className="companionSheetView">
+                  <div className="profileTop companionProfileTop">
+                    {animalCompanion.image ? (
+                      <img
+                        className="characterSheetPortrait"
+                        src={animalCompanion.image}
+                        alt={`Retrato de ${animalCompanion.name}`}
+                      />
+                    ) : <AvatarSigil />}
+                    <div>
+                      <small className="companionSheetKicker">COMPANHEIRO ANIMAL</small>
+                      <h1>{animalCompanion.name}</h1>
+                      <p>{animalCompanion.kind || "Companheiro animal"}</p>
+                    </div>
+                  </div>
+
+                  {animalCompanion.appearance && (
+                    <article className="miniCard companionAppearanceCard">
+                      <b>◇</b>
+                      <div><h3>Aparência</h3><p>{animalCompanion.appearance}</p></div>
+                    </article>
+                  )}
+
+                  <h3 className="subhead">Características</h3>
+                  <div className="companionCoreStats">
+                    <article><small>EVASÃO</small><strong>{animalCompanion.evasion}</strong></article>
+                    <article><small>FADIGA</small><strong>{animalCompanion.stress} / {animalCompanion.maxStress}</strong></article>
+                    <article><small>DANO</small><strong>{state.character.proficiency} × {animalCompanion.damageDie}</strong></article>
+                    <article><small>ALCANCE</small><strong>{animalCompanion.range}</strong></article>
+                    <article><small>TIPO</small><strong>{animalCompanion.damageType === "magic" ? "Mágico" : "Físico"}</strong></article>
+                  </div>
+
+                  <h3 className="subhead">Experiências</h3>
+                  <div className="cardGrid">
+                    {animalCompanion.experiences.map((experience) => (
+                      <article className="miniCard" key={experience.name}>
+                        <b>+{experience.bonus}</b>
+                        <div><h3>{experience.name}</h3><p>Experiência do companheiro</p></div>
+                      </article>
+                    ))}
+                    {!animalCompanion.experiences.length && (
+                      <article className="miniCard companionEmptyCard">
+                        <b>◇</b>
+                        <div><h3>Sem experiências registradas</h3><p>As experiências iniciais são definidas durante a criação do Patrulheiro Treinador.</p></div>
+                      </article>
+                    )}
+                  </div>
+
+                  {Boolean(animalCompanion.training?.length) && (
+                    <>
+                      <h3 className="subhead">Treinamento</h3>
+                      <div className="cardGrid">
+                        {animalCompanion.training!.map((training, index) => (
+                          <article className="miniCard" key={`${training}-${index}`}>
+                            <b>✦</b>
+                            <div><h3>{training}</h3><p>Avanço do companheiro</p></div>
+                          </article>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+              {!showingCompanionSheet && (
+                <>
               <div className="profileTop">
                 {state.character.daggerheart?.image ? (
                   <img
@@ -3143,7 +3233,7 @@ export default function OracleApp() {
                     ))}
                   </div>
 
-                  {(state.character.daggerheart.connections.length > 0 || state.character.daggerheart.animalCompanion) && (
+                  {state.character.daggerheart.connections.length > 0 && (
                     <>
                       <h3 className="subhead">Conexões</h3>
                       <div className="cardGrid">
@@ -3156,36 +3246,6 @@ export default function OracleApp() {
                             </article>
                           );
                         })}
-                        {state.character.daggerheart.animalCompanion && (
-                          <article className="miniCard animalCompanionSheetCard">
-                            {state.character.daggerheart.animalCompanion.image ? (
-                              <img
-                                src={state.character.daggerheart.animalCompanion.image}
-                                alt={`Retrato de ${state.character.daggerheart.animalCompanion.name}`}
-                                className="animalCompanionPortrait"
-                              />
-                            ) : <b>◒</b>}
-                            <div>
-                              <h3>{state.character.daggerheart.animalCompanion.name}</h3>
-                              <p>
-                                {state.character.daggerheart.animalCompanion.kind || "Companheiro animal"}
-                                {state.character.daggerheart.animalCompanion.appearance ? ` · ${state.character.daggerheart.animalCompanion.appearance}` : ""}
-                              </p>
-                              <div className="animalCompanionStats">
-                                <span><small>EVASÃO</small><b>{state.character.daggerheart.animalCompanion.evasion}</b></span>
-                                <span><small>FADIGA</small><b>{state.character.daggerheart.animalCompanion.stress}/{state.character.daggerheart.animalCompanion.maxStress}</b></span>
-                                <span><small>DANO</small><b>{state.character.proficiency} × {state.character.daggerheart.animalCompanion.damageDie}</b></span>
-                                <span><small>ALCANCE</small><b>{state.character.daggerheart.animalCompanion.range}</b></span>
-                                <span><small>TIPO</small><b>{state.character.daggerheart.animalCompanion.damageType === "magic" ? "Mágico" : "Físico"}</b></span>
-                              </div>
-                              {state.character.daggerheart.animalCompanion.experiences.length > 0 && (
-                                <div className="animalCompanionExperiences">
-                                  {state.character.daggerheart.animalCompanion.experiences.map((experience) => <span key={experience.name}>{experience.name} +{experience.bonus}</span>)}
-                                </div>
-                              )}
-                            </div>
-                          </article>
-                        )}
                       </div>
                     </>
                   )}
@@ -3211,6 +3271,8 @@ export default function OracleApp() {
                   );
                 })}
               </div>
+                </>
+              )}
             </section>
           )}
 
