@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-21T18:43:06.891Z",
+  "generatedAt": "2026-10-21T21:14:39.107Z",
   "sources": {
     "translation": "https://github.com/etiagoabreu/daggerheart-translation-pt-BR",
     "art": "https://github.com/mordachai/art-for-daggerheart",
@@ -3389,7 +3389,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/segurem-eles.webp"
     },
     {
       "id": "core-classFeature-attack-of-opportunity",
@@ -3414,7 +3414,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/ataque-de-oportunidade.webp"
     },
     {
       "id": "core-classFeature-cloaked",
@@ -3437,7 +3437,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/oculto.webp"
     },
     {
       "id": "core-classFeature-sneak-attack",
@@ -3460,7 +3460,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/ataque-furtivo.webp"
     },
     {
       "id": "core-classFeature-strange-patterns",
@@ -3483,7 +3483,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/padroes-estranhos.webp"
     },
     {
       "id": "core-classFeature-evolution",
@@ -3517,7 +3517,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/evolucao.webp"
     },
     {
       "id": "core-classFeature-arcane-sense",
@@ -3542,7 +3542,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/sentido-arcano.webp"
     },
     {
       "id": "core-classFeature-make-a-scene",
@@ -3573,7 +3573,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/fazer-uma-cena.webp"
     },
     {
       "id": "core-classFeature-channel-raw-power",
@@ -3598,7 +3598,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/canalizar-poder-bruto.webp"
     },
     {
       "id": "core-classFeature-beastform",
@@ -3627,7 +3627,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/forma-de-fera.webp"
     },
     {
       "id": "core-classFeature-unstoppable",
@@ -3652,7 +3652,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/determinacao.webp"
     },
     {
       "id": "core-classFeature-rally",
@@ -3679,7 +3679,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/inspiracao.webp"
     },
     {
       "id": "core-classFeature-prestidigitation",
@@ -3702,7 +3702,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/prestidigitacao.webp"
     },
     {
       "id": "core-classFeature-rally-level-5",
@@ -3725,7 +3725,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/inspiracao.webp"
     },
     {
       "id": "core-classFeature-prayer-dice",
@@ -3752,7 +3752,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/dados-de-oracao.webp"
     },
     {
       "id": "core-classFeature-frontline-tank",
@@ -3781,7 +3781,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/linha-de-frente.webp"
     },
     {
       "id": "core-classFeature-minor-illusion",
@@ -3811,7 +3811,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/ilusao-menor.webp"
     },
     {
       "id": "core-classFeature-combat-training",
@@ -3834,7 +3834,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/treinamento-de-combate.webp"
     },
     {
       "id": "core-classFeature-wildtouch",
@@ -3857,7 +3857,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/dadiva-da-natureza.webp"
     },
     {
       "id": "core-classFeature-not-this-time",
@@ -3889,7 +3889,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/nao-dessa-vez.webp"
     },
     {
       "id": "core-classFeature-rogue-s-dodge",
@@ -3920,7 +3920,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/esquiva-de-ladino.webp"
     },
     {
       "id": "core-classFeature-volatile-magic",
@@ -3949,7 +3949,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/magia-volatil.webp"
     },
     {
       "id": "core-classFeature-life-support",
@@ -3980,7 +3980,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/alicerce-da-vida.webp"
     },
     {
       "id": "core-classFeature-ranger-s-focus",
@@ -4014,7 +4014,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/marca-da-presa.webp"
     },
     {
       "id": "core-classFeature-no-mercy",
@@ -4045,7 +4045,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/sem-piedade.webp"
     },
     {
       "id": "expansion-class-assassin",
@@ -4888,7 +4888,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/maldicao-de-sangue.webp"
     },
     {
       "id": "expansion-classFeature-grim-psychometry",
@@ -4923,7 +4923,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/psicometria-sombria.webp"
     },
     {
       "id": "expansion-classFeature-crimson-rite",
@@ -4958,7 +4958,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/ritual-carmesin.webp"
     },
     {
       "id": "expansion-classFeature-patron-s-boon",
@@ -4987,7 +4987,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/bencao-do-patrono.webp"
     },
     {
       "id": "expansion-classFeature-warlock-patron",
@@ -5010,7 +5010,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/patrono-oculto.webp"
     },
     {
       "id": "expansion-classFeature-favor",
@@ -5033,7 +5033,7 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/favor.webp"
     },
     {
       "id": "srd2-classFeature-deadly-determination",
@@ -5062,7 +5062,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/determinacao-moral.webp"
     },
     {
       "id": "srd2-classFeature-marked-for-death",
@@ -5091,7 +5091,7 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/marcado-para-morrer.webp"
     },
     {
       "id": "srd2-classFeature-get-in-get-out",
@@ -5122,7 +5122,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/entrar-e-sair.webp"
     },
     {
       "id": "srd2-classFeature-square-up",
@@ -5153,7 +5153,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/partir-pra-cima.webp"
     },
     {
       "id": "srd2-classFeature-i-am-the-weapon",
@@ -5183,7 +5183,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/eu-sou-a-arma.webp"
     },
     {
       "id": "srd2-classFeature-combo-strike",
@@ -5212,7 +5212,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/golpe-combinado.webp"
     },
     {
       "id": "srd2-classFeature-witch-s-charm",
@@ -5243,7 +5243,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/encanto-do-bruxo.webp"
     },
     {
       "id": "srd2-classFeature-hex",
@@ -5274,7 +5274,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/maldicao.webp"
     },
     {
       "id": "srd2-classFeature-commune",
@@ -5299,7 +5299,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/comunhao.webp"
     },
     {
       "id": "core-subclassFeature-slayer",

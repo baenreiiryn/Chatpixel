@@ -39,9 +39,14 @@ export default function CompendiumArt({
 
   if (!src || failed) return <>{fallback}</>;
 
+  const imageClassName = [
+    className,
+    entry?.type === "classFeature" ? "classFeatureIconArt" : "",
+  ].filter(Boolean).join(" ");
+
   return (
     <img
-      className={className}
+      className={imageClassName}
       src={src}
       alt={alt ?? entry?.name ?? ""}
       loading={loading}

@@ -293,6 +293,30 @@ function slug(value) {
     .replace(/^-|-$/g, "");
 }
 
+const CLASS_FEATURE_ART_ROOT = "/compendium/daggerheart/class-features";
+const CLASS_FEATURE_ART_SLUGS = new Set([
+  "alicerce-da-vida", "ataque-de-oportunidade", "ataque-furtivo", "bencao-do-patrono",
+  "canalizar-poder-bruto", "comunhao", "dadiva-da-natureza", "dados-de-oracao",
+  "determinacao", "determinacao-moral", "encanto-do-bruxo", "entrar-e-sair", "esquiva-de-ladino",
+  "eu-sou-a-arma", "evolucao", "favor", "fazer-uma-cena", "forma-de-fera",
+  "golpe-combinado", "ilusao-menor", "inspiracao", "linha-de-frente", "magia-volatil",
+  "maldicao", "maldicao-de-sangue", "marca-da-presa", "marcado-para-morrer",
+  "nao-dessa-vez", "oculto", "padroes-estranhos", "partir-pra-cima", "patrono-oculto",
+  "prestidigitacao", "psicometria-sombria", "ritual-carmesin", "segurem-eles",
+  "sem-piedade", "sentido-arcano", "treinamento-de-combate",
+]);
+const CLASS_FEATURE_ART_ALIASES = new Map([
+  ["inspiracao-nivel-5", "inspiracao"],
+  ["determinacao-mortal", "determinacao-moral"],
+  ["ritual-carmessim", "ritual-carmesin"],
+]);
+
+function classFeatureArtFor(data, key) {
+  const displaySlug = slug(cleanText(data.name || key));
+  const artSlug = CLASS_FEATURE_ART_ALIASES.get(displaySlug) || displaySlug;
+  return CLASS_FEATURE_ART_SLUGS.has(artSlug) ? `${CLASS_FEATURE_ART_ROOT}/${artSlug}.webp` : null;
+}
+
 function wordNumber(value) {
   const normalized = value && value.toLocaleLowerCase("pt-BR");
   if (!normalized) return null;
@@ -545,6 +569,7 @@ for (const [key, data] of loadEntries("daggerheart.classes.json")) {
       type: isClass ? "class" : "classFeature",
       category: "classes",
       parent: isClass ? null : CLASS_FEATURE_PARENT[key] || null,
+      art: isClass ? null : classFeatureArtFor(data, key),
     }));
   }
 }
@@ -570,6 +595,7 @@ for (const [key, rawData] of expansionClassSourceEntries) {
     source: "expansion",
     parent: isClass ? null : subclassParent || EXPANSION_CLASS_FEATURE_PARENT[key] || null,
     tier: subclassMeta?.tier || legacySubclassTier,
+    art: !isClass && !subclassParent ? classFeatureArtFor(data, key) : null,
   }));
 }
 for (const fallback of EXPANSION_FALLBACK_CLASS_FEATURES) {
@@ -581,6 +607,7 @@ for (const fallback of EXPANSION_FALLBACK_CLASS_FEATURES) {
     category: "classes",
     source: "srd2",
     parent: fallback.parent,
+    art: classFeatureArtFor(fallback, fallback.key),
   }));
 }
 for (const [key, data] of loadEntries("daggerheart.subclasses.json")) {
