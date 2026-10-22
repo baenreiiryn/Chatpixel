@@ -2,12 +2,13 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import sharp from "sharp";
 
 const root = process.cwd();
 const payload = JSON.parse(fs.readFileSync(path.join(root, "lib", "compendium", "daggerheart.generated.json"), "utf8"));
 const entries = payload.entries;
 
-test("all playable classes use the local class icon set", () => {
+test("all playable classes use decodable local class icons", async () => {
   const expected = new Map([
     ["Bard", "bardo.webp"], ["Druid", "druida.webp"], ["Guardian", "guardiao.webp"],
     ["Ranger", "patrulheiro.webp"], ["Rogue", "ladino.webp"], ["Seraph", "serafim.webp"],
@@ -19,7 +20,11 @@ test("all playable classes use the local class icon set", () => {
     const entry = entries.find((candidate) => candidate.type === "class" && candidate.sourceId === sourceId);
     assert.ok(entry, `${sourceId} class entry is missing`);
     assert.equal(entry.art, `/compendium/daggerheart/classes/${file}`);
-    assert.equal(fs.existsSync(path.join(root, "public", entry.art.slice(1))), true, `${file} is missing`);
+    const iconPath = path.join(root, "public", entry.art.slice(1));
+    assert.equal(fs.existsSync(iconPath), true, `${file} is missing`);
+    const metadata = await sharp(iconPath).metadata();
+    assert.ok(metadata.width && metadata.height, `${file} could not be decoded`);
+    await sharp(iconPath).raw().toBuffer();
   }
 });
 
