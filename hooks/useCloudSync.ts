@@ -51,6 +51,10 @@ export function readCloudCredentialsForCampaign(localCampaignId: string) {
   }
 }
 
+export function writeCloudCredentialsForCampaign(localCampaignId: string, credentials: Credentials) {
+  localStorage.setItem(cloudCredentialsStorageKey(localCampaignId), JSON.stringify(credentials));
+}
+
 function parsePairCode(code: string) {
   const split = code.trim().split(".");
   if (split.length !== 2 || !split[0] || !split[1]) return null;
@@ -281,6 +285,31 @@ export function useCloudSync(
     return result;
   }, [fetchRemote, saveCredentials]);
 
+  const importCloud = useCallback(async (code: string) => {
+    const creds = parsePairCode(code);
+    if (!creds) throw new Error("Código de pareamento inválido.");
+    setStatus("connecting");
+    try {
+      const response = await fetch(`/api/campaigns/${creds.campaignId}`, {
+        headers: { authorization: `Bearer ${creds.syncKey}` },
+        cache: "no-store",
+      });
+      if (!response.ok) throw new Error("Não foi possível abrir essa campanha.");
+      const data = (await response.json()) as { state: GameState; version: number; updatedAt?: string };
+      const serialized = JSON.stringify(data.state);
+      const credentials: Credentials = {
+        ...creds,
+        version: data.version,
+        lastSyncedHash: fingerprint(serialized),
+      };
+      setStatus("local");
+      return { state: data.state, credentials, updatedAt: data.updatedAt };
+    } catch (error) {
+      setStatus(navigator.onLine ? "error" : "offline");
+      throw error;
+    }
+  }, []);
+
   const disconnectCloud = useCallback(() => {
     saveCredentials(null, localCampaignIdRef.current);
     lastSynced.current = "";
@@ -413,6 +442,7 @@ export function useCloudSync(
     pairCode: credentials ? `${credentials.campaignId}.${credentials.syncKey}` : "",
     createCloud,
     joinCloud,
+    importCloud,
     disconnectCloud,
     fetchRemote: () => credentials && fetchRemote(credentials),
     resolveConflict,

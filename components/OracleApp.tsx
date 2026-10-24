@@ -26,6 +26,7 @@ import {
 import {
   readCloudCredentialsForCampaign,
   removeCloudMetadataForCampaign,
+  writeCloudCredentialsForCampaign,
   useCloudSync,
 } from "@/hooks/useCloudSync";
 import { useOracleBridge } from "@/hooks/useOracleBridge";
@@ -1201,9 +1202,41 @@ export default function OracleApp() {
   async function joinCloudCampaign() {
     setSyncNote("");
     try {
-      await cloud.joinCloud(pairInput);
+      if (activeCampaignId) {
+        await cloud.joinCloud(pairInput);
+      } else {
+        const imported = await cloud.importCloud(pairInput);
+        const normalizedState = ensureGameStateCrafting(ensureGameStateTimeline(ensureGameStateCharacterModel(
+          ensureCampaignTime(imported.state, `cloud:${imported.state.campaign.name}:${imported.state.campaign.system}`),
+        )));
+        const existing = campaignsRef.current.find((entry) =>
+          readCloudCredentialsForCampaign(entry.id)?.campaignId === imported.credentials.campaignId,
+        );
+        const localCampaignId = existing?.id || crypto.randomUUID();
+        const now = imported.updatedAt || campaignActivityAt(normalizedState);
+        const record: CampaignLibraryEntry = existing
+          ? { ...existing, state: normalizedState, updatedAt: now }
+          : { id: localCampaignId, state: normalizedState, createdAt: now, updatedAt: now };
+        const nextLibrary = sortCampaigns([
+          ...campaignsRef.current.filter((entry) => entry.id !== localCampaignId),
+          record,
+        ]);
+        writeCloudCredentialsForCampaign(localCampaignId, imported.credentials);
+        campaignsRef.current = nextLibrary;
+        setCampaigns(nextLibrary);
+        writeCampaignLibrary(nextLibrary);
+        localStorage.setItem(ACTIVE_CAMPAIGN_KEY, localCampaignId);
+        campaignEpochRef.current += 1;
+        activeCampaignIdRef.current = localCampaignId;
+        stateRef.current = normalizedState;
+        setActiveCampaignId(localCampaignId);
+        setState(normalizedState);
+        setScreen("campaign");
+        setView("session");
+        setShowSync(false);
+      }
       setPairInput("");
-      setSyncNote("Campanha carregada deste dispositivo.");
+      setSyncNote(activeCampaignId ? "Campanha sincronizada neste dispositivo." : "Campanha importada da nuvem.");
     } catch (error) {
       setSyncNote(error instanceof Error ? error.message : "Código inválido.");
     }
@@ -2597,10 +2630,10 @@ export default function OracleApp() {
               <div><strong>ChatGPT</strong><small>{bridge.account?.connected ? bridge.account.name || bridge.account.email || "Conectado" : "Conectar Mestre IA"}</small></div>
               <em className={bridge.account?.connected ? "statusConnected" : ""}>{bridge.account?.connected ? "Conectado" : "Configurar"}</em>
             </button>
-            <button onClick={() => setShowSync(true)} disabled={!activeCampaignId}>
+            <button onClick={() => setShowSync(true)}>
               <span className="settingsIcon">☁</span>
-              <div><strong>Sincronização</strong><small>{activeCampaignId ? "Campanha ativa entre seus dispositivos" : "Abra uma campanha para configurar"}</small></div>
-              <em>{activeCampaignId ? cloudLabel : "Sem campanha"}</em>
+              <div><strong>Sincronização</strong><small>{activeCampaignId ? "Campanha ativa entre seus dispositivos" : "Importe uma campanha de outro dispositivo"}</small></div>
+              <em>{activeCampaignId ? cloudLabel : "Importar"}</em>
             </button>
             <button onClick={() => setScreen("diceAppearance")}>
               <span className="settingsIcon">◆</span>
@@ -2623,11 +2656,15 @@ export default function OracleApp() {
               <h2>Campanha em todos os seus dispositivos</h2>
               {!cloud.credentials ? (
                 <>
-                  <p>Crie uma campanha sincronizada ou abra uma existente usando o código de pareamento.</p>
-                  <button className="primary enabled" onClick={createCloudCampaign}>Ativar sincronização</button>
-                  <div className="divider"><span>ou</span></div>
+                  <p>{activeCampaignId ? "Crie uma campanha sincronizada ou abra uma existente usando o código de pareamento." : "Cole o código de pareamento de outro dispositivo para trazer a campanha da nuvem."}</p>
+                  {activeCampaignId && (
+                    <>
+                      <button className="primary enabled" onClick={createCloudCampaign}>Ativar sincronização</button>
+                      <div className="divider"><span>ou</span></div>
+                    </>
+                  )}
                   <label className="pairField"><span>Código existente</span><input value={pairInput} onChange={(event) => setPairInput(event.target.value)} placeholder="campaign-id.chave" /></label>
-                  <button className="ghost" onClick={joinCloudCampaign} disabled={!pairInput.trim()}>Abrir campanha sincronizada</button>
+                  <button className="ghost" onClick={joinCloudCampaign} disabled={!pairInput.trim()}>{activeCampaignId ? "Abrir campanha sincronizada" : "Importar campanha da nuvem"}</button>
                 </>
               ) : (
                 <>
