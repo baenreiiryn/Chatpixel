@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T09:26:55.556Z",
+  "generatedAt": "2026-10-23T19:10:16.804Z",
   "sources": {
     "translation": "https://github.com/etiagoabreu/daggerheart-translation-pt-BR",
     "art": "https://github.com/mordachai/art-for-daggerheart",
@@ -590,7 +590,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/anao.webp"
     },
     {
       "id": "core-ancestryFeature-thick-skin",
@@ -624,7 +624,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/pele-espessa.webp"
     },
     {
       "id": "core-ancestryFeature-increased-fortitude",
@@ -653,7 +653,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/vigoroso.webp"
     },
     {
       "id": "core-ancestry-clank",
@@ -676,7 +676,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/clank.webp"
     },
     {
       "id": "core-ancestryFeature-purposeful-design",
@@ -699,7 +699,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/projeto-intencional.webp"
     },
     {
       "id": "core-ancestryFeature-efficient",
@@ -722,7 +722,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/eficiente.webp"
     },
     {
       "id": "core-ancestry-drakona",
@@ -745,7 +745,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/drakona.webp"
     },
     {
       "id": "core-ancestryFeature-scales",
@@ -768,7 +768,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/escamas.webp"
     },
     {
       "id": "core-ancestryFeature-elemental-breath",
@@ -798,7 +798,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/sopro-elemental.webp"
     },
     {
       "id": "core-ancestry-elf",
@@ -823,7 +823,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/elfo.webp"
     },
     {
       "id": "core-ancestryFeature-quick-reactions",
@@ -854,7 +854,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/reacao-rapida.webp"
     },
     {
       "id": "core-ancestryFeature-celestial-trance",
@@ -877,7 +877,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/transe-celestial.webp"
     },
     {
       "id": "core-ancestry-faerie",
@@ -900,7 +900,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/fada.webp"
     },
     {
       "id": "core-ancestryFeature-luckbender",
@@ -933,7 +933,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/testar-a-sorte.webp"
     },
     {
       "id": "core-ancestryFeature-wings",
@@ -962,7 +962,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/asas.webp"
     },
     {
       "id": "core-ancestry-faun",
@@ -985,7 +985,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/fauno.webp"
     },
     {
       "id": "core-ancestryFeature-caprine-leap",
@@ -1010,7 +1010,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/salto-caprino.webp"
     },
     {
       "id": "core-ancestryFeature-kick",
@@ -1045,7 +1045,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/coice.webp"
     },
     {
       "id": "core-ancestry-firbolg",
@@ -1068,7 +1068,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/firbolg.webp"
     },
     {
       "id": "core-ancestryFeature-charge",
@@ -1106,7 +1106,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/investida.webp"
     },
     {
       "id": "core-ancestryFeature-unshakeable",
@@ -1135,7 +1135,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/inabalavel.webp"
     },
     {
       "id": "core-ancestry-fungril",
@@ -1158,7 +1158,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/fungril.webp"
     },
     {
       "id": "core-ancestryFeature-fungril-network",
@@ -1185,7 +1185,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/conexao-fungril.webp"
     },
     {
       "id": "core-ancestryFeature-death-connection",
@@ -1208,7 +1208,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/vinculo-mortal.webp"
     },
     {
       "id": "core-ancestry-galapa",
@@ -1231,7 +1231,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/galapa.webp"
     },
     {
       "id": "core-ancestryFeature-shell",
@@ -1254,7 +1254,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/carapaca.webp"
     },
     {
       "id": "core-ancestryFeature-retract",
@@ -1283,7 +1283,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/retracao.webp"
     },
     {
       "id": "core-ancestry-giant",
@@ -1306,7 +1306,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/gigante.webp"
     },
     {
       "id": "core-ancestryFeature-endurance",
@@ -1329,7 +1329,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/resistencia.webp"
     },
     {
       "id": "core-ancestryFeature-reach",
@@ -1354,7 +1354,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/alcance.webp"
     },
     {
       "id": "core-ancestry-goblin",
@@ -1377,7 +1377,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/goblin.webp"
     },
     {
       "id": "core-ancestryFeature-surefooted",
@@ -1400,7 +1400,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/passo-firme.webp"
     },
     {
       "id": "core-ancestryFeature-danger-sense",
@@ -1433,7 +1433,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/cheiro-de-perigo.webp"
     },
     {
       "id": "core-ancestry-human",
@@ -1456,7 +1456,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/humano.webp"
     },
     {
       "id": "core-ancestryFeature-high-stamina",
@@ -1479,7 +1479,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/resiliencia.webp"
     },
     {
       "id": "core-ancestryFeature-adaptability",
@@ -1508,7 +1508,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/adaptabilidade.webp"
     },
     {
       "id": "core-ancestry-infernis",
@@ -1531,7 +1531,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/infernis.webp"
     },
     {
       "id": "core-ancestryFeature-fearless",
@@ -1560,7 +1560,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/destemido.webp"
     },
     {
       "id": "core-ancestryFeature-dread-visage",
@@ -1583,7 +1583,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/aspecto-apavorante.webp"
     },
     {
       "id": "core-ancestry-katari",
@@ -1606,7 +1606,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/katari.webp"
     },
     {
       "id": "core-ancestryFeature-feline-instincts",
@@ -1637,7 +1637,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/instinto-felino.webp"
     },
     {
       "id": "core-ancestryFeature-retracting-claws",
@@ -1662,7 +1662,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/garras-retrateis.webp"
     },
     {
       "id": "core-ancestry-orc",
@@ -1685,7 +1685,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/orc.webp"
     },
     {
       "id": "core-ancestryFeature-sturdy",
@@ -1708,7 +1708,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/robusto.webp"
     },
     {
       "id": "core-ancestryFeature-tusks",
@@ -1741,7 +1741,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/presas.webp"
     },
     {
       "id": "core-ancestry-halfling",
@@ -1764,7 +1764,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/pequenino.webp"
     },
     {
       "id": "core-ancestryFeature-luckbringer",
@@ -1789,7 +1789,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/talisma-da-sorte.webp"
     },
     {
       "id": "core-ancestryFeature-internal-compass",
@@ -1812,7 +1812,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/senso-de-direcao.webp"
     },
     {
       "id": "core-ancestry-ribbet",
@@ -1835,7 +1835,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/quacho.webp"
     },
     {
       "id": "core-ancestryFeature-amphibious",
@@ -1858,7 +1858,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/anfibio.webp"
     },
     {
       "id": "core-ancestryFeature-long-tongue",
@@ -1894,7 +1894,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/linguarudo.webp"
     },
     {
       "id": "core-ancestry-simiah",
@@ -1917,7 +1917,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/simio.webp"
     },
     {
       "id": "core-ancestryFeature-natural-climber",
@@ -1940,7 +1940,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/escalador-natural.webp"
     },
     {
       "id": "core-ancestryFeature-nimble",
@@ -1963,7 +1963,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/agil.webp"
     },
     {
       "id": "expansion-ancestry-aetheris",
@@ -1986,7 +1986,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/angelis.webp"
     },
     {
       "id": "expansion-ancestry-earthkin",
@@ -2009,7 +2009,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/terrenal.webp"
     },
     {
       "id": "expansion-ancestry-emberkin",
@@ -2032,7 +2032,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/calidar.webp"
     },
     {
       "id": "expansion-ancestry-gnome",
@@ -2055,7 +2055,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/gnomo.webp"
     },
     {
       "id": "expansion-ancestry-skykin",
@@ -2078,7 +2078,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/celestino.webp"
     },
     {
       "id": "expansion-ancestry-tidekin",
@@ -2101,7 +2101,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestries/maresial.webp"
     },
     {
       "id": "expansion-ancestryFeature-amphibious",
@@ -2124,7 +2124,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/anfibio.webp"
     },
     {
       "id": "expansion-ancestryFeature-divine-countenance",
@@ -2147,7 +2147,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/semblante-divino.webp"
     },
     {
       "id": "expansion-ancestryFeature-eye-of-the-storm",
@@ -2176,7 +2176,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/olho-da-tempestade.webp"
     },
     {
       "id": "expansion-ancestryFeature-fireproof",
@@ -2199,7 +2199,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/a-prova-de-fogo.webp"
     },
     {
       "id": "expansion-ancestryFeature-gale-force",
@@ -2230,7 +2230,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/vendaval.webp"
     },
     {
       "id": "expansion-ancestryFeature-hallowed-aura",
@@ -2257,7 +2257,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/aura-sagrada.webp"
     },
     {
       "id": "expansion-ancestryFeature-ignition",
@@ -2288,7 +2288,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/ignicao.webp"
     },
     {
       "id": "expansion-ancestryFeature-immovable",
@@ -2311,7 +2311,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/irremovivel.webp"
     },
     {
       "id": "expansion-ancestryFeature-lifespring",
@@ -2342,7 +2342,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/fonte-vital.webp"
     },
     {
       "id": "expansion-ancestryFeature-nimble-fingers",
@@ -2373,7 +2373,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/dedos-ageis.webp"
     },
     {
       "id": "expansion-ancestryFeature-stoneskin",
@@ -2396,7 +2396,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/duro-feito-pedra.webp"
     },
     {
       "id": "expansion-ancestryFeature-true-sight",
@@ -2419,7 +2419,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/ancestry-features/visao-verdadeira.webp"
     },
     {
       "id": "core-communityFeature-know-the-tide",
@@ -2442,7 +2442,7 @@
         "hope": false,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/conhecer-a-mare.webp"
     },
     {
       "id": "core-communityFeature-nomadic-pack",
@@ -2473,7 +2473,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/mochila-de-nomade.webp"
     },
     {
       "id": "core-communityFeature-dedicated",
@@ -2498,7 +2498,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/principios.webp"
     },
     {
       "id": "core-community-wanderborne",
@@ -2521,7 +2521,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/nomade.webp"
     },
     {
       "id": "core-communityFeature-privilege",
@@ -2544,7 +2544,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/privilegio.webp"
     },
     {
       "id": "core-community-wildborne",
@@ -2567,7 +2567,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/silvestre.webp"
     },
     {
       "id": "core-community-highborne",
@@ -2590,7 +2590,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/aristocratica.webp"
     },
     {
       "id": "core-communityFeature-steady",
@@ -2613,7 +2613,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/firme.webp"
     },
     {
       "id": "core-communityFeature-well-read",
@@ -2636,7 +2636,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/culto.webp"
     },
     {
       "id": "core-communityFeature-lightfoot",
@@ -2659,7 +2659,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/pes-leves.webp"
     },
     {
       "id": "core-community-orderborne",
@@ -2682,7 +2682,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/disciplinada.webp"
     },
     {
       "id": "core-community-ridgeborne",
@@ -2705,7 +2705,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/montanhesa.webp"
     },
     {
       "id": "core-community-loreborne",
@@ -2728,7 +2728,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/erudita.webp"
     },
     {
       "id": "core-communityFeature-scoundrel",
@@ -2751,7 +2751,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/malandro.webp"
     },
     {
       "id": "core-communityFeature-low-light-living",
@@ -2774,7 +2774,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/habituado-a-penumbra.webp"
     },
     {
       "id": "core-community-underborne",
@@ -2797,7 +2797,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/subterranea.webp"
     },
     {
       "id": "core-community-seaborne",
@@ -2822,7 +2822,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/maritima.webp"
     },
     {
       "id": "core-community-slyborne",
@@ -2845,7 +2845,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/fora-da-lei.webp"
     },
     {
       "id": "expansion-community-duneborne",
@@ -2868,7 +2868,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/desertica.webp"
     },
     {
       "id": "expansion-community-freeborne",
@@ -2891,7 +2891,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/liberta.webp"
     },
     {
       "id": "expansion-community-frostborne",
@@ -2914,7 +2914,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/gelida.webp"
     },
     {
       "id": "expansion-community-hearthborne",
@@ -2937,7 +2937,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/pacata.webp"
     },
     {
       "id": "expansion-community-reborne",
@@ -2960,7 +2960,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/sem-comunidade.webp"
     },
     {
       "id": "expansion-community-warborne",
@@ -2983,7 +2983,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/communities/devastada.webp"
     },
     {
       "id": "expansion-communityFeature-oasis",
@@ -3006,7 +3006,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/oasis.webp"
     },
     {
       "id": "expansion-communityFeature-found-family",
@@ -3037,7 +3037,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/familia-adotada.webp"
     },
     {
       "id": "expansion-communityFeature-brave-face",
@@ -3073,7 +3073,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/semblante-corajoso.webp"
     },
     {
       "id": "expansion-communityFeature-close-knit",
@@ -3098,7 +3098,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/a-uniao-faz-a-forca.webp"
     },
     {
       "id": "expansion-communityFeature-hardy",
@@ -3129,7 +3129,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/resistente.webp"
     },
     {
       "id": "expansion-communityFeature-unbound",
@@ -3154,7 +3154,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null
+      "art": "/compendium/daggerheart/community-features/desgarrado.webp"
     },
     {
       "id": "core-class-bard",
@@ -3726,7 +3726,7 @@
         "hope": false,
         "fear": false
       },
-      "art": "/compendium/daggerheart/class-features/inspiracao.webp"
+      "art": "/compendium/daggerheart/class-features/inspiracao-nivel-5.webp"
     },
     {
       "id": "core-classFeature-prayer-dice",
@@ -4720,7 +4720,7 @@
         "hope": false,
         "fear": false
       },
-      "art": "/compendium/daggerheart/class-features/ritual-carmesin.webp"
+      "art": "/compendium/daggerheart/class-features/ritual-carmesim.webp"
     },
     {
       "id": "expansion-classFeature-patron-s-boon",
@@ -4824,7 +4824,7 @@
         "hope": true,
         "fear": false
       },
-      "art": "/compendium/daggerheart/class-features/determinacao-moral.webp"
+      "art": "/compendium/daggerheart/class-features/determinacao-mortal.webp"
     },
     {
       "id": "srd2-classFeature-marked-for-death",
@@ -24790,7 +24790,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/auxilio-dos-espiritos.webp"
     },
     {
       "id": "void-unofficial-classFeature-summon-entity",
@@ -24823,7 +24823,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/class-features/invocar-entidade.webp"
     },
     {
       "id": "void-unofficial-subclass-necromancy",

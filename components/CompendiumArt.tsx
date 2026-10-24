@@ -43,6 +43,8 @@ export default function CompendiumArt({
     className,
     entry?.type === "class" ? "classIconArt" : "",
     entry?.type === "classFeature" ? "classFeatureIconArt" : "",
+    entry?.category === "ancestries" ? "ancestryIconArt" : "",
+    entry?.category === "communities" ? "communityIconArt" : "",
   ].filter(Boolean).join(" ");
 
   return (

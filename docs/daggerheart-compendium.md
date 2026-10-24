@@ -49,6 +49,32 @@ pipeline.
 O arquivo gerado fica em `lib/compendium/daggerheart.generated.json`. Ele é commitado para
 que builds de produção não dependam dos repositórios externos.
 
+## Ícones de classes e características
+
+As 15 classes e as 42 características usam ícones locais WebP de 256 × 256 pixels,
+sem escrita, com cantos arredondados e transparência nos cantos. Os arquivos ficam em
+`public/compendium/daggerheart/classes` e `public/compendium/daggerheart/class-features`.
+As artes foram geradas para este projeto. Inspiração e Inspiração (Nível 5) têm ícones
+distintos; Auxílio dos Espíritos e Invocar Entidade também usam o conjunto local.
+O importador preserva esses vínculos nas atualizações do compêndio.
+
+## Ícones de ancestralidades e características
+
+As 24 ancestralidades e as 47 características ancestrais distintas usam ícones locais
+WebP de 256 × 256 pixels, sem escrita, com cantos arredondados. Os arquivos ficam em
+`public/compendium/daggerheart/ancestries` e `public/compendium/daggerheart/ancestry-features`.
+Anfíbio compartilha a mesma arte entre Quacho e Maresial, cobrindo as 48 entradas de
+características do compêndio. As artes foram geradas para este projeto e são exibidas
+inteiras, sem cortes. O importador preserva os vínculos nas atualizações dos dados.
+
+## Ícones de comunidades e características
+
+As 15 comunidades e as 15 características de comunidade usam ícones locais WebP
+de 256 × 256 pixels, sem escrita e com cantos arredondados transparentes, gerados
+para este projeto. Os arquivos ficam em `public/compendium/daggerheart/communities`
+e `public/compendium/daggerheart/community-features`. As artes são exibidas inteiras,
+sem cortes, e o importador preserva os vínculos nas atualizações do compêndio.
+
 ## Atualização dos dados
 
 Com os repositórios-fonte clonados ao lado do RPGptSWIG, execute primeiro

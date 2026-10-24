@@ -51,8 +51,10 @@
 .compDetailMeta{flex-wrap:wrap}
 .compEntryArtImage,.compDetailHeroImage{width:100%;height:100%;object-fit:cover;display:block}
 .domainIconArt{object-fit:contain!important;background:radial-gradient(circle at 50% 45%,#24172f,#09070d 72%);padding:8px}
-.classIconArt{object-fit:contain!important;background:#09070e}
-.classFeatureIconArt{object-fit:contain!important;background:#09070e}
+.classIconArt{object-fit:contain!important;background:#09070e;border-radius:9%}
+.classFeatureIconArt{object-fit:contain!important;background:#09070e;border-radius:9%}
+.ancestryIconArt{object-fit:contain!important;background:#09070e;border-radius:9%}
+.communityIconArt{object-fit:contain!important;background:#09070e;border-radius:9%}
 .compDetailHeroImage.domainIconArt{padding:38px}
 .compEntryArtFallback{width:100%;height:100%;min-height:142px;display:grid;place-items:center;color:var(--gold);font-size:25px;background:radial-gradient(circle at 50% 45%,#24172f,#09070d 72%)}
 .compDetailArtFallback{width:100%;height:100%;display:grid;place-items:center;color:var(--gold);font-size:52px;background:radial-gradient(circle at 50% 45%,#2b1a38,#08060b 68%)}

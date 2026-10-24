@@ -23,7 +23,9 @@ test("all playable classes use decodable local class icons", async () => {
     const iconPath = path.join(root, "public", entry.art.slice(1));
     assert.equal(fs.existsSync(iconPath), true, `${file} is missing`);
     const metadata = await sharp(iconPath).metadata();
-    assert.ok(metadata.width && metadata.height, `${file} could not be decoded`);
+    assert.equal(metadata.width, 256, file);
+    assert.equal(metadata.height, 256, file);
+    assert.equal(metadata.hasAlpha, true, file);
     await sharp(iconPath).raw().toBuffer();
   }
 });

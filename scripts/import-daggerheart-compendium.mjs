@@ -317,20 +317,20 @@ const CLASS_ART_SLUGS = new Map(Object.entries({
   Summoner: "invocador",
 }));
 const CLASS_FEATURE_ART_SLUGS = new Set([
-  "alicerce-da-vida", "ataque-de-oportunidade", "ataque-furtivo", "bencao-do-patrono",
+  "alicerce-da-vida", "ataque-de-oportunidade", "ataque-furtivo", "auxilio-dos-espiritos", "bencao-do-patrono",
   "canalizar-poder-bruto", "comunhao", "dadiva-da-natureza", "dados-de-oracao",
-  "determinacao", "determinacao-moral", "encanto-do-bruxo", "entrar-e-sair", "esquiva-de-ladino",
+  "determinacao", "determinacao-mortal", "encanto-do-bruxo", "entrar-e-sair", "esquiva-de-ladino",
   "eu-sou-a-arma", "evolucao", "favor", "fazer-uma-cena", "forma-de-fera",
-  "golpe-combinado", "ilusao-menor", "inspiracao", "linha-de-frente", "magia-volatil",
+  "golpe-combinado", "ilusao-menor", "inspiracao", "inspiracao-nivel-5", "invocar-entidade", "linha-de-frente", "magia-volatil",
   "maldicao", "maldicao-de-sangue", "marca-da-presa", "marcado-para-morrer",
   "nao-dessa-vez", "oculto", "padroes-estranhos", "partir-pra-cima", "patrono-oculto",
-  "prestidigitacao", "psicometria-sombria", "ritual-carmesin", "segurem-eles",
+  "prestidigitacao", "psicometria-sombria", "ritual-carmesim", "segurem-eles",
   "sem-piedade", "sentido-arcano", "treinamento-de-combate",
 ]);
 const CLASS_FEATURE_ART_ALIASES = new Map([
-  ["inspiracao-nivel-5", "inspiracao"],
-  ["determinacao-mortal", "determinacao-moral"],
-  ["ritual-carmessim", "ritual-carmesin"],
+  ["determinacao-moral", "determinacao-mortal"],
+  ["ritual-carmessim", "ritual-carmesim"],
+  ["ritual-carmesin", "ritual-carmesim"],
 ]);
 
 function classFeatureArtFor(data, key) {
@@ -342,6 +342,108 @@ function classFeatureArtFor(data, key) {
 function classArtFor(key) {
   const file = CLASS_ART_SLUGS.get(key);
   return file ? `${CLASS_ART_ROOT}/${file}.webp` : null;
+}
+
+const ANCESTRY_ART_SLUGS = new Set([
+  "anao",
+  "angelis",
+  "calidar",
+  "celestino",
+  "clank",
+  "drakona",
+  "elfo",
+  "fada",
+  "fauno",
+  "firbolg",
+  "fungril",
+  "galapa",
+  "gigante",
+  "gnomo",
+  "goblin",
+  "humano",
+  "infernis",
+  "katari",
+  "maresial",
+  "orc",
+  "pequenino",
+  "quacho",
+  "simio",
+  "terrenal"
+]);
+const ANCESTRY_FEATURE_ART_SLUGS = new Set([
+  "a-prova-de-fogo",
+  "adaptabilidade",
+  "agil",
+  "alcance",
+  "anfibio",
+  "asas",
+  "aspecto-apavorante",
+  "aura-sagrada",
+  "carapaca",
+  "cheiro-de-perigo",
+  "coice",
+  "conexao-fungril",
+  "dedos-ageis",
+  "destemido",
+  "duro-feito-pedra",
+  "eficiente",
+  "escalador-natural",
+  "escamas",
+  "fonte-vital",
+  "garras-retrateis",
+  "ignicao",
+  "inabalavel",
+  "instinto-felino",
+  "investida",
+  "irremovivel",
+  "linguarudo",
+  "olho-da-tempestade",
+  "passo-firme",
+  "pele-espessa",
+  "presas",
+  "projeto-intencional",
+  "reacao-rapida",
+  "resiliencia",
+  "resistencia",
+  "retracao",
+  "robusto",
+  "salto-caprino",
+  "semblante-divino",
+  "senso-de-direcao",
+  "sopro-elemental",
+  "talisma-da-sorte",
+  "testar-a-sorte",
+  "transe-celestial",
+  "vendaval",
+  "vigoroso",
+  "vinculo-mortal",
+  "visao-verdadeira"
+]);
+
+function ancestryArtFor(data, key, isAncestry) {
+  const artSlug = slug(cleanText(data.name || key));
+  const allowed = isAncestry ? ANCESTRY_ART_SLUGS : ANCESTRY_FEATURE_ART_SLUGS;
+  const directory = isAncestry ? "ancestries" : "ancestry-features";
+  return allowed.has(artSlug) ? `/compendium/daggerheart/${directory}/${artSlug}.webp` : null;
+}
+
+const COMMUNITY_ART_SLUGS = new Set([
+  "aristocratica", "desertica", "devastada", "disciplinada", "erudita",
+  "fora-da-lei", "gelida", "liberta", "maritima", "montanhesa", "nomade",
+  "pacata", "sem-comunidade", "silvestre", "subterranea",
+]);
+const COMMUNITY_FEATURE_ART_SLUGS = new Set([
+  "a-uniao-faz-a-forca", "conhecer-a-mare", "culto", "desgarrado",
+  "familia-adotada", "firme", "habituado-a-penumbra", "malandro",
+  "mochila-de-nomade", "oasis", "pes-leves", "principios", "privilegio",
+  "resistente", "semblante-corajoso",
+]);
+
+function communityArtFor(data, key, isCommunity) {
+  const artSlug = slug(cleanText(data.name || key));
+  const allowed = isCommunity ? COMMUNITY_ART_SLUGS : COMMUNITY_FEATURE_ART_SLUGS;
+  const directory = isCommunity ? "communities" : "community-features";
+  return allowed.has(artSlug) ? `/compendium/daggerheart/${directory}/${artSlug}.webp` : null;
 }
 
 function wordNumber(value) {
@@ -574,6 +676,7 @@ for (const [key, data] of loadEntries("daggerheart.ancestries.json")) {
     type: isAncestry ? "ancestry" : "ancestryFeature",
     category: "ancestries",
     parent: isAncestry ? null : currentCoreAncestry,
+    art: ancestryArtFor(data, key, isAncestry),
   }));
 }
 for (const [key, data] of loadEntries("daggerheart-expansion-content.ancestries.json")) {
@@ -585,6 +688,7 @@ for (const [key, data] of loadEntries("daggerheart-expansion-content.ancestries.
     category: "ancestries",
     source: "expansion",
     parent: isAncestry ? null : EXPANSION_ANCESTRY_FEATURE_PARENT[key] || null,
+    art: ancestryArtFor(data, key, isAncestry),
   }));
 }
 for (const [key, data] of loadEntries("daggerheart.communities.json")) {
@@ -595,6 +699,7 @@ for (const [key, data] of loadEntries("daggerheart.communities.json")) {
     type: isCommunity ? "community" : "communityFeature",
     category: "communities",
     parent: isCommunity ? null : COMMUNITY_FEATURE_PARENT[key] || null,
+    art: communityArtFor(data, key, isCommunity),
   }));
 }
 for (const [key, data] of loadEntries("daggerheart-expansion-content.communities.json")) {
@@ -606,6 +711,7 @@ for (const [key, data] of loadEntries("daggerheart-expansion-content.communities
     category: "communities",
     source: "expansion",
     parent: isCommunity ? null : COMMUNITY_FEATURE_PARENT[key] || null,
+    art: communityArtFor(data, key, isCommunity),
   }));
 }
 for (const [key, data] of loadEntries("daggerheart.classes.json")) {
@@ -778,7 +884,7 @@ for (const item of voidContent.entries || []) {
     source: "void-unofficial",
     parent: item.parent || null,
     tier: item.tier || null,
-    art: item.art || (item.type === "class" ? classArtFor(key) : null),
+    art: item.art || (item.type === "class" ? classArtFor(key) : item.type === "classFeature" ? classFeatureArtFor(item, key) : null),
     level: item.level,
     domain: item.domain,
     recallCost: item.recallCost,
