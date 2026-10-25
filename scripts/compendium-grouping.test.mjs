@@ -10,6 +10,7 @@ const flatten = (sections) => sections.flatMap((section) => {
   if (section.kind === "families") return [...section.families.flatMap(({ parent, children }) => [parent, ...children]), ...section.ungrouped];
   if (section.kind === "domains") return section.domains.flatMap((domain) => domain.levels.flatMap((level) => level.entries));
   if (section.kind === "beastforms") return section.tiers.flatMap((tier) => tier.entries);
+  if (section.kind === "equipment") return section.rarities.flatMap((group) => group.entries);
   return section.entries;
 });
 
@@ -29,6 +30,19 @@ test("the organized compendium preserves every real entry exactly once", () => {
       assert.ok(children.every((child) => child.parent === parent.sourceId));
     }
   }
+});
+
+test("equipment is grouped by ascending rarity and search keeps the correct rarity context", () => {
+  const equipment = entries.filter((entry) => entry.category === "equipment");
+  const [section] = buildCompendiumSections(equipment, equipment, order);
+  assert.equal(section.kind, "equipment");
+  assert.deepEqual(section.rarities.map((group) => group.rarity), ["common", "uncommon", "rare", "very-rare"]);
+  assert.equal(flatten([section]).length, 365);
+  for (const group of section.rarities) assert.ok(group.entries.every((entry) => entry.rarity === group.rarity));
+  const item = equipment.find((entry) => entry.sourceId === "Legendary Longsword");
+  const [filtered] = buildCompendiumSections(equipment, [item], order);
+  assert.deepEqual(filtered.rarities.map((group) => group.rarity), ["very-rare"]);
+  assert.deepEqual(flatten([filtered]).map((entry) => entry.id), [item.id]);
 });
 
 test("a matching feature keeps its parent as context and only includes matching siblings", () => {

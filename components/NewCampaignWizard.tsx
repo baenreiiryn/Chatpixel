@@ -20,7 +20,7 @@ import {
   subclassesFor,
   suggestedTraitsFor,
 } from "@/lib/characterCreation/daggerheart";
-import { daggerheartCompendium, entryTypeLabel, type CompendiumEntry } from "@/lib/compendium/daggerheart";
+import { daggerheartCompendium, type CompendiumEntry } from "@/lib/compendium/daggerheart";
 import { extractNarration } from "@/lib/gm";
 import {
   classStatsFor,
@@ -31,6 +31,8 @@ import {
 } from "@/lib/daggerheartCharacter";
 import { reconcileDaggerheartAdvancementTrackers, type DaggerheartLevelUpPlan } from "@/lib/daggerheartAdvancement";
 import DaggerheartLevelUpWizard from "@/components/DaggerheartLevelUpWizard";
+import StartingEquipmentPicker from "@/components/StartingEquipmentPicker";
+import { canChooseStartingEquipment, findEquipmentPreset, reconcileStartingLoadout, startingLoadoutInventory, suggestedStartingLoadout, type StartingLoadout } from "@/lib/startingEquipment";
 import type { CharacterState, CharacterTraitName, InventoryItem } from "@/lib/game";
 
 type AiResponse = { output?: unknown[]; output_text?: unknown };
@@ -140,23 +142,6 @@ const SOURCE_LABELS = {
   expansion: "Expansão",
   playtest: "Teste de jogo",
 } as const;
-
-const EQUIPMENT_TYPE_ICONS: Record<string, string> = {
-  weapon: "⚔",
-  armor: "◈",
-  consumable: "✦",
-  loot: "◇",
-};
-
-function normalizeCompendiumName(value: string) {
-  return value
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLocaleLowerCase("pt-BR")
-    .replace(/[’‘]/g, "'")
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
 function randomId(prefix: string) {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return `${prefix}-${crypto.randomUUID()}`;
@@ -279,12 +264,9 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
 
   const [experiences, setExperiences] = useState(["", ""]);
   const [domainCards, setDomainCards] = useState<string[]>([]);
-  const [equipmentMode, setEquipmentMode] = useState<"suggested" | "manual">("suggested");
   const [equipmentChoiceSelections, setEquipmentChoiceSelections] = useState<number[]>([]);
-  const [manualEquipmentIds, setManualEquipmentIds] = useState<Set<string>>(new Set());
-  const [equipmentQuery, setEquipmentQuery] = useState("");
-  const [equipmentTypeFilter, setEquipmentTypeFilter] = useState("all");
-  const [customEquipment, setCustomEquipment] = useState("");
+  const [equipmentLoadout, setEquipmentLoadout] = useState<StartingLoadout>({});
+  const [equipmentError, setEquipmentError] = useState("");
 
   const [characterName, setCharacterName] = useState("");
   const [pronouns, setPronouns] = useState("");
@@ -330,33 +312,9 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
   const selectedClassFeatures = useMemo(() => classId ? classFeaturesFor(classId) : [], [classId]);
   const selectedSubclassFeatures = useMemo(() => subclassId ? subclassFeaturesFor(subclassId) : [], [subclassId]);
   const classConfig = classId ? CLASS_CONFIG[classId] : undefined;
+  const equipmentTier = daggerheartTierForLevel(level);
   const isRanger = classId === "Ranger";
   const isBeastbound = isRanger && subclassId === "Beastbound";
-  const filteredEquipmentEntries = useMemo(() => {
-    const query = equipmentQuery
-      .trim()
-      .normalize("NFD")
-      .replace(/\p{Diacritic}/gu, "")
-      .toLocaleLowerCase("pt-BR");
-    return equipmentEntries.filter((entry) => {
-      if (equipmentTypeFilter !== "all" && entry.type !== equipmentTypeFilter) return false;
-      if (!query) return true;
-      const text = [entry.name, entry.originalName || "", entry.description, entryTypeLabel(entry.type)]
-        .join(" ")
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "")
-        .toLocaleLowerCase("pt-BR");
-      return text.includes(query);
-    });
-  }, [equipmentEntries, equipmentQuery, equipmentTypeFilter]);
-  const equipmentByName = useMemo(() => {
-    const map = new Map<string, CompendiumEntry>();
-    for (const entry of equipmentEntries) {
-      map.set(normalizeCompendiumName(entry.name), entry);
-      if (entry.originalName) map.set(normalizeCompendiumName(entry.originalName), entry);
-    }
-    return map;
-  }, [equipmentEntries]);
 
   useEffect(() => {
     if (traitMode !== "suggested" || !classId) return;
@@ -367,10 +325,13 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
   useEffect(() => {
     const groups = classConfig?.equipmentChoices || [];
     setEquipmentChoiceSelections(groups.map(() => 0));
-    setManualEquipmentIds(new Set());
-    setEquipmentQuery("");
-    setEquipmentTypeFilter("all");
-  }, [classId, classConfig]);
+    setEquipmentLoadout(suggestedStartingLoadout(classConfig?.suggestedEquipment || [], equipmentEntries, 1));
+    setEquipmentError("");
+  }, [classConfig, equipmentEntries]);
+
+  useEffect(() => {
+    setEquipmentLoadout((current) => reconcileStartingLoadout(current, equipmentEntries, equipmentTier));
+  }, [equipmentEntries, equipmentTier]);
 
   useEffect(() => {
     if (step !== 8 || !ai.connected || companions.length || companionsBusy || companionsAutoStarted.current) return;
@@ -382,7 +343,6 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
     setClassId(nextClassId);
     setSubclassId("");
     setDomainCards([]);
-    setEquipmentMode("suggested");
   }
 
   function chooseDomainCard(cardId: string) {
@@ -401,14 +361,6 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
     setTraits((current) => ({ ...current, [trait]: value }));
   }
 
-  function toggleManualEquipment(entryId: string) {
-    setManualEquipmentIds((current) => {
-      const next = new Set(current);
-      if (next.has(entryId)) next.delete(entryId);
-      else next.add(entryId);
-      return next;
-    });
-  }
 
   async function analyzeVisual(image: string, subject: "personagem" | "animal") {
     if (!ai.connected || !ai.model) throw new Error("Conecte o ChatGPT para analisar a imagem.");
@@ -612,8 +564,8 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
     if (step === 6) return domainCards.length === 2;
     if (step === 7) {
       if (!classConfig) return false;
-      if (equipmentMode === "suggested") return true;
-      return manualEquipmentIds.size > 0 || Boolean(customEquipment.trim());
+      try { startingLoadoutInventory(equipmentLoadout, equipmentEntries, equipmentTier); return true; }
+      catch { return false; }
     }
     if (step === 8) {
       const companionReady = !isBeastbound || Boolean(
@@ -634,16 +586,16 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
     characterImageBusy,
     characterName,
     classConfig,
-    customEquipment,
     classId,
     communityId,
     customTone,
     domainCards.length,
-    equipmentMode,
+    equipmentLoadout,
+    equipmentEntries,
+    equipmentTier,
     experiences,
     history,
     historyBusy,
-    manualEquipmentIds,
     mixedAncestry,
     animalImageBusy,
     animalExperienceA,
@@ -660,36 +612,21 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
 
   function equipmentResult(): InventoryItem[] {
     if (!classConfig) return [];
-    const sourceItems = equipmentMode === "suggested"
-      ? [
-          ...classConfig.suggestedEquipment,
-          ...(classConfig.equipmentChoices || []).flatMap((group, groupIndex) => {
-            const index = equipmentChoiceSelections[groupIndex] || 0;
-            return group[index] ? [group[index]] : [];
-          }),
-        ]
-      : [
-          ...equipmentEntries
-            .filter((entry) => manualEquipmentIds.has(entry.id))
-            .map((entry) => ({
-              name: entry.name,
-              qty: 1,
-              detail: entry.description || entryTypeLabel(entry.type),
-              icon: EQUIPMENT_TYPE_ICONS[entry.type] || "◇",
-            })),
-          ...(() => {
-            const line = customEquipment.trim();
-            if (!line) return [];
-            const [name, ...detailParts] = line.split("|");
-            if (!name.trim()) return [];
-            return [{
-              name: name.trim(),
-              qty: 1,
-              detail: detailParts.join("|").trim() || "Equipamento personalizado",
-              icon: "◇",
-            }];
-          })(),
-        ];
+    const basics = classConfig.suggestedEquipment.filter((item) => {
+      const entry = findEquipmentPreset(item, equipmentEntries);
+      return !entry || !["weapon", "armor", "consumable"].includes(entry.type);
+    });
+    const personalItems = (classConfig.equipmentChoices || []).flatMap((group, groupIndex) => {
+      if (groupIndex === 0 && equipmentLoadout.personal) return [];
+      const item = group[equipmentChoiceSelections[groupIndex] || 0];
+      return item ? [item] : [];
+    });
+    const presetItems = [...basics, ...personalItems].map((item) => {
+      const entry = findEquipmentPreset(item, equipmentEntries);
+      if (entry && !canChooseStartingEquipment(entry, equipmentTier)) throw new Error(`${entry.name}: item indisponível para este patamar.`);
+      return {...item, rarity: entry?.rarity || "common" as const, ...(entry?.sourceId ? {sourceId: entry.sourceId} : {}), ...(entry?.art ? {art: entry.art} : {})};
+    });
+    const sourceItems = [...startingLoadoutInventory(equipmentLoadout, equipmentEntries, equipmentTier), ...presetItems];
     return sourceItems.map((item) => ({ ...item, id: randomId("item") }));
   }
 
@@ -765,7 +702,9 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
       ? [primaryAncestryFeatures[0], secondaryAncestryFeatures[1]].filter(Boolean)
       : primaryAncestryFeatures;
     const cards = availableCards.filter((card) => domainCards.includes(card.id));
-    const equipment = equipmentResult();
+    let equipment: InventoryItem[];
+    try { equipment = equipmentResult(); }
+    catch (error) { setEquipmentError(error instanceof Error ? error.message : "Revise o equipamento inicial."); setStep(7); return; }
 
     const tone = toneId === "custom"
       ? customTone.trim()
@@ -1121,78 +1060,9 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
 
           {step === 7 && classConfig && (
             <div className="campaignWizardStep">
-              <div className="campaignWizardIntro"><small>PASSO 8</small><h1>Prepare seu equipamento.</h1><p>Use o conjunto inicial sugerido para sua classe ou personalize a carga antes da primeira cena.</p></div>
-              <div className="campaignWizardModeSwitch">
-                <button className={equipmentMode === "suggested" ? "active" : ""} onClick={() => setEquipmentMode("suggested")}>Conjunto sugerido</button>
-                <button className={equipmentMode === "manual" ? "active" : ""} onClick={() => setEquipmentMode("manual")}>Escolher manualmente</button>
-              </div>
-              {equipmentMode === "suggested" ? (
-                <>
-                  <div className="campaignWizardEquipmentList">
-                    {classConfig.suggestedEquipment.map((item, index) => {
-                      const entry = equipmentByName.get(normalizeCompendiumName(item.name));
-                      return (
-                        <label key={`${item.name}-${index}`}>
-                          <span className="campaignWizardEquipmentVisual"><CompendiumArt entry={entry} className="campaignWizardEquipmentArt" fallback={item.icon} /></span>
-                          <div><strong>{item.name}</strong><small>{item.detail}</small></div>
-                          <b>×{item.qty}</b>
-                        </label>
-                      );
-                    })}
-                  </div>
-                  {(classConfig.equipmentChoices || []).map((group, groupIndex) => (
-                    <div className="campaignWizardEquipmentChoice" key={groupIndex}>
-                      <small>ESCOLHA 1 ITEM</small>
-                      <div>{group.map((item, itemIndex) => {
-                        const entry = equipmentByName.get(normalizeCompendiumName(item.name));
-                        return <button className={(equipmentChoiceSelections[groupIndex] || 0) === itemIndex ? "selected" : ""} onClick={() => setEquipmentChoiceSelections((current) => current.map((value, index) => index === groupIndex ? itemIndex : value))} key={item.name}><span className="campaignWizardEquipmentChoiceVisual"><CompendiumArt entry={entry} className="campaignWizardEquipmentChoiceArt" fallback={item.icon} /></span><strong>{item.name}</strong></button>;
-                      })}</div>
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <div className="campaignWizardEquipmentBrowser">
-                  <div className="campaignWizardEquipmentBrowserHeader">
-                    <div><small>COMPÊNDIO</small><strong>Escolha seus itens</strong></div>
-                    <span>{manualEquipmentIds.size} {manualEquipmentIds.size === 1 ? "selecionado" : "selecionados"}</span>
-                  </div>
-                  <label className="campaignWizardEquipmentSearch">
-                    <span>⌕</span>
-                    <input value={equipmentQuery} onChange={(event) => setEquipmentQuery(event.target.value)} placeholder="Buscar equipamento…" />
-                    {equipmentQuery && <button onClick={() => setEquipmentQuery("")} type="button">×</button>}
-                  </label>
-                  <div className="campaignWizardEquipmentFilters">
-                    {["all", "weapon", "armor", "consumable", "loot"].map((type) => (
-                      <button
-                        className={equipmentTypeFilter === type ? "active" : ""}
-                        key={type}
-                        onClick={() => setEquipmentTypeFilter(type)}
-                        type="button"
-                      >
-                        {type === "all" ? "Todos" : entryTypeLabel(type)}
-                      </button>
-                    ))}
-                  </div>
-                  <div className="campaignWizardEquipmentCatalog">
-                    {filteredEquipmentEntries.map((entry) => (
-                      <label className={manualEquipmentIds.has(entry.id) ? "selected" : ""} key={entry.id}>
-                        <input type="checkbox" checked={manualEquipmentIds.has(entry.id)} onChange={() => toggleManualEquipment(entry.id)} />
-                        <span className="campaignWizardEquipmentVisual"><CompendiumArt entry={entry} className="campaignWizardEquipmentArt" fallback={EQUIPMENT_TYPE_ICONS[entry.type] || "◇"} /></span>
-                        <div>
-                          <small>{entryTypeLabel(entry.type)}</small>
-                          <strong>{entry.name}</strong>
-                          <p>{entry.description || "Sem descrição no compêndio."}</p>
-                        </div>
-                      </label>
-                    ))}
-                    {!filteredEquipmentEntries.length && <div className="campaignWizardEquipmentEmpty">Nenhum equipamento encontrado.</div>}
-                  </div>
-                  <label className="campaignWizardField campaignWizardCustomEquipment">
-                    <span>Item personalizado <em>opcional · Nome | detalhe</em></span>
-                    <input value={customEquipment} onChange={(event) => setCustomEquipment(event.target.value)} placeholder="Ex.: Amuleto antigo | Lembrança de família" />
-                  </label>
-                </div>
-              )}
+              <div className="campaignWizardIntro"><small>PASSO 8</small><h1>Prepare seu equipamento.</h1><p>Escolha sua armadura, armas e itens iniciais. As opções respeitam o patamar do personagem.</p></div>
+              <StartingEquipmentPicker level={level} config={classConfig} entries={equipmentEntries} value={equipmentLoadout} onChange={(next) => {setEquipmentLoadout(next); setEquipmentError("");}} choices={equipmentChoiceSelections} onChoicesChange={setEquipmentChoiceSelections} />
+              {equipmentError && <p className="campaignWizardError" role="alert">{equipmentError}</p>}
             </div>
           )}
 

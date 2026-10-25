@@ -31,6 +31,12 @@ test("level derives tier, baseline proficiency, armor thresholds and evasion", (
   assert.equal(rules.equipmentEvasionBonus([{ name: "Cota de Malha", detail: "Pesada" }]), -1);
 });
 
+test("canonical equipment descriptions preserve armor Evasion modifiers during creation", () => {
+  assert.equal(rules.equipmentEvasionBonus([{name: "Gibão", detail: "Limiares 5/11 · Armadura 3 · Flexível: +1 em Evasão."}]), 1);
+  assert.equal(rules.equipmentEvasionBonus([{name: "Cota de Malha", detail: "Pesada: –1 em Evasão."}]), -1);
+  assert.equal(rules.equipmentEvasionBonus([{name: "Armadura de Placas", detail: "Muito Pesada: –2 em Evasão; –1 em Agilidade."}]), -2);
+});
+
 test("legacy remaining HP migrates once into marked HP and stays stable", () => {
   const state = structuredClone(game.initialState);
   delete state.resourceModelVersion;

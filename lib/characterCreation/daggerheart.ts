@@ -47,9 +47,9 @@ export const TONE_OPTIONS: ToneOption[] = [
 ];
 
 const commonPack: Array<Omit<InventoryItem, "id">> = [
-  { name: "Tocha", qty: 1, detail: "Equipamento de viagem", icon: "✦" },
-  { name: "Corda", qty: 1, detail: "15 metros", icon: "⌁" },
-  { name: "Suprimentos básicos", qty: 1, detail: "Kit de aventura", icon: "◇" },
+  { name: "Tocha", qty: 1, detail: "Equipamento de viagem", icon: "✦", art: "/compendium/daggerheart/equipment/bonus-torch.webp" },
+  { name: "Corda", qty: 1, detail: "15 metros", icon: "⌁", art: "/compendium/daggerheart/equipment/bonus-rope.webp" },
+  { name: "Suprimentos básicos", qty: 1, detail: "Kit de aventura", icon: "◇", art: "/compendium/daggerheart/equipment/bonus-basic-supplies.webp" },
   { name: "Punhado de ouro", qty: 1, detail: "Dinheiro inicial", icon: "◉" },
   { name: "Poção de Vida Menor", qty: 1, detail: "Consumível inicial", icon: "◒" },
 ];
@@ -69,6 +69,7 @@ function compendiumEquipment(
     detail,
     icon,
     ...(entry?.sourceId ? { sourceId: entry.sourceId } : {}),
+    ...(entry?.art ? { art: entry.art } : {}),
   };
 }
 

@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 import CompendiumArt, { compendiumGlyph } from "@/components/CompendiumArt";
+import EquipmentArt from "@/components/EquipmentArt";
+import { equipmentRarityLabel } from "@/lib/equipmentRarity";
 import { buildCompendiumSections, type CompendiumSection } from "@/lib/compendium/grouping";
 import {
   daggerheartCompendium,
@@ -76,8 +78,10 @@ function Mechanics({ entry, expanded = false }: { entry: CompendiumEntry; expand
 function EntryCard({ entry, onOpen, compact = false }: { entry: CompendiumEntry; onOpen: () => void; compact?: boolean }) {
   const glyph = compendiumGlyph(entry);
   return (
-    <button className={["compEntryCard", entry.art ? "withArt" : "", compact ? "compEntryCardChild" : ""].filter(Boolean).join(" ")} onClick={onOpen}>
-      {entry.art ? (
+    <button className={["compEntryCard", entry.art || entry.category === "equipment" ? "withArt" : "", compact ? "compEntryCardChild" : ""].filter(Boolean).join(" ")} onClick={onOpen}>
+      {entry.category === "equipment" ? (
+        <div className="compEntryArt"><EquipmentArt item={entry} className="compEntryArtImage equipmentIconArt" /></div>
+      ) : entry.art ? (
         <div className="compEntryArt">
           <CompendiumArt
             entry={entry}
@@ -92,13 +96,15 @@ function EntryCard({ entry, onOpen, compact = false }: { entry: CompendiumEntry;
       <div className="compEntryBody">
         <div className="compEntryMeta">
           <span>{entryTypeLabel(entry.type)}</span>
+          {entry.rarity && <em className="rarityBadge" data-rarity={entry.rarity}>{equipmentRarityLabel(entry.rarity)}</em>}
           {entry.type === "beastform" && <em>Patamar {entry.beastformTier}</em>}
           {entry.type === "subclassFeature" && entry.tier && <em>{subclassFeatureTierLabel(entry.tier)}</em>}
           {entry.source === "expansion" && <em>Expansão</em>}
           {entry.source === "void-unofficial" && <em>The Void</em>}
         </div>
         <h3>{entry.name}</h3>
-        <p>{shortDescription(entry.description || entry.motivesAndTactics || "Sem descrição.", compact ? 120 : 170)}</p>
+        {entry.equipmentDetail && <p className="equipmentStats">{entry.equipmentDetail}</p>}
+        <p>{shortDescription(entry.description || entry.motivesAndTactics || (entry.equipmentDetail ? "Equipamento sem característica adicional." : "Sem descrição."), compact ? 120 : 170)}</p>
         <Mechanics entry={entry} />
       </div>
       <b className="compEntryArrow">›</b>
@@ -107,6 +113,14 @@ function EntryCard({ entry, onOpen, compact = false }: { entry: CompendiumEntry;
 }
 
 function SectionEntries({ section, onOpen }: { section: CompendiumSection; onOpen: (entry: CompendiumEntry) => void }) {
+  if (section.kind === "equipment") {
+    return <div className="compEquipmentList">{section.rarities.map(({rarity, entries}) => (
+      <section className="compEquipmentGroup" data-rarity={rarity} aria-label={equipmentRarityLabel(rarity)} key={rarity}>
+        <header><small>RARIDADE</small><h2>{equipmentRarityLabel(rarity)}<span>{entries.length} equipamentos</span></h2></header>
+        <div className="compEntryGrid">{entries.map((entry) => <EntryCard entry={entry} onOpen={() => onOpen(entry)} key={entry.id} />)}</div>
+      </section>
+    ))}</div>;
+  }
   if (section.kind === "families") {
     return (
       <div className="compFamilyList">
@@ -203,6 +217,7 @@ function EntryDetail({
         <div className="compDetailContent">
           <div className="compDetailMeta">
             <span>{entryTypeLabel(entry.type)}</span>
+            {entry.rarity && <i className="rarityBadge" data-rarity={entry.rarity}>{equipmentRarityLabel(entry.rarity)}</i>}
             {entry.type === "subclassFeature" && entry.tier && <i>{subclassFeatureTierLabel(entry.tier)}</i>}
             <i>{entry.source === "expansion" ? "Conteúdo de expansão" : entry.source === "void-unofficial" ? "The Void · conteúdo não oficial" : entry.source === "srd2" ? "SRD 2.0" : entry.source === "srd" ? "SRD" : "Daggerheart"}</i>
             {entry.artSource?.includes("Foundryborne/daggerheart") && <i>Arte de domínio · Foundryborne · DPCGL</i>}
@@ -210,6 +225,8 @@ function EntryDetail({
           <h2>{entry.name}</h2>
           {entry.originalName && entry.originalName !== entry.name && <small className="compOriginalName">{entry.originalName}</small>}
           <Mechanics entry={entry} expanded />
+          {entry.equipmentDetail && <p className="equipmentStats equipmentStatsDetail">{entry.equipmentDetail}</p>}
+          {entry.creationRestricted && <p className="equipmentRestriction">{entry.creationRestricted}</p>}
           {entry.motivesAndTactics && (
             <div className="compTactics">
               <small>MOTIVAÇÕES E TÁTICAS</small>
@@ -284,6 +301,8 @@ export default function DaggerheartCompendium({ onBack }: Props) {
           entryTypeLabel(entry.type),
           entry.type === "subclassFeature" ? subclassFeatureTierLabel(entry.tier) : "",
           entry.domain || "",
+          entry.equipmentDetail || "",
+          entry.rarity ? equipmentRarityLabel(entry.rarity) : "",
           entry.beastformTier ? "Patamar " + entry.beastformTier : "",
           entry.type === "domainCard" && entry.level !== undefined ? "Nível " + entry.level : "",
         ].join(" "));

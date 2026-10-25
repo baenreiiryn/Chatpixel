@@ -20,6 +20,7 @@ import {
   type DiceType,
   type CharacterState,
   type CharacterTracker,
+  type InventoryItem,
   restartCampaignFromSnapshot,
   undoLatest,
 } from "@/lib/game";
@@ -35,6 +36,7 @@ import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestG
 import { buildSceneWebImageSearchPrompt, describeSceneWebImageError, extractSceneWebImage } from "@/lib/sceneWebImage";
 import DaggerheartCompendium from "@/components/DaggerheartCompendium";
 import CompendiumArt from "@/components/CompendiumArt";
+import EquipmentArt from "@/components/EquipmentArt";
 import NewCampaignWizard, { type NewCampaignResult } from "@/components/NewCampaignWizard";
 import DaggerheartLevelUpWizard from "@/components/DaggerheartLevelUpWizard";
 import { TRAIT_LABELS, TRAIT_ORDER } from "@/lib/characterCreation/daggerheart";
@@ -511,6 +513,7 @@ function SheetExpandableCard({
   entry,
   description,
   badge,
+  equipment,
 }: {
   icon: string;
   title: string;
@@ -518,15 +521,19 @@ function SheetExpandableCard({
   entry?: CompendiumEntry;
   description?: string;
   badge?: string;
+  equipment?: InventoryItem;
 }) {
   const body = description?.trim() || entry?.description?.trim() || "";
   const mechanics = entry ? mechanicsSummary(entry) : [];
   const canExpand = Boolean(body || mechanics.length);
+  const visual = equipment
+    ? <EquipmentArt item={equipment} className="sheetEntryArt" />
+    : <CompendiumArt entry={entry} className="sheetEntryArt" fallback={<b>{icon}</b>} />;
 
   if (!canExpand) {
     return (
       <article className="miniCard">
-        <span className="sheetEntryVisual"><CompendiumArt entry={entry} className="sheetEntryArt" fallback={<b>{icon}</b>} /></span>
+        <span className="sheetEntryVisual">{visual}</span>
         <div><h3>{title}</h3><p>{subtitle}</p></div>
         {badge && <strong>{badge}</strong>}
       </article>
@@ -536,7 +543,7 @@ function SheetExpandableCard({
   return (
     <details className="sheetExpandableCard">
       <summary>
-        <span className="sheetEntryVisual"><CompendiumArt entry={entry} className="sheetEntryArt" fallback={<b>{icon}</b>} /></span>
+        <span className="sheetEntryVisual">{visual}</span>
         <div><h3>{title}</h3><p>{subtitle}</p></div>
         <span className={"sheetExpandHint " + (badge ? "badge" : "chevron")}>{badge || "⌄"}</span>
       </summary>
@@ -2987,10 +2994,9 @@ export default function OracleApp() {
                 <div className="inventory">
                   <div className="sectionTitle"><span>Inventário</span><small>{state.inventory.reduce((sum, i) => sum + i.qty, 0)} itens</small></div>
                   {state.inventory.map((item) => {
-                    const entry = findCompendiumEntry(item.id, item.name);
                     return (
                       <div className="itemRow" key={item.id}>
-                        <span className="itemRowVisual"><CompendiumArt entry={entry} className="itemRowArt" fallback={<b>{item.icon}</b>} /></span>
+                        <span className="itemRowVisual"><EquipmentArt item={item} className="itemRowArt" /></span>
                         <div><strong>{item.name}</strong><small>{item.detail}</small></div>
                         <div className="qty">
                           <button onClick={() => setState((s) => executeCommand(s, { type: "inventory", itemId: item.id, amount: -1 }))}>−</button>
@@ -3291,7 +3297,7 @@ export default function OracleApp() {
               <h3 className="subhead">Inventário</h3>
               <div className="cardGrid">
                 {state.inventory.map((item) => {
-                  const entry = findCompendiumEntry(item.id, item.name);
+                  const entry = findCompendiumEntry(item.sourceId || item.id, item.name);
                   const description = entry?.description && entry.description !== item.detail
                     ? [item.detail, entry.description].filter(Boolean).join("\n\n")
                     : item.detail;
@@ -3301,6 +3307,7 @@ export default function OracleApp() {
                       title={item.name}
                       subtitle={entry ? entry.type === "weapon" ? "Arma" : entry.type === "armor" ? "Armadura" : entry.type === "consumable" ? "Consumível" : entry.type === "loot" ? "Item de saque" : "Item" : "Item"}
                       entry={entry}
+                      equipment={item}
                       description={description}
                       badge={`×${item.qty}`}
                       key={item.id}

@@ -1212,6 +1212,23 @@ const featureParentTypes = {
   communityFeature: "community",
   subclassFeature: "subclass",
 };
+const equipmentManifest = readJson(path.join(root, "lib", "compendium", "equipment.manifest.json"));
+const equipmentMetadata = new Map(equipmentManifest.entries.map((item) => [item.type + ":" + item.normalizedName, item]));
+const equipmentArtManifest = readJson(path.join(root, "lib", "compendium", "equipment-art.manifest.json"));
+const equipmentArtwork = new Map(equipmentArtManifest.entries.map((item) => [item.id, item]));
+for (const entry of entries.filter((item) => item.category === "equipment")) {
+  const metadata = equipmentMetadata.get(entry.type + ":" + normalizeSourceArtName(entry.sourceId));
+  if (!metadata || !["common", "uncommon", "rare", "very-rare"].includes(metadata.rarity)) throw new Error(`Missing equipment rarity for ${entry.sourceId}. Run npm run sync:foundryborne-equipment.`);
+  for (const field of ["rarity", "equipmentTier", "weaponSlot", "hands", "equipmentDetail", "creationRestricted"]) {
+    if (metadata[field] !== undefined) entry[field] = metadata[field];
+  }
+  const artwork = equipmentArtwork.get(entry.id);
+  if (!artwork || artwork.type !== entry.type || artwork.sourceId !== entry.sourceId
+    || !fs.existsSync(path.join(root, "public", artwork.art))) {
+    throw new Error(`Missing equipment artwork for ${entry.id}.`);
+  }
+  entry.art = artwork.art;
+}
 const seenEntryIds = new Set();
 for (const entry of entries) {
   if (seenEntryIds.has(entry.id)) throw new Error(`Duplicate compendium entry: ${entry.id}`);

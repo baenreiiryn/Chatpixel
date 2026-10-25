@@ -87,8 +87,8 @@ export function thresholdsFromEquipment(items: Array<Pick<InventoryItem, "name" 
 
 export function equipmentEvasionBonus(items: Array<Pick<InventoryItem, "name" | "detail">>) {
   return items.reduce((total, item) => {
-    const text = `${item.name} ${item.detail}`;
-    const explicit = text.match(/([+-]\d+)\s*Evas[aã]o/gi) || [];
+    const text = `${item.name} ${item.detail}`.replace(/[–−]/g, "-");
+    const explicit = text.match(/([+-]\d+)\s*(?:em\s+)?Evas[aã]o/gi) || [];
     const explicitTotal = explicit.reduce((sum, match) => sum + Number(match.match(/[+-]\d+/)?.[0] || 0), 0);
     if (explicit.length) return total + explicitTotal;
     if (/muito pesada|very heavy/i.test(text)) return total - 2;

@@ -24,6 +24,7 @@ export type CompendiumSection =
   | { category: string; kind: "families"; families: CompendiumFamily[]; ungrouped: CompendiumEntry[] }
   | { category: string; kind: "domains"; domains: CompendiumDomain[] }
   | { category: string; kind: "beastforms"; tiers: Array<{ tier: number; entries: CompendiumEntry[] }> }
+  | { category: string; kind: "equipment"; rarities: Array<{ rarity: string; entries: CompendiumEntry[] }> }
   | { category: string; kind: "flat"; entries: CompendiumEntry[] };
 
 function compareEntries(a: CompendiumEntry, b: CompendiumEntry) {
@@ -123,6 +124,15 @@ export function buildCompendiumSections(
     if (familyTypes) {
       const grouped = groupFamilies(entriesByCategory.get(category) || [], categoryMatches, ...familyTypes);
       sections.push({ category, kind: "families", ...grouped });
+    } else if (category === "equipment") {
+      const rarityOrder = ["common", "uncommon", "rare", "very-rare", "legendary", "unclassified"];
+      const typeOrder = ["weapon", "armor", "consumable", "loot"];
+      const groups = new Map<string, CompendiumEntry[]>();
+      for (const entry of categoryMatches) {
+        const rarity = entry.rarity || "unclassified";
+        groups.set(rarity, [...(groups.get(rarity) || []), entry]);
+      }
+      sections.push({category, kind: "equipment", rarities: Array.from(groups, ([rarity, items]) => ({rarity, entries: items.toSorted((a, b) => typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type) || compareEntries(a, b))})).sort((a, b) => rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity))});
     } else if (category === "beastforms") {
       const tiers = new Map<number, CompendiumEntry[]>();
       for (const entry of categoryMatches) {

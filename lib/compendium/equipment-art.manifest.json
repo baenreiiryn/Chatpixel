@@ -1,0 +1,2949 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "core-weapon-dagger",
+      "sourceId": "Dagger",
+      "name": "Adaga",
+      "type": "weapon",
+      "sha256": "341ec45c31b063468351a43abe4be4f4fbb3ca04033403c6b20165231f9c42a4",
+      "art": "/compendium/daggerheart/equipment/core-weapon-dagger.webp"
+    },
+    {
+      "id": "core-weapon-parrying-dagger",
+      "sourceId": "Parrying Dagger",
+      "name": "Adaga Aparadora",
+      "type": "weapon",
+      "sha256": "606003b05838b7044bfefa8cb5d06bc541617b0b416b5ab49b5db2628ef75555",
+      "art": "/compendium/daggerheart/equipment/core-weapon-parrying-dagger.webp"
+    },
+    {
+      "id": "core-weapon-improved-dagger",
+      "sourceId": "Improved Dagger",
+      "name": "Adaga Aprimorada",
+      "type": "weapon",
+      "sha256": "db9241b5931cfde03d65d00aec4f9ab38bb7a10def8b44e103b2d398be93ef89",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-dagger.webp"
+    },
+    {
+      "id": "core-weapon-advanced-dagger",
+      "sourceId": "Advanced Dagger",
+      "name": "Adaga Avançada",
+      "type": "weapon",
+      "sha256": "66ffdfc0717202528948a298a95e120cd2eecdcf2b4f9a406ddcbfe4f37e2a57",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-dagger.webp"
+    },
+    {
+      "id": "core-weapon-curved-dagger",
+      "sourceId": "Curved Dagger",
+      "name": "Adaga Curva",
+      "type": "weapon",
+      "sha256": "d2d6997e883c70684cd02ebc0d7ff11fb5d51a2eed1414915ebaf50e937e0e53",
+      "art": "/compendium/daggerheart/equipment/core-weapon-curved-dagger.webp"
+    },
+    {
+      "id": "core-weapon-devouring-dagger",
+      "sourceId": "Devouring Dagger",
+      "name": "Adaga Devoradora",
+      "type": "weapon",
+      "sha256": "7d33f410e26ebefd3bc6a2a9f86a412fbdc6838d7ec08399170af3375b1b3bad",
+      "art": "/compendium/daggerheart/equipment/core-weapon-devouring-dagger.webp"
+    },
+    {
+      "id": "core-weapon-legendary-dagger",
+      "sourceId": "Legendary Dagger",
+      "name": "Adaga Lendária",
+      "type": "weapon",
+      "sha256": "2081960f3068a41bee2562acbcc9ee9fc1558760985439d6d54071571753ba2a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-dagger.webp"
+    },
+    {
+      "id": "core-weapon-small-dagger",
+      "sourceId": "Small Dagger",
+      "name": "Adaga Pequena",
+      "type": "weapon",
+      "sha256": "4b8bb8acbf684952beee2ab499efd398dfe0c6f7f364d2a027df2c8fb907d040",
+      "art": "/compendium/daggerheart/equipment/core-weapon-small-dagger.webp"
+    },
+    {
+      "id": "core-weapon-advanced-small-dagger",
+      "sourceId": "Advanced Small Dagger",
+      "name": "Adaga Pequena Aprimorada",
+      "type": "weapon",
+      "sha256": "ae42a3375d797e93c0f4553b600348ca52ac779f5cbb13c76e2c3c91ae2c2b2f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-small-dagger.webp"
+    },
+    {
+      "id": "core-weapon-improved-small-dagger",
+      "sourceId": "Improved Small Dagger",
+      "name": "Adaga Pequena Aprimorada",
+      "type": "weapon",
+      "sha256": "55c32e45ec4f623dc8aceeb684a533cfa7f336a96b41a9aae3d3206ed3a9a125",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-small-dagger.webp"
+    },
+    {
+      "id": "core-weapon-legendary-small-dagger",
+      "sourceId": "Legendary Small Dagger",
+      "name": "Adaga Pequena Lendária",
+      "type": "weapon",
+      "sha256": "9e3eaa5a7f4530d8175d613b2999fcdee7664669f287808ff7bb083dc61f8360",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-small-dagger.webp"
+    },
+    {
+      "id": "core-weapon-halberd",
+      "sourceId": "Halberd",
+      "name": "Alabarda",
+      "type": "weapon",
+      "sha256": "c81d0b9461494cf72c10833742c966abb22c94ba891bfb7fcc81743b8cd94892",
+      "art": "/compendium/daggerheart/equipment/core-weapon-halberd.webp"
+    },
+    {
+      "id": "core-weapon-advanced-halberd",
+      "sourceId": "Advanced Halberd",
+      "name": "Alabarda Aprimorada",
+      "type": "weapon",
+      "sha256": "614c7291d412dab73f9f03122633f0fcbd53942b92e9c3ede65a80fc552e0f2d",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-halberd.webp"
+    },
+    {
+      "id": "core-weapon-improved-halberd",
+      "sourceId": "Improved Halberd",
+      "name": "Alabarda Aprimorada",
+      "type": "weapon",
+      "sha256": "4b9f210af2802c70a578d80fc964c3830d09edb08bf75e48ab2f78a713c0b301",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-halberd.webp"
+    },
+    {
+      "id": "core-weapon-steelforged-halberd",
+      "sourceId": "Steelforged Halberd",
+      "name": "Alabarda de Aço",
+      "type": "weapon",
+      "sha256": "7344c863313919718425038df34cf8a3b2f9f531527e7d2a71d03013fb4c8910",
+      "art": "/compendium/daggerheart/equipment/core-weapon-steelforged-halberd.webp"
+    },
+    {
+      "id": "core-weapon-legendary-halberd",
+      "sourceId": "Legendary Halberd",
+      "name": "Alabarda Lendária",
+      "type": "weapon",
+      "sha256": "67ab5aa8b5ddbb82834c970e2879d9c4777adb4f0a7fe3c7a9a528403ad7d1c6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-halberd.webp"
+    },
+    {
+      "id": "core-weapon-gilded-falchion",
+      "sourceId": "Gilded Falchion",
+      "name": "Alfange Dourado",
+      "type": "weapon",
+      "sha256": "c725a0ccedcb27dc931d86f0c0cd7782fb33b7528aaf9c54d23cddaea71a2e03",
+      "art": "/compendium/daggerheart/equipment/core-weapon-gilded-falchion.webp"
+    },
+    {
+      "id": "core-weapon-glowing-rings",
+      "sourceId": "Glowing Rings",
+      "name": "Anéis Luminosos",
+      "type": "weapon",
+      "sha256": "76370e960dfe36dc04fd92d73ba42bb7ff66e5c91cee72ac70ba050de87529d9",
+      "art": "/compendium/daggerheart/equipment/core-weapon-glowing-rings.webp"
+    },
+    {
+      "id": "core-weapon-advanced-glowing-rings",
+      "sourceId": "Advanced Glowing Rings",
+      "name": "Anéis Luminosos Aprimorados",
+      "type": "weapon",
+      "sha256": "ac61a6e1dde9e764d57d2c4b7653dac3ef643148890ef2d74254a9361638bb75",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-glowing-rings.webp"
+    },
+    {
+      "id": "core-weapon-improved-glowing-rings",
+      "sourceId": "Improved Glowing Rings",
+      "name": "Anéis Luminosos Aprimorados",
+      "type": "weapon",
+      "sha256": "71249ba813eb5ab631030e55770a20a6172cfba9d67cc07b5328c7ba593647ba",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-glowing-rings.webp"
+    },
+    {
+      "id": "core-weapon-legendary-glowing-rings",
+      "sourceId": "Legendary Glowing Rings",
+      "name": "Anéis Luminosos Lendários",
+      "type": "weapon",
+      "sha256": "aad9e4abe67ef1c807e4b9aafe87901e6649b0ce5807981df1afeae839e10b22",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-glowing-rings.webp"
+    },
+    {
+      "id": "core-weapon-elder-bow",
+      "sourceId": "Elder Bow",
+      "name": "Arco Ancião",
+      "type": "weapon",
+      "sha256": "754939cbfeda79b6d576e6ede8edb41b989e060e968d32f0468424a589cff153",
+      "art": "/compendium/daggerheart/equipment/core-weapon-elder-bow.webp"
+    },
+    {
+      "id": "core-weapon-spiked-bow",
+      "sourceId": "Spiked Bow",
+      "name": "Arco com Espinhos",
+      "type": "weapon",
+      "sha256": "f53c18b70a4f85260bf88ce532fbcfe906444aa80f5d52658067723cfa2bc403",
+      "art": "/compendium/daggerheart/equipment/core-weapon-spiked-bow.webp"
+    },
+    {
+      "id": "core-weapon-shortbow",
+      "sourceId": "Shortbow",
+      "name": "Arco Curto",
+      "type": "weapon",
+      "sha256": "5eefbac58db7af42bde9119d43f594e023c158d22578c85b07b0e960cd4c0141",
+      "art": "/compendium/daggerheart/equipment/core-weapon-shortbow.webp"
+    },
+    {
+      "id": "core-weapon-improved-shortbow",
+      "sourceId": "Improved Shortbow",
+      "name": "Arco Curto Aprimorado",
+      "type": "weapon",
+      "sha256": "64fbf7bb596d734d8a52c118b10671a795731983c151d8a3cfb61e504482bcb2",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-shortbow.webp"
+    },
+    {
+      "id": "core-weapon-advanced-shortbow",
+      "sourceId": "Advanced Shortbow",
+      "name": "Arco Curto Avançado",
+      "type": "weapon",
+      "sha256": "d905e5f1bc941451c81f5038759db0231056ed8b19109abb79b3f78fe3bd1a22",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-shortbow.webp"
+    },
+    {
+      "id": "core-weapon-legendary-shortbow",
+      "sourceId": "Legendary Shortbow",
+      "name": "Arco Curto Lendário",
+      "type": "weapon",
+      "sha256": "1b8739172737631f2cf3e5931993361d11f498c291312eb3a321bab8950bd47f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-shortbow.webp"
+    },
+    {
+      "id": "core-weapon-aantari-bow",
+      "sourceId": "Aantari Bow",
+      "name": "Arco de Aantari",
+      "type": "weapon",
+      "sha256": "c9a45adcddd2b62649db5464da1bcda63ef1e8cfd18376bec2f11ff700e2204f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-aantari-bow.webp"
+    },
+    {
+      "id": "core-weapon-thistlebow",
+      "sourceId": "Thistlebow",
+      "name": "Arco de Cardo",
+      "type": "weapon",
+      "sha256": "73ad4febf3f539729f5c70240fbacf365a123537209e8eb5c13a64dc52ab9480",
+      "art": "/compendium/daggerheart/equipment/core-weapon-thistlebow.webp"
+    },
+    {
+      "id": "core-weapon-yutari-bloodbow",
+      "sourceId": "Yutari Bloodbow",
+      "name": "Arco de Sangue de Yutari",
+      "type": "weapon",
+      "sha256": "207b4adc23407f5fda855bafddcbf966ca6cdaf8669f40b26151a022f588fbbd",
+      "art": "/compendium/daggerheart/equipment/core-weapon-yutari-bloodbow.webp"
+    },
+    {
+      "id": "core-weapon-gilded-bow",
+      "sourceId": "Gilded Bow",
+      "name": "Arco Dourado",
+      "type": "weapon",
+      "sha256": "2434b457370877960eaf8eeeb05a09d788edcba7468e889c6a413041d669ea67",
+      "art": "/compendium/daggerheart/equipment/core-weapon-gilded-bow.webp"
+    },
+    {
+      "id": "core-weapon-finehair-bow",
+      "sourceId": "Finehair Bow",
+      "name": "Arco Fio-de-cabelo",
+      "type": "weapon",
+      "sha256": "755c6cc84057bb8c707272a845d8144f61ff4d9dca29630e688cface9fd30f25",
+      "art": "/compendium/daggerheart/equipment/core-weapon-finehair-bow.webp"
+    },
+    {
+      "id": "core-weapon-greatbow",
+      "sourceId": "Greatbow",
+      "name": "Arco Grande",
+      "type": "weapon",
+      "sha256": "dff9740138f4c410f8085efcdec15a41f3f53416e29ce376ff70981cb0f81d6a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-greatbow.webp"
+    },
+    {
+      "id": "core-weapon-longbow",
+      "sourceId": "Longbow",
+      "name": "Arco Longo",
+      "type": "weapon",
+      "sha256": "9d44c293fddbd27d6048028bc53eb4e7caa43b8db91bf437b9bb702d6a0e691b",
+      "art": "/compendium/daggerheart/equipment/core-weapon-longbow.webp"
+    },
+    {
+      "id": "core-weapon-advanced-longbow",
+      "sourceId": "Advanced Longbow",
+      "name": "Arco Longo Aprimorado",
+      "type": "weapon",
+      "sha256": "c348ff531fa0d68b7990b29d83a16f7f1010f24974a33506ab51fcc9a7f11bcc",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-longbow.webp"
+    },
+    {
+      "id": "core-weapon-improved-longbow",
+      "sourceId": "Improved Longbow",
+      "name": "Arco Longo Aprimorado",
+      "type": "weapon",
+      "sha256": "10f5d0af18911a29622eb79bf70dde707742af796d0ea50d6b15c2188ac5427a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-longbow.webp"
+    },
+    {
+      "id": "core-weapon-legendary-longbow",
+      "sourceId": "Legendary Longbow",
+      "name": "Arco Longo Lendário",
+      "type": "weapon",
+      "sha256": "d88e8a538e4ab08f1080b68cf9cee78a43df9995e094c6b3fd34eeb21b39298d",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-longbow.webp"
+    },
+    {
+      "id": "core-weapon-blunderbuss",
+      "sourceId": "Blunderbuss",
+      "name": "Bacamarte",
+      "type": "weapon",
+      "sha256": "5d87402f1ed8ad7a72d74428a8ad2544c0a63130406240fd8e45d463d9e636be",
+      "art": "/compendium/daggerheart/equipment/core-weapon-blunderbuss.webp"
+    },
+    {
+      "id": "core-weapon-crossbow",
+      "sourceId": "Crossbow",
+      "name": "Besta",
+      "type": "weapon",
+      "sha256": "1f4b9b02b12f1df93c6e4c21aac94afd0a8d5dc77db1d8efc815a743603bbec7",
+      "art": "/compendium/daggerheart/equipment/core-weapon-crossbow.webp"
+    },
+    {
+      "id": "core-weapon-improved-crossbow",
+      "sourceId": "Improved Crossbow",
+      "name": "Besta Aprimorada",
+      "type": "weapon",
+      "sha256": "61260d5f7ac9de931a7367cfdc6a81302327f09415b81352d86e5d4af0f49c0d",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-crossbow.webp"
+    },
+    {
+      "id": "core-weapon-advanced-crossbow",
+      "sourceId": "Advanced Crossbow",
+      "name": "Besta Avançada",
+      "type": "weapon",
+      "sha256": "00261b5c998e56e3ec5984070ac2c2a1b75e3f8d8651ad217fb7d890b32a2f15",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-crossbow.webp"
+    },
+    {
+      "id": "core-weapon-hand-crossbow",
+      "sourceId": "Hand Crossbow",
+      "name": "Besta de Mão",
+      "type": "weapon",
+      "sha256": "79a52bf6749a469fea68d984a931f5f3804de10ddebd452bdf5921f068d81e46",
+      "art": "/compendium/daggerheart/equipment/core-weapon-hand-crossbow.webp"
+    },
+    {
+      "id": "core-weapon-improved-hand-crossbow",
+      "sourceId": "Improved Hand Crossbow",
+      "name": "Besta de Mão Aprimorada",
+      "type": "weapon",
+      "sha256": "cc8ab167958ac504c0bd1144dd7198e38b043543abc06f79c4a3c021032f635a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-hand-crossbow.webp"
+    },
+    {
+      "id": "core-weapon-advanced-hand-crossbow",
+      "sourceId": "Advanced Hand Crossbow",
+      "name": "Besta de Mão Avançada",
+      "type": "weapon",
+      "sha256": "f8b55972901f15040e55d0957b3e2f8878319a1268716783d62cebada95cc3f2",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-hand-crossbow.webp"
+    },
+    {
+      "id": "core-weapon-legendary-hand-crossbow",
+      "sourceId": "Legendary Hand Crossbow",
+      "name": "Besta de Mão Lendária",
+      "type": "weapon",
+      "sha256": "1074492d9f82dcbddc5c5e2bff217a1fe9b75f3e8da0ab62d1ed8744bd5070e6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-hand-crossbow.webp"
+    },
+    {
+      "id": "core-weapon-legendary-crossbow",
+      "sourceId": "Legendary Crossbow",
+      "name": "Besta Lendária",
+      "type": "weapon",
+      "sha256": "32017eb000492a2c0d2e7108dc15494ec48c190ea5623bc28727723af84e90f6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-crossbow.webp"
+    },
+    {
+      "id": "core-weapon-quarterstaff",
+      "sourceId": "Quarterstaff",
+      "name": "Bordão",
+      "type": "weapon",
+      "sha256": "5edf9ddece8081bbedd874bb528956b3a85fec368031352c2d47a43496886658",
+      "art": "/compendium/daggerheart/equipment/core-weapon-quarterstaff.webp"
+    },
+    {
+      "id": "core-weapon-improved-quarterstaff",
+      "sourceId": "Improved Quarterstaff",
+      "name": "Bordão Aprimorado",
+      "type": "weapon",
+      "sha256": "cafa2935beee49fd3842b2b2fd83dafc55c61b13b24285918dc82157c75226f6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-quarterstaff.webp"
+    },
+    {
+      "id": "core-weapon-advanced-quarterstaff",
+      "sourceId": "Advanced Quarterstaff",
+      "name": "Bordão Avançado",
+      "type": "weapon",
+      "sha256": "3a6b414a630dd91c7d1a20c871c43b3ca061d20aae3e44e14108086974c74228",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-quarterstaff.webp"
+    },
+    {
+      "id": "core-weapon-legendary-quarterstaff",
+      "sourceId": "Legendary Quarterstaff",
+      "name": "Bordão Lendário",
+      "type": "weapon",
+      "sha256": "21669640cd164d9f2dd82b7a23757412822fecf50c9c2432850fcf759b497f53",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-quarterstaff.webp"
+    },
+    {
+      "id": "core-weapon-buckler",
+      "sourceId": "Buckler",
+      "name": "Broquel",
+      "type": "weapon",
+      "sha256": "1d956da9b291fc72fa52e9a5f3730c0c2d5365b508a20cdc3e5dfcbb53ce0133",
+      "art": "/compendium/daggerheart/equipment/core-weapon-buckler.webp"
+    },
+    {
+      "id": "core-weapon-arcane-frame-wheelchair",
+      "sourceId": "Arcane-Frame Wheelchair",
+      "name": "Cadeira de Rodas Arcana",
+      "type": "weapon",
+      "sha256": "1e4aaeac95dc283c069d39737a9ed57d33fec775c9f0fdfad7322b5e865e8a73",
+      "art": "/compendium/daggerheart/equipment/core-weapon-arcane-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-improved-arcane-frame-wheelchair",
+      "sourceId": "Improved Arcane-Frame Wheelchair",
+      "name": "Cadeira de Rodas Arcana Aprimorada",
+      "type": "weapon",
+      "sha256": "84d91a133a11efcd7cd301441a103c93cb0bbd4cda8480652f7b820b3e674733",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-arcane-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-advanced-arcane-frame-wheelchair",
+      "sourceId": "Advanced Arcane-Frame Wheelchair",
+      "name": "Cadeira de Rodas Arcana Avançada",
+      "type": "weapon",
+      "sha256": "e69e94918ead2684ada1fb0ffed61da611feedbf110a0d984b2fdfc6d7ed4cc6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-arcane-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-legendary-arcane-frame-wheelchair",
+      "sourceId": "Legendary Arcane-Frame Wheelchair",
+      "name": "Cadeira de Rodas Arcana Lendária",
+      "type": "weapon",
+      "sha256": "43f520f6fc1ed52e06e7a79e634b59f7edcdf97a791a6850baec539617348fdf",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-arcane-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-light-frame-wheelchair",
+      "sourceId": "Light-Frame Wheelchair",
+      "name": "Cadeira de Rodas Leve",
+      "type": "weapon",
+      "sha256": "efb229a66b717383fed9d0ef1ecf5bce6159f73fb56ed1b9f9b2a6420fbd7d5e",
+      "art": "/compendium/daggerheart/equipment/core-weapon-light-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-improved-light-frame-wheelchair",
+      "sourceId": "Improved Light-Frame Wheelchair",
+      "name": "Cadeira de Rodas Leve Aprimorada",
+      "type": "weapon",
+      "sha256": "ebfb22b7162c17737f502af5f2c49087850cb33a8b1839b4647fe5ab844c7554",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-light-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-advanced-light-frame-wheelchair",
+      "sourceId": "Advanced Light-Frame Wheelchair",
+      "name": "Cadeira de Rodas Leve Avançada",
+      "type": "weapon",
+      "sha256": "a5971ccdd335edb483c954d900cdfc68735528c7565a56dd1f41a36a60bf4e2a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-light-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-legendary-light-frame-wheelchair",
+      "sourceId": "Legendary Light-Frame Wheelchair",
+      "name": "Cadeira de Rodas Leve Lendária",
+      "type": "weapon",
+      "sha256": "e8a38b9dcb1b913da898df781ea847288e72de0f72f714ed3f3527eca83e8e6d",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-light-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-heavy-frame-wheelchair",
+      "sourceId": "Heavy-Frame Wheelchair",
+      "name": "Cadeira de Rodas Pesada",
+      "type": "weapon",
+      "sha256": "8beecb44b8e8625b6545007f76faee47b1e6bd9d98cc5a493dd8e7fde17d4c53",
+      "art": "/compendium/daggerheart/equipment/core-weapon-heavy-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-improved-heavy-frame-wheelchair",
+      "sourceId": "Improved Heavy-Frame Wheelchair",
+      "name": "Cadeira de Rodas Pesada Aprimorada",
+      "type": "weapon",
+      "sha256": "538700b3678f04e0e6fc6d1bd779136abbc12dd386f044e98116b8a9a4c52618",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-heavy-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-advanced-heavy-frame-wheelchair",
+      "sourceId": "Advanced Heavy-Frame Wheelchair",
+      "name": "Cadeira de Rodas Pesada Avançada",
+      "type": "weapon",
+      "sha256": "7822ec477820c7f056cc20fce5f540350d5400701bd2f5205bff3965f03309cc",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-heavy-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-legendary-heavy-frame-wheelchair",
+      "sourceId": "Legendary Heavy-Frame Wheelchair",
+      "name": "Cadeira de Rodas Pesada Lendária",
+      "type": "weapon",
+      "sha256": "88703de674d38d1570cb3638bbfec5dd929d7f51159360b27e63bc7b308b9b54",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-heavy-frame-wheelchair.webp"
+    },
+    {
+      "id": "core-weapon-shortstaff",
+      "sourceId": "Shortstaff",
+      "name": "Cajado Curto",
+      "type": "weapon",
+      "sha256": "ab43e15b014bccb73cf09067d63889f307c888577331ed3b082b4902195d392f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-shortstaff.webp"
+    },
+    {
+      "id": "core-weapon-improved-shortstaff",
+      "sourceId": "Improved Shortstaff",
+      "name": "Cajado Curto Aprimorado",
+      "type": "weapon",
+      "sha256": "5462f18df06a36425ffc11ba0d54641c76e916a23d6ba9f21ee04d03066c42bf",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-shortstaff.webp"
+    },
+    {
+      "id": "core-weapon-advanced-shortstaff",
+      "sourceId": "Advanced Shortstaff",
+      "name": "Cajado Curto Avançado",
+      "type": "weapon",
+      "sha256": "43ada845b703d38d45e915bf9522a49400f0ce1d2b29bddb40fb9618eb976dbe",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-shortstaff.webp"
+    },
+    {
+      "id": "core-weapon-legendary-shortstaff",
+      "sourceId": "Legendary Shortstaff",
+      "name": "Cajado Curto Lendário",
+      "type": "weapon",
+      "sha256": "12041167be4baec8022255baedddaf85d727e8b08b35d766065131cb3400c715",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-shortstaff.webp"
+    },
+    {
+      "id": "core-weapon-firestaff",
+      "sourceId": "Firestaff",
+      "name": "Cajado de Fogo",
+      "type": "weapon",
+      "sha256": "0292da1da6501ff071002b79ffcd5b8087cd8b5e571d5ced74c606cd4f81cd6b",
+      "art": "/compendium/daggerheart/equipment/core-weapon-firestaff.webp"
+    },
+    {
+      "id": "core-weapon-keeper-s-staff",
+      "sourceId": "Keeper's Staff",
+      "name": "Cajado do Defensor",
+      "type": "weapon",
+      "sha256": "952abe064c1a6ca08047dc732b17aa299c4200a2f8104f42d96cd87141edbefe",
+      "art": "/compendium/daggerheart/equipment/core-weapon-keeper-s-staff.webp"
+    },
+    {
+      "id": "core-weapon-dualstaff",
+      "sourceId": "Dualstaff",
+      "name": "Cajado Duplo",
+      "type": "weapon",
+      "sha256": "1064fce845eeaf93ce8c7870a651d535cf2c4d593a93c16835e7f93b566696d5",
+      "art": "/compendium/daggerheart/equipment/core-weapon-dualstaff.webp"
+    },
+    {
+      "id": "core-weapon-improved-dualstaff",
+      "sourceId": "Improved Dualstaff",
+      "name": "Cajado Duplo Aprimorado",
+      "type": "weapon",
+      "sha256": "71b149f5cb8430bcd494c897ec2873fe156db41e54bc8aa30bd6edd990a01427",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-dualstaff.webp"
+    },
+    {
+      "id": "core-weapon-advanced-dualstaff",
+      "sourceId": "Advanced Dualstaff",
+      "name": "Cajado Duplo Avançado",
+      "type": "weapon",
+      "sha256": "6234084d4b31bd325ef5148b4934260b2a4dd10d9fd6b29cfadef1823b45d20c",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-dualstaff.webp"
+    },
+    {
+      "id": "core-weapon-legendary-dualstaff",
+      "sourceId": "Legendary Dualstaff",
+      "name": "Cajado Duplo Lendário",
+      "type": "weapon",
+      "sha256": "462c8bdb205174136aa2263287d075829d721aed965b6c4ca84f33e4bd6c3640",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-dualstaff.webp"
+    },
+    {
+      "id": "core-weapon-greatstaff",
+      "sourceId": "Greatstaff",
+      "name": "Cajado Grande",
+      "type": "weapon",
+      "sha256": "387c8b2f48d7d50c51eddcb10033a0af864d455c37eec4ce83c6dc0bf851fb5c",
+      "art": "/compendium/daggerheart/equipment/core-weapon-greatstaff.webp"
+    },
+    {
+      "id": "core-weapon-advanced-greatstaff",
+      "sourceId": "Advanced Greatstaff",
+      "name": "Cajado Grande Aprimorado",
+      "type": "weapon",
+      "sha256": "64be5e2ac65b8fa514393bbeb104d5a66d11352d59e1f41c2788689cd77d4632",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-greatstaff.webp"
+    },
+    {
+      "id": "core-weapon-improved-greatstaff",
+      "sourceId": "Improved Greatstaff",
+      "name": "Cajado Grande Aprimorado",
+      "type": "weapon",
+      "sha256": "fdaca4ccaebc2e94a8774efe011238f3d095a35c9cb64693651414251c8c75ae",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-greatstaff.webp"
+    },
+    {
+      "id": "core-weapon-legendary-greatstaff",
+      "sourceId": "Legendary Greatstaff",
+      "name": "Cajado Grande Lendário",
+      "type": "weapon",
+      "sha256": "30e5be0d718bb2b8f43c30436c8daaa46da79d6a69a18bb98b52753c9379d152",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-greatstaff.webp"
+    },
+    {
+      "id": "core-weapon-bloodstaff",
+      "sourceId": "Bloodstaff",
+      "name": "Cajado Sangrento",
+      "type": "weapon",
+      "sha256": "82f5fb0e042b2e70db70bc3dedd6c8d1e17a4b5e62554806f582cac298ee935c",
+      "art": "/compendium/daggerheart/equipment/core-weapon-bloodstaff.webp"
+    },
+    {
+      "id": "core-weapon-hand-cannon",
+      "sourceId": "Hand Cannon",
+      "name": "Canhão de Mão",
+      "type": "weapon",
+      "sha256": "1a0235bd25de9775e002fd24848b8e1ccc9e011012b2a8a63ef99635f2c9d51f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-hand-cannon.webp"
+    },
+    {
+      "id": "core-weapon-scepter",
+      "sourceId": "Scepter",
+      "name": "Cetro",
+      "type": "weapon",
+      "sha256": "3a929a888ba26f6ca204d31a987d4e3d597e01c2d6f6a3e2b799d0d9a6f2b97a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-scepter.webp"
+    },
+    {
+      "id": "core-weapon-advanced-scepter",
+      "sourceId": "Advanced Scepter",
+      "name": "Cetro Aprimorado",
+      "type": "weapon",
+      "sha256": "db50865e3a0849000c509c03b8c271d911d63d31bcecc748454e29f22663d45f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-scepter.webp"
+    },
+    {
+      "id": "core-weapon-improved-scepter",
+      "sourceId": "Improved Scepter",
+      "name": "Cetro Aprimorado",
+      "type": "weapon",
+      "sha256": "af5f1f8945d2771c77846a548c0a75b97c198efdafbf6b0dbe6615e80dccc6a2",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-scepter.webp"
+    },
+    {
+      "id": "core-weapon-scepter-of-elias",
+      "sourceId": "Scepter of Elias",
+      "name": "Cetro de Elias",
+      "type": "weapon",
+      "sha256": "43cb8de61eb96a5204684ebff4f4bbcb00ab1da1817fa7cf902a07ea298e6f89",
+      "art": "/compendium/daggerheart/equipment/core-weapon-scepter-of-elias.webp"
+    },
+    {
+      "id": "core-weapon-legendary-scepter",
+      "sourceId": "Legendary Scepter",
+      "name": "Cetro Lendário",
+      "type": "weapon",
+      "sha256": "1f62041071d4f3f43570a6366b8c5e126ac376fe686a662a964ea2099fd59ab3",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-scepter.webp"
+    },
+    {
+      "id": "core-weapon-whip",
+      "sourceId": "Whip",
+      "name": "Chicote",
+      "type": "weapon",
+      "sha256": "130e146b3fa7662ff86b3741e6fee1c6863a06f9a8af6b669178e1295d6e9291",
+      "art": "/compendium/daggerheart/equipment/core-weapon-whip.webp"
+    },
+    {
+      "id": "core-weapon-advanced-whip",
+      "sourceId": "Advanced Whip",
+      "name": "Chicote Aprimorado",
+      "type": "weapon",
+      "sha256": "cd26f3d75e2e9d009d5e68f80daf8b367f3df81318a49b325be88ffbcd8a0c72",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-whip.webp"
+    },
+    {
+      "id": "core-weapon-improved-whip",
+      "sourceId": "Improved Whip",
+      "name": "Chicote Aprimorado",
+      "type": "weapon",
+      "sha256": "c63755a3c3c38535834dd3752482fc4faea2fc8dcb96a77ebefc63744631d279",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-whip.webp"
+    },
+    {
+      "id": "core-weapon-bladed-whip",
+      "sourceId": "Bladed Whip",
+      "name": "Chicote Laminado",
+      "type": "weapon",
+      "sha256": "fea626595210844669db411fc07b32c705918c9ff6561df59ef8ab7bdfb3f9fd",
+      "art": "/compendium/daggerheart/equipment/core-weapon-bladed-whip.webp"
+    },
+    {
+      "id": "core-weapon-legendary-whip",
+      "sourceId": "Legendary Whip",
+      "name": "Chicote Lendário",
+      "type": "weapon",
+      "sha256": "688ee110bf56fad087e9d885c7c0794500a43ea1840be97aa4d557dcc1ab233f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-whip.webp"
+    },
+    {
+      "id": "core-weapon-cutlass",
+      "sourceId": "Cutlass",
+      "name": "Cimitarra",
+      "type": "weapon",
+      "sha256": "5b00888be353f169cdf152e5d8855811477eb24ab3ee8a56ec9206964b9a28e1",
+      "art": "/compendium/daggerheart/equipment/core-weapon-cutlass.webp"
+    },
+    {
+      "id": "core-weapon-improved-cutlass",
+      "sourceId": "Improved Cutlass",
+      "name": "Cimitarra Aprimorada",
+      "type": "weapon",
+      "sha256": "6766c41d20e525b2e28e42839a117d8e02d47b7e546cc60fb681b8acbde51ec3",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-cutlass.webp"
+    },
+    {
+      "id": "core-weapon-advanced-cutlass",
+      "sourceId": "Advanced Cutlass",
+      "name": "Cimitarra Avançada",
+      "type": "weapon",
+      "sha256": "9c0bd6e35458532ee0564e9e92b1df9372f2f830f1a98f5e7e42ca5c223a2306",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-cutlass.webp"
+    },
+    {
+      "id": "core-weapon-legendary-cutlass",
+      "sourceId": "Legendary Cutlass",
+      "name": "Cimitarra Lendária",
+      "type": "weapon",
+      "sha256": "a4f31c4ef4519ab85987aa6226332fe9222a5e3dbb66ad25aab8053ef4064437",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-cutlass.webp"
+    },
+    {
+      "id": "core-weapon-swinging-ropeblade",
+      "sourceId": "Swinging Ropeblade",
+      "name": "Dardo de Corda",
+      "type": "weapon",
+      "sha256": "aa48e5023966bb74dec966b21c9f4a08580f6118697931ff6ea158dc7607a145",
+      "art": "/compendium/daggerheart/equipment/core-weapon-swinging-ropeblade.webp"
+    },
+    {
+      "id": "core-weapon-spiked-shield",
+      "sourceId": "Spiked Shield",
+      "name": "Escudo com Espinhos",
+      "type": "weapon",
+      "sha256": "880fbd847818b906cc405a5405f33133de61a7cb341b0069e1817602e0793cdd",
+      "art": "/compendium/daggerheart/equipment/core-weapon-spiked-shield.webp"
+    },
+    {
+      "id": "core-weapon-braveshield",
+      "sourceId": "Braveshield",
+      "name": "Escudo da Bravura",
+      "type": "weapon",
+      "sha256": "e9019b5ba84fc7eb8ef55b0d08399efe6a6c062e252d7569b35a9b0663f3e07e",
+      "art": "/compendium/daggerheart/equipment/core-weapon-braveshield.webp"
+    },
+    {
+      "id": "core-weapon-round-shield",
+      "sourceId": "Round Shield",
+      "name": "Escudo Redondo",
+      "type": "weapon",
+      "sha256": "b448a65a93c6ea726c5fa798c15c021f40b40bdf8569c3850fa8e3f696d94e73",
+      "art": "/compendium/daggerheart/equipment/core-weapon-round-shield.webp"
+    },
+    {
+      "id": "core-weapon-improved-round-shield",
+      "sourceId": "Improved Round Shield",
+      "name": "Escudo Redondo Aprimorado",
+      "type": "weapon",
+      "sha256": "a46afdd59a4fffdf2daa61a998781770a619c834b05b73704e84ab715288f50b",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-round-shield.webp"
+    },
+    {
+      "id": "core-weapon-advanced-round-shield",
+      "sourceId": "Advanced Round Shield",
+      "name": "Escudo Redondo Avançado",
+      "type": "weapon",
+      "sha256": "d99aaded733cbdd8aabc681cea35b3ee1ce1cfd94beb880fc5cfafb47ca024d6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-round-shield.webp"
+    },
+    {
+      "id": "core-weapon-legendary-round-shield",
+      "sourceId": "Legendary Round Shield",
+      "name": "Escudo Redondo Lendário",
+      "type": "weapon",
+      "sha256": "27aa6633537d11750781acb01d1c2936e5576aeebb3bcde4d353029b71a12677",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-round-shield.webp"
+    },
+    {
+      "id": "core-weapon-tower-shield",
+      "sourceId": "Tower Shield",
+      "name": "Escudo-torre",
+      "type": "weapon",
+      "sha256": "a06c626309915ef4090026b836b2e9d7c3dbf1b72c6e4972df5f9513ef6327bb",
+      "art": "/compendium/daggerheart/equipment/core-weapon-tower-shield.webp"
+    },
+    {
+      "id": "core-weapon-improved-tower-shield",
+      "sourceId": "Improved Tower Shield",
+      "name": "Escudo-torre Aprimorado",
+      "type": "weapon",
+      "sha256": "e5e753a4b5f90c2746d84a6bfc4bb0a5b096669a851c6d883bb66959310b9d46",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-tower-shield.webp"
+    },
+    {
+      "id": "core-weapon-advanced-tower-shield",
+      "sourceId": "Advanced Tower Shield",
+      "name": "Escudo-torre Avançado",
+      "type": "weapon",
+      "sha256": "2e3f7acae6e0b08c7e8ff9ad7db971ac279a52e61f1f4ae3fcd93862e9f4ef54",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-tower-shield.webp"
+    },
+    {
+      "id": "core-weapon-legendary-tower-shield",
+      "sourceId": "Legendary Tower Shield",
+      "name": "Escudo-torre Lendário",
+      "type": "weapon",
+      "sha256": "a77317f0ea205baadf2ba4c351fb60173db7e410831600f9be333ed4c89048c8",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-tower-shield.webp"
+    },
+    {
+      "id": "core-weapon-casting-sword",
+      "sourceId": "Casting Sword",
+      "name": "Espada Conjuradora",
+      "type": "weapon",
+      "sha256": "abc7546253b5bf971448b4c90a66573d2b43792f1e94f3026ab80b0bab2a5d8f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-casting-sword.webp"
+    },
+    {
+      "id": "core-weapon-shortsword",
+      "sourceId": "Shortsword",
+      "name": "Espada Curta",
+      "type": "weapon",
+      "sha256": "b6e4ce276b3622c951ac20a9fc34c1b48ee124fbc3235c2fe97263403c8f0dce",
+      "art": "/compendium/daggerheart/equipment/core-weapon-shortsword.webp"
+    },
+    {
+      "id": "core-weapon-improved-shortsword",
+      "sourceId": "Improved Shortsword",
+      "name": "Espada Curta Aprimorada",
+      "type": "weapon",
+      "sha256": "32614bd07408ae65baf4e7402c06db132b5296a9e367158a737b36b59151b735",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-shortsword.webp"
+    },
+    {
+      "id": "core-weapon-advanced-shortsword",
+      "sourceId": "Advanced Shortsword",
+      "name": "Espada Curta Avançada",
+      "type": "weapon",
+      "sha256": "5531ea1aed2889ce0d97a22e8044d40ec48a83e9d0ab6b31d93daf177d5ffb3a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-shortsword.webp"
+    },
+    {
+      "id": "core-weapon-legendary-shortsword",
+      "sourceId": "Legendary Shortsword",
+      "name": "Espada Curta Lendária",
+      "type": "weapon",
+      "sha256": "882fd79d1807b1f92e12b224bf14cb7eb3d00da14b374c98924062d35b0c8c69",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-shortsword.webp"
+    },
+    {
+      "id": "core-weapon-bravesword",
+      "sourceId": "Bravesword",
+      "name": "Espada da Bravura",
+      "type": "weapon",
+      "sha256": "450749563bbc1e068ff37efb025a286e7859c023a900853f933593eb9c6cbc12",
+      "art": "/compendium/daggerheart/equipment/core-weapon-bravesword.webp"
+    },
+    {
+      "id": "core-weapon-sword-of-light-flame",
+      "sourceId": "Sword of Light & Flame",
+      "name": "Espada da Luz e da Chama",
+      "type": "weapon",
+      "sha256": "ac7b892ed24a26d82b1809f8f236ec5bcac7bba803a81125301851f8440019ab",
+      "art": "/compendium/daggerheart/equipment/core-weapon-sword-of-light-flame.webp"
+    },
+    {
+      "id": "core-weapon-dual-ended-sword",
+      "sourceId": "Dual-Ended Sword",
+      "name": "Espada Dupla",
+      "type": "weapon",
+      "sha256": "cebbfb7b7c797573739886da73dc4b66508065c03939cf87b8590bd387662cbb",
+      "art": "/compendium/daggerheart/equipment/core-weapon-dual-ended-sword.webp"
+    },
+    {
+      "id": "core-weapon-broadsword",
+      "sourceId": "Broadsword",
+      "name": "Espada Larga",
+      "type": "weapon",
+      "sha256": "24976a5f842014a0ebd808a496d43eb1431c6b1f925a34ced29f5681a160c674",
+      "art": "/compendium/daggerheart/equipment/core-weapon-broadsword.webp"
+    },
+    {
+      "id": "core-weapon-improved-broadsword",
+      "sourceId": "Improved Broadsword",
+      "name": "Espada Larga Aprimorada",
+      "type": "weapon",
+      "sha256": "aaf37f64763fc22697c436eea2fc8743cdee8095fdb80f467a8b8930d70a3ab7",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-broadsword.webp"
+    },
+    {
+      "id": "core-weapon-advanced-broadsword",
+      "sourceId": "Advanced Broadsword",
+      "name": "Espada Larga Avançada",
+      "type": "weapon",
+      "sha256": "f5eaa3cdaa30326202d8899a6264a5b9a688e8a4e305283d48156e84502c6e0c",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-broadsword.webp"
+    },
+    {
+      "id": "core-weapon-urok-broadsword",
+      "sourceId": "Urok Broadsword",
+      "name": "Espada Larga de Urok",
+      "type": "weapon",
+      "sha256": "12b14df1591d2526ef5c46f213c57ea0b97aa6bfc8ca878ef109d4883759758e",
+      "art": "/compendium/daggerheart/equipment/core-weapon-urok-broadsword.webp"
+    },
+    {
+      "id": "core-weapon-legendary-broadsword",
+      "sourceId": "Legendary Broadsword",
+      "name": "Espada Larga Lendária",
+      "type": "weapon",
+      "sha256": "001e0ed9514ad404c895d1e9cb2463a17100a98f10a53f23a31367d749771fa1",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-broadsword.webp"
+    },
+    {
+      "id": "core-weapon-longsword",
+      "sourceId": "Longsword",
+      "name": "Espada Longa",
+      "type": "weapon",
+      "sha256": "f6118e66acc274f2f4601316ce11b780d714498f5de0de3f7ee7e2cb706d2df5",
+      "art": "/compendium/daggerheart/equipment/core-weapon-longsword.webp"
+    },
+    {
+      "id": "core-weapon-advanced-longsword",
+      "sourceId": "Advanced Longsword",
+      "name": "Espada Longa Aprimorada",
+      "type": "weapon",
+      "sha256": "980c23f2706814b3ab8cac2ddbfb30cc69937168068b0c728987be1894dcdffb",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-longsword.webp"
+    },
+    {
+      "id": "core-weapon-improved-longsword",
+      "sourceId": "Improved Longsword",
+      "name": "Espada Longa Aprimorada",
+      "type": "weapon",
+      "sha256": "c7b104aa467b0c00c10bba568ce0b549e8346598c509847350a007e0d7cdc61f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-longsword.webp"
+    },
+    {
+      "id": "core-weapon-legendary-longsword",
+      "sourceId": "Legendary Longsword",
+      "name": "Espada Longa Lendária",
+      "type": "weapon",
+      "sha256": "414f6f6f3268bd97a0543b9de1507b70fa23cca1d1898cd41107568834f44dd3",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-longsword.webp"
+    },
+    {
+      "id": "core-weapon-war-scythe",
+      "sourceId": "War Scythe",
+      "name": "Foice de Guerra",
+      "type": "weapon",
+      "sha256": "9c742353d470a8b85c9324f954f04453a8bb3efaaffe777ab2e9c735dbd37d0a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-war-scythe.webp"
+    },
+    {
+      "id": "core-weapon-midas-scythe",
+      "sourceId": "Midas Scythe",
+      "name": "Foice de Midas",
+      "type": "weapon",
+      "sha256": "c459662b0be4aff11b06ffb310a67a4a5ee3fa5756187353466cd210f9b0530d",
+      "art": "/compendium/daggerheart/equipment/core-weapon-midas-scythe.webp"
+    },
+    {
+      "id": "core-weapon-hand-sling",
+      "sourceId": "Hand Sling",
+      "name": "Funda",
+      "type": "weapon",
+      "sha256": "6702042e24460b8fa534c98a54e0d94b4b2d16907d170ed7e3ad1d24cadf5fef",
+      "art": "/compendium/daggerheart/equipment/core-weapon-hand-sling.webp"
+    },
+    {
+      "id": "core-weapon-grappler",
+      "sourceId": "Grappler",
+      "name": "Gancho",
+      "type": "weapon",
+      "sha256": "5b9d445fef83ff16c07fac323ccf757063b309a2b7b405edceb72bb58143ba13",
+      "art": "/compendium/daggerheart/equipment/core-weapon-grappler.webp"
+    },
+    {
+      "id": "core-weapon-improved-grappler",
+      "sourceId": "Improved Grappler",
+      "name": "Gancho Aprimorado",
+      "type": "weapon",
+      "sha256": "38aaadee53444194cf6b2078051cc0730e7ff2b1575555ee6e56472243313386",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-grappler.webp"
+    },
+    {
+      "id": "core-weapon-advanced-grappler",
+      "sourceId": "Advanced Grappler",
+      "name": "Gancho Avançado",
+      "type": "weapon",
+      "sha256": "907d4b5f3a408374a9b1a43ff3cd8d84c106cd5125fab1a18a42477ef9d610a0",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-grappler.webp"
+    },
+    {
+      "id": "core-weapon-legendary-grappler",
+      "sourceId": "Legendary Grappler",
+      "name": "Gancho Lendário",
+      "type": "weapon",
+      "sha256": "784d18ffbc4991bd2d79a8329d81868419bc97a73eb6a2766e51d3eba52ad0c4",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-grappler.webp"
+    },
+    {
+      "id": "core-weapon-talon-blades",
+      "sourceId": "Talon Blades",
+      "name": "Garras-lâmina",
+      "type": "weapon",
+      "sha256": "aae27fa5364ceb8d3e5c4b5fff01e146cd7a2df50624255d1c26d225fe9d549a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-talon-blades.webp"
+    },
+    {
+      "id": "core-weapon-ego-blade",
+      "sourceId": "Ego Blade",
+      "name": "Lâmina do Ego",
+      "type": "weapon",
+      "sha256": "cd27600ce0190026d47ea1d35c9e2d5cccf55733f0a326cf8b9e39ea414632e0",
+      "art": "/compendium/daggerheart/equipment/core-weapon-ego-blade.webp"
+    },
+    {
+      "id": "core-weapon-flickerfly-blade",
+      "sourceId": "Flickerfly Blade",
+      "name": "Lâmina do Oscilume",
+      "type": "weapon",
+      "sha256": "3869de13b1e6fd0e9d5f174dbfb997b6c1573d4360f25e4c5980dff0a70029b7",
+      "art": "/compendium/daggerheart/equipment/core-weapon-flickerfly-blade.webp"
+    },
+    {
+      "id": "core-weapon-returning-blade",
+      "sourceId": "Returning Blade",
+      "name": "Lâmina do Retorno",
+      "type": "weapon",
+      "sha256": "ea77ee899aa127f42302ae96889561f452a6dca11f97cb22071b3d3f3a4b0560",
+      "art": "/compendium/daggerheart/equipment/core-weapon-returning-blade.webp"
+    },
+    {
+      "id": "core-weapon-improved-returning-blade",
+      "sourceId": "Improved Returning Blade",
+      "name": "Lâmina do Retorno Aprimorada",
+      "type": "weapon",
+      "sha256": "7d44de80338baa560078718615c1ea4685797faefcaeb022b0802086ca642f11",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-returning-blade.webp"
+    },
+    {
+      "id": "core-weapon-advanced-returning-blade",
+      "sourceId": "Advanced Returning Blade",
+      "name": "Lâmina do Retorno Avançada",
+      "type": "weapon",
+      "sha256": "60408c4dc563eddaff554f5969d2d88a9afbfda847dbcc1302326908fed66387",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-returning-blade.webp"
+    },
+    {
+      "id": "core-weapon-legendary-returning-blade",
+      "sourceId": "Legendary Returning Blade",
+      "name": "Lâmina do Retorno Lendária",
+      "type": "weapon",
+      "sha256": "eae058f0a085221ae6ee7ffd5a8f0479f772d5cc5626e199134a9ca9dde6c1b6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-returning-blade.webp"
+    },
+    {
+      "id": "core-weapon-ghostblade",
+      "sourceId": "Ghostblade",
+      "name": "Lâmina Fantasma",
+      "type": "weapon",
+      "sha256": "6e6cb8c956de5b70c74518abdb5486f97b0ed013ebbb63a8329fcc14379c1b09",
+      "art": "/compendium/daggerheart/equipment/core-weapon-ghostblade.webp"
+    },
+    {
+      "id": "core-weapon-floating-bladeshards",
+      "sourceId": "Floating Bladeshards",
+      "name": "Lâminas Flutuantes",
+      "type": "weapon",
+      "sha256": "48c513211b56d680b9536d78e0d7001a8143864e4f5bae0793dc28ec177353e6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-floating-bladeshards.webp"
+    },
+    {
+      "id": "core-weapon-spear",
+      "sourceId": "Spear",
+      "name": "Lança",
+      "type": "weapon",
+      "sha256": "1bf768336274794b2f09f7f2218b75d336d83e2da72bbddbe2d4e0fef4b18ea2",
+      "art": "/compendium/daggerheart/equipment/core-weapon-spear.webp"
+    },
+    {
+      "id": "core-weapon-improved-spear",
+      "sourceId": "Improved Spear",
+      "name": "Lança Aprimorada",
+      "type": "weapon",
+      "sha256": "37b50cea04a6edb461de34f1a2bbb4a8e33f29775e7ef8bfdd314d0e4431cc64",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-spear.webp"
+    },
+    {
+      "id": "core-weapon-advanced-spear",
+      "sourceId": "Advanced Spear",
+      "name": "Lança Avançada",
+      "type": "weapon",
+      "sha256": "f2d1fd476eb09d36cee89ed0a2ac85a77c77f15dd9955c1437cf4e715bc7f7fc",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-spear.webp"
+    },
+    {
+      "id": "core-weapon-legendary-spear",
+      "sourceId": "Legendary Spear",
+      "name": "Lança Lendária",
+      "type": "weapon",
+      "sha256": "a84dab3921d39dd039859776dce6dd45f0b88a7f0462460992df6820e0c8ddb0",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-spear.webp"
+    },
+    {
+      "id": "core-weapon-primer-shard",
+      "sourceId": "Primer Shard",
+      "name": "Lasca de Apoio",
+      "type": "weapon",
+      "sha256": "641ce69ef727705949f3753f51c979a228eeddc94257506e3b63d0f12adadff6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-primer-shard.webp"
+    },
+    {
+      "id": "core-weapon-knuckle-claws",
+      "sourceId": "Knuckle Claws",
+      "name": "Luva com Garras",
+      "type": "weapon",
+      "sha256": "ec27c9bb56cd360e8b58b236b2290586c237e61d9270121fa3978448387381cf",
+      "art": "/compendium/daggerheart/equipment/core-weapon-knuckle-claws.webp"
+    },
+    {
+      "id": "core-weapon-fusion-gloves",
+      "sourceId": "Fusion Gloves",
+      "name": "Luvas de Liga",
+      "type": "weapon",
+      "sha256": "f40e563077fe25067b829ca1eac9e5e81af912f7218d42fae1ce2d48aa2e03f1",
+      "art": "/compendium/daggerheart/equipment/core-weapon-fusion-gloves.webp"
+    },
+    {
+      "id": "core-weapon-mace",
+      "sourceId": "Mace",
+      "name": "Maça",
+      "type": "weapon",
+      "sha256": "1a4807b2d4e9e539d1a93d4ce105d5336ae1bc6415ff885d6084cc4d2042e2b1",
+      "art": "/compendium/daggerheart/equipment/core-weapon-mace.webp"
+    },
+    {
+      "id": "core-weapon-advanced-mace",
+      "sourceId": "Advanced Mace",
+      "name": "Maça Aprimorada",
+      "type": "weapon",
+      "sha256": "d69703ba8d0685efe459c45f637cea0038a10781f51f6332847222579e0cd394",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-mace.webp"
+    },
+    {
+      "id": "core-weapon-improved-mace",
+      "sourceId": "Improved Mace",
+      "name": "Maça Aprimorada",
+      "type": "weapon",
+      "sha256": "6167b27e6a5a8c973549a7e7bc23364ded2938ed2bd1e65159d7ef57c178fbf1",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-mace.webp"
+    },
+    {
+      "id": "core-weapon-legendary-mace",
+      "sourceId": "Legendary Mace",
+      "name": "Maça Lendária",
+      "type": "weapon",
+      "sha256": "ee1aea5cf02164ceff1fe5adf90b2a83682ccae1e7e2da8ea75345fb73021837",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-mace.webp"
+    },
+    {
+      "id": "core-weapon-battleaxe",
+      "sourceId": "Battleaxe",
+      "name": "Machado de Batalha",
+      "type": "weapon",
+      "sha256": "d16f8d681cb1e6e66dddd178ed7fa459526c7cecef7e12272ca0e0e5e9e7bb5c",
+      "art": "/compendium/daggerheart/equipment/core-weapon-battleaxe.webp"
+    },
+    {
+      "id": "core-weapon-improved-battleaxe",
+      "sourceId": "Improved Battleaxe",
+      "name": "Machado de Batalha Aprimorado",
+      "type": "weapon",
+      "sha256": "65ef35654ed4dd9d28f6471bfe88549eea68f266e77696d77fb90d54e6a1d78b",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-battleaxe.webp"
+    },
+    {
+      "id": "core-weapon-advanced-battleaxe",
+      "sourceId": "Advanced Battleaxe",
+      "name": "Machado de Batalha Avançado",
+      "type": "weapon",
+      "sha256": "a926a42d9112cf1b4387fc96dc2d36bd3dd7f2e60301a432d78a740eb5f07282",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-battleaxe.webp"
+    },
+    {
+      "id": "core-weapon-legendary-battleaxe",
+      "sourceId": "Legendary Battleaxe",
+      "name": "Machado de Batalha Lendário",
+      "type": "weapon",
+      "sha256": "66bf940972de8c5febf3b1564a1b2a878c24d6e1f7021dfe9891ac23be864f3a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-battleaxe.webp"
+    },
+    {
+      "id": "core-weapon-axe-of-fortunis",
+      "sourceId": "Axe of Fortunis",
+      "name": "Machado de Fortunis",
+      "type": "weapon",
+      "sha256": "b7bb909a709ca52d1d1c94cf76bada9c45b8d626eee0d73e427f8e866da491df",
+      "art": "/compendium/daggerheart/equipment/core-weapon-axe-of-fortunis.webp"
+    },
+    {
+      "id": "core-weapon-labrys-axe",
+      "sourceId": "Labrys Axe",
+      "name": "Machado de Labrys",
+      "type": "weapon",
+      "sha256": "9e67a74e237e1019d5987cb77faf6d045d31520ab0bfff30f64879776ffa0bc8",
+      "art": "/compendium/daggerheart/equipment/core-weapon-labrys-axe.webp"
+    },
+    {
+      "id": "core-weapon-returning-axe",
+      "sourceId": "Returning Axe",
+      "name": "Machado Retornável",
+      "type": "weapon",
+      "sha256": "2649ed46ec1a8b0cba989ddc341bfd0c0c13bfbd0e25bf553a9a26ebed4ea10a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-returning-axe.webp"
+    },
+    {
+      "id": "core-weapon-ricochet-axes",
+      "sourceId": "Ricochet Axes",
+      "name": "Machado Ricochete",
+      "type": "weapon",
+      "sha256": "3ed460bf2620fa9f465306b7cd3d01d68ae43b04bb89d56a9370946dc07f7048",
+      "art": "/compendium/daggerheart/equipment/core-weapon-ricochet-axes.webp"
+    },
+    {
+      "id": "core-weapon-hallowed-axe",
+      "sourceId": "Hallowed Axe",
+      "name": "Machado Sagrado",
+      "type": "weapon",
+      "sha256": "9a5ff26c21d5c7a5edb2ee306eb9c3f19c9a9eb7d9b868ce50a6a9a2b4a21cb9",
+      "art": "/compendium/daggerheart/equipment/core-weapon-hallowed-axe.webp"
+    },
+    {
+      "id": "core-weapon-improved-hallowed-axe",
+      "sourceId": "Improved Hallowed Axe",
+      "name": "Machado Sagrado Aprimorado",
+      "type": "weapon",
+      "sha256": "ee87aebf8309d9603ea3be722db228080f33b4d4d7cea1ae649814531c697a3c",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-hallowed-axe.webp"
+    },
+    {
+      "id": "core-weapon-advanced-hallowed-axe",
+      "sourceId": "Advanced Hallowed Axe",
+      "name": "Machado Sagrado Avançado",
+      "type": "weapon",
+      "sha256": "918522bee1b23625d2723b6dcc902971c5fdf63208f1ac00965f06373c3395a1",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-hallowed-axe.webp"
+    },
+    {
+      "id": "core-weapon-legendary-hallowed-axe",
+      "sourceId": "Legendary Hallowed Axe",
+      "name": "Machado Sagrado Lendário",
+      "type": "weapon",
+      "sha256": "18089d194d1b4523c87328078c717cd1384eb181eeeb13feac9f1fc76978c65f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-hallowed-axe.webp"
+    },
+    {
+      "id": "core-weapon-sledge-axe",
+      "sourceId": "Sledge Axe",
+      "name": "Machado-martelo",
+      "type": "weapon",
+      "sha256": "76553e1d14dcf63ce0e18272d6f9ecaf6727959adbb83775ba4f149fb801d600",
+      "art": "/compendium/daggerheart/equipment/core-weapon-sledge-axe.webp"
+    },
+    {
+      "id": "core-weapon-double-flail",
+      "sourceId": "Double Flail",
+      "name": "Mangual Duplo",
+      "type": "weapon",
+      "sha256": "08a4f64b7512f8281c8c452f639c9542d2d857d81fe7436239d4a15bc9655adb",
+      "art": "/compendium/daggerheart/equipment/core-weapon-double-flail.webp"
+    },
+    {
+      "id": "core-weapon-impact-gauntlet",
+      "sourceId": "Impact Gauntlet",
+      "name": "Manopla do Impacto",
+      "type": "weapon",
+      "sha256": "c1c3999006bb5c0e48c0b5f09d08b85b7e20d3b1679f87a5d4c1d3d90df5e702",
+      "art": "/compendium/daggerheart/equipment/core-weapon-impact-gauntlet.webp"
+    },
+    {
+      "id": "core-weapon-powered-gauntlet",
+      "sourceId": "Powered Gauntlet",
+      "name": "Manopla Fortalecida",
+      "type": "weapon",
+      "sha256": "24995136cbc4f72e067034573456b2e705b3eba0ee91fb0df5aa237c7ad27a01",
+      "art": "/compendium/daggerheart/equipment/core-weapon-powered-gauntlet.webp"
+    },
+    {
+      "id": "core-weapon-arcane-gauntlets",
+      "sourceId": "Arcane Gauntlets",
+      "name": "Manoplas Arcanas",
+      "type": "weapon",
+      "sha256": "3d5cd8f33ba15622f0c07d45364adb7906a212a7b1b5901ee4e3c837012ae930",
+      "art": "/compendium/daggerheart/equipment/core-weapon-arcane-gauntlets.webp"
+    },
+    {
+      "id": "core-weapon-improved-arcane-gauntlets",
+      "sourceId": "Improved Arcane Gauntlets",
+      "name": "Manoplas Arcanas Aprimoradas",
+      "type": "weapon",
+      "sha256": "a6644d3cb4509956425fb4db451b91b5edb2306722ef159de292ecc0bce5ea31",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-arcane-gauntlets.webp"
+    },
+    {
+      "id": "core-weapon-advanced-arcane-gauntlets",
+      "sourceId": "Advanced Arcane Gauntlets",
+      "name": "Manoplas Arcanas Avançadas",
+      "type": "weapon",
+      "sha256": "70bf4cb987649dee7a67ec05e9320150ba659e2ec23c99858f2d9db35d2d7134",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-arcane-gauntlets.webp"
+    },
+    {
+      "id": "core-weapon-legendary-arcane-gauntlets",
+      "sourceId": "Legendary Arcane Gauntlets",
+      "name": "Manoplas Arcanas Lendárias",
+      "type": "weapon",
+      "sha256": "b2bf097284cfd4e341112f390fb0179aed081040a0c16813ac1c37b587125c21",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-arcane-gauntlets.webp"
+    },
+    {
+      "id": "core-weapon-siphoning-gauntlets",
+      "sourceId": "Siphoning Gauntlets",
+      "name": "Manoplas Sorvedouras",
+      "type": "weapon",
+      "sha256": "ca5f1d3f2a0f980e76537d93e380ac38d02b2bd44c8cbf2037f8f1cd3ba56852",
+      "art": "/compendium/daggerheart/equipment/core-weapon-siphoning-gauntlets.webp"
+    },
+    {
+      "id": "core-weapon-hammer-of-wrath",
+      "sourceId": "Hammer of Wrath",
+      "name": "Martelo da Ira",
+      "type": "weapon",
+      "sha256": "de04e61897680c7b5912a12306575eda490bc4f04e546724c76ac833a20ce1de",
+      "art": "/compendium/daggerheart/equipment/core-weapon-hammer-of-wrath.webp"
+    },
+    {
+      "id": "core-weapon-hammer-of-exota",
+      "sourceId": "Hammer of Exota",
+      "name": "Martelo de Exota",
+      "type": "weapon",
+      "sha256": "8417058a05719c7c77b6a794561dd9fcb36f3bb010e66ec966d135eb1ded74c0",
+      "art": "/compendium/daggerheart/equipment/core-weapon-hammer-of-exota.webp"
+    },
+    {
+      "id": "core-weapon-warhammer",
+      "sourceId": "Warhammer",
+      "name": "Martelo de Guerra",
+      "type": "weapon",
+      "sha256": "49d10ead16275d9375d9b4433bb5f25d1b10c1b7d30cd383affacb329ec702dc",
+      "art": "/compendium/daggerheart/equipment/core-weapon-warhammer.webp"
+    },
+    {
+      "id": "core-weapon-improved-warhammer",
+      "sourceId": "Improved Warhammer",
+      "name": "Martelo de Guerra Aprimorado",
+      "type": "weapon",
+      "sha256": "a2c650e4cab5aad5af6b5dc9987f0f39cc349d31cb230d0a467f9da35519dccc",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-warhammer.webp"
+    },
+    {
+      "id": "core-weapon-advanced-warhammer",
+      "sourceId": "Advanced Warhammer",
+      "name": "Martelo de Guerra Avançado",
+      "type": "weapon",
+      "sha256": "94366a7d98c1c75f6d550116cc75d2ba0a75eee33027fa66f95f6215f5c84d1f",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-warhammer.webp"
+    },
+    {
+      "id": "core-weapon-legendary-warhammer",
+      "sourceId": "Legendary Warhammer",
+      "name": "Martelo de Guerra Lendário",
+      "type": "weapon",
+      "sha256": "995e89d1d768d1bb05cabd6e29224dafa394583856523adc5cc991dc18e88db8",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-warhammer.webp"
+    },
+    {
+      "id": "core-weapon-greatsword",
+      "sourceId": "Greatsword",
+      "name": "Montante",
+      "type": "weapon",
+      "sha256": "227b88f0c127ffdd53c8d96213aad902f4a46af677cebf9e4dcde1a79104997a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-greatsword.webp"
+    },
+    {
+      "id": "core-weapon-improved-greatsword",
+      "sourceId": "Improved Greatsword",
+      "name": "Montante Aprimorada",
+      "type": "weapon",
+      "sha256": "a7563b38412f7b06c5007e8851a5992d31e0cc794a10df8e335f8c55bcc68b81",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-greatsword.webp"
+    },
+    {
+      "id": "core-weapon-advanced-greatsword",
+      "sourceId": "Advanced Greatsword",
+      "name": "Montante Avançada",
+      "type": "weapon",
+      "sha256": "5ea96ada1d2ffa92b04aef5b6d3a3010e38ab33b44c19a295eb3969850439583",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-greatsword.webp"
+    },
+    {
+      "id": "core-weapon-legendary-greatsword",
+      "sourceId": "Legendary Greatsword",
+      "name": "Montante Lendária",
+      "type": "weapon",
+      "sha256": "3c3e4a2a2498a465053d801c8c334513f5c35be1e0338ed91bc4fcb7265cb7e6",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-greatsword.webp"
+    },
+    {
+      "id": "core-weapon-mage-orb",
+      "sourceId": "Mage Orb",
+      "name": "Orbe Mágico",
+      "type": "weapon",
+      "sha256": "194aaf8dab8b12c1aab904b3287ac561d3d6562e34eb696da616c9bb7b0b8007",
+      "art": "/compendium/daggerheart/equipment/core-weapon-mage-orb.webp"
+    },
+    {
+      "id": "core-weapon-widogast-pendant",
+      "sourceId": "Widogast Pendant",
+      "name": "Pingente de Widogast",
+      "type": "weapon",
+      "sha256": "c9e464aa4d6b605618e67a5963c9a8bc0a024ab3c2ddc98def3188bed96e0f57",
+      "art": "/compendium/daggerheart/equipment/core-weapon-widogast-pendant.webp"
+    },
+    {
+      "id": "core-weapon-extended-polearm",
+      "sourceId": "Extended Polearm",
+      "name": "Pique Estendido",
+      "type": "weapon",
+      "sha256": "e1782e556fb38c16463896db3eed63e46a2d068d9e206b6cf410d6604244079e",
+      "art": "/compendium/daggerheart/equipment/core-weapon-extended-polearm.webp"
+    },
+    {
+      "id": "core-weapon-blessed-anlace",
+      "sourceId": "Blessed Anlace",
+      "name": "Punhal Abençoado",
+      "type": "weapon",
+      "sha256": "daba0d6716d6ff990ef41566c1747d986d8a8c674afb46b08ba1fb1527aab561",
+      "art": "/compendium/daggerheart/equipment/core-weapon-blessed-anlace.webp"
+    },
+    {
+      "id": "core-weapon-rapier",
+      "sourceId": "Rapier",
+      "name": "Rapieira",
+      "type": "weapon",
+      "sha256": "abc927c6c4a193c338755855f2ec28efefa6c93b81b2cd7fd423f15c6f822deb",
+      "art": "/compendium/daggerheart/equipment/core-weapon-rapier.webp"
+    },
+    {
+      "id": "core-weapon-advanced-rapier",
+      "sourceId": "Advanced Rapier",
+      "name": "Rapieira Aprimorada",
+      "type": "weapon",
+      "sha256": "f249a6bfce4208a5e9c493cde1ccf295603743ee5145101b44cd26809368b0b3",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-rapier.webp"
+    },
+    {
+      "id": "core-weapon-improved-rapier",
+      "sourceId": "Improved Rapier",
+      "name": "Rapieira Aprimorada",
+      "type": "weapon",
+      "sha256": "5d3afd42607530f48a5db4ba8926206fbd191f6f964bad7ad533b8d757eb0a09",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-rapier.webp"
+    },
+    {
+      "id": "core-weapon-legendary-rapier",
+      "sourceId": "Legendary Rapier",
+      "name": "Rapieira Lendária",
+      "type": "weapon",
+      "sha256": "73b4c0cd4b8d0f47ca1c2cb4b4f9ebc17b4f697742c6c794934c31b5974cafb5",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-rapier.webp"
+    },
+    {
+      "id": "core-weapon-black-powder-revolver",
+      "sourceId": "Black Powder Revolver",
+      "name": "Revólver da Pólvora Negra",
+      "type": "weapon",
+      "sha256": "a268619a38839c661bb7a23af0d8504c258a9919cec3b72d9a0516373babd8f3",
+      "art": "/compendium/daggerheart/equipment/core-weapon-black-powder-revolver.webp"
+    },
+    {
+      "id": "core-weapon-magus-revolver",
+      "sourceId": "Magus Revolver",
+      "name": "Revólver de Magus",
+      "type": "weapon",
+      "sha256": "0d05a09b1ba4a013e0204aa56f7fd8b7ba1e4de0ef71d035d105e48e9f9790d2",
+      "art": "/compendium/daggerheart/equipment/core-weapon-magus-revolver.webp"
+    },
+    {
+      "id": "core-weapon-ilmari-s-rifle",
+      "sourceId": "Ilmari's Rifle",
+      "name": "Rifle de Ilmari",
+      "type": "weapon",
+      "sha256": "93e5910992d7d3f3b9fc4481e99155300762d33e243290e372e6567765b2cb88",
+      "art": "/compendium/daggerheart/equipment/core-weapon-ilmari-s-rifle.webp"
+    },
+    {
+      "id": "core-weapon-runes-of-ruination",
+      "sourceId": "Runes of Ruination",
+      "name": "Runas da Ruína",
+      "type": "weapon",
+      "sha256": "62ae6fad606e564a4a43733fbb8f0da381e38252835e55744a7944f76b56fdc0",
+      "art": "/compendium/daggerheart/equipment/core-weapon-runes-of-ruination.webp"
+    },
+    {
+      "id": "core-weapon-hand-runes",
+      "sourceId": "Hand Runes",
+      "name": "Runas de Mão",
+      "type": "weapon",
+      "sha256": "2fd3106a8e96982c9e199f601bddeb078153220e94b1c5a6bc23f83e4e579af0",
+      "art": "/compendium/daggerheart/equipment/core-weapon-hand-runes.webp"
+    },
+    {
+      "id": "core-weapon-improved-hand-runes",
+      "sourceId": "Improved Hand Runes",
+      "name": "Runas de Mão Aprimoradas",
+      "type": "weapon",
+      "sha256": "b54905150b615cb6eca3c1e1d7c25b9c84e8ca694f7eaf437f20bbd0a59923a4",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-hand-runes.webp"
+    },
+    {
+      "id": "core-weapon-advanced-hand-runes",
+      "sourceId": "Advanced Hand Runes",
+      "name": "Runas de Mão Avançadas",
+      "type": "weapon",
+      "sha256": "bce6ad15e391d1cf4d89d4c0c78f04d0fd9a96bc1d9c31aa58d713229b86707b",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-hand-runes.webp"
+    },
+    {
+      "id": "core-weapon-legendary-hand-runes",
+      "sourceId": "Legendary Hand Runes",
+      "name": "Runas de Mão Lendárias",
+      "type": "weapon",
+      "sha256": "a475188d27fa85079fd74207d063bce848b26a465508f8d1e98c962dd91e016d",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-hand-runes.webp"
+    },
+    {
+      "id": "core-weapon-meridian-cutlass",
+      "sourceId": "Meridian Cutlass",
+      "name": "Sabre de Meridin",
+      "type": "weapon",
+      "sha256": "0e973fe9994eec4a40f4bed40baf6ff74ae5dd527195792251707f5707bab468",
+      "art": "/compendium/daggerheart/equipment/core-weapon-meridian-cutlass.webp"
+    },
+    {
+      "id": "core-weapon-retractable-saber",
+      "sourceId": "Retractable Saber",
+      "name": "Sabre Retrátil",
+      "type": "weapon",
+      "sha256": "7c9819f9a2bf956f2799ba1b45db4137dec960543b5e616d9bac11cb645d3e73",
+      "art": "/compendium/daggerheart/equipment/core-weapon-retractable-saber.webp"
+    },
+    {
+      "id": "core-weapon-knuckle-blades",
+      "sourceId": "Knuckle Blades",
+      "name": "Soqueira com Lâmina",
+      "type": "weapon",
+      "sha256": "806b837f89d6ca180b4faa7b7e3ef6d168981d21ca11b0bcf784e018962430b8",
+      "art": "/compendium/daggerheart/equipment/core-weapon-knuckle-blades.webp"
+    },
+    {
+      "id": "core-weapon-wand",
+      "sourceId": "Wand",
+      "name": "Varinha",
+      "type": "weapon",
+      "sha256": "11bbe01fea1d21d0511720584682072afb81a77b5df6949ad170cff544538fd2",
+      "art": "/compendium/daggerheart/equipment/core-weapon-wand.webp"
+    },
+    {
+      "id": "core-weapon-improved-wand",
+      "sourceId": "Improved Wand",
+      "name": "Varinha Aprimorada",
+      "type": "weapon",
+      "sha256": "d42b9e4d0238f24dc66a01e65cb394af40360e38e1963ab90ec952da211018e5",
+      "art": "/compendium/daggerheart/equipment/core-weapon-improved-wand.webp"
+    },
+    {
+      "id": "core-weapon-advanced-wand",
+      "sourceId": "Advanced Wand",
+      "name": "Varinha Aprimorada",
+      "type": "weapon",
+      "sha256": "c61240f778790a033c79ec0f20cd037a5a7bb2214c0de75fc829f258a218e59b",
+      "art": "/compendium/daggerheart/equipment/core-weapon-advanced-wand.webp"
+    },
+    {
+      "id": "core-weapon-wand-of-essek",
+      "sourceId": "Wand of Essek",
+      "name": "Varinha de Essek",
+      "type": "weapon",
+      "sha256": "a2438426c5cdd5c406a7230d792e947556f58b1908808e70b0ae61c1e292ff43",
+      "art": "/compendium/daggerheart/equipment/core-weapon-wand-of-essek.webp"
+    },
+    {
+      "id": "core-weapon-wand-of-enthrallment",
+      "sourceId": "Wand of Enthrallment",
+      "name": "Varinha do Fascínio",
+      "type": "weapon",
+      "sha256": "1d27c6d78c4bf81ff22a8d3437a8cf5dea30ce7fa848c3dbb5489859f8497be5",
+      "art": "/compendium/daggerheart/equipment/core-weapon-wand-of-enthrallment.webp"
+    },
+    {
+      "id": "core-weapon-legendary-wand",
+      "sourceId": "Legendary Wand",
+      "name": "Varinha Lendária",
+      "type": "weapon",
+      "sha256": "ade402c4a602578ca1b4ef0573d2a242a1926ecc2c8d7b9f634514aa3b84306a",
+      "art": "/compendium/daggerheart/equipment/core-weapon-legendary-wand.webp"
+    },
+    {
+      "id": "core-armor-bladefare-armor",
+      "sourceId": "Bladefare Armor",
+      "name": "Armadura Concreta",
+      "type": "armor",
+      "sha256": "8721939acf725698a2e8ab121249e865b2ef543bb8b4ed29c9e81d2b1787bd55",
+      "art": "/compendium/daggerheart/equipment/core-armor-bladefare-armor.webp"
+    },
+    {
+      "id": "core-armor-bare-bones",
+      "sourceId": "Bare Bones",
+      "name": "Armadura Corporal",
+      "type": "armor",
+      "sha256": "7e53f42f5590900b842392b1383b541ad1e43238c94337052c095431cb9d117d",
+      "art": "/compendium/daggerheart/equipment/core-armor-bare-bones.webp"
+    },
+    {
+      "id": "core-armor-channeling-armor",
+      "sourceId": "Channeling Armor",
+      "name": "Armadura da Canalização",
+      "type": "armor",
+      "sha256": "f5dd00ecef9c2ddc8db31b947939627262d5fb491b676c181a13ae4f7fbda994",
+      "art": "/compendium/daggerheart/equipment/core-armor-channeling-armor.webp"
+    },
+    {
+      "id": "core-armor-bellamoi-fine-armor",
+      "sourceId": "Bellamoi Fine Armor",
+      "name": "Armadura de Bellamoi",
+      "type": "armor",
+      "sha256": "14cc3e945778a075ee9bff6c2aecb20988d9ecb62a0522f36821ec2aaae899f7",
+      "art": "/compendium/daggerheart/equipment/core-armor-bellamoi-fine-armor.webp"
+    },
+    {
+      "id": "core-armor-leather-armor",
+      "sourceId": "Leather Armor",
+      "name": "Armadura de Couro",
+      "type": "armor",
+      "sha256": "d794771c5dfd5f6ff50f0003c2f312ca77bb120026f28d89491fb4b1bbe99b74",
+      "art": "/compendium/daggerheart/equipment/core-armor-leather-armor.webp"
+    },
+    {
+      "id": "core-armor-improved-leather-armor",
+      "sourceId": "Improved Leather Armor",
+      "name": "Armadura de Couro Aprimorada",
+      "type": "armor",
+      "sha256": "58aab2f398ba03f415f69bc4a44037215bf62dc2113b49d43e04cb4941587ecc",
+      "art": "/compendium/daggerheart/equipment/core-armor-improved-leather-armor.webp"
+    },
+    {
+      "id": "core-armor-advanced-leather-armor",
+      "sourceId": "Advanced Leather Armor",
+      "name": "Armadura de Couro Avançada",
+      "type": "armor",
+      "sha256": "54767a3a29f1a024e391a52175f9b995ee1c1174f0de6874255967809389cc50",
+      "art": "/compendium/daggerheart/equipment/core-armor-advanced-leather-armor.webp"
+    },
+    {
+      "id": "core-armor-legendary-leather-armor",
+      "sourceId": "Legendary Leather Armor",
+      "name": "Armadura de Couro Lendária",
+      "type": "armor",
+      "sha256": "0618f6d1b18d35da652e4542e708737232766613d80e4ee95a2661393ef83288",
+      "art": "/compendium/daggerheart/equipment/core-armor-legendary-leather-armor.webp"
+    },
+    {
+      "id": "core-armor-dragonscale-armor",
+      "sourceId": "Dragonscale Armor",
+      "name": "Armadura de Escamas de Dragão",
+      "type": "armor",
+      "sha256": "0f6bfe2c4cd2ca759655bd42d3faec896bcfa079b3226a69d0be363b4e6ce732",
+      "art": "/compendium/daggerheart/equipment/core-armor-dragonscale-armor.webp"
+    },
+    {
+      "id": "core-armor-veritas-opal-armor",
+      "sourceId": "Veritas Opal Armor",
+      "name": "Armadura de Opala da Verdade",
+      "type": "armor",
+      "sha256": "d64596eb6d03ff71c545dfde178851f1be91ac6416e90f01e6efd3450c2029d3",
+      "art": "/compendium/daggerheart/equipment/core-armor-veritas-opal-armor.webp"
+    },
+    {
+      "id": "core-armor-full-plate-armor",
+      "sourceId": "Full Plate Armor",
+      "name": "Armadura de Placas",
+      "type": "armor",
+      "sha256": "dcb0dbd41ced10b3653fe3d463dc7318a0abc947528445562305c2fcf8cd1a82",
+      "art": "/compendium/daggerheart/equipment/core-armor-full-plate-armor.webp"
+    },
+    {
+      "id": "core-armor-improved-full-plate-armor",
+      "sourceId": "Improved Full Plate Armor",
+      "name": "Armadura de Placas Aprimorada",
+      "type": "armor",
+      "sha256": "bc4b17895f5dba6a1926e7c2ea1932dbb54e471831bb80b9f4368d36bcd2272b",
+      "art": "/compendium/daggerheart/equipment/core-armor-improved-full-plate-armor.webp"
+    },
+    {
+      "id": "core-armor-advanced-full-plate-armor",
+      "sourceId": "Advanced Full Plate Armor",
+      "name": "Armadura de Placas Avançada",
+      "type": "armor",
+      "sha256": "7539115109401c63e20d27e44dee8536a155a7df47f2373e2e454c0cdbc72569",
+      "art": "/compendium/daggerheart/equipment/core-armor-advanced-full-plate-armor.webp"
+    },
+    {
+      "id": "core-armor-spiked-plate-armor",
+      "sourceId": "Spiked Plate Armor",
+      "name": "Armadura de Placas com Espinhos",
+      "type": "armor",
+      "sha256": "1327ac83b3e8fc9e779f1f88885db96d683845360264733c3654587f1bd7d775",
+      "art": "/compendium/daggerheart/equipment/core-armor-spiked-plate-armor.webp"
+    },
+    {
+      "id": "core-armor-legendary-full-plate-armor",
+      "sourceId": "Legendary Full Plate Armor",
+      "name": "Armadura de Placas Lendária",
+      "type": "armor",
+      "sha256": "ba92236fa351d8e9c3b2dfa3db6482f8af3d5930945e07a7486306720b7a02a2",
+      "art": "/compendium/daggerheart/equipment/core-armor-legendary-full-plate-armor.webp"
+    },
+    {
+      "id": "core-armor-rosewild-armor",
+      "sourceId": "Rosewild Armor",
+      "name": "Armadura de Rosamata",
+      "type": "armor",
+      "sha256": "9cfc96b16ea462ad3b3df3a534f1d635beecc200db4977594bf2c7164c1ce1ab",
+      "art": "/compendium/daggerheart/equipment/core-armor-rosewild-armor.webp"
+    },
+    {
+      "id": "core-armor-emberwoven-armor",
+      "sourceId": "Emberwoven Armor",
+      "name": "Armadura de Tecido Âmbar",
+      "type": "armor",
+      "sha256": "67bb4a85e051b41f86a0c2e0a032958a151dc6f3a380ac8ef23ab0d5c2b740e4",
+      "art": "/compendium/daggerheart/equipment/core-armor-emberwoven-armor.webp"
+    },
+    {
+      "id": "core-armor-harrowbone-armor",
+      "sourceId": "Harrowbone Armor",
+      "name": "Armadura do Tormento",
+      "type": "armor",
+      "sha256": "f3a8da649a6b3674c6e7f9e54b3408caa38710b77f6f04c6ee266d5399073284",
+      "art": "/compendium/daggerheart/equipment/core-armor-harrowbone-armor.webp"
+    },
+    {
+      "id": "core-armor-runetan-floating-armor",
+      "sourceId": "Runetan Floating Armor",
+      "name": "Armadura Flutuante de Runetan",
+      "type": "armor",
+      "sha256": "acec1fc6d19566ceb61a9b9afbf1c6d1a3813cdec3467559cd1ed354c2283d73",
+      "art": "/compendium/daggerheart/equipment/core-armor-runetan-floating-armor.webp"
+    },
+    {
+      "id": "core-armor-full-fortified-armor",
+      "sourceId": "Full Fortified Armor",
+      "name": "Armadura Fortificada",
+      "type": "armor",
+      "sha256": "9e0498151753b2519a06a43d80c83422bf6a046d36751efc4b0c5f1ac28e83ee",
+      "art": "/compendium/daggerheart/equipment/core-armor-full-fortified-armor.webp"
+    },
+    {
+      "id": "core-armor-tyris-soft-armor",
+      "sourceId": "Tyris Soft Armor",
+      "name": "Armadura Graciosa de Tyris",
+      "type": "armor",
+      "sha256": "7d1a9a8e540ed22a65694f4bb09db4876f2ddb2eba5fd772ef0b0a0efff91b06",
+      "art": "/compendium/daggerheart/equipment/core-armor-tyris-soft-armor.webp"
+    },
+    {
+      "id": "core-armor-monett-s-cloak",
+      "sourceId": "Monett's Cloak",
+      "name": "Capa de Monett",
+      "type": "armor",
+      "sha256": "723d3c92d3c059c0bcb466230fa844630807ef17a27385ccccc51743f0aa2468",
+      "art": "/compendium/daggerheart/equipment/core-armor-monett-s-cloak.webp"
+    },
+    {
+      "id": "core-armor-chainmail-armor",
+      "sourceId": "Chainmail Armor",
+      "name": "Cota de Malha",
+      "type": "armor",
+      "sha256": "cb6df081742181a70e2b9f4560990214abbec91029e222479b563614daf938cf",
+      "art": "/compendium/daggerheart/equipment/core-armor-chainmail-armor.webp"
+    },
+    {
+      "id": "core-armor-improved-chainmail-armor",
+      "sourceId": "Improved Chainmail Armor",
+      "name": "Cota de Malha Aprimorada",
+      "type": "armor",
+      "sha256": "90c5aacc6ddd0048ef3c62cb6a686b19360ec28246630be1189fe1600b1a1b9d",
+      "art": "/compendium/daggerheart/equipment/core-armor-improved-chainmail-armor.webp"
+    },
+    {
+      "id": "core-armor-advanced-chainmail-armor",
+      "sourceId": "Advanced Chainmail Armor",
+      "name": "Cota de Malha Avançada",
+      "type": "armor",
+      "sha256": "720175dac82de2ebdb1202b8295b468f2b624fdb0adbb24ef705b8e92b688d39",
+      "art": "/compendium/daggerheart/equipment/core-armor-advanced-chainmail-armor.webp"
+    },
+    {
+      "id": "core-armor-elundrian-chain-mail",
+      "sourceId": "Elundrian Chain Mail",
+      "name": "Cota de Malha Elundriana",
+      "type": "armor",
+      "sha256": "d9b31df8c76342eb93c09d31ede4f254f7137e4ab8423e25549ce127a0237cb5",
+      "art": "/compendium/daggerheart/equipment/core-armor-elundrian-chain-mail.webp"
+    },
+    {
+      "id": "core-armor-legendary-chainmail-armor",
+      "sourceId": "Legendary Chainmail Armor",
+      "name": "Cota de Malha Lendária",
+      "type": "armor",
+      "sha256": "8eab1a8d0617beead76bcdbe673f058a38db5746966ddaae244d0914bdcf636a",
+      "art": "/compendium/daggerheart/equipment/core-armor-legendary-chainmail-armor.webp"
+    },
+    {
+      "id": "core-armor-savior-chainmail",
+      "sourceId": "Savior Chainmail",
+      "name": "Cota de Malha Salvadora",
+      "type": "armor",
+      "sha256": "5a3ff7651cddf85c5c39ca4ab0f01f2927b1087fd1331cd6f493c88eb4e41aca",
+      "art": "/compendium/daggerheart/equipment/core-armor-savior-chainmail.webp"
+    },
+    {
+      "id": "core-armor-dunamis-silkchain",
+      "sourceId": "Dunamis Silkchain",
+      "name": "Cota de Seda de Dunamis",
+      "type": "armor",
+      "sha256": "b0c6236af663e25a6ef1ea210dceb0095ffd116ffe520afc5352c4cc32db8f88",
+      "art": "/compendium/daggerheart/equipment/core-armor-dunamis-silkchain.webp"
+    },
+    {
+      "id": "core-armor-gambeson-armor",
+      "sourceId": "Gambeson Armor",
+      "name": "Gibão",
+      "type": "armor",
+      "sha256": "c660f9d4e535ced906616aba0fa29d55ec74debf9a808740efefb6b3fd83091f",
+      "art": "/compendium/daggerheart/equipment/core-armor-gambeson-armor.webp"
+    },
+    {
+      "id": "core-armor-improved-gambeson-armor",
+      "sourceId": "Improved Gambeson Armor",
+      "name": "Gibão Aprimorado",
+      "type": "armor",
+      "sha256": "d8b14c9a4fc277e43a2534b40cf04211af00ce53d819eb98c58c29b71995e70d",
+      "art": "/compendium/daggerheart/equipment/core-armor-improved-gambeson-armor.webp"
+    },
+    {
+      "id": "core-armor-advanced-gambeson-armor",
+      "sourceId": "Advanced Gambeson Armor",
+      "name": "Gibão Avançado",
+      "type": "armor",
+      "sha256": "02cee2b64586ab8705249480df6b2323a0bd59815a1424d850f4a3ebcf887625",
+      "art": "/compendium/daggerheart/equipment/core-armor-advanced-gambeson-armor.webp"
+    },
+    {
+      "id": "core-armor-legendary-gambeson-armor",
+      "sourceId": "Legendary Gambeson Armor",
+      "name": "Gibão Lendário",
+      "type": "armor",
+      "sha256": "36b941452b2e6e1f3df624a084c977cc3ba1c4e30ecb25d4e3f8ba0086c5d0eb",
+      "art": "/compendium/daggerheart/equipment/core-armor-legendary-gambeson-armor.webp"
+    },
+    {
+      "id": "core-armor-irontree-breastplate-armor",
+      "sourceId": "Irontree Breastplate Armor",
+      "name": "Peitoral de Placas de Pau-Ferro",
+      "type": "armor",
+      "sha256": "55d1328d248fef778a469c0e82549b49fec9753381fa10b258195bc9b63b3bd7",
+      "art": "/compendium/daggerheart/equipment/core-armor-irontree-breastplate-armor.webp"
+    },
+    {
+      "id": "core-armor-runes-of-fortification",
+      "sourceId": "Runes of Fortification",
+      "name": "Runas da Fortificação",
+      "type": "armor",
+      "sha256": "d99199ac2bd495caf97d59cc9315cca5092f3f5f9ef72ce92cce94930ff9d629",
+      "art": "/compendium/daggerheart/equipment/core-armor-runes-of-fortification.webp"
+    },
+    {
+      "id": "core-consumable-ogre-musk",
+      "sourceId": "Ogre Musk",
+      "name": "Almíscar do Ogro",
+      "type": "consumable",
+      "sha256": "c395321365604868d15998fb1a20bb11b268203eb11c302a5507038d8935bd74",
+      "art": "/compendium/daggerheart/equipment/core-consumable-ogre-musk.webp"
+    },
+    {
+      "id": "core-consumable-wingsprout",
+      "sourceId": "Wingsprout",
+      "name": "Asas Mágicas",
+      "type": "consumable",
+      "sha256": "e4a1693cf1fb5cdec63cfe090ffbfaa4c70d0c746299547358b7a19b606b3af9",
+      "art": "/compendium/daggerheart/equipment/core-consumable-wingsprout.webp"
+    },
+    {
+      "id": "core-consumable-feast-of-xuria",
+      "sourceId": "Feast of Xuria",
+      "name": "Ceia de Xúria",
+      "type": "consumable",
+      "sha256": "9ce2b1655a8c26d43cc30af84dffff60b552682f2889dfd3f781ede526611a77",
+      "art": "/compendium/daggerheart/equipment/core-consumable-feast-of-xuria.webp"
+    },
+    {
+      "id": "core-consumable-death-tea",
+      "sourceId": "Death Tea",
+      "name": "Chá da Morte",
+      "type": "consumable",
+      "sha256": "8a78c9ea57afb750b2707a12094701151fd0091f78bc4431b9708727f7a9a892",
+      "art": "/compendium/daggerheart/equipment/core-consumable-death-tea.webp"
+    },
+    {
+      "id": "core-consumable-dragonbloom-tea",
+      "sourceId": "Dragonbloom Tea",
+      "name": "Chá de Erva-dragão",
+      "type": "consumable",
+      "sha256": "e9e012d0468c2aac4d9241573e981d77b5b607e36ae86c84826a84efb1996fba",
+      "art": "/compendium/daggerheart/equipment/core-consumable-dragonbloom-tea.webp"
+    },
+    {
+      "id": "core-consumable-circle-of-the-void",
+      "sourceId": "Circle of the Void",
+      "name": "Círculo do Vazio",
+      "type": "consumable",
+      "sha256": "fc408434904b4e05c2b30cd43147ff495961d0a7560bd7c0d0ab8cbb2a248b3c",
+      "art": "/compendium/daggerheart/equipment/core-consumable-circle-of-the-void.webp"
+    },
+    {
+      "id": "core-consumable-mirror-of-marigold",
+      "sourceId": "Mirror of Marigold",
+      "name": "Espelho Maravilha",
+      "type": "consumable",
+      "sha256": "9ad7d07302dec4c6a3d9475ab7bb8e5ef3c2fded978cc972e676a30285a9a309",
+      "art": "/compendium/daggerheart/equipment/core-consumable-mirror-of-marigold.webp"
+    },
+    {
+      "id": "core-consumable-hopehold-flare",
+      "sourceId": "Hopehold Flare",
+      "name": "Fogareiro da Esperança",
+      "type": "consumable",
+      "sha256": "872d9b3759a694affde9a1ace5cbe4a6c0414731a977cbef140bfe1359fe8ba9",
+      "art": "/compendium/daggerheart/equipment/core-consumable-hopehold-flare.webp"
+    },
+    {
+      "id": "core-consumable-varik-leaves",
+      "sourceId": "Varik Leaves",
+      "name": "Folhas de Varik",
+      "type": "consumable",
+      "sha256": "a3083d9cf2ecad72367a0b78e40008d3285e7ad7d204560e006fd692c880f268",
+      "art": "/compendium/daggerheart/equipment/core-consumable-varik-leaves.webp"
+    },
+    {
+      "id": "core-consumable-improved-arcane-shard",
+      "sourceId": "Improved Arcane Shard",
+      "name": "Fragmento Arcano Aprimorado",
+      "type": "consumable",
+      "sha256": "61260857579c8d0d6fb0de80dc857dfde0900a7ccbd3723fd71f9f01fc62e6f6",
+      "art": "/compendium/daggerheart/equipment/core-consumable-improved-arcane-shard.webp"
+    },
+    {
+      "id": "core-consumable-unstable-arcane-shard",
+      "sourceId": "Unstable Arcane Shard",
+      "name": "Fragmento Arcano Instável",
+      "type": "consumable",
+      "sha256": "e12082bd4cd3ebc09a71ca7475930a5e22adf105f51eb04d718efbeb3439d80b",
+      "art": "/compendium/daggerheart/equipment/core-consumable-unstable-arcane-shard.webp"
+    },
+    {
+      "id": "core-consumable-major-arcane-shard",
+      "sourceId": "Major Arcane Shard",
+      "name": "Fragmento Arcano Maior",
+      "type": "consumable",
+      "sha256": "824e9b579c5847ce80178923350e6eabcb3da3ea814f9056931d6029feec48ba",
+      "art": "/compendium/daggerheart/equipment/core-consumable-major-arcane-shard.webp"
+    },
+    {
+      "id": "core-consumable-vial-of-darksmoke",
+      "sourceId": "Vial of Darksmoke",
+      "name": "Frasco de Fumaça Negra",
+      "type": "consumable",
+      "sha256": "a8eb881bd280345770103f52077d79cd64c6b1f37165941cb3a16c89509e1167",
+      "art": "/compendium/daggerheart/equipment/core-consumable-vial-of-darksmoke.webp"
+    },
+    {
+      "id": "core-consumable-vial-of-moondrip",
+      "sourceId": "Vial of Moondrip",
+      "name": "Frasco de Gota Lunar",
+      "type": "consumable",
+      "sha256": "61262ba527b16666168d73cb54fedbfea8ed54b7f02b3defaf5ea24ee74c41f4",
+      "art": "/compendium/daggerheart/equipment/core-consumable-vial-of-moondrip.webp"
+    },
+    {
+      "id": "core-consumable-stardrop",
+      "sourceId": "Stardrop",
+      "name": "Gota Estelar",
+      "type": "consumable",
+      "sha256": "3f32aae8ba12521212b54a6751b27586ff2cdb5cda326e7cc20b08c86e2e0996",
+      "art": "/compendium/daggerheart/equipment/core-consumable-stardrop.webp"
+    },
+    {
+      "id": "core-consumable-jar-of-lost-voices",
+      "sourceId": "Jar of Lost Voices",
+      "name": "Jarra de Vozes Perdidas",
+      "type": "consumable",
+      "sha256": "34995bf549726b5de4936cffcc20706112dbfc9452a97c3fe402441b1497e234",
+      "art": "/compendium/daggerheart/equipment/core-consumable-jar-of-lost-voices.webp"
+    },
+    {
+      "id": "core-consumable-bonding-honey",
+      "sourceId": "Bonding Honey",
+      "name": "Mel da União",
+      "type": "consumable",
+      "sha256": "8d1e3be17a6530190ccbae0d516569da24ba39f7dbbcc262515ec0cfc28a3044",
+      "art": "/compendium/daggerheart/equipment/core-consumable-bonding-honey.webp"
+    },
+    {
+      "id": "core-consumable-morphing-clay",
+      "sourceId": "Morphing Clay",
+      "name": "Molde de Argila",
+      "type": "consumable",
+      "sha256": "73a665f44f5723bcc1b973b2062739b9298db26f3d8f562e4cc7141d9bd5c4f8",
+      "art": "/compendium/daggerheart/equipment/core-consumable-morphing-clay.webp"
+    },
+    {
+      "id": "core-consumable-sweet-moss",
+      "sourceId": "Sweet Moss",
+      "name": "Musgo Doce",
+      "type": "consumable",
+      "sha256": "64bc5354e3eb53bf7ec524560707d39c7e3c67b41c390885e17f28732b814785",
+      "art": "/compendium/daggerheart/equipment/core-consumable-sweet-moss.webp"
+    },
+    {
+      "id": "core-consumable-blinding-orb",
+      "sourceId": "Blinding Orb",
+      "name": "Orbe Cegante",
+      "type": "consumable",
+      "sha256": "83fec8675aa2838cda1ac2cd2abc6b81c700c0044487f44c7fb50e3735378757",
+      "art": "/compendium/daggerheart/equipment/core-consumable-blinding-orb.webp"
+    },
+    {
+      "id": "core-consumable-featherbone",
+      "sourceId": "Featherbone",
+      "name": "Osso-pena",
+      "type": "consumable",
+      "sha256": "3c3ab13872b120f08cc7bbaf8481fcbd95565756ec302542e1cdb5c1eaebf971",
+      "art": "/compendium/daggerheart/equipment/core-consumable-featherbone.webp"
+    },
+    {
+      "id": "core-consumable-acidpaste",
+      "sourceId": "Acidpaste",
+      "name": "Pasta Ácida",
+      "type": "consumable",
+      "sha256": "29adfb3c138c22d26176a62547dc004f5fbb43e5732bf5a84572e801c880278b",
+      "art": "/compendium/daggerheart/equipment/core-consumable-acidpaste.webp"
+    },
+    {
+      "id": "core-consumable-channelstone",
+      "sourceId": "Channelstone",
+      "name": "Pedra Canalizadora",
+      "type": "consumable",
+      "sha256": "8fc2316e28bd946c6c03838a0dc2b197498ead1168175f23d098cf5079e9517f",
+      "art": "/compendium/daggerheart/equipment/core-consumable-channelstone.webp"
+    },
+    {
+      "id": "core-consumable-knowledge-stone",
+      "sourceId": "Knowledge Stone",
+      "name": "Pedra do Conhecimento",
+      "type": "consumable",
+      "sha256": "5e9baf04a043e0e5878563e27a05b2fcec75564d3d6b40c165ea63be47ff67c6",
+      "art": "/compendium/daggerheart/equipment/core-consumable-knowledge-stone.webp"
+    },
+    {
+      "id": "core-consumable-replication-parchment",
+      "sourceId": "Replication Parchment",
+      "name": "Pergaminho da Cópia",
+      "type": "consumable",
+      "sha256": "298f68e3e8a74ff0be81d3619a91e5598b1a7ad5063b1b46a331afb232047c59",
+      "art": "/compendium/daggerheart/equipment/core-consumable-replication-parchment.webp"
+    },
+    {
+      "id": "core-consumable-snap-powder",
+      "sourceId": "Snap Powder",
+      "name": "Pó do Estalo",
+      "type": "consumable",
+      "sha256": "9c4394891c3d857fbfa86527a6fcb69b55ebe840b68d62cf18fb39cc3056cd76",
+      "art": "/compendium/daggerheart/equipment/core-consumable-snap-powder.webp"
+    },
+    {
+      "id": "core-consumable-mythic-dust",
+      "sourceId": "Mythic Dust",
+      "name": "Pó Mítico",
+      "type": "consumable",
+      "sha256": "e7ef259712b1e21acb9c59480ce399e844b3d0b0f61769e6a639f0fc969e5a05",
+      "art": "/compendium/daggerheart/equipment/core-consumable-mythic-dust.webp"
+    },
+    {
+      "id": "core-consumable-potion-of-stability",
+      "sourceId": "Potion of Stability",
+      "name": "Poção da Estabilidade",
+      "type": "consumable",
+      "sha256": "b1dc0e65017c3f401fb15759a27869bb650789ccacbac831f97580b733e6f75a",
+      "art": "/compendium/daggerheart/equipment/core-consumable-potion-of-stability.webp"
+    },
+    {
+      "id": "core-consumable-enlighten-potion",
+      "sourceId": "Enlighten Potion",
+      "name": "Poção da Iluminação",
+      "type": "consumable",
+      "sha256": "48967c03f6c54aea05315f380e49e1b00627237a57b62f66cb840d2db0e4bf53",
+      "art": "/compendium/daggerheart/equipment/core-consumable-enlighten-potion.webp"
+    },
+    {
+      "id": "core-consumable-major-enlighten-potion",
+      "sourceId": "Major Enlighten Potion",
+      "name": "Poção da Iluminação Maior",
+      "type": "consumable",
+      "sha256": "3603aa5cbacd6e6135260551346cca36bf11ccbc462f7089349539298798d1c1",
+      "art": "/compendium/daggerheart/equipment/core-consumable-major-enlighten-potion.webp"
+    },
+    {
+      "id": "core-consumable-attune-potion",
+      "sourceId": "Attune Potion",
+      "name": "Poção da Sintonia",
+      "type": "consumable",
+      "sha256": "f4343c8ea468cd8689a9a2589be37117b6ee2912186e638d39a88497bce177f6",
+      "art": "/compendium/daggerheart/equipment/core-consumable-attune-potion.webp"
+    },
+    {
+      "id": "core-consumable-major-attune-potion",
+      "sourceId": "Major Attune Potion",
+      "name": "Poção da Sintonia Maior",
+      "type": "consumable",
+      "sha256": "4bf3b4b4f033d57003e9502e4c133ffe2f8d91f78ae35c2f1752ba4332fa1057",
+      "art": "/compendium/daggerheart/equipment/core-consumable-major-attune-potion.webp"
+    },
+    {
+      "id": "core-consumable-stride-potion",
+      "sourceId": "Stride Potion",
+      "name": "Poção da Velocidade",
+      "type": "consumable",
+      "sha256": "5d19232b4381fa1b53b1b6c59f9d76bfecb027e3c89b2303f5a97c1c6e2a8884",
+      "art": "/compendium/daggerheart/equipment/core-consumable-stride-potion.webp"
+    },
+    {
+      "id": "core-consumable-major-stride-potion",
+      "sourceId": "Major Stride Potion",
+      "name": "Poção da Velocidade Maior",
+      "type": "consumable",
+      "sha256": "ef672e567b5406eac452c247b8efdc038f92903b548dab05769bc90320d91912",
+      "art": "/compendium/daggerheart/equipment/core-consumable-major-stride-potion.webp"
+    },
+    {
+      "id": "core-consumable-health-potion",
+      "sourceId": "Health Potion",
+      "name": "Poção de Vida",
+      "type": "consumable",
+      "sha256": "95b60df74a4308205694bb8099e6a19af25dd0a78faedaaaffae3c659ac97a1d",
+      "art": "/compendium/daggerheart/equipment/core-consumable-health-potion.webp"
+    },
+    {
+      "id": "core-consumable-major-health-potion",
+      "sourceId": "Major Health Potion",
+      "name": "Poção de Vida Maior",
+      "type": "consumable",
+      "sha256": "7247d41fde99a856cc9e40da2172236eaad3c77f600e2218b961e9929002ad65",
+      "art": "/compendium/daggerheart/equipment/core-consumable-major-health-potion.webp"
+    },
+    {
+      "id": "core-consumable-minor-health-potion",
+      "sourceId": "Minor Health Potion",
+      "name": "Poção de Vida Menor",
+      "type": "consumable",
+      "sha256": "7c6014b3f278ca2c55d64f9fba2ccdfd62a88dad20f4a7d8a70b87014b2887b2",
+      "art": "/compendium/daggerheart/equipment/core-consumable-minor-health-potion.webp"
+    },
+    {
+      "id": "core-consumable-stamina-potion",
+      "sourceId": "Stamina Potion",
+      "name": "Poção de Vigor",
+      "type": "consumable",
+      "sha256": "ec405ab25f97000636474da80354398e0140e94bff29483863eac3bf0a52d080",
+      "art": "/compendium/daggerheart/equipment/core-consumable-stamina-potion.webp"
+    },
+    {
+      "id": "core-consumable-major-stamina-potion",
+      "sourceId": "Major Stamina Potion",
+      "name": "Poção de Vigor Maior",
+      "type": "consumable",
+      "sha256": "195e8046efcdd48e301ed9871d0c37f6b9609878f6bcd9dc803814371ed972a0",
+      "art": "/compendium/daggerheart/equipment/core-consumable-major-stamina-potion.webp"
+    },
+    {
+      "id": "core-consumable-minor-stamina-potion",
+      "sourceId": "Minor Stamina Potion",
+      "name": "Poção de Vigor Menor",
+      "type": "consumable",
+      "sha256": "b176dc827373a75a272b051851405c9b53f586a03acb260deba2cd830762fb07",
+      "art": "/compendium/daggerheart/equipment/core-consumable-minor-stamina-potion.webp"
+    },
+    {
+      "id": "core-consumable-charm-potion",
+      "sourceId": "Charm Potion",
+      "name": "Poção do Charme",
+      "type": "consumable",
+      "sha256": "9eb771e474d0be5bd63fa5543ea6d9c37e0105dcf67a462fe86a225457ce53a4",
+      "art": "/compendium/daggerheart/equipment/core-consumable-charm-potion.webp"
+    },
+    {
+      "id": "core-consumable-major-charm-potion",
+      "sourceId": "Major Charm Potion",
+      "name": "Poção do Charme Maior",
+      "type": "consumable",
+      "sha256": "30e775a898a0f7f290b50b66789d0ce66632c36126d009bf8d6eb00e435867fc",
+      "art": "/compendium/daggerheart/equipment/core-consumable-major-charm-potion.webp"
+    },
+    {
+      "id": "core-consumable-control-potion",
+      "sourceId": "Control Potion",
+      "name": "Poção do Controle",
+      "type": "consumable",
+      "sha256": "b4e28aea0febf8c4c4118ecfef79a2a9e954382bd3d04be730cb8f6f9d858273",
+      "art": "/compendium/daggerheart/equipment/core-consumable-control-potion.webp"
+    },
+    {
+      "id": "core-consumable-major-control-potion",
+      "sourceId": "Major Control Potion",
+      "name": "Poção do Controle Maior",
+      "type": "consumable",
+      "sha256": "37e6ee9e374159dfb9f43537acee660c77b516bee3c4fe733f672d816b5efc5c",
+      "art": "/compendium/daggerheart/equipment/core-consumable-major-control-potion.webp"
+    },
+    {
+      "id": "core-consumable-growing-potion",
+      "sourceId": "Growing Potion",
+      "name": "Poção do Crescimento",
+      "type": "consumable",
+      "sha256": "81b7fb8fa4956f6f050e689b63a57a8aafb845707511b6e4cd8b08dcabe68139",
+      "art": "/compendium/daggerheart/equipment/core-consumable-growing-potion.webp"
+    },
+    {
+      "id": "core-consumable-shrinking-potion",
+      "sourceId": "Shrinking Potion",
+      "name": "Poção do Encolhimento",
+      "type": "consumable",
+      "sha256": "f91d253dbf5e22f55bc02dca2728b36b79ba68379a787109f652ab78694cddc9",
+      "art": "/compendium/daggerheart/equipment/core-consumable-shrinking-potion.webp"
+    },
+    {
+      "id": "core-consumable-bolster-potion",
+      "sourceId": "Bolster Potion",
+      "name": "Poção do Impulso",
+      "type": "consumable",
+      "sha256": "1e26949d8d9c2c4c28db91a0e1b7f57e93d848a1efe428289a56ad90e68a94db",
+      "art": "/compendium/daggerheart/equipment/core-consumable-bolster-potion.webp"
+    },
+    {
+      "id": "core-consumable-major-bolster-potion",
+      "sourceId": "Major Bolster Potion",
+      "name": "Poção do Impulso Maior",
+      "type": "consumable",
+      "sha256": "df19c2ee875219be586d02ca5aa595a8ea4d8deee445cf6dce2cc4fc55c678f7",
+      "art": "/compendium/daggerheart/equipment/core-consumable-major-bolster-potion.webp"
+    },
+    {
+      "id": "core-consumable-homet-s-secret-potion",
+      "sourceId": "Homet’s Secret Potion",
+      "name": "Poção Secreta de Homet",
+      "type": "consumable",
+      "sha256": "ef560185bac416b91fe8854372dbbf992c69c3c6cdb03a0180014442d875470c",
+      "art": "/compendium/daggerheart/equipment/core-consumable-homet-s-secret-potion.webp"
+    },
+    {
+      "id": "core-consumable-jumping-root",
+      "sourceId": "Jumping Root",
+      "name": "Raiz da Cambalhota",
+      "type": "consumable",
+      "sha256": "ba5445a51bbbd7e2425721d2bf2770919ada08dce3bacfed0c49431399c7ca47",
+      "art": "/compendium/daggerheart/equipment/core-consumable-jumping-root.webp"
+    },
+    {
+      "id": "core-consumable-armor-stitcher",
+      "sourceId": "Armor Stitcher",
+      "name": "Remendo de Armadura",
+      "type": "consumable",
+      "sha256": "f003ad9266b857fd307f3a65f5949f9f3b92cd23b16b04d5dc5014942009f1d4",
+      "art": "/compendium/daggerheart/equipment/core-consumable-armor-stitcher.webp"
+    },
+    {
+      "id": "core-consumable-redthorn-saliva",
+      "sourceId": "Redthorn Saliva",
+      "name": "Saliva de Espinho-vermelho",
+      "type": "consumable",
+      "sha256": "9f3133d026ec2b7a6d8b601cb2a74403a6e9161de2090a2c1609bf5668eaeaa6",
+      "art": "/compendium/daggerheart/equipment/core-consumable-redthorn-saliva.webp"
+    },
+    {
+      "id": "core-consumable-blood-of-the-yorgi",
+      "sourceId": "Blood of the Yorgi",
+      "name": "Sangue dos Yorgi",
+      "type": "consumable",
+      "sha256": "16e9b88cdc5eade780fa968cf789cf2679ee5ba7d7e67938f3c52c0bc2a34651",
+      "art": "/compendium/daggerheart/equipment/core-consumable-blood-of-the-yorgi.webp"
+    },
+    {
+      "id": "core-consumable-sun-tree-sap",
+      "sourceId": "Sun Tree Sap",
+      "name": "Seiva da Árvore do Sol",
+      "type": "consumable",
+      "sha256": "ee350af8f76c19b0b219604ef6df49123e2b3ae00d1ffa4f741f4700b9fe4ebf",
+      "art": "/compendium/daggerheart/equipment/core-consumable-sun-tree-sap.webp"
+    },
+    {
+      "id": "core-consumable-sleeping-sap",
+      "sourceId": "Sleeping Sap",
+      "name": "Seiva do Sono",
+      "type": "consumable",
+      "sha256": "436f7bb054b7bbd8402c0d66affee4a3673779275aa1f772ae25d8c6c4740f2f",
+      "art": "/compendium/daggerheart/equipment/core-consumable-sleeping-sap.webp"
+    },
+    {
+      "id": "core-consumable-bridge-seed",
+      "sourceId": "Bridge Seed",
+      "name": "Semente da Ponte",
+      "type": "consumable",
+      "sha256": "b04eb890e4b13c2ce33b49d231d6620d1f5eba61f7f9cd72eb03ef60e09d4b4b",
+      "art": "/compendium/daggerheart/equipment/core-consumable-bridge-seed.webp"
+    },
+    {
+      "id": "void-unofficial-consumable-lifeblood-talisman-consumable",
+      "sourceId": "Lifeblood Talisman (Consumable)",
+      "name": "Talismã de Sangue Vital",
+      "type": "consumable",
+      "sha256": "4a1b720b874d11b207897fdd8bc02330747e7b769b4c2ac2ca25463fdf4baf63",
+      "art": "/compendium/daggerheart/equipment/void-unofficial-consumable-lifeblood-talisman-consumable.webp"
+    },
+    {
+      "id": "core-consumable-gill-salve",
+      "sourceId": "Gill Salve",
+      "name": "Unguento de Guelras",
+      "type": "consumable",
+      "sha256": "b6514c49dbdab038560b9cd923972bded90f770a8265d033098759e887d43d0c",
+      "art": "/compendium/daggerheart/equipment/core-consumable-gill-salve.webp"
+    },
+    {
+      "id": "core-consumable-dripfang-poison",
+      "sourceId": "Dripfang Poison",
+      "name": "Veneno da Presa Gotejante",
+      "type": "consumable",
+      "sha256": "03eba1eb32cdd7a7c15025edca8c9e3d9d287571e703654b4c542d1d1dae3779",
+      "art": "/compendium/daggerheart/equipment/core-consumable-dripfang-poison.webp"
+    },
+    {
+      "id": "core-consumable-grindletooth-venom",
+      "sourceId": "Grindletooth Venom",
+      "name": "Veneno de Presâmia",
+      "type": "consumable",
+      "sha256": "e17556c8d71170605a53197027ce08cd1d969fd5d213b22301a8ff60e017cbb6",
+      "art": "/compendium/daggerheart/equipment/core-consumable-grindletooth-venom.webp"
+    },
+    {
+      "id": "core-consumable-improved-grindletooth-venom",
+      "sourceId": "Improved Grindletooth Venom",
+      "name": "Veneno de Presâmia Aprimorado",
+      "type": "consumable",
+      "sha256": "ff1049f2b206c28ce39c955fbdd3170f1a29cb20c357bcee8c1ba238a3cf3932",
+      "art": "/compendium/daggerheart/equipment/core-consumable-improved-grindletooth-venom.webp"
+    },
+    {
+      "id": "void-unofficial-loot-steel-needle",
+      "sourceId": "Steel Needle",
+      "name": "Agulha de Aço",
+      "type": "loot",
+      "sha256": "39dc4b5924cb5277cdfeba243abf8a70ad7a5a6d7516b1365ba73987c66f6f3e",
+      "art": "/compendium/daggerheart/equipment/void-unofficial-loot-steel-needle.webp"
+    },
+    {
+      "id": "core-loot-manacles",
+      "sourceId": "Manacles",
+      "name": "Algemas",
+      "type": "loot",
+      "sha256": "0f0afaf37e5c6e82499313ed503d735ea745ca1c0efa7e167b85ae65dd2f2af8",
+      "art": "/compendium/daggerheart/equipment/core-loot-manacles.webp"
+    },
+    {
+      "id": "core-loot-charging-quiver",
+      "sourceId": "Charging Quiver",
+      "name": "Aljava de Carga",
+      "type": "loot",
+      "sha256": "2c60cf2e68316357c93dade1f71ae21c2e69c7a7eea5c11ffd384759a8a09197",
+      "art": "/compendium/daggerheart/equipment/core-loot-charging-quiver.webp"
+    },
+    {
+      "id": "core-loot-airblade-charm",
+      "sourceId": "Airblade Charm",
+      "name": "Amuleto do Alcance",
+      "type": "loot",
+      "sha256": "316d5617168697206e7c4224547bbe11ecab7714a61125d6f8e31bb29ec9ecf3",
+      "art": "/compendium/daggerheart/equipment/core-loot-airblade-charm.webp"
+    },
+    {
+      "id": "core-loot-elusive-amulet",
+      "sourceId": "Elusive Amulet",
+      "name": "Amuleto do Desaparecimento",
+      "type": "loot",
+      "sha256": "e00192f6a2915b048c9c08c891a0fdf09edc775e51fd0d52045d5961cbe9d4b2",
+      "art": "/compendium/daggerheart/equipment/core-loot-elusive-amulet.webp"
+    },
+    {
+      "id": "core-loot-ring-of-resistance",
+      "sourceId": "Ring of Resistance",
+      "name": "Anel da Resistência",
+      "type": "loot",
+      "sha256": "9104143e74f9483da3e92bca5ec9d4db298e6b31487d643a8c03130d68722ad2",
+      "art": "/compendium/daggerheart/equipment/core-loot-ring-of-resistance.webp"
+    },
+    {
+      "id": "core-loot-ring-of-unbreakable-resolve",
+      "sourceId": "Ring of Unbreakable Resolve",
+      "name": "Anel da Vontade de Ferro",
+      "type": "loot",
+      "sha256": "cc9e266ed9113e480d65063ac6e0225a95a28a55c90a1b182358de0d19cf1b5d",
+      "art": "/compendium/daggerheart/equipment/core-loot-ring-of-unbreakable-resolve.webp"
+    },
+    {
+      "id": "core-loot-ring-of-silence",
+      "sourceId": "Ring of Silence",
+      "name": "Anel do Silêncio",
+      "type": "loot",
+      "sha256": "f9e5296e4b28460f43d94754fb64857317e7d3669d6c2a93c05cc890ad223ee9",
+      "art": "/compendium/daggerheart/equipment/core-loot-ring-of-silence.webp"
+    },
+    {
+      "id": "core-loot-piper-whistle",
+      "sourceId": "Piper Whistle",
+      "name": "Apito-flauta",
+      "type": "loot",
+      "sha256": "d081090878282eb959bf7deb4e0e1f39c852a65a48d4177eaf06969c1bdd3bdb",
+      "art": "/compendium/daggerheart/equipment/core-loot-piper-whistle.webp"
+    },
+    {
+      "id": "core-loot-lorekeeper",
+      "sourceId": "Lorekeeper",
+      "name": "Arquivo Infausto",
+      "type": "loot",
+      "sha256": "b0483ce1faa0c927f0fc076b0e61acb2bd3ec40e75a97c88c57a277f51704141",
+      "art": "/compendium/daggerheart/equipment/core-loot-lorekeeper.webp"
+    },
+    {
+      "id": "core-loot-empty-chest",
+      "sourceId": "Empty Chest",
+      "name": "Baú Vazio",
+      "type": "loot",
+      "sha256": "9c7efbf068ff8a3ae2a0f19790d1dc298a0711d3fdea0a3794aa00e97fc57523",
+      "art": "/compendium/daggerheart/equipment/core-loot-empty-chest.webp"
+    },
+    {
+      "id": "core-loot-bag-of-ficklesand",
+      "sourceId": "Bag of Ficklesand",
+      "name": "Bolsa de Areia Errática",
+      "type": "loot",
+      "sha256": "e4d5ce5bac00bb0bfa1786047e2d02c2d903c8039b8ba9cbbe44c87c0c3e80c3",
+      "art": "/compendium/daggerheart/equipment/core-loot-bag-of-ficklesand.webp"
+    },
+    {
+      "id": "core-loot-infinite-bag",
+      "sourceId": "Infinite Bag",
+      "name": "Bolsa Infinita",
+      "type": "loot",
+      "sha256": "0991942004e42213e5127759c5b872a21716d05838db8940b4016f3809eed7ae",
+      "art": "/compendium/daggerheart/equipment/core-loot-infinite-bag.webp"
+    },
+    {
+      "id": "core-loot-lakestrider-boots",
+      "sourceId": "Lakestrider Boots",
+      "name": "Botas do Passo D'água",
+      "type": "loot",
+      "sha256": "f8a236d33686e2b369a0384a6e51e6b5d4b6c4bc6a1e13d75a542eac5393978a",
+      "art": "/compendium/daggerheart/equipment/core-loot-lakestrider-boots.webp"
+    },
+    {
+      "id": "core-loot-homing-compasses",
+      "sourceId": "Homing Compasses",
+      "name": "Bússolas Harmônicas",
+      "type": "loot",
+      "sha256": "3169eeac5ffb734533c3ac46dbde2b8f08a9c03f7dc5a2f5e66ce9645881f3bd",
+      "art": "/compendium/daggerheart/equipment/core-loot-homing-compasses.webp"
+    },
+    {
+      "id": "core-loot-box-of-many-goods",
+      "sourceId": "Box of Many Goods",
+      "name": "Caixa das Muitas Posses",
+      "type": "loot",
+      "sha256": "c71a8b73cfc5db67f13a3825317361110cc208ce1ea55b46cb250149b7ce3830",
+      "art": "/compendium/daggerheart/equipment/core-loot-box-of-many-goods.webp"
+    },
+    {
+      "id": "core-loot-companion-case",
+      "sourceId": "Companion Case",
+      "name": "Caixinha do Companheiro",
+      "type": "loot",
+      "sha256": "a12c05ab7af939c62f6f2f35a21118bfbdcf3108ea35f87110513a191c79f371",
+      "art": "/compendium/daggerheart/equipment/core-loot-companion-case.webp"
+    },
+    {
+      "id": "core-loot-suspended-rod",
+      "sourceId": "Suspended Rod",
+      "name": "Cajado Suspenso",
+      "type": "loot",
+      "sha256": "87fdf23fd707def7e92ea496d152e4573d4b91e4b821cc79003b2b16017802fc",
+      "art": "/compendium/daggerheart/equipment/core-loot-suspended-rod.webp"
+    },
+    {
+      "id": "core-loot-arcane-cloak",
+      "sourceId": "Arcane Cloak",
+      "name": "Capa Arcana",
+      "type": "loot",
+      "sha256": "71382e2bc721483207e26355b64a4c93f6fe5196d449f438389799881d5170eb",
+      "art": "/compendium/daggerheart/equipment/core-loot-arcane-cloak.webp"
+    },
+    {
+      "id": "core-loot-skeleton-key",
+      "sourceId": "Skeleton Key",
+      "name": "Chave Mestra",
+      "type": "loot",
+      "sha256": "992f8d9f8dd5ad0c42ba8e8271bd82759a96a2ffc9390237f5a19bdc2620b080",
+      "art": "/compendium/daggerheart/equipment/core-loot-skeleton-key.webp"
+    },
+    {
+      "id": "core-loot-belt-of-unity",
+      "sourceId": "Belt of Unity",
+      "name": "Cinturão da Unidade",
+      "type": "loot",
+      "sha256": "ac1676d6ea17ab70e39ac5025c37c7244d346b9226309e07e6cc747a25bc17ca",
+      "art": "/compendium/daggerheart/equipment/core-loot-belt-of-unity.webp"
+    },
+    {
+      "id": "core-loot-clay-companion",
+      "sourceId": "Clay Companion",
+      "name": "Companheiro de Argila",
+      "type": "loot",
+      "sha256": "4dd7dddf48e24498ab678baa58fc34e218bbd629f6a9253f410a16a630666db8",
+      "art": "/compendium/daggerheart/equipment/core-loot-clay-companion.webp"
+    },
+    {
+      "id": "void-unofficial-loot-50ft-of-rope",
+      "sourceId": "50ft of Rope",
+      "name": "Corda de 15 Metros",
+      "type": "loot",
+      "sha256": "692d3c4350587d747e931a737b11c93f8abfc1c3cab01eda3e6b7fbb4820ae8c",
+      "art": "/compendium/daggerheart/equipment/void-unofficial-loot-50ft-of-rope.webp"
+    },
+    {
+      "id": "core-loot-paragon-s-chain",
+      "sourceId": "Paragon’s Chain",
+      "name": "Corrente dos Princípios",
+      "type": "loot",
+      "sha256": "2e03066c6c98ffeb02ca15581d44492e7478aeae99df700bb52fddc21ff9b2f6",
+      "art": "/compendium/daggerheart/equipment/core-loot-paragon-s-chain.webp"
+    },
+    {
+      "id": "void-unofficial-loot-a-harmless-spirit-trapped-inside-a-glass-bottle",
+      "sourceId": "a harmless spirit trapped inside a glass bottle",
+      "name": "Espírito Inofensivo Preso em uma Garrafa de Vidro",
+      "type": "loot",
+      "sha256": "820364fc5f02bf483a6da85ff00457a662f1e3fc68e710f07de1fbd1c594d6fb",
+      "art": "/compendium/daggerheart/equipment/void-unofficial-loot-a-harmless-spirit-trapped-inside-a-glass-bottle.webp"
+    },
+    {
+      "id": "core-loot-corrector-sprite",
+      "sourceId": "Corrector Sprite",
+      "name": "Espírito Sussurrante",
+      "type": "loot",
+      "sha256": "cd98976e1ae77856974f9c163a11b52d9aec784f4139f3a429cc920ff88f17cb",
+      "art": "/compendium/daggerheart/equipment/core-loot-corrector-sprite.webp"
+    },
+    {
+      "id": "core-loot-piercing-arrows",
+      "sourceId": "Piercing Arrows",
+      "name": "Flechas Perfurantes",
+      "type": "loot",
+      "sha256": "923671d18c2dbcf9874b18435ce33baaafb7d7525a1781c04824ead5349f7caf",
+      "art": "/compendium/daggerheart/equipment/core-loot-piercing-arrows.webp"
+    },
+    {
+      "id": "core-loot-shard-of-memory",
+      "sourceId": "Shard of Memory",
+      "name": "Fragmento de Memória",
+      "type": "loot",
+      "sha256": "559c6368b0b1cedf4fc5120f1f726b9dc93bcb10276a8b8f69ab890d1bce024e",
+      "art": "/compendium/daggerheart/equipment/core-loot-shard-of-memory.webp"
+    },
+    {
+      "id": "void-unofficial-loot-vial-holding-a-foe-s-blood",
+      "sourceId": "Vial Holding a Foe's Blood",
+      "name": "Frasco com Sangue de um Inimigo",
+      "type": "loot",
+      "sha256": "c210c3486bc3520b8e9d99dee6325f0feb3dfc8e78b3f8903c54d1dc70d208b6",
+      "art": "/compendium/daggerheart/equipment/void-unofficial-loot-vial-holding-a-foe-s-blood.webp"
+    },
+    {
+      "id": "core-loot-dual-flask",
+      "sourceId": "Dual Flask",
+      "name": "Frasco Duplo",
+      "type": "loot",
+      "sha256": "733573cb424cb7eb77e2afe65ccfff08ca995ec02b40f359d1c9c6a724fbf051",
+      "art": "/compendium/daggerheart/equipment/core-loot-dual-flask.webp"
+    },
+    {
+      "id": "core-loot-gem-of-sagacity",
+      "sourceId": "Gem of Sagacity",
+      "name": "Gema da Iluminação",
+      "type": "loot",
+      "sha256": "623096720270e27588cd43d421e9d07a6856259107f5163513c37fc307f0a6e0",
+      "art": "/compendium/daggerheart/equipment/core-loot-gem-of-sagacity.webp"
+    },
+    {
+      "id": "core-loot-gem-of-insight",
+      "sourceId": "Gem of Insight",
+      "name": "Gema da Sintonia",
+      "type": "loot",
+      "sha256": "e3f35f192b80cd1368745250a6af27d8b4b61c5d728eb678508802ff85a96322",
+      "art": "/compendium/daggerheart/equipment/core-loot-gem-of-insight.webp"
+    },
+    {
+      "id": "core-loot-gem-of-alacrity",
+      "sourceId": "Gem of Alacrity",
+      "name": "Gema da Velocidade",
+      "type": "loot",
+      "sha256": "e9a599464ed54aa77a001181e06cde99cfe246c3e5b4a8848a8918c95a83fd2a",
+      "art": "/compendium/daggerheart/equipment/core-loot-gem-of-alacrity.webp"
+    },
+    {
+      "id": "core-loot-gem-of-audacity",
+      "sourceId": "Gem of Audacity",
+      "name": "Gema do Charme",
+      "type": "loot",
+      "sha256": "630aefd62051e50f9636761675c70855a7e38065d755f36efbe1b71e1691844b",
+      "art": "/compendium/daggerheart/equipment/core-loot-gem-of-audacity.webp"
+    },
+    {
+      "id": "core-loot-gem-of-precision",
+      "sourceId": "Gem of Precision",
+      "name": "Gema do Controle",
+      "type": "loot",
+      "sha256": "45b7c6d78071e3cf4d46bc89764aa98a8ecb39975ed878958c0cd5489a22926b",
+      "art": "/compendium/daggerheart/equipment/core-loot-gem-of-precision.webp"
+    },
+    {
+      "id": "core-loot-gem-of-might",
+      "sourceId": "Gem of Might",
+      "name": "Gema do Impulso",
+      "type": "loot",
+      "sha256": "1247db1546927c286f4c109f7dc65a1b76102b3285e51e08c09767b193409b51",
+      "art": "/compendium/daggerheart/equipment/core-loot-gem-of-might.webp"
+    },
+    {
+      "id": "core-loot-fire-jar",
+      "sourceId": "Fire Jar",
+      "name": "Jarro de Fogo",
+      "type": "loot",
+      "sha256": "cab87257ab6ebc05e037390757b480c5cfe790508983a8eac6cf288ebcd090c1",
+      "art": "/compendium/daggerheart/equipment/core-loot-fire-jar.webp"
+    },
+    {
+      "id": "core-loot-gecko-gloves",
+      "sourceId": "Gecko Gloves",
+      "name": "Luvas-lagartixa",
+      "type": "loot",
+      "sha256": "a5f1818a37555ed03e9ee5e22394c663ee6d32659fddd120331431f7cbdb1570",
+      "art": "/compendium/daggerheart/equipment/core-loot-gecko-gloves.webp"
+    },
+    {
+      "id": "core-loot-hopekeeper-locket",
+      "sourceId": "Hopekeeper Locket",
+      "name": "Medalhão da Esperança",
+      "type": "loot",
+      "sha256": "82f453357bff2dface7b8012ebee61ea950a4f5139fba43a90b9f991df3fd805",
+      "art": "/compendium/daggerheart/equipment/core-loot-hopekeeper-locket.webp"
+    },
+    {
+      "id": "core-loot-speaking-orbs",
+      "sourceId": "Speaking Orbs",
+      "name": "Orbes da Comunicação",
+      "type": "loot",
+      "sha256": "172974310beb64addc694590b9a8dbd07bd4e79edeba2d6346564444e8605528",
+      "art": "/compendium/daggerheart/equipment/core-loot-speaking-orbs.webp"
+    },
+    {
+      "id": "void-unofficial-loot-a-pair-of-mysterious-coins",
+      "sourceId": "a pair of mysterious coins",
+      "name": "Par de Moedas Misteriosas",
+      "type": "loot",
+      "sha256": "c35e77104c142cf498951bd2b138a2bf79d738b1b591f422530afbb7bd31e0c3",
+      "art": "/compendium/daggerheart/equipment/void-unofficial-loot-a-pair-of-mysterious-coins.webp"
+    },
+    {
+      "id": "core-loot-glider",
+      "sourceId": "Glider",
+      "name": "Paraquedas",
+      "type": "loot",
+      "sha256": "6f2751dc88cd6645fb9f2ad481c01330e16e9369b465ca859dcfb35f13f58869",
+      "art": "/compendium/daggerheart/equipment/core-loot-glider.webp"
+    },
+    {
+      "id": "core-loot-bloodstone",
+      "sourceId": "Bloodstone",
+      "name": "Pedra da Brutalidade",
+      "type": "loot",
+      "sha256": "cfb7e0fa1031d4417e9a5f7e73777e206cf62c3ebfc1a31804e652f48455a652",
+      "art": "/compendium/daggerheart/equipment/core-loot-bloodstone.webp"
+    },
+    {
+      "id": "core-loot-greatstone",
+      "sourceId": "Greatstone",
+      "name": "Pedra da Resiliência",
+      "type": "loot",
+      "sha256": "3a3290c0792e45de4513414b31283a8c57bda1c13fb9fa5449da12e5c217f791",
+      "art": "/compendium/daggerheart/equipment/core-loot-greatstone.webp"
+    },
+    {
+      "id": "core-loot-glamour-stone",
+      "sourceId": "Glamour Stone",
+      "name": "Pedra do Glamour",
+      "type": "loot",
+      "sha256": "ac9f819d54a2229c48a927a4f0d2122393c325c0195a531e77953e4c03dfdd94",
+      "art": "/compendium/daggerheart/equipment/core-loot-glamour-stone.webp"
+    },
+    {
+      "id": "core-loot-valorstone",
+      "sourceId": "Valorstone",
+      "name": "Pedra do Poder",
+      "type": "loot",
+      "sha256": "fb05052b339d3b1c7eee9efc21f87eef7d7b4e7d32407e7ec4519cd9ff963f18",
+      "art": "/compendium/daggerheart/equipment/core-loot-valorstone.webp"
+    },
+    {
+      "id": "core-loot-phoenix-feather",
+      "sourceId": "Phoenix Feather",
+      "name": "Pena de Fênix",
+      "type": "loot",
+      "sha256": "d79e6a97f247ad47086a6b49326e76feec1a932b7e50f9fad15f4033b5516a79",
+      "art": "/compendium/daggerheart/equipment/core-loot-phoenix-feather.webp"
+    },
+    {
+      "id": "core-loot-flickerfly-pendant",
+      "sourceId": "Flickerfly Pendant",
+      "name": "Pingente do Oscilume",
+      "type": "loot",
+      "sha256": "0cdf5e2e2ce9596a0fb217607b187c0f519895f2a2c7d01318ccb9b1af6b7097",
+      "art": "/compendium/daggerheart/equipment/core-loot-flickerfly-pendant.webp"
+    },
+    {
+      "id": "core-loot-calming-pendant",
+      "sourceId": "Calming Pendant",
+      "name": "Pingente Tranquilizante",
+      "type": "loot",
+      "sha256": "1eeadada565f80f07830f2ce876c8aa5903d17169d9b3de262428e5f8d198d0e",
+      "art": "/compendium/daggerheart/equipment/core-loot-calming-pendant.webp"
+    },
+    {
+      "id": "core-loot-arcane-prism",
+      "sourceId": "Arcane Prism",
+      "name": "Prisma Arcano",
+      "type": "loot",
+      "sha256": "b8526c5849363d5a8dc1af1d7985b169f54abb174aa24d3ec6192b6eb34dcc22",
+      "art": "/compendium/daggerheart/equipment/core-loot-arcane-prism.webp"
+    },
+    {
+      "id": "core-loot-vial-of-darksmoke-recipe",
+      "sourceId": "Vial of Darksmoke Recipe",
+      "name": "Receita de Frasco de Fumaça Negra",
+      "type": "loot",
+      "sha256": "aca273268f40a32aed224a0a94940a5aa76f3d733762bf5dd0c067dc7673e526",
+      "art": "/compendium/daggerheart/equipment/core-loot-vial-of-darksmoke-recipe.webp"
+    },
+    {
+      "id": "core-loot-mythic-dust-recipe",
+      "sourceId": "Mythic Dust Recipe",
+      "name": "Receita de Pó Mítico",
+      "type": "loot",
+      "sha256": "44f53282ace7457f34a3b951c29dfa2064cb9c5e4ae124ffef6904af7d0cbde5",
+      "art": "/compendium/daggerheart/equipment/core-loot-mythic-dust-recipe.webp"
+    },
+    {
+      "id": "core-loot-minor-health-potion-recipe",
+      "sourceId": "Minor Health Potion Recipe",
+      "name": "Receita de Poção de Vida Menor",
+      "type": "loot",
+      "sha256": "0cde33e544fcc2344f6a97c8d80c5b88c55bb7df620fb9c11beb4cfc7cbef735",
+      "art": "/compendium/daggerheart/equipment/core-loot-minor-health-potion-recipe.webp"
+    },
+    {
+      "id": "core-loot-minor-stamina-potion-recipe",
+      "sourceId": "Minor Stamina Potion Recipe",
+      "name": "Receita de Poção de Vigor Menor",
+      "type": "loot",
+      "sha256": "a1cdf7f3efa84dc1826a645c11ac621d9a2aa4e9caac9c2e36bdfca9f1e8a5e9",
+      "art": "/compendium/daggerheart/equipment/core-loot-minor-stamina-potion-recipe.webp"
+    },
+    {
+      "id": "core-loot-woven-net",
+      "sourceId": "Woven Net",
+      "name": "Rede Trançada",
+      "type": "loot",
+      "sha256": "523b28fc47918d7ec470a15222b22a6fd1135256416ca04a7aab68c4f6f705e1",
+      "art": "/compendium/daggerheart/equipment/core-loot-woven-net.webp"
+    },
+    {
+      "id": "core-loot-enlighten-relic",
+      "sourceId": "Enlighten Relic",
+      "name": "Relíquia da Iluminação",
+      "type": "loot",
+      "sha256": "c8354cd25a9a4d5c1932c086de590e5f0d8260fc865a5e9c02bf54fccbcdcb32",
+      "art": "/compendium/daggerheart/equipment/core-loot-enlighten-relic.webp"
+    },
+    {
+      "id": "core-loot-attune-relic",
+      "sourceId": "Attune Relic",
+      "name": "Relíquia da Sintonia",
+      "type": "loot",
+      "sha256": "cf2f41dd5dd044b7ddcdc64de2536e44e06621cc7c1f8ac79be7f4819dee6c95",
+      "art": "/compendium/daggerheart/equipment/core-loot-attune-relic.webp"
+    },
+    {
+      "id": "core-loot-stride-relic",
+      "sourceId": "Stride Relic",
+      "name": "Relíquia da Velocidade",
+      "type": "loot",
+      "sha256": "99a420126c619d73785e0bf82dacc6765dc30f6312b9b2ae7121e19424969077",
+      "art": "/compendium/daggerheart/equipment/core-loot-stride-relic.webp"
+    },
+    {
+      "id": "core-loot-honing-relic",
+      "sourceId": "Honing Relic",
+      "name": "Relíquia do Aperfeiçoamento",
+      "type": "loot",
+      "sha256": "91a4daa2a5bcb44dfef62c1cabe9c99352d31c3d47be459c679c45d679a3d7d6",
+      "art": "/compendium/daggerheart/equipment/core-loot-honing-relic.webp"
+    },
+    {
+      "id": "core-loot-charm-relic",
+      "sourceId": "Charm Relic",
+      "name": "Relíquia do Charme",
+      "type": "loot",
+      "sha256": "5e314035d3ecc6bbb6d4d1c2e38f649a1d87cc150f309c5c9f29ccb0a4e300ee",
+      "art": "/compendium/daggerheart/equipment/core-loot-charm-relic.webp"
+    },
+    {
+      "id": "core-loot-control-relic",
+      "sourceId": "Control Relic",
+      "name": "Relíquia do Controle",
+      "type": "loot",
+      "sha256": "24283fef996490a435a6043259c225f9ff528bad6353673b9d6fe172f9e11471",
+      "art": "/compendium/daggerheart/equipment/core-loot-control-relic.webp"
+    },
+    {
+      "id": "core-loot-bolster-relic",
+      "sourceId": "Bolster Relic",
+      "name": "Relíquia do Impulso",
+      "type": "loot",
+      "sha256": "ac415a8ab032de6b679b0c1eca9835211b73488a7d714ef97ac25a81557d6ea9",
+      "art": "/compendium/daggerheart/equipment/core-loot-bolster-relic.webp"
+    },
+    {
+      "id": "core-loot-premium-bedroll",
+      "sourceId": "Premium Bedroll",
+      "name": "Saco de Dormir de Qualidade",
+      "type": "loot",
+      "sha256": "728d1a5688e7e6629513c547c12c9c2e188f462c0327bc41b0b3bbb0a17edc0e",
+      "art": "/compendium/daggerheart/equipment/core-loot-premium-bedroll.webp"
+    },
+    {
+      "id": "core-loot-portal-seed",
+      "sourceId": "Portal Seed",
+      "name": "Semente de Portal",
+      "type": "loot",
+      "sha256": "a9eff2a919ff883dbe5d4cf0354725c17f8bfd94ffc21b74be2970943421102b",
+      "art": "/compendium/daggerheart/equipment/core-loot-portal-seed.webp"
+    },
+    {
+      "id": "core-loot-alistair-s-torch",
+      "sourceId": "Alistair’s Torch",
+      "name": "Tocha de Alistair",
+      "type": "loot",
+      "sha256": "1d529ee6b89a2dc005991394beaf7bdbd9888704abd0419f008c956e4353794d",
+      "art": "/compendium/daggerheart/equipment/core-loot-alistair-s-torch.webp"
+    },
+    {
+      "id": "bonus-torch",
+      "sourceId": "Torch",
+      "name": "Tocha",
+      "type": "bonus",
+      "sha256": "b39d3d25f12253f79db56bf997a413f3b0d8b24162d84a3862019444e6341ced",
+      "art": "/compendium/daggerheart/equipment/bonus-torch.webp"
+    },
+    {
+      "id": "bonus-rope",
+      "sourceId": "50ft Rope",
+      "name": "Corda de 15 metros",
+      "type": "bonus",
+      "sha256": "bb39113d6135d1673e812642c5c7652e55be4e9d05b4548f80a8a1316ee89960",
+      "art": "/compendium/daggerheart/equipment/bonus-rope.webp"
+    },
+    {
+      "id": "bonus-basic-supplies",
+      "sourceId": "Basic Supplies",
+      "name": "Suprimentos básicos",
+      "type": "bonus",
+      "sha256": "3b39a6b4c257845c373a680d8a40375217dfc38df92faa7ac8d63ee72680ad80",
+      "art": "/compendium/daggerheart/equipment/bonus-basic-supplies.webp"
+    }
+  ]
+}

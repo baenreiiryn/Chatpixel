@@ -1,0 +1,6178 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "url": "https://github.com/Foundryborne/daggerheart",
+    "license": "DPCGL"
+  },
+  "classification": {
+    "weaponAndArmor": "tier 1=common, 2=uncommon, 3=rare, 4=very-rare",
+    "loot": "table results 1–24=common, 25–36=uncommon, 37–48=rare, 49–60=very-rare; project classification, not unique official item rarities"
+  },
+  "entries": [
+    {
+      "sourceId": "Advanced Banded Armor",
+      "type": "armor",
+      "normalizedName": "advancedbandedarmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 15/34 · Armadura 6"
+    },
+    {
+      "sourceId": "Advanced Brigandine Armor",
+      "type": "armor",
+      "normalizedName": "advancedbrigandinearmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/26 · Armadura 5"
+    },
+    {
+      "sourceId": "Advanced Chainmail Armor",
+      "type": "armor",
+      "normalizedName": "advancedchainmailarmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/31 · Armadura 6"
+    },
+    {
+      "sourceId": "Advanced Full Plate Armor",
+      "type": "armor",
+      "normalizedName": "advancedfullplatearmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 15/35 · Armadura 6"
+    },
+    {
+      "sourceId": "Advanced Gambeson Armor",
+      "type": "armor",
+      "normalizedName": "advancedgambesonarmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/23 · Armadura 5"
+    },
+    {
+      "sourceId": "Advanced Leather Armor",
+      "type": "armor",
+      "normalizedName": "advancedleatherarmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/27 · Armadura 5"
+    },
+    {
+      "sourceId": "Advanced Mage Robes",
+      "type": "armor",
+      "normalizedName": "advancedmagerobes",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 8/22 · Armadura 4"
+    },
+    {
+      "sourceId": "Advanced Scale Mail Armor",
+      "type": "armor",
+      "normalizedName": "advancedscalemailarmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/30 · Armadura 5"
+    },
+    {
+      "sourceId": "Astral Raiment",
+      "type": "armor",
+      "normalizedName": "astralraiment",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/27 · Armadura 5"
+    },
+    {
+      "sourceId": "Banded Armor",
+      "type": "armor",
+      "normalizedName": "bandedarmor",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 8/16 · Armadura 4"
+    },
+    {
+      "sourceId": "Bare Bones",
+      "type": "armor",
+      "normalizedName": "barebones",
+      "rarity": "common",
+      "rarityBasis": "starting-item",
+      "creationRestricted": "Requer a carta de domínio Armadura Corporal; não é uma armadura inicial."
+    },
+    {
+      "sourceId": "Bellamoi Fine Armor",
+      "type": "armor",
+      "normalizedName": "bellamoifinearmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/27 · Armadura 5"
+    },
+    {
+      "sourceId": "Bladefare Armor",
+      "type": "armor",
+      "normalizedName": "bladefarearmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 16/39 · Armadura 6"
+    },
+    {
+      "sourceId": "Bloodstone Plate Armor",
+      "type": "armor",
+      "normalizedName": "bloodstoneplatearmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/35 · Armadura 6"
+    },
+    {
+      "sourceId": "Brigandine Armor",
+      "type": "armor",
+      "normalizedName": "brigandinearmor",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 6/12 · Armadura 3"
+    },
+    {
+      "sourceId": "Chainmail Armor",
+      "type": "armor",
+      "normalizedName": "chainmailarmor",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 7/15 · Armadura 4"
+    },
+    {
+      "sourceId": "Channeling Armor",
+      "type": "armor",
+      "normalizedName": "channelingarmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/36 · Armadura 5"
+    },
+    {
+      "sourceId": "Circle-Forged Dreadplate",
+      "type": "armor",
+      "normalizedName": "circleforgeddreadplate",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 14/38 · Armadura 6"
+    },
+    {
+      "sourceId": "Cloverweave Cloak",
+      "type": "armor",
+      "normalizedName": "cloverweavecloak",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/27 · Armadura 5"
+    },
+    {
+      "sourceId": "Darkweave Shroud",
+      "type": "armor",
+      "normalizedName": "darkweaveshroud",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/36 · Armadura 5"
+    },
+    {
+      "sourceId": "Deep-Forged Coral Armor",
+      "type": "armor",
+      "normalizedName": "deepforgedcoralarmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/35 · Armadura 6"
+    },
+    {
+      "sourceId": "Dragonscale Armor",
+      "type": "armor",
+      "normalizedName": "dragonscalearmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/27 · Armadura 5"
+    },
+    {
+      "sourceId": "Dunamis Silkchain",
+      "type": "armor",
+      "normalizedName": "dunamissilkchain",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/36 · Armadura 7"
+    },
+    {
+      "sourceId": "Elundrian Chain Armor",
+      "type": "armor",
+      "normalizedName": "elundrianchainarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/21 · Armadura 4"
+    },
+    {
+      "sourceId": "Elundrian Chain Mail",
+      "type": "armor",
+      "normalizedName": "elundrianchainmail",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/21 · Armadura 4"
+    },
+    {
+      "sourceId": "Emberwoven Armor",
+      "type": "armor",
+      "normalizedName": "emberwovenarmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/36 · Armadura 6"
+    },
+    {
+      "sourceId": "Enchanter's Robes",
+      "type": "armor",
+      "normalizedName": "enchantersrobes",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/20 · Armadura 4"
+    },
+    {
+      "sourceId": "Full Fortified Armor",
+      "type": "armor",
+      "normalizedName": "fullfortifiedarmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 15/40 · Armadura 4"
+    },
+    {
+      "sourceId": "Full Plate Armor",
+      "type": "armor",
+      "normalizedName": "fullplatearmor",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 8/17 · Armadura 4"
+    },
+    {
+      "sourceId": "Gambeson Armor",
+      "type": "armor",
+      "normalizedName": "gambesonarmor",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 5/11 · Armadura 3"
+    },
+    {
+      "sourceId": "Gilded Sunplate",
+      "type": "armor",
+      "normalizedName": "gildedsunplate",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 12/26 · Armadura 5"
+    },
+    {
+      "sourceId": "Godbound Laminar",
+      "type": "armor",
+      "normalizedName": "godboundlaminar",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/36 · Armadura 6"
+    },
+    {
+      "sourceId": "Granminster's Finery",
+      "type": "armor",
+      "normalizedName": "granminstersfinery",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/27 · Armadura 2"
+    },
+    {
+      "sourceId": "Hallowed Heroplate",
+      "type": "armor",
+      "normalizedName": "hallowedheroplate",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/35 · Armadura 7"
+    },
+    {
+      "sourceId": "Harrowbone Armor",
+      "type": "armor",
+      "normalizedName": "harrowbonearmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/21 · Armadura 4"
+    },
+    {
+      "sourceId": "Hawkguard's Mantle",
+      "type": "armor",
+      "normalizedName": "hawkguardsmantle",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/20 · Armadura 4"
+    },
+    {
+      "sourceId": "Improved Banded Armor",
+      "type": "armor",
+      "normalizedName": "improvedbandedarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/27 · Armadura 5"
+    },
+    {
+      "sourceId": "Improved Brigandine Armor",
+      "type": "armor",
+      "normalizedName": "improvedbrigandinearmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/19 · Armadura 4"
+    },
+    {
+      "sourceId": "Improved Chainmail Armor",
+      "type": "armor",
+      "normalizedName": "improvedchainmailarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/24 · Armadura 5"
+    },
+    {
+      "sourceId": "Improved Full Plate Armor",
+      "type": "armor",
+      "normalizedName": "improvedfullplatearmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/28 · Armadura 5"
+    },
+    {
+      "sourceId": "Improved Gambeson Armor",
+      "type": "armor",
+      "normalizedName": "improvedgambesonarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 7/16 · Armadura 4"
+    },
+    {
+      "sourceId": "Improved Leather Armor",
+      "type": "armor",
+      "normalizedName": "improvedleatherarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/20 · Armadura 4"
+    },
+    {
+      "sourceId": "Improved Mage Robes",
+      "type": "armor",
+      "normalizedName": "improvedmagerobes",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 6/15 · Armadura 3"
+    },
+    {
+      "sourceId": "Improved Scale Mail Armor",
+      "type": "armor",
+      "normalizedName": "improvedscalemailarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/23 · Armadura 4"
+    },
+    {
+      "sourceId": "Irontree Breastplate Armor",
+      "type": "armor",
+      "normalizedName": "irontreebreastplatearmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/20 · Armadura 4"
+    },
+    {
+      "sourceId": "Leather Armor",
+      "type": "armor",
+      "normalizedName": "leatherarmor",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 6/13 · Armadura 3"
+    },
+    {
+      "sourceId": "Legendary Banded Armor",
+      "type": "armor",
+      "normalizedName": "legendarybandedarmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 17/43 · Armadura 7"
+    },
+    {
+      "sourceId": "Legendary Brigandine Armor",
+      "type": "armor",
+      "normalizedName": "legendarybrigandinearmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/35 · Armadura 6"
+    },
+    {
+      "sourceId": "Legendary Chainmail Armor",
+      "type": "armor",
+      "normalizedName": "legendarychainmailarmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 15/40 · Armadura 7"
+    },
+    {
+      "sourceId": "Legendary Full Plate Armor",
+      "type": "armor",
+      "normalizedName": "legendaryfullplatearmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 17/44 · Armadura 7"
+    },
+    {
+      "sourceId": "Legendary Gambeson Armor",
+      "type": "armor",
+      "normalizedName": "legendarygambesonarmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/32 · Armadura 6"
+    },
+    {
+      "sourceId": "Legendary Leather Armor",
+      "type": "armor",
+      "normalizedName": "legendaryleatherarmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/36 · Armadura 6"
+    },
+    {
+      "sourceId": "Legendary Mage Robes",
+      "type": "armor",
+      "normalizedName": "legendarymagerobes",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 10/31 · Armadura 5"
+    },
+    {
+      "sourceId": "Legendary Scale Mail Armor",
+      "type": "armor",
+      "normalizedName": "legendaryscalemailarmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 15/39 · Armadura 6"
+    },
+    {
+      "sourceId": "Mage Robes",
+      "type": "armor",
+      "normalizedName": "magerobes",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 4/10 · Armadura 2"
+    },
+    {
+      "sourceId": "Monett's Cloak",
+      "type": "armor",
+      "normalizedName": "monettscloak",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 16/39 · Armadura 6"
+    },
+    {
+      "sourceId": "Resonant Harness",
+      "type": "armor",
+      "normalizedName": "resonantharness",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 15/40 · Armadura 7"
+    },
+    {
+      "sourceId": "Rosewild Armor",
+      "type": "armor",
+      "normalizedName": "rosewildarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/23 · Armadura 5"
+    },
+    {
+      "sourceId": "Rune-Forged Exosuit",
+      "type": "armor",
+      "normalizedName": "runeforgedexosuit",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 12/39 · Armadura 7"
+    },
+    {
+      "sourceId": "Runes of Fortification",
+      "type": "armor",
+      "normalizedName": "runesoffortification",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 17/43 · Armadura 6"
+    },
+    {
+      "sourceId": "Runetan Floating Armor",
+      "type": "armor",
+      "normalizedName": "runetanfloatingarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/20 · Armadura 4"
+    },
+    {
+      "sourceId": "Savior Chainmail",
+      "type": "armor",
+      "normalizedName": "saviorchainmail",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 18/48 · Armadura 8"
+    },
+    {
+      "sourceId": "Scale Mail Armor",
+      "type": "armor",
+      "normalizedName": "scalemailarmor",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 7/14 · Armadura 3"
+    },
+    {
+      "sourceId": "Skywarden's Lamellar",
+      "type": "armor",
+      "normalizedName": "skywardenslamellar",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/27 · Armadura 5"
+    },
+    {
+      "sourceId": "Spidersilk Tunic",
+      "type": "armor",
+      "normalizedName": "spidersilktunic",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/20 · Armadura 4"
+    },
+    {
+      "sourceId": "Spiked Plate Armor",
+      "type": "armor",
+      "normalizedName": "spikedplatearmor",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 10/25 · Armadura 5"
+    },
+    {
+      "sourceId": "Stormthread Habit",
+      "type": "armor",
+      "normalizedName": "stormthreadhabit",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 9/20 · Armadura 4"
+    },
+    {
+      "sourceId": "Trollhide Cuirass",
+      "type": "armor",
+      "normalizedName": "trollhidecuirass",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 11/23 · Armadura 5"
+    },
+    {
+      "sourceId": "Tyris Soft Armor",
+      "type": "armor",
+      "normalizedName": "tyrissoftarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 8/18 · Armadura 5"
+    },
+    {
+      "sourceId": "Veritas Opal Armor",
+      "type": "armor",
+      "normalizedName": "veritasopalarmor",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 13/36 · Armadura 6"
+    },
+    {
+      "sourceId": "Wyrdwood Splint Armor",
+      "type": "armor",
+      "normalizedName": "wyrdwoodsplintarmor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "equipmentDetail": "Limiares 10/21 · Armadura 5"
+    },
+    {
+      "sourceId": "Acidpaste",
+      "type": "consumable",
+      "normalizedName": "acidpaste",
+      "lootRoll": 36,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Arcticite Shard",
+      "type": "consumable",
+      "normalizedName": "arcticiteshard",
+      "lootRoll": 36,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Armor Stitcher",
+      "type": "consumable",
+      "normalizedName": "armorstitcher",
+      "lootRoll": 21,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Attune Potion",
+      "type": "consumable",
+      "normalizedName": "attunepotion",
+      "lootRoll": 4,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Berserker's Brew",
+      "type": "consumable",
+      "normalizedName": "berserkersbrew",
+      "lootRoll": 34,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Blinding Orb",
+      "type": "consumable",
+      "normalizedName": "blindingorb",
+      "lootRoll": 57,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Blood of the Yorgi",
+      "type": "consumable",
+      "normalizedName": "bloodoftheyorgi",
+      "lootRoll": 31,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Bolster Potion",
+      "type": "consumable",
+      "normalizedName": "bolsterpotion",
+      "lootRoll": 2,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Bonding Honey",
+      "type": "consumable",
+      "normalizedName": "bondinghoney",
+      "lootRoll": 52,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Bridge Seed",
+      "type": "consumable",
+      "normalizedName": "bridgeseed",
+      "lootRoll": 49,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Bundle of Spiderlegs",
+      "type": "consumable",
+      "normalizedName": "bundleofspiderlegs",
+      "lootRoll": 17,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Cacophonous Concoction",
+      "type": "consumable",
+      "normalizedName": "cacophonousconcoction",
+      "lootRoll": 41,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Channelstone",
+      "type": "consumable",
+      "normalizedName": "channelstone",
+      "lootRoll": 34,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Charm Potion",
+      "type": "consumable",
+      "normalizedName": "charmpotion",
+      "lootRoll": 5,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Chimeric Saliva",
+      "type": "consumable",
+      "normalizedName": "chimericsaliva",
+      "lootRoll": 8,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Circle of the Void",
+      "type": "consumable",
+      "normalizedName": "circleofthevoid",
+      "lootRoll": 40,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Ciscan Fog Bottle",
+      "type": "consumable",
+      "normalizedName": "ciscanfogbottle",
+      "lootRoll": 18,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Cockerel Claw Tea",
+      "type": "consumable",
+      "normalizedName": "cockerelclawtea",
+      "lootRoll": 39,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Control Potion",
+      "type": "consumable",
+      "normalizedName": "controlpotion",
+      "lootRoll": 3,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Cupbearer's Bezoar",
+      "type": "consumable",
+      "normalizedName": "cupbearersbezoar",
+      "lootRoll": 4,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Deathseer's Powder",
+      "type": "consumable",
+      "normalizedName": "deathseerspowder",
+      "lootRoll": 11,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Death Tea",
+      "type": "consumable",
+      "normalizedName": "deathtea",
+      "lootRoll": 58,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Demiurge's Draught",
+      "type": "consumable",
+      "normalizedName": "demiurgesdraught",
+      "lootRoll": 38,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Displacement Token",
+      "type": "consumable",
+      "normalizedName": "displacementtoken",
+      "lootRoll": 23,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Dragonbloom Tea",
+      "type": "consumable",
+      "normalizedName": "dragonbloomtea",
+      "lootRoll": 48,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Drakemantle",
+      "type": "consumable",
+      "normalizedName": "drakemantle",
+      "lootRoll": 56,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Dripfang Poison",
+      "type": "consumable",
+      "normalizedName": "dripfangpoison",
+      "lootRoll": 42,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Emberite Shard",
+      "type": "consumable",
+      "normalizedName": "emberiteshard",
+      "lootRoll": 35,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Enlighten Potion",
+      "type": "consumable",
+      "normalizedName": "enlightenpotion",
+      "lootRoll": 6,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Feast of Xuria",
+      "type": "consumable",
+      "normalizedName": "feastofxuria",
+      "lootRoll": 51,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Featherbone",
+      "type": "consumable",
+      "normalizedName": "featherbone",
+      "lootRoll": 39,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Featherstep Potion",
+      "type": "consumable",
+      "normalizedName": "feathersteppotion",
+      "lootRoll": 60,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Formoid Serum",
+      "type": "consumable",
+      "normalizedName": "formoidserum",
+      "lootRoll": 48,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Fulgurite Shard",
+      "type": "consumable",
+      "normalizedName": "fulguriteshard",
+      "lootRoll": 37,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gambler's Fallacy",
+      "type": "consumable",
+      "normalizedName": "gamblersfallacy",
+      "lootRoll": 57,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gill Salve",
+      "type": "consumable",
+      "normalizedName": "gillsalve",
+      "lootRoll": 22,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Glowmoss Mushroom",
+      "type": "consumable",
+      "normalizedName": "glowmossmushroom",
+      "lootRoll": 14,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Godling's Pomelo",
+      "type": "consumable",
+      "normalizedName": "godlingspomelo",
+      "lootRoll": 50,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gossip Flower",
+      "type": "consumable",
+      "normalizedName": "gossipflower",
+      "lootRoll": 22,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gravity Bomb",
+      "type": "consumable",
+      "normalizedName": "gravitybomb",
+      "lootRoll": 21,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Green Ooze Oil",
+      "type": "consumable",
+      "normalizedName": "greenoozeoil",
+      "lootRoll": 29,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Grindletooth Venom",
+      "type": "consumable",
+      "normalizedName": "grindletoothvenom",
+      "lootRoll": 9,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Growing Potion",
+      "type": "consumable",
+      "normalizedName": "growingpotion",
+      "lootRoll": 54,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Health Potion",
+      "type": "consumable",
+      "normalizedName": "healthpotion",
+      "lootRoll": 19,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Homet's Secret Potion",
+      "type": "consumable",
+      "normalizedName": "hometssecretpotion",
+      "lootRoll": 32,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Hopehold Flare",
+      "type": "consumable",
+      "normalizedName": "hopeholdflare",
+      "lootRoll": 37,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Improved Arcane Shard",
+      "type": "consumable",
+      "normalizedName": "improvedarcaneshard",
+      "lootRoll": 24,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Improved Grindletooth Venom",
+      "type": "consumable",
+      "normalizedName": "improvedgrindletoothvenom",
+      "lootRoll": 14,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Instant Camp",
+      "type": "consumable",
+      "normalizedName": "instantcamp",
+      "lootRoll": 16,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Invisibility Potion",
+      "type": "consumable",
+      "normalizedName": "invisibilitypotion",
+      "lootRoll": 47,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Iridian Dust",
+      "type": "consumable",
+      "normalizedName": "iridiandust",
+      "lootRoll": 2,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Jar of Lost Voices",
+      "type": "consumable",
+      "normalizedName": "jaroflostvoices",
+      "lootRoll": 47,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Jumping Root",
+      "type": "consumable",
+      "normalizedName": "jumpingroot",
+      "lootRoll": 17,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Knowledge Stone",
+      "type": "consumable",
+      "normalizedName": "knowledgestone",
+      "lootRoll": 55,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Lifeblood Talisman (Consumable)",
+      "type": "consumable",
+      "normalizedName": "lifebloodtalismanconsumable",
+      "rarity": "common",
+      "rarityBasis": "starting-item",
+      "creationRestricted": "Criado pela carta de domínio Sangue Vital; não é um consumível inicial."
+    },
+    {
+      "sourceId": "Lionheart Tonic",
+      "type": "consumable",
+      "normalizedName": "lionhearttonic",
+      "lootRoll": 58,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Lyrebird Lozenge",
+      "type": "consumable",
+      "normalizedName": "lyrebirdlozenge",
+      "lootRoll": 6,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Magic-User's Malison",
+      "type": "consumable",
+      "normalizedName": "magicusersmalison",
+      "lootRoll": 52,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Major Arcane Shard",
+      "type": "consumable",
+      "normalizedName": "majorarcaneshard",
+      "lootRoll": 38,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Major Attune Potion",
+      "type": "consumable",
+      "normalizedName": "majorattunepotion",
+      "lootRoll": 28,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Major Bolster Potion",
+      "type": "consumable",
+      "normalizedName": "majorbolsterpotion",
+      "lootRoll": 26,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Major Charm Potion",
+      "type": "consumable",
+      "normalizedName": "majorcharmpotion",
+      "lootRoll": 29,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Major Control Potion",
+      "type": "consumable",
+      "normalizedName": "majorcontrolpotion",
+      "lootRoll": 27,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Major Enlighten Potion",
+      "type": "consumable",
+      "normalizedName": "majorenlightenpotion",
+      "lootRoll": 30,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Major Health Potion",
+      "type": "consumable",
+      "normalizedName": "majorhealthpotion",
+      "lootRoll": 43,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Major Stamina Potion",
+      "type": "consumable",
+      "normalizedName": "majorstaminapotion",
+      "lootRoll": 44,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Major Stride Potion",
+      "type": "consumable",
+      "normalizedName": "majorstridepotion",
+      "lootRoll": 25,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Mask of the Echoed Self",
+      "type": "consumable",
+      "normalizedName": "maskoftheechoedself",
+      "lootRoll": 54,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Mesmer's Tonic",
+      "type": "consumable",
+      "normalizedName": "mesmerstonic",
+      "lootRoll": 46,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Midas Flask",
+      "type": "consumable",
+      "normalizedName": "midasflask",
+      "lootRoll": 32,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Minor Health Potion",
+      "type": "consumable",
+      "normalizedName": "minorhealthpotion",
+      "lootRoll": 7,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Minor Stamina Potion",
+      "type": "consumable",
+      "normalizedName": "minorstaminapotion",
+      "lootRoll": 8,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Mirror of Marigold",
+      "type": "consumable",
+      "normalizedName": "mirrorofmarigold",
+      "lootRoll": 59,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Mnemonic Potion",
+      "type": "consumable",
+      "normalizedName": "mnemonicpotion",
+      "lootRoll": 27,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Moonlight Orb",
+      "type": "consumable",
+      "normalizedName": "moonlightorb",
+      "lootRoll": 31,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Morphing Clay",
+      "type": "consumable",
+      "normalizedName": "morphingclay",
+      "lootRoll": 15,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Mossmantle Potion",
+      "type": "consumable",
+      "normalizedName": "mossmantlepotion",
+      "lootRoll": 5,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Mythic Dust",
+      "type": "consumable",
+      "normalizedName": "mythicdust",
+      "lootRoll": 35,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Necroprancer's Bell",
+      "type": "consumable",
+      "normalizedName": "necroprancersbell",
+      "lootRoll": 55,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Night Hag's Dust",
+      "type": "consumable",
+      "normalizedName": "nighthagsdust",
+      "lootRoll": 24,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Nightmare Mead",
+      "type": "consumable",
+      "normalizedName": "nightmaremead",
+      "lootRoll": 42,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Ogre Musk",
+      "type": "consumable",
+      "normalizedName": "ogremusk",
+      "lootRoll": 45,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Packet of Space Dust",
+      "type": "consumable",
+      "normalizedName": "packetofspacedust",
+      "lootRoll": 9,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Phial of Deep Ink",
+      "type": "consumable",
+      "normalizedName": "phialofdeepink",
+      "lootRoll": 45,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Pipeweed",
+      "type": "consumable",
+      "normalizedName": "pipeweed",
+      "lootRoll": 10,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Potion of Stability",
+      "type": "consumable",
+      "normalizedName": "potionofstability",
+      "lootRoll": 13,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Potion of Vigilance",
+      "type": "consumable",
+      "normalizedName": "potionofvigilance",
+      "lootRoll": 40,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Psychopomp's Shroud",
+      "type": "consumable",
+      "normalizedName": "psychopompsshroud",
+      "lootRoll": 44,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Quintessential Severant",
+      "type": "consumable",
+      "normalizedName": "quintessentialseverant",
+      "lootRoll": 53,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Red Ooze Oil",
+      "type": "consumable",
+      "normalizedName": "redoozeoil",
+      "lootRoll": 15,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Redthorn Saliva",
+      "type": "consumable",
+      "normalizedName": "redthornsaliva",
+      "lootRoll": 33,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Replication Parchment",
+      "type": "consumable",
+      "normalizedName": "replicationparchment",
+      "lootRoll": 23,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Salamander Salve",
+      "type": "consumable",
+      "normalizedName": "salamandersalve",
+      "lootRoll": 28,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Self-Sewing Thread",
+      "type": "consumable",
+      "normalizedName": "selfsewingthread",
+      "lootRoll": 25,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Shrinking Potion",
+      "type": "consumable",
+      "normalizedName": "shrinkingpotion",
+      "lootRoll": 53,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Slayer's Salt",
+      "type": "consumable",
+      "normalizedName": "slayerssalt",
+      "lootRoll": 12,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Sleeping Sap",
+      "type": "consumable",
+      "normalizedName": "sleepingsap",
+      "lootRoll": 50,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Snakeskin Spirit",
+      "type": "consumable",
+      "normalizedName": "snakeskinspirit",
+      "lootRoll": 51,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Snap Powder",
+      "type": "consumable",
+      "normalizedName": "snappowder",
+      "lootRoll": 18,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Snapthorn Seed",
+      "type": "consumable",
+      "normalizedName": "snapthornseed",
+      "lootRoll": 19,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Sprite Bottle",
+      "type": "consumable",
+      "normalizedName": "spritebottle",
+      "lootRoll": 20,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Staff of Reversal",
+      "type": "consumable",
+      "normalizedName": "staffofreversal",
+      "lootRoll": 33,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Stake of Abjuration",
+      "type": "consumable",
+      "normalizedName": "stakeofabjuration",
+      "lootRoll": 43,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Stamina Potion",
+      "type": "consumable",
+      "normalizedName": "staminapotion",
+      "lootRoll": 20,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Stardrop",
+      "type": "consumable",
+      "normalizedName": "stardrop",
+      "lootRoll": 60,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Steelskin Salve",
+      "type": "consumable",
+      "normalizedName": "steelskinsalve",
+      "lootRoll": 49,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Stonemason's Fortune",
+      "type": "consumable",
+      "normalizedName": "stonemasonsfortune",
+      "lootRoll": 26,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Stride Potion",
+      "type": "consumable",
+      "normalizedName": "stridepotion",
+      "lootRoll": 1,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Sunlight Orb",
+      "type": "consumable",
+      "normalizedName": "sunlightorb",
+      "lootRoll": 30,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Sun Tree Sap",
+      "type": "consumable",
+      "normalizedName": "suntreesap",
+      "lootRoll": 41,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Sweet Moss",
+      "type": "consumable",
+      "normalizedName": "sweetmoss",
+      "lootRoll": 56,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Tears of the Undying Hero",
+      "type": "consumable",
+      "normalizedName": "tearsoftheundyinghero",
+      "lootRoll": 59,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Unstable Arcane Shard",
+      "type": "consumable",
+      "normalizedName": "unstablearcaneshard",
+      "lootRoll": 12,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Varik Leaves",
+      "type": "consumable",
+      "normalizedName": "varikleaves",
+      "lootRoll": 10,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Verglasian Seed",
+      "type": "consumable",
+      "normalizedName": "verglasianseed",
+      "lootRoll": 3,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Vial of Darksmoke",
+      "type": "consumable",
+      "normalizedName": "vialofdarksmoke",
+      "lootRoll": 16,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Vial of Featherfall",
+      "type": "consumable",
+      "normalizedName": "vialoffeatherfall",
+      "lootRoll": 7,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Vial of Moondrip",
+      "type": "consumable",
+      "normalizedName": "vialofmoondrip",
+      "lootRoll": 11,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Warding Candle",
+      "type": "consumable",
+      "normalizedName": "wardingcandle",
+      "lootRoll": 1,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Wingsprout",
+      "type": "consumable",
+      "normalizedName": "wingsprout",
+      "lootRoll": 46,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Yakamel Milk",
+      "type": "consumable",
+      "normalizedName": "yakamelmilk",
+      "lootRoll": 13,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "50ft of Rope",
+      "type": "loot",
+      "normalizedName": "50ftofrope",
+      "rarity": "common",
+      "rarityBasis": "starting-item"
+    },
+    {
+      "sourceId": "a harmless spirit trapped inside a glass bottle",
+      "type": "loot",
+      "normalizedName": "aharmlessspirittrappedinsideaglassbottle",
+      "rarity": "common",
+      "rarityBasis": "starting-item"
+    },
+    {
+      "sourceId": "Airblade Charm",
+      "type": "loot",
+      "normalizedName": "airbladecharm",
+      "lootRoll": 35,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Alistair's Torch",
+      "type": "loot",
+      "normalizedName": "alistairstorch",
+      "lootRoll": 4,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "a pair of mysterious coins",
+      "type": "loot",
+      "normalizedName": "apairofmysteriouscoins",
+      "rarity": "common",
+      "rarityBasis": "starting-item"
+    },
+    {
+      "sourceId": "Arcane Cloak",
+      "type": "loot",
+      "normalizedName": "arcanecloak",
+      "lootRoll": 7,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Arcane Prism",
+      "type": "loot",
+      "normalizedName": "arcaneprism",
+      "lootRoll": 17,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Attune Relic",
+      "type": "loot",
+      "normalizedName": "attunerelic",
+      "lootRoll": 44,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Augur's Relic",
+      "type": "loot",
+      "normalizedName": "augursrelic",
+      "lootRoll": 60,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Bag of Ficklesand",
+      "type": "loot",
+      "normalizedName": "bagofficklesand",
+      "lootRoll": 31,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Ball Bearings",
+      "type": "loot",
+      "normalizedName": "ballbearings",
+      "lootRoll": 3,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Belt of Unity",
+      "type": "loot",
+      "normalizedName": "beltofunity",
+      "lootRoll": 60,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Blackwing Quill",
+      "type": "loot",
+      "normalizedName": "blackwingquill",
+      "lootRoll": 9,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Bloodstone",
+      "type": "loot",
+      "normalizedName": "bloodstone",
+      "lootRoll": 25,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Bolster Relic",
+      "type": "loot",
+      "normalizedName": "bolsterrelic",
+      "lootRoll": 42,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Boots of Supple Mystique",
+      "type": "loot",
+      "normalizedName": "bootsofsupplemystique",
+      "lootRoll": 18,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Box of Dragon Dust",
+      "type": "loot",
+      "normalizedName": "boxofdragondust",
+      "lootRoll": 4,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Box of Many Goods",
+      "type": "loot",
+      "normalizedName": "boxofmanygoods",
+      "lootRoll": 34,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Calming Pendant",
+      "type": "loot",
+      "normalizedName": "calmingpendant",
+      "lootRoll": 29,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Caltrops",
+      "type": "loot",
+      "normalizedName": "caltrops",
+      "lootRoll": 1,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Charging Quiver",
+      "type": "loot",
+      "normalizedName": "chargingquiver",
+      "lootRoll": 3,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Charm Relic",
+      "type": "loot",
+      "normalizedName": "charmrelic",
+      "lootRoll": 45,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Cheater's Coin",
+      "type": "loot",
+      "normalizedName": "cheaterscoin",
+      "lootRoll": 28,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Clay Companion",
+      "type": "loot",
+      "normalizedName": "claycompanion",
+      "lootRoll": 50,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Collapsible Pole",
+      "type": "loot",
+      "normalizedName": "collapsiblepole",
+      "lootRoll": 8,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Collar of Ascendancy",
+      "type": "loot",
+      "normalizedName": "collarofascendancy",
+      "lootRoll": 49,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Communion Relic",
+      "type": "loot",
+      "normalizedName": "communionrelic",
+      "lootRoll": 59,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Companion Case",
+      "type": "loot",
+      "normalizedName": "companioncase",
+      "lootRoll": 13,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Control Relic",
+      "type": "loot",
+      "normalizedName": "controlrelic",
+      "lootRoll": 43,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Corrector Sprite",
+      "type": "loot",
+      "normalizedName": "correctorsprite",
+      "lootRoll": 21,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Crucible Frames",
+      "type": "loot",
+      "normalizedName": "crucibleframes",
+      "lootRoll": 42,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Dagginae's Obsidian Slate",
+      "type": "loot",
+      "normalizedName": "dagginaesobsidianslate",
+      "lootRoll": 32,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Dual Flask",
+      "type": "loot",
+      "normalizedName": "dualflask",
+      "lootRoll": 30,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Eclipse Coin",
+      "type": "loot",
+      "normalizedName": "eclipsecoin",
+      "lootRoll": 34,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Elusive Amulet",
+      "type": "loot",
+      "normalizedName": "elusiveamulet",
+      "lootRoll": 38,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Elven Spyglass",
+      "type": "loot",
+      "normalizedName": "elvenspyglass",
+      "lootRoll": 6,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Empty Chest",
+      "type": "loot",
+      "normalizedName": "emptychest",
+      "lootRoll": 12,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Enchanter's Loupe",
+      "type": "loot",
+      "normalizedName": "enchantersloupe",
+      "lootRoll": 26,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Enlighten Relic",
+      "type": "loot",
+      "normalizedName": "enlightenrelic",
+      "lootRoll": 46,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Escher's Mirrorball",
+      "type": "loot",
+      "normalizedName": "eschersmirrorball",
+      "lootRoll": 27,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Fire Jar",
+      "type": "loot",
+      "normalizedName": "firejar",
+      "lootRoll": 9,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Flickerfly Pendant",
+      "type": "loot",
+      "normalizedName": "flickerflypendant",
+      "lootRoll": 48,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Force Disc",
+      "type": "loot",
+      "normalizedName": "forcedisc",
+      "lootRoll": 45,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Furball Bag",
+      "type": "loot",
+      "normalizedName": "furballbag",
+      "lootRoll": 24,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gadiman's Backpack",
+      "type": "loot",
+      "normalizedName": "gadimansbackpack",
+      "lootRoll": 33,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gecko Gloves",
+      "type": "loot",
+      "normalizedName": "geckogloves",
+      "lootRoll": 22,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gem of Alacrity",
+      "type": "loot",
+      "normalizedName": "gemofalacrity",
+      "lootRoll": 53,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gem of Audacity",
+      "type": "loot",
+      "normalizedName": "gemofaudacity",
+      "lootRoll": 57,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gem of Insight",
+      "type": "loot",
+      "normalizedName": "gemofinsight",
+      "lootRoll": 56,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gem of Might",
+      "type": "loot",
+      "normalizedName": "gemofmight",
+      "lootRoll": 54,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gem of Precision",
+      "type": "loot",
+      "normalizedName": "gemofprecision",
+      "lootRoll": 55,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gem of Sagacity",
+      "type": "loot",
+      "normalizedName": "gemofsagacity",
+      "lootRoll": 58,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Ghoulskin Gloves",
+      "type": "loot",
+      "normalizedName": "ghoulskingloves",
+      "lootRoll": 36,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Glamour Stone",
+      "type": "loot",
+      "normalizedName": "glamourstone",
+      "lootRoll": 11,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Glider",
+      "type": "loot",
+      "normalizedName": "glider",
+      "lootRoll": 27,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gloves of Alacrity",
+      "type": "loot",
+      "normalizedName": "glovesofalacrity",
+      "lootRoll": 37,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gourmet Granules",
+      "type": "loot",
+      "normalizedName": "gourmetgranules",
+      "lootRoll": 7,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Grapnel",
+      "type": "loot",
+      "normalizedName": "grapnel",
+      "lootRoll": 2,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Gravewarden's Bell",
+      "type": "loot",
+      "normalizedName": "gravewardensbell",
+      "lootRoll": 29,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Greatstone",
+      "type": "loot",
+      "normalizedName": "greatstone",
+      "lootRoll": 26,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Hero's Helm",
+      "type": "loot",
+      "normalizedName": "heroshelm",
+      "lootRoll": 51,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Hollowbark Horn",
+      "type": "loot",
+      "normalizedName": "hollowbarkhorn",
+      "lootRoll": 13,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Homing Compasses",
+      "type": "loot",
+      "normalizedName": "homingcompasses",
+      "lootRoll": 20,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Honing Relic",
+      "type": "loot",
+      "normalizedName": "honingrelic",
+      "lootRoll": 47,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Hopekeeper Locket",
+      "type": "loot",
+      "normalizedName": "hopekeeperlocket",
+      "lootRoll": 39,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Infinite Bag",
+      "type": "loot",
+      "normalizedName": "infinitebag",
+      "lootRoll": 40,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Insomniac's Periapt",
+      "type": "loot",
+      "normalizedName": "insomniacsperiapt",
+      "lootRoll": 38,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Iron Dagger Pendant",
+      "type": "loot",
+      "normalizedName": "irondaggerpendant",
+      "lootRoll": 48,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Iron Veil",
+      "type": "loot",
+      "normalizedName": "ironveil",
+      "lootRoll": 23,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Kingfisher's Net",
+      "type": "loot",
+      "normalizedName": "kingfishersnet",
+      "lootRoll": 21,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Knockback Bracelets",
+      "type": "loot",
+      "normalizedName": "knockbackbracelets",
+      "lootRoll": 44,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Lakestrider Boots",
+      "type": "loot",
+      "normalizedName": "lakestriderboots",
+      "lootRoll": 49,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Loaded Dice",
+      "type": "loot",
+      "normalizedName": "loadeddice",
+      "lootRoll": 12,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Lorekeeper",
+      "type": "loot",
+      "normalizedName": "lorekeeper",
+      "lootRoll": 23,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Manacles",
+      "type": "loot",
+      "normalizedName": "manacles",
+      "lootRoll": 6,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Mandragorian Torch",
+      "type": "loot",
+      "normalizedName": "mandragoriantorch",
+      "lootRoll": 17,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Map of Revelation",
+      "type": "loot",
+      "normalizedName": "mapofrevelation",
+      "lootRoll": 31,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Minor Health Potion Recipe",
+      "type": "loot",
+      "normalizedName": "minorhealthpotionrecipe",
+      "lootRoll": 19,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Minor Stamina Potion Recipe",
+      "type": "loot",
+      "normalizedName": "minorstaminapotionrecipe",
+      "lootRoll": 18,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Molepaw Mittens",
+      "type": "loot",
+      "normalizedName": "molepawmittens",
+      "lootRoll": 46,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Mythic Dust Recipe",
+      "type": "loot",
+      "normalizedName": "mythicdustrecipe",
+      "lootRoll": 51,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Namer's Oracle",
+      "type": "loot",
+      "normalizedName": "namersoracle",
+      "lootRoll": 41,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Nighthawker's Ring",
+      "type": "loot",
+      "normalizedName": "nighthawkersring",
+      "lootRoll": 5,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Paragon's Chain",
+      "type": "loot",
+      "normalizedName": "paragonschain",
+      "lootRoll": 37,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Phobophage's Circlet",
+      "type": "loot",
+      "normalizedName": "phobophagescirclet",
+      "lootRoll": 55,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Phoenix Feather",
+      "type": "loot",
+      "normalizedName": "phoenixfeather",
+      "lootRoll": 33,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Piercing Arrows",
+      "type": "loot",
+      "normalizedName": "piercingarrows",
+      "lootRoll": 14,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Piper Whistle",
+      "type": "loot",
+      "normalizedName": "piperwhistle",
+      "lootRoll": 2,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Portal Frames",
+      "type": "loot",
+      "normalizedName": "portalframes",
+      "lootRoll": 58,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Portal Seed",
+      "type": "loot",
+      "normalizedName": "portalseed",
+      "lootRoll": 36,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Premium Bedroll",
+      "type": "loot",
+      "normalizedName": "premiumbedroll",
+      "lootRoll": 1,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Quillshawl",
+      "type": "loot",
+      "normalizedName": "quillshawl",
+      "lootRoll": 56,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Reliquary of the Sightless Saint",
+      "type": "loot",
+      "normalizedName": "reliquaryofthesightlesssaint",
+      "lootRoll": 30,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Returning Ring",
+      "type": "loot",
+      "normalizedName": "returningring",
+      "lootRoll": 20,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Ring of Resistance",
+      "type": "loot",
+      "normalizedName": "ringofresistance",
+      "lootRoll": 32,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Ring of Silence",
+      "type": "loot",
+      "normalizedName": "ringofsilence",
+      "lootRoll": 28,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Ring of Unbreakable Resolve",
+      "type": "loot",
+      "normalizedName": "ringofunbreakableresolve",
+      "lootRoll": 59,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Rings of Alliance",
+      "type": "loot",
+      "normalizedName": "ringsofalliance",
+      "lootRoll": 54,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Rings of Camaraderie",
+      "type": "loot",
+      "normalizedName": "ringsofcamaraderie",
+      "lootRoll": 53,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Rings of Friendship",
+      "type": "loot",
+      "normalizedName": "ringsoffriendship",
+      "lootRoll": 52,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Self-Tying Rope",
+      "type": "loot",
+      "normalizedName": "selftyingrope",
+      "lootRoll": 14,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Shard of Memory",
+      "type": "loot",
+      "normalizedName": "shardofmemory",
+      "lootRoll": 52,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Silee's Folding Knife",
+      "type": "loot",
+      "normalizedName": "sileesfoldingknife",
+      "lootRoll": 10,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Skeleton Key",
+      "type": "loot",
+      "normalizedName": "skeletonkey",
+      "lootRoll": 16,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Sorcerer's Hat",
+      "type": "loot",
+      "normalizedName": "sorcerershat",
+      "lootRoll": 35,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Soul-Twin Circlets",
+      "type": "loot",
+      "normalizedName": "soultwincirclets",
+      "lootRoll": 40,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Speaking Orbs",
+      "type": "loot",
+      "normalizedName": "speakingorbs",
+      "lootRoll": 5,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Steel Needle",
+      "type": "loot",
+      "normalizedName": "steelneedle",
+      "rarity": "common",
+      "rarityBasis": "starting-item"
+    },
+    {
+      "sourceId": "Stride Relic",
+      "type": "loot",
+      "normalizedName": "striderelic",
+      "lootRoll": 41,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Suspended Rod",
+      "type": "loot",
+      "normalizedName": "suspendedrod",
+      "lootRoll": 10,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Temporal Sanctuary",
+      "type": "loot",
+      "normalizedName": "temporalsanctuary",
+      "lootRoll": 50,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Thief's Compass",
+      "type": "loot",
+      "normalizedName": "thiefscompass",
+      "lootRoll": 15,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Timekeeper's Pendant",
+      "type": "loot",
+      "normalizedName": "timekeeperspendant",
+      "lootRoll": 47,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Titan's Girdle",
+      "type": "loot",
+      "normalizedName": "titansgirdle",
+      "lootRoll": 22,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Traveler's Bell",
+      "type": "loot",
+      "normalizedName": "travelersbell",
+      "lootRoll": 16,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Two-Faced Aegis Brooch",
+      "type": "loot",
+      "normalizedName": "twofacedaegisbrooch",
+      "lootRoll": 43,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Valorstone",
+      "type": "loot",
+      "normalizedName": "valorstone",
+      "lootRoll": 15,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Vial Holding a Foe's Blood",
+      "type": "loot",
+      "normalizedName": "vialholdingafoesblood",
+      "rarity": "common",
+      "rarityBasis": "starting-item"
+    },
+    {
+      "sourceId": "Vial of Darksmoke Recipe",
+      "type": "loot",
+      "normalizedName": "vialofdarksmokerecipe",
+      "lootRoll": 24,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Warp Pendant",
+      "type": "loot",
+      "normalizedName": "warppendant",
+      "lootRoll": 57,
+      "rarity": "very-rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Whisperstep Anklet",
+      "type": "loot",
+      "normalizedName": "whisperstepanklet",
+      "lootRoll": 25,
+      "rarity": "uncommon",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Wildrider's Saddle",
+      "type": "loot",
+      "normalizedName": "wildriderssaddle",
+      "lootRoll": 39,
+      "rarity": "rare",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Windup Toy",
+      "type": "loot",
+      "normalizedName": "winduptoy",
+      "lootRoll": 11,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Woven Net",
+      "type": "loot",
+      "normalizedName": "wovennet",
+      "lootRoll": 8,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Zephyr's Jar",
+      "type": "loot",
+      "normalizedName": "zephyrsjar",
+      "lootRoll": 19,
+      "rarity": "common",
+      "rarityBasis": "loot-table-band"
+    },
+    {
+      "sourceId": "Aantari Bow",
+      "type": "weapon",
+      "normalizedName": "aantaribow",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Distante · d6+11 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Adder's Fang",
+      "type": "weapon",
+      "normalizedName": "addersfang",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+9 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Arcane-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "advancedarcaneframewheelchair",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+6 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Arcane Gauntlets",
+      "type": "weapon",
+      "normalizedName": "advancedarcanegauntlets",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Arcane Rifle",
+      "type": "weapon",
+      "normalizedName": "advancedarcanerifle",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d10+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Battleaxe",
+      "type": "weapon",
+      "normalizedName": "advancedbattleaxe",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Brass Knuckles",
+      "type": "weapon",
+      "normalizedName": "advancedbrassknuckles",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+7 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Brightsword",
+      "type": "weapon",
+      "normalizedName": "advancedbrightsword",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Broadsword",
+      "type": "weapon",
+      "normalizedName": "advancedbroadsword",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+6 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Casting Dagger",
+      "type": "weapon",
+      "normalizedName": "advancedcastingdagger",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d6+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Crossbow",
+      "type": "weapon",
+      "normalizedName": "advancedcrossbow",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+7 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Cutlass",
+      "type": "weapon",
+      "normalizedName": "advancedcutlass",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+7 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Dagger",
+      "type": "weapon",
+      "normalizedName": "advanceddagger",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+7 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Dualstaff",
+      "type": "weapon",
+      "normalizedName": "advanceddualstaff",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Distante · d6+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Enchanted Chakram",
+      "type": "weapon",
+      "normalizedName": "advancedenchantedchakram",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d6+7 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Fighting Cloak",
+      "type": "weapon",
+      "normalizedName": "advancedfightingcloak",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d4+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Focus Runes",
+      "type": "weapon",
+      "normalizedName": "advancedfocusrunes",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Muito Próximo · d6+4 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Glowing Rings",
+      "type": "weapon",
+      "normalizedName": "advancedglowingrings",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Próximo · d10+8 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Grappler",
+      "type": "weapon",
+      "normalizedName": "advancedgrappler",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d6+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Greatstaff",
+      "type": "weapon",
+      "normalizedName": "advancedgreatstaff",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Muito Distante · d6+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Greatsword",
+      "type": "weapon",
+      "normalizedName": "advancedgreatsword",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Halberd",
+      "type": "weapon",
+      "normalizedName": "advancedhalberd",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Muito Próximo · d10+8 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Hallowed Axe",
+      "type": "weapon",
+      "normalizedName": "advancedhallowedaxe",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+7 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Hand Crossbow",
+      "type": "weapon",
+      "normalizedName": "advancedhandcrossbow",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+5 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Hand Runes",
+      "type": "weapon",
+      "normalizedName": "advancedhandrunes",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Muito Próximo · d10+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Hatchet",
+      "type": "weapon",
+      "normalizedName": "advancedhatchet",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Heavy-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "advancedheavyframewheelchair",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Katana",
+      "type": "weapon",
+      "normalizedName": "advancedkatana",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d10+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Light-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "advancedlightframewheelchair",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+6 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Longbow",
+      "type": "weapon",
+      "normalizedName": "advancedlongbow",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d8+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Longsword",
+      "type": "weapon",
+      "normalizedName": "advancedlongsword",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d10+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Mace",
+      "type": "weapon",
+      "normalizedName": "advancedmace",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+7 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Offhand Brass Knuckles",
+      "type": "weapon",
+      "normalizedName": "advancedoffhandbrassknuckles",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Quarterstaff",
+      "type": "weapon",
+      "normalizedName": "advancedquarterstaff",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Corpo a Corpo · d10+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Rapier",
+      "type": "weapon",
+      "normalizedName": "advancedrapier",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+6 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Returning Blade",
+      "type": "weapon",
+      "normalizedName": "advancedreturningblade",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d8+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Rope Dart",
+      "type": "weapon",
+      "normalizedName": "advancedropedart",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Próximo · d6+7 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Round Shield",
+      "type": "weapon",
+      "normalizedName": "advancedroundshield",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d4+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Runelock Pistol",
+      "type": "weapon",
+      "normalizedName": "advancedrunelockpistol",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+9 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Rune Shield",
+      "type": "weapon",
+      "normalizedName": "advancedruneshield",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d4+4 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Scepter",
+      "type": "weapon",
+      "normalizedName": "advancedscepter",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Presença · Distante · d6+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Scimitar",
+      "type": "weapon",
+      "normalizedName": "advancedscimitar",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+7 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Shadowblade",
+      "type": "weapon",
+      "normalizedName": "advancedshadowblade",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+6 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Shortbow",
+      "type": "weapon",
+      "normalizedName": "advancedshortbow",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Distante · d6+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Shortstaff",
+      "type": "weapon",
+      "normalizedName": "advancedshortstaff",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d8+7 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Shortsword",
+      "type": "weapon",
+      "normalizedName": "advancedshortsword",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Small Dagger",
+      "type": "weapon",
+      "normalizedName": "advancedsmalldagger",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Spear",
+      "type": "weapon",
+      "normalizedName": "advancedspear",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Throwing Knives",
+      "type": "weapon",
+      "normalizedName": "advancedthrowingknives",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Tower Shield",
+      "type": "weapon",
+      "normalizedName": "advancedtowershield",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d6+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Twisted Dagger",
+      "type": "weapon",
+      "normalizedName": "advancedtwisteddagger",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d8+6 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Wand",
+      "type": "weapon",
+      "normalizedName": "advancedwand",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+7 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Advanced Warhammer",
+      "type": "weapon",
+      "normalizedName": "advancedwarhammer",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Advanced Whip",
+      "type": "weapon",
+      "normalizedName": "advancedwhip",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Muito Próximo · d6+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Advanced Whipsword",
+      "type": "weapon",
+      "normalizedName": "advancedwhipsword",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8+6 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Arcane-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "arcaneframewheelchair",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Arcane Gauntlets",
+      "type": "weapon",
+      "normalizedName": "arcanegauntlets",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+3 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Arcane Rifle",
+      "type": "weapon",
+      "normalizedName": "arcanerifle",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d10+3 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Arc Wand",
+      "type": "weapon",
+      "normalizedName": "arcwand",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Próximo · d8+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Arquebus",
+      "type": "weapon",
+      "normalizedName": "arquebus",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Distante · d8+10 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Axe of Fortunis",
+      "type": "weapon",
+      "normalizedName": "axeoffortunis",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+8 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Battleaxe",
+      "type": "weapon",
+      "normalizedName": "battleaxe",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Bec de Corbin",
+      "type": "weapon",
+      "normalizedName": "becdecorbin",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Próximo · d10+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Blackblood Tendril",
+      "type": "weapon",
+      "normalizedName": "blackbloodtendril",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d6+8 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Black Powder Revolver",
+      "type": "weapon",
+      "normalizedName": "blackpowderrevolver",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+8 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Black Powder Serpentine",
+      "type": "weapon",
+      "normalizedName": "blackpowderserpentine",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Distante · d8+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Bladed Fan",
+      "type": "weapon",
+      "normalizedName": "bladedfan",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Bladed Star",
+      "type": "weapon",
+      "normalizedName": "bladedstar",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Próximo · d8+7 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Bladed Whip",
+      "type": "weapon",
+      "normalizedName": "bladedwhip",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Muito Próximo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Blessed Anlace",
+      "type": "weapon",
+      "normalizedName": "blessedanlace",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Corpo a Corpo · d10+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Blitz Hammer",
+      "type": "weapon",
+      "normalizedName": "blitzhammer",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+7 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Bloodstaff",
+      "type": "weapon",
+      "normalizedName": "bloodstaff",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Distante · d20+7 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Blunderbuss",
+      "type": "weapon",
+      "normalizedName": "blunderbuss",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Próximo · d8+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Brass Knuckles",
+      "type": "weapon",
+      "normalizedName": "brassknuckles",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+1 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Braveshield",
+      "type": "weapon",
+      "normalizedName": "braveshield",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d4+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Bravesword",
+      "type": "weapon",
+      "normalizedName": "bravesword",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+7 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Brightsword",
+      "type": "weapon",
+      "normalizedName": "brightsword",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+3 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Broadsword",
+      "type": "weapon",
+      "normalizedName": "broadsword",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Buckler",
+      "type": "weapon",
+      "normalizedName": "buckler",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d4+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Cane Sword",
+      "type": "weapon",
+      "normalizedName": "canesword",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+4 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Casting Dagger",
+      "type": "weapon",
+      "normalizedName": "castingdagger",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Casting Sword",
+      "type": "weapon",
+      "normalizedName": "castingsword",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+4 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Chained Scythe",
+      "type": "weapon",
+      "normalizedName": "chainedscythe",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Muito Próximo · d10+5 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Clockwork Crossbow",
+      "type": "weapon",
+      "normalizedName": "clockworkcrossbow",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+11 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Collapsible Baton",
+      "type": "weapon",
+      "normalizedName": "collapsiblebaton",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Crossbow",
+      "type": "weapon",
+      "normalizedName": "crossbow",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+1 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Crystal Spear",
+      "type": "weapon",
+      "normalizedName": "crystalspear",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Próximo · d10+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Curved Dagger",
+      "type": "weapon",
+      "normalizedName": "curveddagger",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+9 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Cutlass",
+      "type": "weapon",
+      "normalizedName": "cutlass",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+1 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Cyrurgien's Scalpel",
+      "type": "weapon",
+      "normalizedName": "cyrurgiensscalpel",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Dagger",
+      "type": "weapon",
+      "normalizedName": "dagger",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+1 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Demon's Edge",
+      "type": "weapon",
+      "normalizedName": "demonsedge",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+10 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Devouring Dagger",
+      "type": "weapon",
+      "normalizedName": "devouringdagger",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+4 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Displacement Razor",
+      "type": "weapon",
+      "normalizedName": "displacementrazor",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+3 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Double Flail",
+      "type": "weapon",
+      "normalizedName": "doubleflail",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Próximo · d10+8 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Dual-Ended Sword",
+      "type": "weapon",
+      "normalizedName": "dualendedsword",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d10+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Dualstaff",
+      "type": "weapon",
+      "normalizedName": "dualstaff",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Distante · d6+3 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Echo Blade",
+      "type": "weapon",
+      "normalizedName": "echoblade",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d4+6 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Ego Blade",
+      "type": "weapon",
+      "normalizedName": "egoblade",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d12+4 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Elder Bow",
+      "type": "weapon",
+      "normalizedName": "elderbow",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Distante · d6+4 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Eldritch Vambrace",
+      "type": "weapon",
+      "normalizedName": "eldritchvambrace",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Corpo a Corpo · d8 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Enchanted Chakram",
+      "type": "weapon",
+      "normalizedName": "enchantedchakram",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d6+1 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Enchanted Lute",
+      "type": "weapon",
+      "normalizedName": "enchantedlute",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Presença · Próximo · d8+3 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Enchanted Shillelagh",
+      "type": "weapon",
+      "normalizedName": "enchantedshillelagh",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+3 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Ethereal Zweihänder",
+      "type": "weapon",
+      "normalizedName": "etherealzweihander",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Muito Próximo · d10+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Extended Polearm",
+      "type": "weapon",
+      "normalizedName": "extendedpolearm",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8+10 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Fighting Cloak",
+      "type": "weapon",
+      "normalizedName": "fightingcloak",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Finehair Bow",
+      "type": "weapon",
+      "normalizedName": "finehairbow",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d6+5 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Firestaff",
+      "type": "weapon",
+      "normalizedName": "firestaff",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Distante · d6+7 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Flickerfly Blade",
+      "type": "weapon",
+      "normalizedName": "flickerflyblade",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+5 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Floating Bladeshards",
+      "type": "weapon",
+      "normalizedName": "floatingbladeshards",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d8+9 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Focus Runes",
+      "type": "weapon",
+      "normalizedName": "focusrunes",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Muito Próximo · d6 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Fury Gem",
+      "type": "weapon",
+      "normalizedName": "furygem",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d8+3 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Fusion Gloves",
+      "type": "weapon",
+      "normalizedName": "fusiongloves",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Muito Distante · d6+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Ghostblade",
+      "type": "weapon",
+      "normalizedName": "ghostblade",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d10+7 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Gilded Bow",
+      "type": "weapon",
+      "normalizedName": "gildedbow",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Distante · d6+7 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Gilded Falchion",
+      "type": "weapon",
+      "normalizedName": "gildedfalchion",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+4 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Glowing Rings",
+      "type": "weapon",
+      "normalizedName": "glowingrings",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Próximo · d10+2 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Grappler",
+      "type": "weapon",
+      "normalizedName": "grappler",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Gravity Arbalest",
+      "type": "weapon",
+      "normalizedName": "gravityarbalest",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Distante · d8+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Greatbow",
+      "type": "weapon",
+      "normalizedName": "greatbow",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Distante · d6+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Greatstaff",
+      "type": "weapon",
+      "normalizedName": "greatstaff",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Muito Distante · d6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Greatsword",
+      "type": "weapon",
+      "normalizedName": "greatsword",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Gunblade",
+      "type": "weapon",
+      "normalizedName": "gunblade",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Distante · d6+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Halberd",
+      "type": "weapon",
+      "normalizedName": "halberd",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Muito Próximo · d10+2 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Hallowed Axe",
+      "type": "weapon",
+      "normalizedName": "hallowedaxe",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+1 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Hammer of Exota",
+      "type": "weapon",
+      "normalizedName": "hammerofexota",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Corpo a Corpo · d8+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Hammer of Wrath",
+      "type": "weapon",
+      "normalizedName": "hammerofwrath",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+7 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Hand Cannon",
+      "type": "weapon",
+      "normalizedName": "handcannon",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Distante · d6+12 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Hand Crossbow",
+      "type": "weapon",
+      "normalizedName": "handcrossbow",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+1 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Hand Runes",
+      "type": "weapon",
+      "normalizedName": "handrunes",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Muito Próximo · d10 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Hand Sling",
+      "type": "weapon",
+      "normalizedName": "handsling",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Distante · d6+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Hatchet",
+      "type": "weapon",
+      "normalizedName": "hatchet",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Heavy-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "heavyframewheelchair",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Ilmari's Rifle",
+      "type": "weapon",
+      "normalizedName": "ilmarisrifle",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Distante · d6+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Impact Gauntlet",
+      "type": "weapon",
+      "normalizedName": "impactgauntlet",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+11 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Arcane-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "improvedarcaneframewheelchair",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Arcane Gauntlets",
+      "type": "weapon",
+      "normalizedName": "improvedarcanegauntlets",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Arcane Rifle",
+      "type": "weapon",
+      "normalizedName": "improvedarcanerifle",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d10+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Battleaxe",
+      "type": "weapon",
+      "normalizedName": "improvedbattleaxe",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Brass Knuckles",
+      "type": "weapon",
+      "normalizedName": "improvedbrassknuckles",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+4 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Brightsword",
+      "type": "weapon",
+      "normalizedName": "improvedbrightsword",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Broadsword",
+      "type": "weapon",
+      "normalizedName": "improvedbroadsword",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Casting Dagger",
+      "type": "weapon",
+      "normalizedName": "improvedcastingdagger",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d6+3 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Crossbow",
+      "type": "weapon",
+      "normalizedName": "improvedcrossbow",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+4 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Cutlass",
+      "type": "weapon",
+      "normalizedName": "improvedcutlass",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+4 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Dagger",
+      "type": "weapon",
+      "normalizedName": "improveddagger",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+4 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Dualstaff",
+      "type": "weapon",
+      "normalizedName": "improveddualstaff",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Distante · d6+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Enchanted Chakram",
+      "type": "weapon",
+      "normalizedName": "improvedenchantedchakram",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d6+4 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Fighting Cloak",
+      "type": "weapon",
+      "normalizedName": "improvedfightingcloak",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d4+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Focus Runes",
+      "type": "weapon",
+      "normalizedName": "improvedfocusrunes",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Muito Próximo · d6+2 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Glowing Rings",
+      "type": "weapon",
+      "normalizedName": "improvedglowingrings",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Próximo · d10+5 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Grappler",
+      "type": "weapon",
+      "normalizedName": "improvedgrappler",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d6+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Greatstaff",
+      "type": "weapon",
+      "normalizedName": "improvedgreatstaff",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Muito Distante · d6+3 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Greatsword",
+      "type": "weapon",
+      "normalizedName": "improvedgreatsword",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Halberd",
+      "type": "weapon",
+      "normalizedName": "improvedhalberd",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Muito Próximo · d10+5 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Hallowed Axe",
+      "type": "weapon",
+      "normalizedName": "improvedhallowedaxe",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+4 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Hand Crossbow",
+      "type": "weapon",
+      "normalizedName": "improvedhandcrossbow",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+3 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Hand Runes",
+      "type": "weapon",
+      "normalizedName": "improvedhandrunes",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Muito Próximo · d10+3 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Hatchet",
+      "type": "weapon",
+      "normalizedName": "improvedhatchet",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Heavy-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "improvedheavyframewheelchair",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Katana",
+      "type": "weapon",
+      "normalizedName": "improvedkatana",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d10+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Light-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "improvedlightframewheelchair",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Longbow",
+      "type": "weapon",
+      "normalizedName": "improvedlongbow",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d8+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Longsword",
+      "type": "weapon",
+      "normalizedName": "improvedlongsword",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d10+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Mace",
+      "type": "weapon",
+      "normalizedName": "improvedmace",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+4 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Offhand Brass Knuckles",
+      "type": "weapon",
+      "normalizedName": "improvedoffhandbrassknuckles",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Quarterstaff",
+      "type": "weapon",
+      "normalizedName": "improvedquarterstaff",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Corpo a Corpo · d10+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Rapier",
+      "type": "weapon",
+      "normalizedName": "improvedrapier",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Returning Blade",
+      "type": "weapon",
+      "normalizedName": "improvedreturningblade",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d8+3 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Rope Dart",
+      "type": "weapon",
+      "normalizedName": "improvedropedart",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Próximo · d6+4 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Round Shield",
+      "type": "weapon",
+      "normalizedName": "improvedroundshield",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d4+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Runelock Pistol",
+      "type": "weapon",
+      "normalizedName": "improvedrunelockpistol",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Rune Shield",
+      "type": "weapon",
+      "normalizedName": "improvedruneshield",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d4+2 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Scepter",
+      "type": "weapon",
+      "normalizedName": "improvedscepter",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Presença · Distante · d6+3 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Scimitar",
+      "type": "weapon",
+      "normalizedName": "improvedscimitar",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+4 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Shadowblade",
+      "type": "weapon",
+      "normalizedName": "improvedshadowblade",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Shortbow",
+      "type": "weapon",
+      "normalizedName": "improvedshortbow",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Distante · d6+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Shortstaff",
+      "type": "weapon",
+      "normalizedName": "improvedshortstaff",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d8+4 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Shortsword",
+      "type": "weapon",
+      "normalizedName": "improvedshortsword",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Small Dagger",
+      "type": "weapon",
+      "normalizedName": "improvedsmalldagger",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Spear",
+      "type": "weapon",
+      "normalizedName": "improvedspear",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Throwing Knives",
+      "type": "weapon",
+      "normalizedName": "improvedthrowingknives",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Tower Shield",
+      "type": "weapon",
+      "normalizedName": "improvedtowershield",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d6+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Twisted Dagger",
+      "type": "weapon",
+      "normalizedName": "improvedtwisteddagger",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Wand",
+      "type": "weapon",
+      "normalizedName": "improvedwand",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+4 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Improved Warhammer",
+      "type": "weapon",
+      "normalizedName": "improvedwarhammer",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Improved Whip",
+      "type": "weapon",
+      "normalizedName": "improvedwhip",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Muito Próximo · d6+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Improved Whipsword",
+      "type": "weapon",
+      "normalizedName": "improvedwhipsword",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Infinite Staff",
+      "type": "weapon",
+      "normalizedName": "infinitestaff",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Presença · Corpo a Corpo · d10+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Javelins",
+      "type": "weapon",
+      "normalizedName": "javelins",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Muito Próximo · d6+6 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Katana",
+      "type": "weapon",
+      "normalizedName": "katana",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d10+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Keeper's Staff",
+      "type": "weapon",
+      "normalizedName": "keepersstaff",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Distante · d6+4 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Knuckle Blades",
+      "type": "weapon",
+      "normalizedName": "knuckleblades",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+6 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Knuckle Claws",
+      "type": "weapon",
+      "normalizedName": "knuckleclaws",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d6+8 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Labrys Axe",
+      "type": "weapon",
+      "normalizedName": "labrysaxe",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+7 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Lance",
+      "type": "weapon",
+      "normalizedName": "lance",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Muito Próximo · d10+5 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Arcane-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "legendaryarcaneframewheelchair",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+9 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Arcane Gauntlets",
+      "type": "weapon",
+      "normalizedName": "legendaryarcanegauntlets",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+12 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Arcane Rifle",
+      "type": "weapon",
+      "normalizedName": "legendaryarcanerifle",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d10+12 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Battleaxe",
+      "type": "weapon",
+      "normalizedName": "legendarybattleaxe",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Brass Knuckles",
+      "type": "weapon",
+      "normalizedName": "legendarybrassknuckles",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+10 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Brightsword",
+      "type": "weapon",
+      "normalizedName": "legendarybrightsword",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+12 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Broadsword",
+      "type": "weapon",
+      "normalizedName": "legendarybroadsword",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+9 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Casting Dagger",
+      "type": "weapon",
+      "normalizedName": "legendarycastingdagger",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d6+9 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Crossbow",
+      "type": "weapon",
+      "normalizedName": "legendarycrossbow",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+10 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Cutlass",
+      "type": "weapon",
+      "normalizedName": "legendarycutlass",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+10 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Dagger",
+      "type": "weapon",
+      "normalizedName": "legendarydagger",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+10 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Dualstaff",
+      "type": "weapon",
+      "normalizedName": "legendarydualstaff",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Distante · d8+12 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Enchanted Chakram",
+      "type": "weapon",
+      "normalizedName": "legendaryenchantedchakram",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d6+10 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Fighting Cloak",
+      "type": "weapon",
+      "normalizedName": "legendaryfightingcloak",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d4+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Focus Runes",
+      "type": "weapon",
+      "normalizedName": "legendaryfocusrunes",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Muito Próximo · d6+6 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Glowing Rings",
+      "type": "weapon",
+      "normalizedName": "legendaryglowingrings",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Próximo · d10+11 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Grappler",
+      "type": "weapon",
+      "normalizedName": "legendarygrappler",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d6+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Greatstaff",
+      "type": "weapon",
+      "normalizedName": "legendarygreatstaff",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Muito Distante · d6+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Greatsword",
+      "type": "weapon",
+      "normalizedName": "legendarygreatsword",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Halberd",
+      "type": "weapon",
+      "normalizedName": "legendaryhalberd",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Muito Próximo · d10+11 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Hallowed Axe",
+      "type": "weapon",
+      "normalizedName": "legendaryhallowedaxe",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+10 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Hand Crossbow",
+      "type": "weapon",
+      "normalizedName": "legendaryhandcrossbow",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Distante · d6+7 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Hand Runes",
+      "type": "weapon",
+      "normalizedName": "legendaryhandrunes",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Muito Próximo · d10+9 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Hatchet",
+      "type": "weapon",
+      "normalizedName": "legendaryhatchet",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Heavy-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "legendaryheavyframewheelchair",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Katana",
+      "type": "weapon",
+      "normalizedName": "legendarykatana",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d10+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Light-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "legendarylightframewheelchair",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+9 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Longbow",
+      "type": "weapon",
+      "normalizedName": "legendarylongbow",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d8+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Longsword",
+      "type": "weapon",
+      "normalizedName": "legendarylongsword",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d10+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Mace",
+      "type": "weapon",
+      "normalizedName": "legendarymace",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+10 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Offhand Brass Knuckles",
+      "type": "weapon",
+      "normalizedName": "legendaryoffhandbrassknuckles",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Quarterstaff",
+      "type": "weapon",
+      "normalizedName": "legendaryquarterstaff",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Corpo a Corpo · d10+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Rapier",
+      "type": "weapon",
+      "normalizedName": "legendaryrapier",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+9 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Returning Blade",
+      "type": "weapon",
+      "normalizedName": "legendaryreturningblade",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d8+9 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Rope Dart",
+      "type": "weapon",
+      "normalizedName": "legendaryropedart",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Próximo · d6+10 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Round Shield",
+      "type": "weapon",
+      "normalizedName": "legendaryroundshield",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d4+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Runelock Pistol",
+      "type": "weapon",
+      "normalizedName": "legendaryrunelockpistol",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+12 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Rune Shield",
+      "type": "weapon",
+      "normalizedName": "legendaryruneshield",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d4+6 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Scepter",
+      "type": "weapon",
+      "normalizedName": "legendaryscepter",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Presença · Distante · d6+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Scimitar",
+      "type": "weapon",
+      "normalizedName": "legendaryscimitar",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+10 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Shadowblade",
+      "type": "weapon",
+      "normalizedName": "legendaryshadowblade",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+9 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Shortbow",
+      "type": "weapon",
+      "normalizedName": "legendaryshortbow",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Distante · d6+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Shortstaff",
+      "type": "weapon",
+      "normalizedName": "legendaryshortstaff",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d8+10 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Shortsword",
+      "type": "weapon",
+      "normalizedName": "legendaryshortsword",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Small Dagger",
+      "type": "weapon",
+      "normalizedName": "legendarysmalldagger",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Spear",
+      "type": "weapon",
+      "normalizedName": "legendaryspear",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Throwing Knives",
+      "type": "weapon",
+      "normalizedName": "legendarythrowingknives",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Tower Shield",
+      "type": "weapon",
+      "normalizedName": "legendarytowershield",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d6+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Twisted Dagger",
+      "type": "weapon",
+      "normalizedName": "legendarytwisteddagger",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d8+9 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Wand",
+      "type": "weapon",
+      "normalizedName": "legendarywand",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+10 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Legendary Warhammer",
+      "type": "weapon",
+      "normalizedName": "legendarywarhammer",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+12 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Legendary Whip",
+      "type": "weapon",
+      "normalizedName": "legendarywhip",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Muito Próximo · d6+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Legendary Whipsword",
+      "type": "weapon",
+      "normalizedName": "legendarywhipsword",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8+9 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Light-Frame Wheelchair",
+      "type": "weapon",
+      "normalizedName": "lightframewheelchair",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Longbow",
+      "type": "weapon",
+      "normalizedName": "longbow",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d8+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Longsword",
+      "type": "weapon",
+      "normalizedName": "longsword",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d10+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Mace",
+      "type": "weapon",
+      "normalizedName": "mace",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+1 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Mage Orb",
+      "type": "weapon",
+      "normalizedName": "mageorb",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+7 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Magus Revolver",
+      "type": "weapon",
+      "normalizedName": "magusrevolver",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Distante · d6+13 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Meridian Cutlass",
+      "type": "weapon",
+      "normalizedName": "meridiancutlass",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d10+5 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Midas Scythe",
+      "type": "weapon",
+      "normalizedName": "midasscythe",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d10+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Möbius Orb",
+      "type": "weapon",
+      "normalizedName": "mobiusorb",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d8+6 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Offhand Brass Knuckles",
+      "type": "weapon",
+      "normalizedName": "offhandbrassknuckles",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Parrying Dagger",
+      "type": "weapon",
+      "normalizedName": "parryingdagger",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d6+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Platinum Estoc",
+      "type": "weapon",
+      "normalizedName": "platinumestoc",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+7 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Powered Gauntlet",
+      "type": "weapon",
+      "normalizedName": "poweredgauntlet",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Próximo · d6+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Primer Shard",
+      "type": "weapon",
+      "normalizedName": "primershard",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Muito Próximo · d4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Quarterstaff",
+      "type": "weapon",
+      "normalizedName": "quarterstaff",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Corpo a Corpo · d10+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Rapier",
+      "type": "weapon",
+      "normalizedName": "rapier",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Razor Wire",
+      "type": "weapon",
+      "normalizedName": "razorwire",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Próximo · d6+3 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Retractable Saber",
+      "type": "weapon",
+      "normalizedName": "retractablesaber",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d10+7 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Returning Axe",
+      "type": "weapon",
+      "normalizedName": "returningaxe",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Próximo · d6+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Returning Blade",
+      "type": "weapon",
+      "normalizedName": "returningblade",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Próximo · d8 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Ricochet Axes",
+      "type": "weapon",
+      "normalizedName": "ricochetaxes",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Distante · d6+11 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Rime Scepter",
+      "type": "weapon",
+      "normalizedName": "rimescepter",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Próximo · d8+6 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Rocket Maul",
+      "type": "weapon",
+      "normalizedName": "rocketmaul",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+7 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Rope Dart",
+      "type": "weapon",
+      "normalizedName": "ropedart",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Próximo · d6+1 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Round Shield",
+      "type": "weapon",
+      "normalizedName": "roundshield",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Runelock Pistol",
+      "type": "weapon",
+      "normalizedName": "runelockpistol",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+3 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Rune Shield",
+      "type": "weapon",
+      "normalizedName": "runeshield",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d4 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Runes of Ruination",
+      "type": "weapon",
+      "normalizedName": "runesofruination",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Muito Próximo · d20+4 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Scepter",
+      "type": "weapon",
+      "normalizedName": "scepter",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Presença · Distante · d6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Scepter of Elias",
+      "type": "weapon",
+      "normalizedName": "scepterofelias",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Distante · d6+3 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Scimitar",
+      "type": "weapon",
+      "normalizedName": "scimitar",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8+1 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Segmented Staff",
+      "type": "weapon",
+      "normalizedName": "segmentedstaff",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Muito Próximo · d6+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Severed Dragon Claw",
+      "type": "weapon",
+      "normalizedName": "severeddragonclaw",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Corpo a Corpo · d10+11 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Shadowblade",
+      "type": "weapon",
+      "normalizedName": "shadowblade",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Corpo a Corpo · d8 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Shortbow",
+      "type": "weapon",
+      "normalizedName": "shortbow",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Distante · d6+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Shortstaff",
+      "type": "weapon",
+      "normalizedName": "shortstaff",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Próximo · d8+1 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Shortsword",
+      "type": "weapon",
+      "normalizedName": "shortsword",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Singing Sword",
+      "type": "weapon",
+      "normalizedName": "singingsword",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Muito Próximo · d8+5 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Siphoning Gauntlets",
+      "type": "weapon",
+      "normalizedName": "siphoninggauntlets",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Presença · Corpo a Corpo · d10+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Sledge Axe",
+      "type": "weapon",
+      "normalizedName": "sledgeaxe",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+13 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Small Dagger",
+      "type": "weapon",
+      "normalizedName": "smalldagger",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Soldier's Pike",
+      "type": "weapon",
+      "normalizedName": "soldierspike",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Próximo · d10+5 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Soul Chain",
+      "type": "weapon",
+      "normalizedName": "soulchain",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Muito Próximo · d6+5 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Spear",
+      "type": "weapon",
+      "normalizedName": "spear",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Spellbound Bangles",
+      "type": "weapon",
+      "normalizedName": "spellboundbangles",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d10+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Spiked Bow",
+      "type": "weapon",
+      "normalizedName": "spikedbow",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Muito Distante · d6+7 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Spiked Shield",
+      "type": "weapon",
+      "normalizedName": "spikedshield",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d6+2 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Splintershaft Bow",
+      "type": "weapon",
+      "normalizedName": "splintershaftbow",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Agilidade · Distante · d6+6 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Staff of Augma",
+      "type": "weapon",
+      "normalizedName": "staffofaugma",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Instinto · Distante · d6+7 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Starmetal Blade",
+      "type": "weapon",
+      "normalizedName": "starmetalblade",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Corpo a Corpo · d8+10 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Steelforged Halberd",
+      "type": "weapon",
+      "normalizedName": "steelforgedhalberd",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Muito Próximo · d8+4 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Storm God's Greataxe",
+      "type": "weapon",
+      "normalizedName": "stormgodsgreataxe",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Muito Próximo · d10+9 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Swinging Ropeblade",
+      "type": "weapon",
+      "normalizedName": "swingingropeblade",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Presença · Próximo · d8+9 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Sword of Light & Flame",
+      "type": "weapon",
+      "normalizedName": "swordoflightflame",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d10+11 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Talon Blades",
+      "type": "weapon",
+      "normalizedName": "talonblades",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Próximo · d10+7 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Thistlebow",
+      "type": "weapon",
+      "normalizedName": "thistlebow",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Instinto · Distante · d6+13 mágico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Throwing Knives",
+      "type": "weapon",
+      "normalizedName": "throwingknives",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Tinker's Hammer",
+      "type": "weapon",
+      "normalizedName": "tinkershammer",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+4 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Tower Shield",
+      "type": "weapon",
+      "normalizedName": "towershield",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Twisted Dagger",
+      "type": "weapon",
+      "normalizedName": "twisteddagger",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d8 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Urok Broadsword",
+      "type": "weapon",
+      "normalizedName": "urokbroadsword",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Void Needle",
+      "type": "weapon",
+      "normalizedName": "voidneedle",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Corpo a Corpo · d4+6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Vorpal Shard",
+      "type": "weapon",
+      "normalizedName": "vorpalshard",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Corpo a Corpo · d4 mágico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Wand",
+      "type": "weapon",
+      "normalizedName": "wand",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d6+1 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Wand of Enthrallment",
+      "type": "weapon",
+      "normalizedName": "wandofenthrallment",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Distante · d6+4 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Wand of Essek",
+      "type": "weapon",
+      "normalizedName": "wandofessek",
+      "equipmentTier": 4,
+      "rarity": "very-rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Distante · d8+13 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "War Dart",
+      "type": "weapon",
+      "normalizedName": "wardart",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Agilidade · Distante · d6+5 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Warhammer",
+      "type": "weapon",
+      "normalizedName": "warhammer",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Força · Corpo a Corpo · d12+3 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "War Pick",
+      "type": "weapon",
+      "normalizedName": "warpick",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Força · Corpo a Corpo · d8+3 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "War Scythe",
+      "type": "weapon",
+      "normalizedName": "warscythe",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8+5 físico · duas mãos · Primária"
+    },
+    {
+      "sourceId": "Whip",
+      "type": "weapon",
+      "normalizedName": "whip",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "secondary",
+      "hands": 1,
+      "equipmentDetail": "Presença · Muito Próximo · d6 físico · uma mão · Secundária"
+    },
+    {
+      "sourceId": "Whipsword",
+      "type": "weapon",
+      "normalizedName": "whipsword",
+      "equipmentTier": 1,
+      "rarity": "common",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Acuidade · Muito Próximo · d8 físico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Widogast Pendant",
+      "type": "weapon",
+      "normalizedName": "widogastpendant",
+      "equipmentTier": 3,
+      "rarity": "rare",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 1,
+      "equipmentDetail": "Conhecimento · Próximo · d10+5 mágico · uma mão · Primária"
+    },
+    {
+      "sourceId": "Yutari Bloodbow",
+      "type": "weapon",
+      "normalizedName": "yutaribloodbow",
+      "equipmentTier": 2,
+      "rarity": "uncommon",
+      "rarityBasis": "equipment-tier",
+      "weaponSlot": "primary",
+      "hands": 2,
+      "equipmentDetail": "Acuidade · Distante · d6+4 mágico · duas mãos · Primária"
+    }
+  ]
+}

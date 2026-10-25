@@ -1,4 +1,5 @@
 import raw from "./daggerheart.generated.json";
+import type { EquipmentRarity } from "@/lib/equipmentRarity";
 
 export type CompendiumMechanics = {
   costs: Array<{ resource: string; amount: number | null; label: string }>;
@@ -24,6 +25,12 @@ export type CompendiumEntry = {
   tier?: "foundation" | "specialization" | "mastery";
   level?: number;
   beastformTier?: number;
+  rarity?: EquipmentRarity;
+  equipmentTier?: number;
+  weaponSlot?: "primary" | "secondary";
+  hands?: number;
+  equipmentDetail?: string;
+  creationRestricted?: string;
   domain?: string;
   recallCost?: number;
   description: string;

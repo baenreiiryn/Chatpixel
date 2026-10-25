@@ -48,6 +48,7 @@ export default function CompendiumArt({
     entry?.category === "communities" ? "communityIconArt" : "",
     entry?.category === "subclasses" ? "subclassIconArt" : "",
     entry?.category === "beastforms" ? "beastformIconArt" : "",
+    entry?.category === "equipment" ? "equipmentIconArt" : "",
   ].filter(Boolean).join(" ");
 
   return (

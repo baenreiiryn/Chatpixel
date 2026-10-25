@@ -116,6 +116,10 @@ A visualização Todos mantém a mesma organização por categoria.
 
 ## Atualização dos dados
 
+Equipamentos são agrupados por raridade e incluem os metadados necessários para a
+seleção por patamar na criação. Consulte `docs/equipment-rarity-and-creation.md`
+para a classificação, os limites e o fluxo dos cartões de equipamento.
+
 Com os repositórios-fonte clonados ao lado do RPGptSWIG, execute primeiro
 `npm run sync:foundryborne-subclasses` e depois `npm run import:daggerheart`.
 
