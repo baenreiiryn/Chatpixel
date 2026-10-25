@@ -977,6 +977,32 @@ for (const entry of entries) {
   delete entry.artLicense;
 }
 
+const beastformArtSlugs = new Map([
+  ["Agile Scout", "explorador-agil"],
+  ["Aquatic Scout", "explorador-aquatico"],
+  ["Household Friend", "animal-domestico"],
+  ["Nimble Grazer", "ruminante-arisco"],
+  ["Pack Predator", "predador-de-bando"],
+  ["Stalking Arachnid", "aracnideo-espreitador"],
+  ["Armored Sentry", "carapaca-vigilante"],
+  ["Mighty Strider", "trotador-robusto"],
+  ["Pouncing Predator", "predador-furtivo"],
+  ["Powerful Beast", "fera-poderosa"],
+  ["Striking Serpent", "serpente-traicoeira"],
+  ["Winged Beast", "fera-alada"],
+  ["Aquatic Predator", "predador-aquatico"],
+  ["Great Predator", "grande-predador"],
+  ["Great Winged Beast", "grande-fera-alada"],
+  ["Legendary Beast", "fera-lendaria"],
+  ["Legendary Hybrid", "hibrido-lendario"],
+  ["Mighty Lizard", "lagarto-poderoso"],
+  ["Epic Aquatic Beast", "fera-aquatica-epica"],
+  ["Massive Behemoth", "gigante-massiva"],
+  ["Mythic Aerial Hunter", "cacador-aereo-mitico"],
+  ["Mythic Beast", "fera-mitica"],
+  ["Mythic Hybrid", "hibrido-mitico"],
+  ["Terrible Lizard", "lagarto-terrivel"],
+]);
 const beastformManifest = readJson(path.join(root, "lib", "compendium", "beastforms.manifest.json"));
 const beastformTranslations = new Map(loadEntries("daggerheart.beastforms.json"));
 const beastformTerms = {
@@ -1020,6 +1046,9 @@ for (const form of beastformManifest.forms) {
     paragraphs.push(`${feature.name}: ${cleanText(description)}`);
   }
   const entry = makeEntry({ key: form.name, data: { name: translated.name, description: paragraphs.join("\n\n") }, type: "beastform", category: "beastforms", source: "srd", parent: "Beastform" });
+  const artSlug = beastformArtSlugs.get(form.name);
+  if (!artSlug) throw new Error(`Missing beastform artwork mapping: ${form.name}`);
+  entry.art = `/compendium/daggerheart/beastforms/${artSlug}.webp`;
   entry.beastformTier = form.tier;
   entries.push(entry);
 }

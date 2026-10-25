@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T11:50:51.767Z",
+  "generatedAt": "2026-10-25T12:10:15.025Z",
   "sources": {
     "translation": "https://github.com/etiagoabreu/daggerheart-translation-pt-BR",
     "art": "https://github.com/mordachai/art-for-daggerheart",
@@ -27024,7 +27024,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/explorador-agil.webp",
       "beastformTier": 1
     },
     {
@@ -27055,7 +27055,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/explorador-aquatico.webp",
       "beastformTier": 1
     },
     {
@@ -27086,7 +27086,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/animal-domestico.webp",
       "beastformTier": 1
     },
     {
@@ -27123,7 +27123,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/ruminante-arisco.webp",
       "beastformTier": 1
     },
     {
@@ -27161,7 +27161,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/predador-de-bando.webp",
       "beastformTier": 1
     },
     {
@@ -27198,7 +27198,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/aracnideo-espreitador.webp",
       "beastformTier": 1
     },
     {
@@ -27250,7 +27250,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/carapaca-vigilante.webp",
       "beastformTier": 2
     },
     {
@@ -27289,7 +27289,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/trotador-robusto.webp",
       "beastformTier": 2
     },
     {
@@ -27333,7 +27333,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/predador-furtivo.webp",
       "beastformTier": 2
     },
     {
@@ -27370,7 +27370,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/fera-poderosa.webp",
       "beastformTier": 2
     },
     {
@@ -27412,7 +27412,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/serpente-traicoeira.webp",
       "beastformTier": 2
     },
     {
@@ -27445,7 +27445,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/fera-alada.webp",
       "beastformTier": 2
     },
     {
@@ -27482,7 +27482,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/predador-aquatico.webp",
       "beastformTier": 3
     },
     {
@@ -27519,7 +27519,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/grande-predador.webp",
       "beastformTier": 3
     },
     {
@@ -27552,7 +27552,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/grande-fera-alada.webp",
       "beastformTier": 3
     },
     {
@@ -27576,7 +27576,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/fera-lendaria.webp",
       "beastformTier": 3
     },
     {
@@ -27607,7 +27607,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/hibrido-lendario.webp",
       "beastformTier": 3
     },
     {
@@ -27645,7 +27645,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/lagarto-poderoso.webp",
       "beastformTier": 3
     },
     {
@@ -27683,7 +27683,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/fera-aquatica-epica.webp",
       "beastformTier": 4
     },
     {
@@ -27726,7 +27726,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/gigante-massiva.webp",
       "beastformTier": 4
     },
     {
@@ -27760,7 +27760,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/cacador-aereo-mitico.webp",
       "beastformTier": 4
     },
     {
@@ -27784,7 +27784,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/fera-mitica.webp",
       "beastformTier": 4
     },
     {
@@ -27815,7 +27815,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/hibrido-mitico.webp",
       "beastformTier": 4
     },
     {
@@ -27859,7 +27859,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/beastforms/lagarto-terrivel.webp",
       "beastformTier": 4
     },
     {
