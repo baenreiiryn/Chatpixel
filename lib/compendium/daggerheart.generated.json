@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T19:10:16.804Z",
+  "generatedAt": "2026-10-25T07:09:49.413Z",
   "sources": {
     "translation": "https://github.com/etiagoabreu/daggerheart-translation-pt-BR",
     "art": "https://github.com/mordachai/art-for-daggerheart",
@@ -4192,7 +4192,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/mutagenicos.webp",
       "tier": "foundation"
     },
     {
@@ -4227,7 +4227,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/mutagenicos-aprimorados.webp",
       "tier": "specialization"
     },
     {
@@ -4259,7 +4259,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/toxinas-volateis.webp",
       "tier": "specialization"
     },
     {
@@ -4289,7 +4289,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/mestre-dos-mutagenicos.webp",
       "tier": "mastery"
     },
     {
@@ -4324,7 +4324,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/manto-do-patrono.webp",
       "tier": "foundation"
     },
     {
@@ -4350,7 +4350,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/devocao-morbida.webp",
       "tier": "foundation"
     },
     {
@@ -4382,7 +4382,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/invocacao-sugadora.webp",
       "tier": "specialization"
     },
     {
@@ -4408,7 +4408,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/egide-sombria.webp",
       "tier": "mastery"
     },
     {
@@ -4440,7 +4440,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/maldicao-drenadora.webp",
       "tier": "mastery"
     },
     {
@@ -4470,7 +4470,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/arma-favorita.webp",
       "tier": "foundation"
     },
     {
@@ -4494,7 +4494,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/arauto-da-morte.webp",
       "tier": "foundation"
     },
     {
@@ -4527,7 +4527,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/alcance-ameacador.webp",
       "tier": "specialization"
     },
     {
@@ -4562,7 +4562,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/desprezo-pelo-inimigo.webp",
       "tier": "specialization"
     },
     {
@@ -4586,7 +4586,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/ataque-temivel.webp",
       "tier": "mastery"
     },
     {
@@ -4620,7 +4620,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/ira-divina.webp",
       "tier": "mastery"
     },
     {
@@ -5084,7 +5084,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/matanca.webp",
       "tier": "foundation"
     },
     {
@@ -5119,7 +5119,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/triunfo-do-caos.webp",
       "tier": "mastery"
     },
     {
@@ -5143,7 +5143,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/brilhante.webp",
       "tier": "mastery"
     },
     {
@@ -5177,7 +5177,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/protecao-druidica.webp",
       "tier": "specialization"
     },
     {
@@ -5211,7 +5211,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/aura-elemental.webp",
       "tier": "specialization"
     },
     {
@@ -5239,7 +5239,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/auxilio-encantado.webp",
       "tier": "specialization"
     },
     {
@@ -5263,7 +5263,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/irrefreavel.webp",
       "tier": "specialization"
     },
     {
@@ -5287,7 +5287,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/discipulo-da-guerra.webp"
     },
     {
       "id": "core-subclassFeature-eloquent",
@@ -5320,7 +5320,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/eloquente.webp",
       "tier": "specialization"
     },
     {
@@ -5350,7 +5350,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/vontade-de-ferro.webp",
       "tier": "foundation"
     },
     {
@@ -5374,7 +5374,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/conexoes.webp",
       "tier": "foundation"
     },
     {
@@ -5398,7 +5398,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/impavido.webp",
       "tier": "mastery"
     },
     {
@@ -5422,7 +5422,7 @@
         "hope": false,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/nao-tenha-medo.webp",
       "tier": "mastery"
     },
     {
@@ -5446,7 +5446,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/mafioso.webp"
     },
     {
       "id": "core-subclassFeature-gifted-performer",
@@ -5473,7 +5473,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/artista-talentoso.webp",
       "tier": "foundation"
     },
     {
@@ -5503,7 +5503,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/alma-de-poeta.webp",
       "tier": "foundation"
     },
     {
@@ -5527,7 +5527,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/predador-veloz.webp",
       "tier": "specialization"
     },
     {
@@ -5556,7 +5556,7 @@
         "hope": false,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/encare-o-medo.webp",
       "tier": "foundation"
     },
     {
@@ -5588,7 +5588,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/nemesis.webp",
       "tier": "mastery"
     },
     {
@@ -5612,7 +5612,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/ressonancia-sagrada.webp",
       "tier": "mastery"
     },
     {
@@ -5647,7 +5647,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/soberania-elemental.webp",
       "tier": "mastery"
     },
     {
@@ -5673,7 +5673,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/sombra-fugaz.webp",
       "tier": "mastery"
     },
     {
@@ -5705,7 +5705,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/irmaos-de-armas.webp",
       "tier": "specialization"
     },
     {
@@ -5729,7 +5729,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/primordialista.webp"
     },
     {
       "id": "core-subclassFeature-sparing-touch",
@@ -5754,7 +5754,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/toque-piedoso.webp",
       "tier": "foundation"
     },
     {
@@ -5786,7 +5786,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/especialista-em-armas.webp",
       "tier": "specialization"
     },
     {
@@ -5812,7 +5812,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/troca-perfeita.webp",
       "tier": "specialization"
     },
     {
@@ -5836,7 +5836,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/talentoso.webp",
       "tier": "specialization"
     },
     {
@@ -5860,7 +5860,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/devocao.webp",
       "tier": "specialization"
     },
     {
@@ -5892,7 +5892,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/defensor.webp",
       "tier": "mastery"
     },
     {
@@ -5922,7 +5922,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/regeneracao.webp",
       "tier": "foundation"
     },
     {
@@ -5961,7 +5961,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/asas-de-luz.webp",
       "tier": "foundation"
     },
     {
@@ -5985,7 +5985,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/portador-divino.webp"
     },
     {
       "id": "core-subclassFeature-companion",
@@ -6008,7 +6008,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/companheiro-animal.webp",
       "tier": "foundation"
     },
     {
@@ -6040,7 +6040,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/arma-espiritual.webp",
       "tier": "foundation"
     },
     {
@@ -6064,7 +6064,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/escolhido-da-bravura.webp"
     },
     {
       "id": "core-subclassFeature-rousing-speech",
@@ -6091,7 +6091,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/discurso-inspirador.webp",
       "tier": "foundation"
     },
     {
@@ -6119,7 +6119,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/reforcos-confiaveis.webp",
       "tier": "mastery"
     },
     {
@@ -6149,7 +6149,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/predador-implacavel.webp",
       "tier": "foundation"
     },
     {
@@ -6173,7 +6173,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/vingador.webp"
     },
     {
       "id": "core-subclass-beastbound",
@@ -6196,7 +6196,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/treinador.webp"
     },
     {
       "id": "core-subclassFeature-natural-evasion",
@@ -6225,7 +6225,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/evasao-natural.webp",
       "tier": "specialization"
     },
     {
@@ -6255,7 +6255,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/manipular-magia.webp",
       "tier": "foundation"
     },
     {
@@ -6279,7 +6279,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/protetor-dos-elementos.webp"
     },
     {
       "id": "core-subclassFeature-unwavering",
@@ -6302,7 +6302,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/resoluto.webp",
       "tier": "foundation"
     },
     {
@@ -6326,7 +6326,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/beletrista.webp"
     },
     {
       "id": "core-subclassFeature-battlemage",
@@ -6349,7 +6349,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/mago-de-batalha.webp",
       "tier": "foundation"
     },
     {
@@ -6373,7 +6373,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/promissor.webp",
       "tier": "foundation"
     },
     {
@@ -6401,7 +6401,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/poder-dos-deuses.webp",
       "tier": "mastery"
     },
     {
@@ -6425,7 +6425,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/maestro.webp",
       "tier": "specialization"
     },
     {
@@ -6449,7 +6449,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/escolhido-da-matanca.webp"
     },
     {
       "id": "core-subclassFeature-contacts-everywhere",
@@ -6476,7 +6476,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/contatos.webp",
       "tier": "specialization"
     },
     {
@@ -6508,7 +6508,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/camaradagem.webp",
       "tier": "mastery"
     },
     {
@@ -6532,7 +6532,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/preparacao-marcial.webp",
       "tier": "mastery"
     },
     {
@@ -6562,7 +6562,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/elementalismo.webp"
     },
     {
       "id": "core-subclassFeature-rise-to-the-challenge",
@@ -6585,7 +6585,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/enfrentar-o-desafio.webp",
       "tier": "specialization"
     },
     {
@@ -6609,7 +6609,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/poesia-epica.webp",
       "tier": "mastery"
     },
     {
@@ -6637,7 +6637,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/serenidade-da-natureza.webp",
       "tier": "foundation"
     },
     {
@@ -6670,7 +6670,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/encarnacao-elemental.webp",
       "tier": "foundation"
     },
     {
@@ -6694,7 +6694,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/ascensao.webp",
       "tier": "mastery"
     },
     {
@@ -6722,7 +6722,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/nuvem-de-escuridao.webp",
       "tier": "specialization"
     },
     {
@@ -6746,7 +6746,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/gatuno.webp"
     },
     {
       "id": "core-subclassFeature-shadow-stepper",
@@ -6777,7 +6777,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/passo-sombrio.webp",
       "tier": "foundation"
     },
     {
@@ -6801,7 +6801,7 @@
         "hope": false,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/movido-por-medo.webp",
       "tier": "specialization"
     },
     {
@@ -6827,7 +6827,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/unidos-na-batalha.webp",
       "tier": "specialization"
     },
     {
@@ -6859,7 +6859,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/protetor-leal.webp",
       "tier": "mastery"
     },
     {
@@ -6883,7 +6883,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/treinamento-especializado.webp",
       "tier": "specialization"
     },
     {
@@ -6915,7 +6915,7 @@
         "hope": false,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/desaparecimento.webp",
       "tier": "mastery"
     },
     {
@@ -6942,7 +6942,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/represalia.webp",
       "tier": "specialization"
     },
     {
@@ -6966,7 +6966,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/virtuoso.webp",
       "tier": "mastery"
     },
     {
@@ -6990,7 +6990,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/trovador.webp"
     },
     {
       "id": "core-subclassFeature-apex-predator",
@@ -7019,7 +7019,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/predador-apex.webp",
       "tier": "mastery"
     },
     {
@@ -7043,7 +7043,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/coragem.webp",
       "tier": "foundation"
     },
     {
@@ -7067,7 +7067,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/presenca-curativa.webp",
       "tier": "specialization"
     },
     {
@@ -7104,7 +7104,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/revanche.webp",
       "tier": "foundation"
     },
     {
@@ -7128,7 +7128,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/conjurar-escudo.webp",
       "tier": "specialization"
     },
     {
@@ -7152,7 +7152,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/discipulo-do-conhecimento.webp"
     },
     {
       "id": "core-subclassFeature-battle-ritual",
@@ -7177,7 +7177,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/ritual-de-batalha.webp",
       "tier": "foundation"
     },
     {
@@ -7201,7 +7201,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/baluarte.webp"
     },
     {
       "id": "core-subclassFeature-transcendence",
@@ -7228,7 +7228,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/transcendencia.webp",
       "tier": "mastery"
     },
     {
@@ -7252,7 +7252,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/visagem-eterea.webp",
       "tier": "specialization"
     },
     {
@@ -7276,7 +7276,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/adrenalina.webp",
       "tier": "specialization"
     },
     {
@@ -7300,7 +7300,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/treinamento-avancado.webp",
       "tier": "mastery"
     },
     {
@@ -7324,7 +7324,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/avante.webp",
       "tier": "foundation"
     },
     {
@@ -7359,7 +7359,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/adepto.webp",
       "tier": "foundation"
     },
     {
@@ -7389,7 +7389,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/bem-vivido.webp",
       "tier": "mastery"
     },
     {
@@ -7419,7 +7419,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/elementalista.webp",
       "tier": "foundation"
     },
     {
@@ -7443,7 +7443,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/vem-tranquilo.webp",
       "tier": "foundation"
     },
     {
@@ -7471,7 +7471,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/amigo-leal.webp",
       "tier": "mastery"
     },
     {
@@ -7495,7 +7495,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/protetor-da-renovacao.webp"
     },
     {
       "id": "core-subclass-winged-sentinel",
@@ -7518,7 +7518,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/sentinela-alada.webp"
     },
     {
       "id": "core-subclassFeature-arcane-charge",
@@ -7551,7 +7551,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/carga-arcana.webp",
       "tier": "mastery"
     },
     {
@@ -7575,7 +7575,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/rastreador.webp"
     },
     {
       "id": "expansion-subclass-executioners-guild",
@@ -7598,7 +7598,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/executor.webp"
     },
     {
       "id": "expansion-subclass-poisoners-guild",
@@ -7621,7 +7621,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/intoxicante.webp"
     },
     {
       "id": "expansion-subclass-order-of-the-lycan",
@@ -7644,7 +7644,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/ordem-do-licantropo.webp"
     },
     {
       "id": "expansion-subclass-order-of-the-mutant",
@@ -7667,7 +7667,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/ordem-do-mutante.webp"
     },
     {
       "id": "expansion-subclass-juggernaut",
@@ -7690,7 +7690,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/implacavel.webp"
     },
     {
       "id": "expansion-subclass-martial-artist",
@@ -7713,7 +7713,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/artista-marcial.webp"
     },
     {
       "id": "expansion-subclass-pact-of-the-endless",
@@ -7736,7 +7736,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/pacto-do-perpetuo.webp"
     },
     {
       "id": "expansion-subclass-pact-of-the-wrathful",
@@ -7759,7 +7759,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/pacto-do-colerico.webp"
     },
     {
       "id": "expansion-subclass-hedge",
@@ -7782,7 +7782,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/cerca-viva.webp"
     },
     {
       "id": "expansion-subclass-moon",
@@ -7805,7 +7805,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/lunar.webp"
     },
     {
       "id": "core-domainCard-forager",
@@ -24846,7 +24846,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/necromancia.webp"
     },
     {
       "id": "void-unofficial-subclassFeature-second-circle-shambling-corpse",
@@ -24869,7 +24869,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/2-circulo-cadaver-cambaleante.webp",
       "tier": "foundation"
     },
     {
@@ -24897,7 +24897,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/fome-da-sepultura.webp",
       "tier": "foundation"
     },
     {
@@ -24929,7 +24929,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/colheita-sombria.webp",
       "tier": "foundation"
     },
     {
@@ -24953,7 +24953,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/3-circulo-fantasmas.webp",
       "tier": "specialization"
     },
     {
@@ -24977,7 +24977,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/protetores-fantasmagoricos.webp",
       "tier": "specialization"
     },
     {
@@ -25011,7 +25011,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/terror-espectral.webp",
       "tier": "specialization"
     },
     {
@@ -25035,7 +25035,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/4-circulo-cavaleiro-da-morte.webp",
       "tier": "mastery"
     },
     {
@@ -25059,7 +25059,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/guerreiro-mortal.webp",
       "tier": "mastery"
     },
     {
@@ -25083,7 +25083,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/baluarte-do-cavaleiro.webp",
       "tier": "mastery"
     },
     {
@@ -25107,7 +25107,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/teurgia.webp"
     },
     {
       "id": "void-unofficial-subclassFeature-second-circle-angel",
@@ -25130,7 +25130,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/2-circulo-anjo.webp",
       "tier": "foundation"
     },
     {
@@ -25154,7 +25154,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/presenca-angelical.webp",
       "tier": "foundation"
     },
     {
@@ -25183,7 +25183,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/golpe-de-esperanca.webp",
       "tier": "foundation"
     },
     {
@@ -25207,7 +25207,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/3-circulo-arcanjo.webp",
       "tier": "specialization"
     },
     {
@@ -25231,7 +25231,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/comandante-divino.webp",
       "tier": "specialization"
     },
     {
@@ -25264,7 +25264,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/auxilio-celestial.webp",
       "tier": "specialization"
     },
     {
@@ -25288,7 +25288,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/4-circulo-manifestacao-divina.webp",
       "tier": "mastery"
     },
     {
@@ -25312,7 +25312,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/esperanca-consagrada.webp",
       "tier": "mastery"
     },
     {
@@ -25336,7 +25336,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null
+      "art": "/compendium/daggerheart/subclasses/ordem-do-espectro.webp"
     },
     {
       "id": "void-unofficial-subclassFeature-shadowed-grit",
@@ -25365,7 +25365,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/determinacao-sombria.webp",
       "tier": "foundation"
     },
     {
@@ -25397,7 +25397,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/caminhante-do-veu.webp",
       "tier": "foundation"
     },
     {
@@ -25424,7 +25424,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/cacador-do-veu.webp",
       "tier": "specialization"
     },
     {
@@ -25466,7 +25466,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/forma-espectral.webp",
       "tier": "mastery"
     },
     {
@@ -25490,7 +25490,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/horror-lapidado.webp",
       "tier": "mastery"
     },
     {
@@ -25520,7 +25520,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/forma-hibrida.webp",
       "tier": "foundation"
     },
     {
@@ -25544,7 +25544,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/a-fera-interior.webp",
       "tier": "foundation"
     },
     {
@@ -25570,7 +25570,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/foco-bestial.webp",
       "tier": "specialization"
     },
     {
@@ -25594,7 +25594,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/fortalecimento-feral.webp",
       "tier": "specialization"
     },
     {
@@ -25618,7 +25618,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/regeneracao.webp",
       "tier": "mastery"
     },
     {
@@ -25642,7 +25642,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/subclass-features/predador-supremo.webp",
       "tier": "mastery"
     },
     {

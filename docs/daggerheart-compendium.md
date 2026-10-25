@@ -75,6 +75,17 @@ para este projeto. Os arquivos ficam em `public/compendium/daggerheart/communiti
 e `public/compendium/daggerheart/community-features`. As artes são exibidas inteiras,
 sem cortes, e o importador preserva os vínculos nas atualizações do compêndio.
 
+## Ícones de subclasses e características
+
+As 31 subclasses e as 117 características distintas usam ícones locais WebP de
+256 × 256 pixels, sem escrita e com cantos arredondados transparentes, gerados
+para este projeto. Os arquivos ficam em `public/compendium/daggerheart/subclasses`
+e `public/compendium/daggerheart/subclass-features`. Regeneração compartilha a mesma
+arte entre Protetor da Renovação e Ordem do Licantropo, cobrindo as 118 entradas
+de características do compêndio. Os ícones são exibidos inteiros no compêndio,
+na ficha, na criação e nas características de evolução. O importador preserva
+os vínculos nas atualizações dos dados.
+
 ## Atualização dos dados
 
 Com os repositórios-fonte clonados ao lado do RPGptSWIG, execute primeiro

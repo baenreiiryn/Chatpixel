@@ -55,6 +55,9 @@
 .classFeatureIconArt{object-fit:contain!important;background:#09070e;border-radius:9%}
 .ancestryIconArt{object-fit:contain!important;background:#09070e;border-radius:9%}
 .communityIconArt{object-fit:contain!important;background:#09070e;border-radius:9%}
+.subclassIconArt{object-fit:contain!important;background:#09070e;border-radius:9%}
+.daggerLevelFeatureList .daggerLevelFeatureWithArt{display:inline-flex;align-items:center;gap:5px;border-radius:9px}
+.daggerLevelFeatureArt{width:24px;height:24px;flex-shrink:0;display:block}
 .compDetailHeroImage.domainIconArt{padding:38px}
 .compEntryArtFallback{width:100%;height:100%;min-height:142px;display:grid;place-items:center;color:var(--gold);font-size:25px;background:radial-gradient(circle at 50% 45%,#24172f,#09070d 72%)}
 .compDetailArtFallback{width:100%;height:100%;display:grid;place-items:center;color:var(--gold);font-size:52px;background:radial-gradient(circle at 50% 45%,#2b1a38,#08060b 68%)}

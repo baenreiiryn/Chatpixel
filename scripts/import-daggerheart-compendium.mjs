@@ -446,6 +446,56 @@ function communityArtFor(data, key, isCommunity) {
   return allowed.has(artSlug) ? `/compendium/daggerheart/${directory}/${artSlug}.webp` : null;
 }
 
+const SUBCLASS_ART_SLUGS = new Set([
+  "artista-marcial", "beletrista", "baluarte", "cerca-viva",
+  "discipulo-da-guerra", "discipulo-do-conhecimento", "elementalismo", "escolhido-da-bravura",
+  "escolhido-da-matanca", "executor", "gatuno", "implacavel",
+  "intoxicante", "lunar", "mafioso", "necromancia",
+  "ordem-do-espectro", "ordem-do-licantropo", "ordem-do-mutante", "pacto-do-colerico",
+  "pacto-do-perpetuo", "portador-divino", "primordialista", "protetor-da-renovacao",
+  "protetor-dos-elementos", "rastreador", "sentinela-alada", "teurgia",
+  "treinador", "trovador", "vingador",
+]);
+const SUBCLASS_FEATURE_ART_SLUGS = new Set([
+  "2-circulo-anjo", "2-circulo-cadaver-cambaleante", "3-circulo-arcanjo", "3-circulo-fantasmas",
+  "4-circulo-cavaleiro-da-morte", "4-circulo-manifestacao-divina", "a-fera-interior", "adepto",
+  "adrenalina", "alcance-ameacador", "alma-de-poeta", "amigo-leal",
+  "arauto-da-morte", "arma-espiritual", "arma-favorita", "artista-talentoso",
+  "asas-de-luz", "ascensao", "ataque-temivel", "aura-elemental",
+  "auxilio-celestial", "auxilio-encantado", "avante", "baluarte-do-cavaleiro",
+  "bem-vivido", "brilhante", "cacador-do-veu", "camaradagem",
+  "caminhante-do-veu", "carga-arcana", "colheita-sombria", "comandante-divino",
+  "companheiro-animal", "conexoes", "conjurar-escudo", "contatos",
+  "coragem", "defensor", "desaparecimento", "desprezo-pelo-inimigo",
+  "determinacao-sombria", "devocao", "devocao-morbida", "discurso-inspirador",
+  "egide-sombria", "elementalista", "eloquente", "encare-o-medo",
+  "encarnacao-elemental", "enfrentar-o-desafio", "especialista-em-armas", "esperanca-consagrada",
+  "evasao-natural", "foco-bestial", "fome-da-sepultura", "forma-espectral",
+  "forma-hibrida", "fortalecimento-feral", "golpe-de-esperanca", "guerreiro-mortal",
+  "horror-lapidado", "impavido", "invocacao-sugadora", "ira-divina",
+  "irmaos-de-armas", "irrefreavel", "maestro", "mago-de-batalha",
+  "maldicao-drenadora", "manipular-magia", "manto-do-patrono", "matanca",
+  "mestre-dos-mutagenicos", "movido-por-medo", "mutagenicos", "mutagenicos-aprimorados",
+  "nao-tenha-medo", "nemesis", "nuvem-de-escuridao", "passo-sombrio",
+  "poder-dos-deuses", "poesia-epica", "predador-apex", "predador-implacavel",
+  "predador-supremo", "predador-veloz", "preparacao-marcial", "presenca-angelical",
+  "presenca-curativa", "promissor", "protecao-druidica", "protetor-leal",
+  "protetores-fantasmagoricos", "reforcos-confiaveis", "regeneracao", "represalia",
+  "resoluto", "ressonancia-sagrada", "revanche", "ritual-de-batalha",
+  "serenidade-da-natureza", "soberania-elemental", "sombra-fugaz", "talentoso",
+  "terror-espectral", "toque-piedoso", "toxinas-volateis", "transcendencia",
+  "treinamento-avancado", "treinamento-especializado", "triunfo-do-caos", "troca-perfeita",
+  "unidos-na-batalha", "vem-tranquilo", "virtuoso", "visagem-eterea",
+  "vontade-de-ferro",
+]);
+
+function subclassArtFor(data, key, isSubclass) {
+  const artSlug = slug(cleanText(data.name || key));
+  const allowed = isSubclass ? SUBCLASS_ART_SLUGS : SUBCLASS_FEATURE_ART_SLUGS;
+  const directory = isSubclass ? "subclasses" : "subclass-features";
+  return allowed.has(artSlug) ? `/compendium/daggerheart/${directory}/${artSlug}.webp` : null;
+}
+
 function wordNumber(value) {
   const normalized = value && value.toLocaleLowerCase("pt-BR");
   if (!normalized) return null;
@@ -749,7 +799,7 @@ for (const [key, rawData] of expansionClassSourceEntries) {
     source: "expansion",
     parent: isClass ? null : subclassParent || EXPANSION_CLASS_FEATURE_PARENT[key] || null,
     tier: subclassMeta?.tier || legacySubclassTier,
-    art: isClass ? classArtFor(key) : !subclassParent ? classFeatureArtFor(data, key) : null,
+    art: isClass ? classArtFor(key) : subclassParent ? subclassArtFor(data, key, false) : classFeatureArtFor(data, key),
   }));
 }
 for (const fallback of EXPANSION_FALLBACK_CLASS_FEATURES) {
@@ -779,6 +829,7 @@ for (const [key, data] of loadEntries("daggerheart.subclasses.json")) {
     category: "subclasses",
     parent: isSubclass ? SUBCLASS_CLASS_PARENT[key] || null : subclassParent,
     tier: subclassMeta?.tier || null,
+    art: subclassArtFor(data, key, isSubclass),
   }));
 }
 for (const [key, rawData] of loadEntries("daggerheart-expansion-content.subclasses.json")) {
@@ -794,6 +845,7 @@ for (const [key, rawData] of loadEntries("daggerheart-expansion-content.subclass
     category: "subclasses",
     source: "expansion",
     parent: EXPANSION_SUBCLASS_PARENT[key] || null,
+    art: subclassArtFor(data, key, true),
   }));
 }
 for (const [key, data] of loadEntries("daggerheart.domains.json")) {
@@ -884,7 +936,7 @@ for (const item of voidContent.entries || []) {
     source: "void-unofficial",
     parent: item.parent || null,
     tier: item.tier || null,
-    art: item.art || (item.type === "class" ? classArtFor(key) : item.type === "classFeature" ? classFeatureArtFor(item, key) : null),
+    art: item.art || (item.type === "class" ? classArtFor(key) : item.type === "classFeature" ? classFeatureArtFor(item, key) : item.type === "subclass" || item.type === "subclassFeature" ? subclassArtFor(item, key, item.type === "subclass") : null),
     level: item.level,
     domain: item.domain,
     recallCost: item.recallCost,

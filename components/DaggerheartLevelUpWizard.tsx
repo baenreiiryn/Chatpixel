@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import CompendiumArt from "@/components/CompendiumArt";
 import {
   CLASS_CONFIG,
   TRAIT_LABELS,
@@ -818,7 +819,16 @@ export default function DaggerheartLevelUpWizard({
                                 {subclassOptions.map((option) => <option key={`${option.sourceId}-${option.tier}`} value={`${option.sourceId}|${option.tier}`}>{option.name} · {option.tier === "specialization" ? "Especialização" : "Maestria"}</option>)}
                               </select>
                             </label>
-                            {draft.subclassSourceId && draft.subclassTier && <div className="daggerLevelFeatureList">{subclassFeaturesFor(draft.subclassSourceId, draft.subclassTier).map((feature) => <span key={feature.id}>{feature.name}</span>)}</div>}
+                            {draft.subclassSourceId && draft.subclassTier && (
+                              <div className="daggerLevelFeatureList">
+                                {subclassFeaturesFor(draft.subclassSourceId, draft.subclassTier).map((feature) => (
+                                  <span className="daggerLevelFeatureWithArt" key={feature.id}>
+                                    <CompendiumArt entry={feature} className="daggerLevelFeatureArt" alt="" fallback={null} />
+                                    {feature.name}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         )}
 

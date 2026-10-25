@@ -990,6 +990,18 @@ export default function NewCampaignWizard({ ai, onBack, onComplete, mode = "new"
                   return <button className={subclassId === id ? "selected" : ""} onClick={() => setSubclassId(id)} key={entry.id}><CompendiumArt entry={entry} className="campaignWizardChoiceArt compact" fallback={null} /><strong>{entry.name}</strong><span>{entry.description}</span></button>;
                     })}
                   </div>
+                  {selectedSubclass && selectedSubclassFeatures.length > 0 && (
+                    <div className="campaignWizardFeaturePreview">
+                      {selectedSubclassFeatures.map((feature) => (
+                        <div key={feature.id}>
+                          <CompendiumArt entry={feature} className="campaignWizardFeatureArt" alt="" fallback={null} />
+                          <small>CARACTERÍSTICA DE SUBCLASSE</small>
+                          <strong>{feature.name}</strong>
+                          <p>{feature.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
