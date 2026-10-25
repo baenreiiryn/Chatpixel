@@ -1,10 +1,11 @@
 {
-  "generatedAt": "2026-10-25T07:09:49.413Z",
+  "generatedAt": "2026-10-25T11:24:30.118Z",
   "sources": {
     "translation": "https://github.com/etiagoabreu/daggerheart-translation-pt-BR",
     "art": "https://github.com/mordachai/art-for-daggerheart",
     "foundryborne": "https://github.com/Foundryborne/daggerheart",
     "srd": "https://www.daggerheart.com/srd/",
+    "expansionSubclassSupplement": "https://www.daggerheart.com/wp-content/uploads/2026/08/DH_SRD_2_2026_08_25.pdf",
     "voidUnofficial": "https://github.com/brunocalado/the-void-unofficial"
   },
   "categories": [
@@ -3016,7 +3017,7 @@
       "type": "communityFeature",
       "category": "communities",
       "source": "expansion",
-      "parent": "Freeborne",
+      "parent": "Reborne",
       "description": "Uma vez por sessão, você pode gastar 1 Ponto de Esperança para usar as habilidades de comunidade de um aliado. Quando fizer isso, ganhe 1 Ponto de Esperança.",
       "mechanics": {
         "costs": [
@@ -3139,7 +3140,7 @@
       "type": "communityFeature",
       "category": "communities",
       "source": "expansion",
-      "parent": "Reborne",
+      "parent": "Freeborne",
       "description": "Uma vez por sessão, quando rolar um Teste com Medo, você pode mudar o resultado para Esperança.",
       "mechanics": {
         "costs": [],
@@ -7806,6 +7807,926 @@
         "fear": false
       },
       "art": "/compendium/daggerheart/subclasses/lunar.webp"
+    },
+    {
+      "id": "srd2-subclassFeature-stance-fighter",
+      "sourceId": "Stance Fighter",
+      "name": "Combatente de Posturas",
+      "originalName": "Stance Fighter",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Martial Artist",
+      "description": "Você canaliza sua determinação interior em posturas que concedem benefícios em combate. Ao receber a carta de Fundação desta subclasse, escolha duas posturas do Patamar 1. A cada nível adquirido, aprenda mais uma postura do seu patamar ou de um patamar inferior.\n\nFoco: uma vez por descanso, em um momento de calma, zere seu Foco e role uma quantidade de d6 igual ao seu Instinto. Seu novo Foco é o maior resultado desses dados, até o máximo de 6.\n\nGaste 1 de Foco para assumir uma postura conhecida. Apenas uma postura pode estar ativa. Ela termina quando você assume outra postura, sofre Dano Grave, marca seu último Ponto de Vida ou a cena termina. Ao encerrá-la, você perde seus benefícios contínuos.\n\nPatamar 1\n• Favorecida: ganhe um bônus nas rolagens de dano igual a um atributo à sua escolha.\n• Revigorante: após um ataque bem-sucedido, role um d4; com resultado 4, ganhe 1 de Foco.\n• Rápida: ao atacar, gaste 1 de Foco ou marque 1 de Fadiga para incluir outra criatura dentro do alcance como alvo do mesmo ataque.\n• Confiável: ganhe +1 nas rolagens de ataque.\n\nPatamar 2\n• Agressiva: sofra −1 na Evasão. Em um ataque bem-sucedido, role um dado de dano adicional e descarte o menor resultado.\n• Ancorada: ganhe +2 nos limiares de dano e não possa ser movido contra sua vontade.\n• Defensiva: ataques contra você em alcance Corpo-a-Corpo têm desvantagem, a menos que o atacante marque 1 de Fadiga para anulá-la.\n• Sobrenatural: em um ataque bem-sucedido, escolha causar dano físico ou mágico.\n\nPatamar 3\n• Agarradora: em um ataque bem-sucedido em alcance Corpo-a-Corpo, gaste 1 de Foco ou marque 1 de Fadiga para deixar o alvo temporariamente Restringido ou arremessá-lo até alcance Próximo.\n• Assustadora: em um ataque bem-sucedido, o alvo marca 1 de Fadiga.\n• Estável: você pode gastar 1 de Foco no lugar de marcar 1 Ponto de Armadura para reduzir dano.\n• Vigilante: quando for alvo de um ataque, marque 1 de Fadiga para adicionar um d6 à Evasão contra esse ataque.\n\nPatamar 4\n• Esmagadora: ao causar Dano Grave, gaste 1 de Esperança para fazer o alvo marcar 1 Ponto de Vida adicional.\n• Precisa: trate um resultado 1 em um dado de dano como o maior valor desse dado.\n• Apurada: antes de uma rolagem de ataque, gaste 1 de Foco para ganhar +1 na Proficiência para esse ataque.\n• Isoladora: tenha vantagem nos ataques quando não houver outras criaturas em alcance Muito Próximo de você nem do alvo.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          },
+          {
+            "resource": "Armadura",
+            "amount": 1,
+            "label": "1 Armadura"
+          },
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          },
+          {
+            "resource": "Ponto de Vida",
+            "amount": 1,
+            "label": "1 Ponto de Vida"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Muito Próximo"
+        ],
+        "frequency": [
+          "Uma vez por descanso"
+        ],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/artista-marcial.webp",
+      "tier": "foundation"
+    },
+    {
+      "id": "srd2-subclassFeature-keen-defenses",
+      "sourceId": "Keen Defenses",
+      "name": "Defesas Aguçadas",
+      "originalName": "Keen Defenses",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Martial Artist",
+      "description": "Quando for alvo de um ataque, gaste 1 de Foco para ganhar um bônus na Evasão igual ao seu Patamar contra esse ataque.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/artista-marcial.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-focus-cannon",
+      "sourceId": "Focus Cannon",
+      "name": "Canhão de Foco",
+      "originalName": "Focus Cannon",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Martial Artist",
+      "description": "Gaste 1 de Foco para fazer um Teste de Instinto contra um adversário em alcance Distante. Em um sucesso, cause d20+3 de dano mágico usando sua Proficiência.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d20+3",
+            "type": "mágico"
+          }
+        ],
+        "tests": [
+          "Teste de Instinto"
+        ],
+        "difficulties": [],
+        "ranges": [
+          "Distante"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/artista-marcial.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-limit-breaker",
+      "sourceId": "Limit Breaker",
+      "name": "Quebrar os Limites",
+      "originalName": "Limit Breaker",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Martial Artist",
+      "description": "Uma vez por descanso, realize uma proeza atlética extraordinária sem precisar rolar, como correr sobre a água, saltar entre telhados distantes ou escalar um edifício. Ao fazê-lo, ganhe 1 de Esperança e limpe 1 de Fadiga.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Distante"
+        ],
+        "frequency": [
+          "Uma vez por descanso"
+        ],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/artista-marcial.webp",
+      "tier": "mastery"
+    },
+    {
+      "id": "srd2-subclassFeature-flow-state",
+      "sourceId": "Flow State",
+      "name": "Estado de Fluxo",
+      "originalName": "Flow State",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Martial Artist",
+      "description": "Você pode marcar 1 de Fadiga em vez de gastar 1 de Foco para mudar de postura. Além disso, pode gastar 1 de Foco em vez de marcar 1 de Fadiga para iniciar um Golpe Combinado.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/artista-marcial.webp",
+      "tier": "mastery"
+    },
+    {
+      "id": "srd2-subclassFeature-herbal-remedies",
+      "sourceId": "Herbal Remedies",
+      "name": "Remédios Herbais",
+      "originalName": "Herbal Remedies",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Hedge",
+      "description": "Quando você ou um aliado na cena limpar 1 ou mais Pontos de Vida ou de Fadiga ao usar um consumível, aumente em 1 a quantidade limpa.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/cerca-viva.webp",
+      "tier": "foundation"
+    },
+    {
+      "id": "srd2-subclassFeature-enchanted-talisman",
+      "sourceId": "Enchanted Talisman",
+      "name": "Talismã Encantado",
+      "originalName": "Enchanted Talisman",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Hedge",
+      "description": "Uma vez por descanso, imbua um pequeno objeto com sua essência protetora. Gaste qualquer quantidade de Esperança e coloque a mesma quantidade de marcadores nesta carta. Quando quem estiver segurando o talismã sofrer dano, gaste 1 marcador para reduzir em 1 a quantidade de Pontos de Vida que essa pessoa marca. Remova todos os marcadores quando você descansar.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": null,
+            "label": "qualquer quantidade Esperança"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [
+          "Uma vez por descanso"
+        ],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/cerca-viva.webp",
+      "tier": "foundation"
+    },
+    {
+      "id": "srd2-subclassFeature-walk-between-worlds",
+      "sourceId": "Walk Between Worlds",
+      "name": "Caminhar entre Mundos",
+      "originalName": "Walk Between Worlds",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Hedge",
+      "description": "Em um momento de calma, faça um Teste de Conjuração (13). Uma vez por descanso, após um sucesso, marque 1 de Fadiga para atravessar o véu da morte e conversar com espíritos próximos. Coloque nesta carta uma quantidade de marcadores igual ao seu atributo de Conjuração e remova 1 sempre que um espírito responder a uma pergunta. Quando o último marcador for removido ou a cena terminar, retorne ao Reino Mortal no mesmo ponto de onde saiu.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [],
+        "tests": [
+          "Teste de Conjuração"
+        ],
+        "difficulties": [
+          13
+        ],
+        "ranges": [
+          "Próximo"
+        ],
+        "frequency": [
+          "Uma vez por descanso"
+        ],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/cerca-viva.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-vexing-malison",
+      "sourceId": "Vexing Malison",
+      "name": "Maldição Atormentadora",
+      "originalName": "Vexing Malison",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Hedge",
+      "description": "Você tem vantagem nos ataques contra criaturas afetadas pela sua característica Maldição.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/cerca-viva.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-circle-of-power",
+      "sourceId": "Circle of Power",
+      "name": "Círculo de Poder",
+      "originalName": "Circle of Power",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Hedge",
+      "description": "Uma vez por descanso, desenhe no chão um círculo que delimite uma área de alcance Muito Próximo ao seu redor. Coloque nesta carta uma quantidade de marcadores igual ao seu atributo de Conjuração. Dentro do círculo, você e seus aliados ganham +2 nos limiares de dano, nas rolagens de ataque e na Evasão. Remova 1 marcador sempre que você ou um aliado dentro do círculo fizer uma rolagem de ação ou evitar um ataque. A magia termina quando o último marcador for removido ou você sair do círculo.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Muito Próximo"
+        ],
+        "frequency": [
+          "Uma vez por descanso"
+        ],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/cerca-viva.webp",
+      "tier": "mastery"
+    },
+    {
+      "id": "srd2-subclassFeature-first-strike",
+      "sourceId": "First Strike",
+      "name": "Primeiro Golpe",
+      "originalName": "First Strike",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Executioners Guild",
+      "description": "Na primeira vez em cada cena em que você acertar um ataque, cause o dobro do dano.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/executor.webp",
+      "tier": "foundation"
+    },
+    {
+      "id": "srd2-subclassFeature-ambush",
+      "sourceId": "Ambush",
+      "name": "Emboscada",
+      "originalName": "Ambush",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Executioners Guild",
+      "description": "Sua característica Marcado para Morrer usa d6 em vez de d4.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/executor.webp",
+      "tier": "foundation"
+    },
+    {
+      "id": "srd2-subclassFeature-death-strike",
+      "sourceId": "Death Strike",
+      "name": "Golpe Mortal",
+      "originalName": "Death Strike",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Executioners Guild",
+      "description": "Quando causar Dano Grave a uma criatura, marque 1 de Fadiga para fazê-la marcar 1 Ponto de Vida adicional.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          },
+          {
+            "resource": "Ponto de Vida",
+            "amount": 1,
+            "label": "1 Ponto de Vida"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/executor.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-scorpion-s-poise",
+      "sourceId": "Scorpion's Poise",
+      "name": "Postura do Escorpião",
+      "originalName": "Scorpion's Poise",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Executioners Guild",
+      "description": "Você ganha +2 na Evasão contra ataques de uma criatura que esteja Marcada para Morrer por você.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/executor.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-true-strike",
+      "sourceId": "True Strike",
+      "name": "Golpe Certeiro",
+      "originalName": "True Strike",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Executioners Guild",
+      "description": "Uma vez por descanso longo, quando errar um ataque, gaste 1 de Esperança para transformá-lo em um sucesso.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [
+          "Uma vez por descanso longo"
+        ],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/executor.webp",
+      "tier": "mastery"
+    },
+    {
+      "id": "srd2-subclassFeature-backstab",
+      "sourceId": "Backstab",
+      "name": "Punhalada pelas Costas",
+      "originalName": "Backstab",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Executioners Guild",
+      "description": "Sua característica Marcado para Morrer usa d8 em vez de d6.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/executor.webp",
+      "tier": "mastery"
+    },
+    {
+      "id": "srd2-subclassFeature-rugged",
+      "sourceId": "Rugged",
+      "name": "Tenaz",
+      "originalName": "Rugged",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Juggernaut",
+      "description": "Ganhe um bônus permanente de +3 no seu limiar de Dano Grave.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/implacavel.webp",
+      "tier": "foundation"
+    },
+    {
+      "id": "srd2-subclassFeature-overwhelm",
+      "sourceId": "Overwhelm",
+      "name": "Sobrepujar",
+      "originalName": "Overwhelm",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Juggernaut",
+      "description": "Quando acertar um ataque, gaste 1 de Esperança para arremessar o alvo até alcance Próximo ou fazê-lo marcar 1 de Fadiga.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          },
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Próximo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/implacavel.webp",
+      "tier": "foundation"
+    },
+    {
+      "id": "srd2-subclassFeature-surrounded",
+      "sourceId": "Surrounded",
+      "name": "Cercado",
+      "originalName": "Surrounded",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Juggernaut",
+      "description": "Quando atacar com uma arma Corpo-a-Corpo, gaste qualquer quantidade de Esperança para incluir a mesma quantidade de criaturas adicionais em alcance Corpo-a-Corpo como alvos do ataque.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": null,
+            "label": "qualquer quantidade Esperança"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/implacavel.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-eye-for-an-eye",
+      "sourceId": "Eye for an Eye",
+      "name": "Olho por Olho",
+      "originalName": "Eye for an Eye",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Juggernaut",
+      "description": "Uma vez por descanso, quando um adversário em alcance Corpo-a-Corpo fizer você marcar Pontos de Vida, marque 1 de Fadiga para fazê-lo marcar a mesma quantidade de Pontos de Vida.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Ponto de Vida",
+            "amount": null,
+            "label": "variável Ponto de Vida"
+          },
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [
+          "Uma vez por descanso"
+        ],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/implacavel.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-pummeljoy",
+      "sourceId": "Pummeljoy",
+      "name": "Prazer em Golpear",
+      "originalName": "Pummeljoy",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Juggernaut",
+      "description": "Quando obtiver um sucesso crítico em um ataque com uma arma Corpo-a-Corpo, ganhe 1 de Esperança adicional, limpe 1 de Fadiga adicional e ganhe +1 na Proficiência para esse ataque.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/implacavel.webp",
+      "tier": "mastery"
+    },
+    {
+      "id": "srd2-subclassFeature-not-done-yet",
+      "sourceId": "Not Done Yet",
+      "name": "Ainda Não Acabou",
+      "originalName": "Not Done Yet",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Juggernaut",
+      "description": "Quando sofrer Dano Grave, escolha ganhar 1 de Esperança ou limpar 1 de Fadiga.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/implacavel.webp",
+      "tier": "mastery"
+    },
+    {
+      "id": "srd2-subclassFeature-toxic-concoctions",
+      "sourceId": "Toxic Concoctions",
+      "name": "Misturas Tóxicas",
+      "originalName": "Toxic Concoctions",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Poisoners Guild",
+      "description": "Marque 1 de Fadiga para colocar 1d4+1 marcadores nesta carta. Quando acertar um ataque com arma, gaste 1 marcador para aplicar ao alvo um veneno conhecido.\n\n• Pétala Fantasma: o alvo fica temporariamente Vulnerável.\n• Esporo Sepulcral: o alvo também marca 1 de Fadiga.\n• Erva Sanguessuga: cause 1d6 de dano adicional nesse ataque.\n\nAo fazer um descanso longo, remova os marcadores não utilizados.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "1d6"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/intoxicante.webp",
+      "tier": "foundation"
+    },
+    {
+      "id": "srd2-subclassFeature-poison-compendium",
+      "sourceId": "Poison Compendium",
+      "name": "Compêndio de Venenos",
+      "originalName": "Poison Compendium",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Poisoners Guild",
+      "description": "Você também conhece estes venenos:\n\n• Vinha da Meia-Noite: o alvo tem desvantagem nas rolagens de ataque até marcar 1 de Fadiga para encerrar esse efeito.\n• Raiz de Górgona: o alvo fica temporariamente Restringido.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/intoxicante.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-twin-fang",
+      "sourceId": "Twin Fang",
+      "name": "Presas Gêmeas",
+      "originalName": "Twin Fang",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Poisoners Guild",
+      "description": "Quando aplicar um veneno conhecido a um alvo que esteja Marcado para Morrer por você, gaste 1 marcador adicional para também aplicar o efeito de um segundo veneno conhecido.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/intoxicante.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-venomancer",
+      "sourceId": "Venomancer",
+      "name": "Venomante",
+      "originalName": "Venomancer",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Poisoners Guild",
+      "description": "Você também conhece estes venenos:\n\n• Semente da Praga: o alvo sofre −3 nos limiares de dano até o fim da cena. Esse efeito não se acumula.\n• Folha do Medo: cause dano adicional igual ao resultado do seu Dado de Medo nesse ataque.\n• Espinho Cadavérico: o alvo tem desvantagem nos Testes de Reação até o fim da cena.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": true
+      },
+      "art": "/compendium/daggerheart/subclasses/intoxicante.webp",
+      "tier": "mastery"
+    },
+    {
+      "id": "srd2-subclassFeature-adder-s-blessing",
+      "sourceId": "Adder's Blessing",
+      "name": "Bênção da Víbora",
+      "originalName": "Adder's Blessing",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Poisoners Guild",
+      "description": "Você é imune a venenos e outras toxinas.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/intoxicante.webp",
+      "tier": "mastery"
+    },
+    {
+      "id": "srd2-subclassFeature-night-s-glamour",
+      "sourceId": "Night's Glamour",
+      "name": "Fascínio Noturno",
+      "originalName": "Night's Glamour",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Moon",
+      "description": "Faça um Teste de Conjuração (13) para revestir-se de uma aparência ilusória e fascinante. Enquanto o efeito durar, tenha vantagem nos testes que tirem proveito dessa aparência. Além disso, adversários em alcance Próximo precisam marcar 1 de Fadiga para atacar você.\n\nQuando marcar um Ponto de Vida ou causar dano, o efeito termina, a menos que você marque 1 de Fadiga para mantê-lo.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          },
+          {
+            "resource": "Ponto de Vida",
+            "amount": 1,
+            "label": "1 Ponto de Vida"
+          }
+        ],
+        "damage": [],
+        "tests": [
+          "Teste de Conjuração"
+        ],
+        "difficulties": [
+          13
+        ],
+        "ranges": [
+          "Próximo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/lunar.webp",
+      "tier": "foundation"
+    },
+    {
+      "id": "srd2-subclassFeature-moonbeam",
+      "sourceId": "Moonbeam",
+      "name": "Raio Lunar",
+      "originalName": "Moonbeam",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Moon",
+      "description": "Uma vez por sessão, conjure uma coluna de luz da lua que ilumina uma área em alcance Próximo até o fim da cena. Sob essa luz, você e seus aliados ganham +1 nos Testes de Conjuração e enxergam através de ilusões.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Próximo"
+        ],
+        "frequency": [
+          "Uma vez por sessão"
+        ],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/lunar.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-ire-of-pale-light",
+      "sourceId": "Ire of Pale Light",
+      "name": "Ira da Luz Pálida",
+      "originalName": "Ire of Pale Light",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Moon",
+      "description": "Quando uma criatura afetada pela sua característica Maldição, em alcance Muito Distante, errar um ataque, ela marca 1 de Fadiga.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Muito Distante"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/lunar.webp",
+      "tier": "specialization"
+    },
+    {
+      "id": "srd2-subclassFeature-lunar-phases",
+      "sourceId": "Lunar Phases",
+      "name": "Fases Lunares",
+      "originalName": "Lunar Phases",
+      "type": "subclassFeature",
+      "category": "subclasses",
+      "source": "srd2",
+      "parent": "Moon",
+      "description": "No início de cada sessão, role um d6 e coloque-o nesta carta. Até o fim da sessão, ganhe o efeito correspondente:\n\n• 1 — Lua Nova: gaste 1 de Esperança para anular Dano Menor.\n• 2–3 — Lua Crescente: ganhe +2 nas rolagens de dano.\n• 4 — Lua Cheia: ganhe +3 nos limiares de dano.\n• 5–6 — Lua Minguante: ganhe +1 na Evasão.\n\nUma vez por descanso, gaste 1 de Esperança para aumentar em 1 o valor desse dado. Ao aumentar um resultado 6, ele se torna 1.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          }
+        ],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [
+          "No início de cada sessão",
+          "Uma vez por descanso"
+        ],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": "/compendium/daggerheart/subclasses/lunar.webp",
+      "tier": "mastery"
     },
     {
       "id": "core-domainCard-forager",
@@ -14668,7 +15589,7 @@
         "hope": true,
         "fear": true
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 1,
       "recallCost": 1
@@ -14705,7 +15626,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 1,
       "recallCost": 0
@@ -14731,7 +15652,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 1,
       "recallCost": 1
@@ -14765,7 +15686,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 2,
       "recallCost": 1
@@ -14808,7 +15729,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 2,
       "recallCost": 2
@@ -14852,7 +15773,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 3,
       "recallCost": 1
@@ -14893,7 +15814,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 4,
       "recallCost": 1
@@ -14934,7 +15855,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 5,
       "recallCost": 2
@@ -14975,7 +15896,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 6,
       "recallCost": 1
@@ -15009,7 +15930,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 8,
       "recallCost": 1
@@ -15035,7 +15956,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 6,
       "recallCost": 0
@@ -15067,7 +15988,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 7,
       "recallCost": 2
@@ -15103,7 +16024,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "domain": "Blood",
       "level": 10,
       "recallCost": 2
@@ -25676,7 +26597,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "level": 2,
       "domain": "Blood",
       "recallCost": 2
@@ -25714,7 +26635,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "level": 3,
       "domain": "Blood",
       "recallCost": 3
@@ -25746,7 +26667,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "level": 5,
       "domain": "Blood",
       "recallCost": 1
@@ -25786,7 +26707,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "level": 6,
       "domain": "Blood",
       "recallCost": 0
@@ -25816,7 +26737,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "level": 7,
       "domain": "Blood",
       "recallCost": 2
@@ -25852,7 +26773,7 @@
         "hope": true,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "level": 8,
       "domain": "Blood",
       "recallCost": 2
@@ -25893,7 +26814,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "level": 9,
       "domain": "Blood",
       "recallCost": 3
@@ -25919,7 +26840,7 @@
         "hope": false,
         "fear": false
       },
-      "art": null,
+      "art": "/compendium/daggerheart/domains/blood.png",
       "level": 10,
       "domain": "Blood",
       "recallCost": 1

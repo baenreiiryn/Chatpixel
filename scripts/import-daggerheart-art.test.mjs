@@ -28,9 +28,18 @@ test("importer applies synced Foundryborne domain art and attribution metadata",
   assert.equal(soldier?.artLicense, "Darrington Press Community Gaming License (DPCGL)");
 
   const blood = payload.entries.find((entry) => entry.type === "domainCard" && entry.originalName === "Blood Spike");
-  assert.equal(blood?.art ?? null, null);
+  assert.equal(blood?.art, "/compendium/daggerheart/domains/blood.png");
   assert.equal(blood?.artSource, undefined);
   assert.equal(blood?.artLicense, undefined);
+
+  const byDomain = Object.groupBy(domainCards, (entry) => entry.domain.toLowerCase());
+  assert.equal(Object.keys(byDomain).length, 11);
+  for (const [domain, cards] of Object.entries(byDomain)) {
+    assert.equal(cards.length, 21, domain);
+    assert.equal(new Set(cards.map((entry) => entry.art)).size, 1, domain + " has inconsistent icons");
+    assert.ok(cards.every((entry) => entry.art), domain + " is missing its icon");
+  }
+  assert.ok(byDomain.blood.some((entry) => entry.source === "void-unofficial"));
 
   for (const entry of payload.entries.filter((item) => item.art)) {
     const relativeArt = decodeURIComponent(entry.art).replace(/^\/+/, "");

@@ -112,6 +112,12 @@ function die(id: string, name: string, sides: number, source: CharacterTracker["
 export function initialTrackersForCharacter(classId: string, level: number, subclassId?: string): CharacterTracker[] {
   classId = normalizeDaggerheartClassId(classId);
   const trackers: CharacterTracker[] = [];
+  if (classId === "Brawler" && (subclassId === "Martial Artist" || subclassId === "Artista Marcial")) {
+    trackers.push({
+      ...counter("martial-artist-focus", "Foco", 0, 6, { type: "subclassFeature", id: "Stance Fighter" }),
+      description: "Uma vez por descanso, em um momento de calma, zere o Foco, role d6 em quantidade igual ao Instinto e use o maior resultado como novo Foco (máximo 6). Gaste Foco para assumir posturas e usar suas características.",
+    });
+  }
   if (classId === "Warlock") {
     trackers.push({ ...counter("warlock-favor", "Favor", 3, 6, { type: "classFeature", id: "Favor" }), description: "Você começa com 3 Pontos de Favor e pode acumular até 6." });
   }

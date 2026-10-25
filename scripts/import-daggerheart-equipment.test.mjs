@@ -25,13 +25,13 @@ test("importer publishes translated equipment with stable entry types and descri
   });
 
   const equipment = payload.entries.filter((entry) => entry.category === "equipment");
-  assert.equal(equipment.length, 359);
+  assert.equal(equipment.length, 365);
   assert.deepEqual(
     Object.fromEntries(["weapon", "armor", "consumable", "loot"].map((type) => [
       type,
       equipment.filter((entry) => entry.type === type).length,
     ])),
-    { weapon: 204, armor: 35, consumable: 60, loot: 60 },
+    { weapon: 204, armor: 35, consumable: 61, loot: 65 },
   );
 
   assert.match(

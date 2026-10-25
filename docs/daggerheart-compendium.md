@@ -41,10 +41,12 @@ Descrições de características são analisadas para destacar automaticamente:
 - frequência de uso.
 
 As características de subclasse preservam também o vínculo com sua subclasse e o estágio de
-progressão `foundation`, `specialization` ou `mastery`. Os nomes e textos continuam vindo da
-tradução PT-BR; o pack Foundryborne é usado apenas para sincronizar esse metadado estrutural do
-SRD. Nenhuma arte de subclasse, logo ou outra imagem restrita do Foundryborne é copiada pelo
-pipeline.
+progressão `foundation`, `specialization` ou `mastery`. Os nomes e textos vêm da tradução
+PT-BR, complementada por `lib/compendium/expansion-subclass-features.pt-BR.json` para as
+31 características ausentes de Artista Marcial, Cerca-Viva, Executor, Implacável,
+Intoxicante e Lunar. Esse complemento traduz o SRD 2.0 e inclui as 16 posturas e as regras
+de Foco do Artista Marcial. O pack Foundryborne sincroniza o metadado estrutural do SRD.
+Nenhuma arte de subclasse, logo ou outra imagem restrita do Foundryborne é copiada pelo pipeline.
 
 O arquivo gerado fica em `lib/compendium/daggerheart.generated.json`. Ele é commitado para
 que builds de produção não dependam dos repositórios externos.
@@ -77,14 +79,29 @@ sem cortes, e o importador preserva os vínculos nas atualizações do compêndi
 
 ## Ícones de subclasses e características
 
-As 31 subclasses e as 117 características distintas usam ícones locais WebP de
+As 31 subclasses e as 117 características distintas do conjunto original usam ícones locais WebP de
 256 × 256 pixels, sem escrita e com cantos arredondados transparentes, gerados
 para este projeto. Os arquivos ficam em `public/compendium/daggerheart/subclasses`
 e `public/compendium/daggerheart/subclass-features`. Regeneração compartilha a mesma
-arte entre Protetor da Renovação e Ordem do Licantropo, cobrindo as 118 entradas
-de características do compêndio. Os ícones são exibidos inteiros no compêndio,
+arte entre Protetor da Renovação e Ordem do Licantropo, cobrindo 118 entradas.
+As 31 características complementares reutilizam o ícone da própria subclasse quando
+não têm arte específica, totalizando 149 entradas com arte. Os ícones são exibidos inteiros no compêndio,
 na ficha, na criação e nas características de evolução. O importador preserva
 os vínculos nas atualizações dos dados.
+
+## Ícones de domínios
+
+Os 11 domínios têm um ícone compartilhado pelas respectivas cartas: símbolo branco
+centralizado sobre fundo colorido com degradê suave. As 210 cartas de dez domínios
+preservam os PNGs Foundryborne e sua atribuição. As 21 cartas de Blood usam
+`public/compendium/daggerheart/domains/blood.png`, PNG de 500 × 500 pixels criado
+para o OracleRPG com geração de imagens: uma gota branca estilizada, com recortes
+angulares, sobre fundo vinho/vermelho, sem escrita nem moldura.
+
+Esse arquivo fica fora da pasta regenerada pelo sync Foundryborne. O importador
+aplica a arte depois das substituições do Void, cobrindo também suas cartas novas.
+O teste de importação verifica que cada domínio tem um único ícone e nenhuma carta
+fica sem arte.
 
 ## Organização da consulta
 
@@ -104,6 +121,14 @@ Com os repositórios-fonte clonados ao lado do RPGptSWIG, execute primeiro
 
 O sync gera `lib/compendium/foundryborne-subclass-features.manifest.json`, que é commitado junto
 com o compêndio para que builds de produção não dependam do checkout do Foundryborne.
+
+O importador recusa IDs duplicados, vínculos órfãos, cartas sem domínio/nível válido,
+ancestralidades sem duas características, comunidades sem uma característica e subclasses
+sem Fundação, Especialização ou Maestria. Os testes também fixam os vínculos
+Liberta → Desgarrado e Sem Comunidade → Família Adotada.
+
+A auditoria de cobertura e as diferenças entre versões das fontes estão registradas em
+`docs/compendium-audit-2026-10-25.md`.
 
 O importador também copia somente `adversaries/portraits/*.webp`; tokens circulares e
 wildcards não são incluídos no app.

@@ -312,7 +312,7 @@ export default function DaggerheartCompendium({ onBack }: Props) {
           ))}
           <div className="compendiumCredits">
             <small>FONTES</small>
-            <p>Tradução PT-BR não oficial do SRD. Artes de adversários sob CC0. Ícones de domínio via Foundryborne sob DPCGL.</p>
+            <p>Tradução PT-BR não oficial do SRD. Artes de adversários sob CC0. Ícones de dez domínios via Foundryborne sob DPCGL; Blood criado para o OracleRPG.</p>
           </div>
         </aside>
 

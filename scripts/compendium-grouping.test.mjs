@@ -18,7 +18,7 @@ test("the organized compendium preserves every real entry exactly once", () => {
   assert.equal(displayed.length, entries.length);
   assert.equal(new Set(displayed.map((entry) => entry.id)).size, entries.length);
   assert.deepEqual(displayed.map((entry) => entry.id).sort(), entries.map((entry) => entry.id).sort());
-  for (const [category, parentCount, childCount] of [["classes", 15, 42], ["ancestries", 24, 48], ["communities", 15, 15], ["subclasses", 31, 118]]) {
+  for (const [category, parentCount, childCount] of [["classes", 15, 42], ["ancestries", 24, 48], ["communities", 15, 15], ["subclasses", 31, 149]]) {
     const section = sections.find((item) => item.category === category);
     assert.equal(section.kind, "families");
     assert.equal(section.families.length, parentCount);

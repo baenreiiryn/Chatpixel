@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "name": "Daggerheart SRD 2.0 · tradução complementar PT-BR",
+    "url": "https://www.daggerheart.com/wp-content/uploads/2026/08/DH_SRD_2_2026_08_25.pdf",
+    "license": "Darrington Press Community Gaming License (DPCGL)"
+  },
+  "entries": [
+    {
+      "parent": "Martial Artist",
+      "sourceId": "Stance Fighter",
+      "name": "Combatente de Posturas",
+      "tier": "foundation",
+      "description": "Você canaliza sua determinação interior em posturas que concedem benefícios em combate. Ao receber a carta de Fundação desta subclasse, escolha duas posturas do Patamar 1. A cada nível adquirido, aprenda mais uma postura do seu patamar ou de um patamar inferior.\n\nFoco: uma vez por descanso, em um momento de calma, zere seu Foco e role uma quantidade de d6 igual ao seu Instinto. Seu novo Foco é o maior resultado desses dados, até o máximo de 6.\n\nGaste 1 de Foco para assumir uma postura conhecida. Apenas uma postura pode estar ativa. Ela termina quando você assume outra postura, sofre Dano Grave, marca seu último Ponto de Vida ou a cena termina. Ao encerrá-la, você perde seus benefícios contínuos.\n\nPatamar 1\n• Favorecida: ganhe um bônus nas rolagens de dano igual a um atributo à sua escolha.\n• Revigorante: após um ataque bem-sucedido, role um d4; com resultado 4, ganhe 1 de Foco.\n• Rápida: ao atacar, gaste 1 de Foco ou marque 1 de Fadiga para incluir outra criatura dentro do alcance como alvo do mesmo ataque.\n• Confiável: ganhe +1 nas rolagens de ataque.\n\nPatamar 2\n• Agressiva: sofra −1 na Evasão. Em um ataque bem-sucedido, role um dado de dano adicional e descarte o menor resultado.\n• Ancorada: ganhe +2 nos limiares de dano e não possa ser movido contra sua vontade.\n• Defensiva: ataques contra você em alcance Corpo-a-Corpo têm desvantagem, a menos que o atacante marque 1 de Fadiga para anulá-la.\n• Sobrenatural: em um ataque bem-sucedido, escolha causar dano físico ou mágico.\n\nPatamar 3\n• Agarradora: em um ataque bem-sucedido em alcance Corpo-a-Corpo, gaste 1 de Foco ou marque 1 de Fadiga para deixar o alvo temporariamente Restringido ou arremessá-lo até alcance Próximo.\n• Assustadora: em um ataque bem-sucedido, o alvo marca 1 de Fadiga.\n• Estável: você pode gastar 1 de Foco no lugar de marcar 1 Ponto de Armadura para reduzir dano.\n• Vigilante: quando for alvo de um ataque, marque 1 de Fadiga para adicionar um d6 à Evasão contra esse ataque.\n\nPatamar 4\n• Esmagadora: ao causar Dano Grave, gaste 1 de Esperança para fazer o alvo marcar 1 Ponto de Vida adicional.\n• Precisa: trate um resultado 1 em um dado de dano como o maior valor desse dado.\n• Apurada: antes de uma rolagem de ataque, gaste 1 de Foco para ganhar +1 na Proficiência para esse ataque.\n• Isoladora: tenha vantagem nos ataques quando não houver outras criaturas em alcance Muito Próximo de você nem do alvo."
+    },
+    {
+      "parent": "Martial Artist",
+      "sourceId": "Keen Defenses",
+      "name": "Defesas Aguçadas",
+      "tier": "specialization",
+      "description": "Quando for alvo de um ataque, gaste 1 de Foco para ganhar um bônus na Evasão igual ao seu Patamar contra esse ataque."
+    },
+    {
+      "parent": "Martial Artist",
+      "sourceId": "Focus Cannon",
+      "name": "Canhão de Foco",
+      "tier": "specialization",
+      "description": "Gaste 1 de Foco para fazer um Teste de Instinto contra um adversário em alcance Distante. Em um sucesso, cause d20+3 de dano mágico usando sua Proficiência."
+    },
+    {
+      "parent": "Martial Artist",
+      "sourceId": "Limit Breaker",
+      "name": "Quebrar os Limites",
+      "tier": "mastery",
+      "description": "Uma vez por descanso, realize uma proeza atlética extraordinária sem precisar rolar, como correr sobre a água, saltar entre telhados distantes ou escalar um edifício. Ao fazê-lo, ganhe 1 de Esperança e limpe 1 de Fadiga."
+    },
+    {
+      "parent": "Martial Artist",
+      "sourceId": "Flow State",
+      "name": "Estado de Fluxo",
+      "tier": "mastery",
+      "description": "Você pode marcar 1 de Fadiga em vez de gastar 1 de Foco para mudar de postura. Além disso, pode gastar 1 de Foco em vez de marcar 1 de Fadiga para iniciar um Golpe Combinado."
+    },
+    {
+      "parent": "Hedge",
+      "sourceId": "Herbal Remedies",
+      "name": "Remédios Herbais",
+      "tier": "foundation",
+      "description": "Quando você ou um aliado na cena limpar 1 ou mais Pontos de Vida ou de Fadiga ao usar um consumível, aumente em 1 a quantidade limpa."
+    },
+    {
+      "parent": "Hedge",
+      "sourceId": "Enchanted Talisman",
+      "name": "Talismã Encantado",
+      "tier": "foundation",
+      "description": "Uma vez por descanso, imbua um pequeno objeto com sua essência protetora. Gaste qualquer quantidade de Esperança e coloque a mesma quantidade de marcadores nesta carta. Quando quem estiver segurando o talismã sofrer dano, gaste 1 marcador para reduzir em 1 a quantidade de Pontos de Vida que essa pessoa marca. Remova todos os marcadores quando você descansar."
+    },
+    {
+      "parent": "Hedge",
+      "sourceId": "Walk Between Worlds",
+      "name": "Caminhar entre Mundos",
+      "tier": "specialization",
+      "description": "Em um momento de calma, faça um Teste de Conjuração (13). Uma vez por descanso, após um sucesso, marque 1 de Fadiga para atravessar o véu da morte e conversar com espíritos próximos. Coloque nesta carta uma quantidade de marcadores igual ao seu atributo de Conjuração e remova 1 sempre que um espírito responder a uma pergunta. Quando o último marcador for removido ou a cena terminar, retorne ao Reino Mortal no mesmo ponto de onde saiu."
+    },
+    {
+      "parent": "Hedge",
+      "sourceId": "Vexing Malison",
+      "name": "Maldição Atormentadora",
+      "tier": "specialization",
+      "description": "Você tem vantagem nos ataques contra criaturas afetadas pela sua característica Maldição."
+    },
+    {
+      "parent": "Hedge",
+      "sourceId": "Circle of Power",
+      "name": "Círculo de Poder",
+      "tier": "mastery",
+      "description": "Uma vez por descanso, desenhe no chão um círculo que delimite uma área de alcance Muito Próximo ao seu redor. Coloque nesta carta uma quantidade de marcadores igual ao seu atributo de Conjuração. Dentro do círculo, você e seus aliados ganham +2 nos limiares de dano, nas rolagens de ataque e na Evasão. Remova 1 marcador sempre que você ou um aliado dentro do círculo fizer uma rolagem de ação ou evitar um ataque. A magia termina quando o último marcador for removido ou você sair do círculo."
+    },
+    {
+      "parent": "Executioners Guild",
+      "sourceId": "First Strike",
+      "name": "Primeiro Golpe",
+      "tier": "foundation",
+      "description": "Na primeira vez em cada cena em que você acertar um ataque, cause o dobro do dano."
+    },
+    {
+      "parent": "Executioners Guild",
+      "sourceId": "Ambush",
+      "name": "Emboscada",
+      "tier": "foundation",
+      "description": "Sua característica Marcado para Morrer usa d6 em vez de d4."
+    },
+    {
+      "parent": "Executioners Guild",
+      "sourceId": "Death Strike",
+      "name": "Golpe Mortal",
+      "tier": "specialization",
+      "description": "Quando causar Dano Grave a uma criatura, marque 1 de Fadiga para fazê-la marcar 1 Ponto de Vida adicional."
+    },
+    {
+      "parent": "Executioners Guild",
+      "sourceId": "Scorpion's Poise",
+      "name": "Postura do Escorpião",
+      "tier": "specialization",
+      "description": "Você ganha +2 na Evasão contra ataques de uma criatura que esteja Marcada para Morrer por você."
+    },
+    {
+      "parent": "Executioners Guild",
+      "sourceId": "True Strike",
+      "name": "Golpe Certeiro",
+      "tier": "mastery",
+      "description": "Uma vez por descanso longo, quando errar um ataque, gaste 1 de Esperança para transformá-lo em um sucesso."
+    },
+    {
+      "parent": "Executioners Guild",
+      "sourceId": "Backstab",
+      "name": "Punhalada pelas Costas",
+      "tier": "mastery",
+      "description": "Sua característica Marcado para Morrer usa d8 em vez de d6."
+    },
+    {
+      "parent": "Juggernaut",
+      "sourceId": "Rugged",
+      "name": "Tenaz",
+      "tier": "foundation",
+      "description": "Ganhe um bônus permanente de +3 no seu limiar de Dano Grave."
+    },
+    {
+      "parent": "Juggernaut",
+      "sourceId": "Overwhelm",
+      "name": "Sobrepujar",
+      "tier": "foundation",
+      "description": "Quando acertar um ataque, gaste 1 de Esperança para arremessar o alvo até alcance Próximo ou fazê-lo marcar 1 de Fadiga."
+    },
+    {
+      "parent": "Juggernaut",
+      "sourceId": "Surrounded",
+      "name": "Cercado",
+      "tier": "specialization",
+      "description": "Quando atacar com uma arma Corpo-a-Corpo, gaste qualquer quantidade de Esperança para incluir a mesma quantidade de criaturas adicionais em alcance Corpo-a-Corpo como alvos do ataque."
+    },
+    {
+      "parent": "Juggernaut",
+      "sourceId": "Eye for an Eye",
+      "name": "Olho por Olho",
+      "tier": "specialization",
+      "description": "Uma vez por descanso, quando um adversário em alcance Corpo-a-Corpo fizer você marcar Pontos de Vida, marque 1 de Fadiga para fazê-lo marcar a mesma quantidade de Pontos de Vida."
+    },
+    {
+      "parent": "Juggernaut",
+      "sourceId": "Pummeljoy",
+      "name": "Prazer em Golpear",
+      "tier": "mastery",
+      "description": "Quando obtiver um sucesso crítico em um ataque com uma arma Corpo-a-Corpo, ganhe 1 de Esperança adicional, limpe 1 de Fadiga adicional e ganhe +1 na Proficiência para esse ataque."
+    },
+    {
+      "parent": "Juggernaut",
+      "sourceId": "Not Done Yet",
+      "name": "Ainda Não Acabou",
+      "tier": "mastery",
+      "description": "Quando sofrer Dano Grave, escolha ganhar 1 de Esperança ou limpar 1 de Fadiga."
+    },
+    {
+      "parent": "Poisoners Guild",
+      "sourceId": "Toxic Concoctions",
+      "name": "Misturas Tóxicas",
+      "tier": "foundation",
+      "description": "Marque 1 de Fadiga para colocar 1d4+1 marcadores nesta carta. Quando acertar um ataque com arma, gaste 1 marcador para aplicar ao alvo um veneno conhecido.\n\n• Pétala Fantasma: o alvo fica temporariamente Vulnerável.\n• Esporo Sepulcral: o alvo também marca 1 de Fadiga.\n• Erva Sanguessuga: cause 1d6 de dano adicional nesse ataque.\n\nAo fazer um descanso longo, remova os marcadores não utilizados."
+    },
+    {
+      "parent": "Poisoners Guild",
+      "sourceId": "Poison Compendium",
+      "name": "Compêndio de Venenos",
+      "tier": "specialization",
+      "description": "Você também conhece estes venenos:\n\n• Vinha da Meia-Noite: o alvo tem desvantagem nas rolagens de ataque até marcar 1 de Fadiga para encerrar esse efeito.\n• Raiz de Górgona: o alvo fica temporariamente Restringido."
+    },
+    {
+      "parent": "Poisoners Guild",
+      "sourceId": "Twin Fang",
+      "name": "Presas Gêmeas",
+      "tier": "specialization",
+      "description": "Quando aplicar um veneno conhecido a um alvo que esteja Marcado para Morrer por você, gaste 1 marcador adicional para também aplicar o efeito de um segundo veneno conhecido."
+    },
+    {
+      "parent": "Poisoners Guild",
+      "sourceId": "Venomancer",
+      "name": "Venomante",
+      "tier": "mastery",
+      "description": "Você também conhece estes venenos:\n\n• Semente da Praga: o alvo sofre −3 nos limiares de dano até o fim da cena. Esse efeito não se acumula.\n• Folha do Medo: cause dano adicional igual ao resultado do seu Dado de Medo nesse ataque.\n• Espinho Cadavérico: o alvo tem desvantagem nos Testes de Reação até o fim da cena."
+    },
+    {
+      "parent": "Poisoners Guild",
+      "sourceId": "Adder's Blessing",
+      "name": "Bênção da Víbora",
+      "tier": "mastery",
+      "description": "Você é imune a venenos e outras toxinas."
+    },
+    {
+      "parent": "Moon",
+      "sourceId": "Night's Glamour",
+      "name": "Fascínio Noturno",
+      "tier": "foundation",
+      "description": "Faça um Teste de Conjuração (13) para revestir-se de uma aparência ilusória e fascinante. Enquanto o efeito durar, tenha vantagem nos testes que tirem proveito dessa aparência. Além disso, adversários em alcance Próximo precisam marcar 1 de Fadiga para atacar você.\n\nQuando marcar um Ponto de Vida ou causar dano, o efeito termina, a menos que você marque 1 de Fadiga para mantê-lo."
+    },
+    {
+      "parent": "Moon",
+      "sourceId": "Moonbeam",
+      "name": "Raio Lunar",
+      "tier": "specialization",
+      "description": "Uma vez por sessão, conjure uma coluna de luz da lua que ilumina uma área em alcance Próximo até o fim da cena. Sob essa luz, você e seus aliados ganham +1 nos Testes de Conjuração e enxergam através de ilusões."
+    },
+    {
+      "parent": "Moon",
+      "sourceId": "Ire of Pale Light",
+      "name": "Ira da Luz Pálida",
+      "tier": "specialization",
+      "description": "Quando uma criatura afetada pela sua característica Maldição, em alcance Muito Distante, errar um ataque, ela marca 1 de Fadiga."
+    },
+    {
+      "parent": "Moon",
+      "sourceId": "Lunar Phases",
+      "name": "Fases Lunares",
+      "tier": "mastery",
+      "description": "No início de cada sessão, role um d6 e coloque-o nesta carta. Até o fim da sessão, ganhe o efeito correspondente:\n\n• 1 — Lua Nova: gaste 1 de Esperança para anular Dano Menor.\n• 2–3 — Lua Crescente: ganhe +2 nas rolagens de dano.\n• 4 — Lua Cheia: ganhe +3 nos limiares de dano.\n• 5–6 — Lua Minguante: ganhe +1 na Evasão.\n\nUma vez por descanso, gaste 1 de Esperança para aumentar em 1 o valor desse dado. Ao aumentar um resultado 6, ele se torna 1."
+    }
+  ]
+}
