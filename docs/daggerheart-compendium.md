@@ -86,6 +86,17 @@ de características do compêndio. Os ícones são exibidos inteiros no compênd
 na ficha, na criação e nas características de evolução. O importador preserva
 os vínculos nas atualizações dos dados.
 
+## Organização da consulta
+
+Classes, ancestralidades, comunidades e subclasses exibem suas características
+logo abaixo da entrada principal, em cartões menores e recuados. As características
+de subclasse seguem a ordem Fundação, Especialização e Maestria. As cartas são
+agrupadas por domínio e, dentro dele, por nível numérico.
+
+A busca mantém a entrada principal como contexto quando encontra uma de suas
+características; ao encontrar a entrada principal, exibe suas características.
+A visualização Todos mantém a mesma organização por categoria.
+
 ## Atualização dos dados
 
 Com os repositórios-fonte clonados ao lado do RPGptSWIG, execute primeiro

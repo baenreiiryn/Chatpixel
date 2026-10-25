@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import CompendiumArt, { compendiumGlyph } from "@/components/CompendiumArt";
+import { buildCompendiumSections, type CompendiumSection } from "@/lib/compendium/grouping";
 import {
   daggerheartCompendium,
   entryTypeLabel,
@@ -72,10 +73,10 @@ function Mechanics({ entry, expanded = false }: { entry: CompendiumEntry; expand
   );
 }
 
-function EntryCard({ entry, onOpen }: { entry: CompendiumEntry; onOpen: () => void }) {
+function EntryCard({ entry, onOpen, compact = false }: { entry: CompendiumEntry; onOpen: () => void; compact?: boolean }) {
   const glyph = compendiumGlyph(entry);
   return (
-    <button className={"compEntryCard " + (entry.art ? "withArt" : "")} onClick={onOpen}>
+    <button className={["compEntryCard", entry.art ? "withArt" : "", compact ? "compEntryCardChild" : ""].filter(Boolean).join(" ")} onClick={onOpen}>
       {entry.art ? (
         <div className="compEntryArt">
           <CompendiumArt
@@ -96,11 +97,63 @@ function EntryCard({ entry, onOpen }: { entry: CompendiumEntry; onOpen: () => vo
           {entry.source === "void-unofficial" && <em>The Void</em>}
         </div>
         <h3>{entry.name}</h3>
-        <p>{shortDescription(entry.description || entry.motivesAndTactics || "Sem descrição.")}</p>
+        <p>{shortDescription(entry.description || entry.motivesAndTactics || "Sem descrição.", compact ? 120 : 170)}</p>
         <Mechanics entry={entry} />
       </div>
       <b className="compEntryArrow">›</b>
     </button>
+  );
+}
+
+function SectionEntries({ section, onOpen }: { section: CompendiumSection; onOpen: (entry: CompendiumEntry) => void }) {
+  if (section.kind === "families") {
+    return (
+      <div className="compFamilyList">
+        {section.families.map(({ parent, children }) => (
+          <section className="compFamilyGroup" aria-label={parent.name} key={parent.id}>
+            <EntryCard entry={parent} onOpen={() => onOpen(parent)} />
+            {children.length > 0 && (
+              <ul className="compFamilyChildren" aria-label={"Características de " + parent.name}>
+                {children.map((entry) => (
+                  <li key={entry.id}><EntryCard entry={entry} compact onOpen={() => onOpen(entry)} /></li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
+        {section.ungrouped.length > 0 && (
+          <div className="compEntryGrid">
+            {section.ungrouped.map((entry) => <EntryCard entry={entry} onOpen={() => onOpen(entry)} key={entry.id} />)}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (section.kind === "domains") {
+    return (
+      <div className="compDomainList">
+        {section.domains.map((domain) => (
+          <section className="compDomainGroup" aria-label={"Domínio " + domain.name} key={domain.id}>
+            <header className="compDomainHeader"><small>DOMÍNIO</small><h2>{domain.name}</h2></header>
+            {domain.levels.map(({ level, entries }) => (
+              <section className="compDomainLevel" aria-label={level === null ? "Sem nível" : "Nível " + level} key={level ?? "none"}>
+                <h3>{level === null ? "Sem nível" : "Nível " + level}<span>{entries.length} {entries.length === 1 ? "carta" : "cartas"}</span></h3>
+                <div className="compEntryGrid">
+                  {entries.map((entry) => <EntryCard entry={entry} onOpen={() => onOpen(entry)} key={entry.id} />)}
+                </div>
+              </section>
+            ))}
+          </section>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="compEntryGrid">
+      {section.entries.map((entry) => <EntryCard entry={entry} onOpen={() => onOpen(entry)} key={entry.id} />)}
+    </div>
   );
 }
 
@@ -214,6 +267,8 @@ export default function DaggerheartCompendium({ onBack }: Props) {
           entry.motivesAndTactics || "",
           entryTypeLabel(entry.type),
           entry.type === "subclassFeature" ? subclassFeatureTierLabel(entry.tier) : "",
+          entry.domain || "",
+          entry.type === "domainCard" && entry.level !== undefined ? "Nível " + entry.level : "",
         ].join(" "));
         return haystack.includes(normalizedQuery);
       })
@@ -222,6 +277,12 @@ export default function DaggerheartCompendium({ onBack }: Props) {
         return type || a.name.localeCompare(b.name, "pt-BR");
       });
   }, [category, query]);
+
+  const sections = useMemo(() => buildCompendiumSections(
+    daggerheartCompendium.entries,
+    filtered,
+    daggerheartCompendium.categories.map((item) => item.id),
+  ), [filtered]);
 
   const activeCategory = daggerheartCompendium.categories.find((item) => item.id === category);
 
@@ -282,8 +343,13 @@ export default function DaggerheartCompendium({ onBack }: Props) {
             {query && <small>para “{query}”</small>}
           </div>
 
-          <div className="compendiumEntries">
-            {filtered.map((entry) => <EntryCard entry={entry} onOpen={() => setSelectedId(entry.id)} key={entry.id} />)}
+          <div className="compendiumEntries organized">
+            {sections.map((section) => (
+              <section className="compSection" key={section.category}>
+                {category === "all" && <h2 className="compSectionTitle">{daggerheartCompendium.categories.find((item) => item.id === section.category)?.name || section.category}</h2>}
+                <SectionEntries section={section} onOpen={(entry) => setSelectedId(entry.id)} />
+              </section>
+            ))}
             {!filtered.length && (
               <div className="compendiumEmpty"><b>◇</b><h3>Nada encontrado</h3><p>Tente outro termo ou escolha uma categoria diferente.</p></div>
             )}
