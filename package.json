@@ -11,6 +11,7 @@
     "bridge": "node bridge/server.mjs",
     "sync:foundryborne-art": "node scripts/sync-foundryborne-art.mjs",
     "sync:foundryborne-subclasses": "node scripts/sync-foundryborne-subclasses.mjs",
+    "sync:beastforms": "node scripts/sync-beastforms.mjs",
     "import:daggerheart": "node scripts/import-daggerheart-compendium.mjs"
   },
   "dependencies": {

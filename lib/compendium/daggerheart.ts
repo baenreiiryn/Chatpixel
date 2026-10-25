@@ -23,6 +23,7 @@ export type CompendiumEntry = {
   parent?: string | null;
   tier?: "foundation" | "specialization" | "mastery";
   level?: number;
+  beastformTier?: number;
   domain?: string;
   recallCost?: number;
   description: string;
@@ -74,6 +75,7 @@ export function entryTypeLabel(type: string) {
     subclass: "Subclasse",
     subclassFeature: "Característica de subclasse",
     domainCard: "Carta de domínio",
+    beastform: "Forma de Fera",
     weapon: "Arma",
     armor: "Armadura",
     consumable: "Consumível",

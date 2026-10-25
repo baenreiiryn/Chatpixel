@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T11:24:30.118Z",
+  "generatedAt": "2026-10-25T11:50:51.767Z",
   "sources": {
     "translation": "https://github.com/etiagoabreu/daggerheart-translation-pt-BR",
     "art": "https://github.com/mordachai/art-for-daggerheart",
@@ -38,6 +38,12 @@
       "name": "Subclasses",
       "icon": "△",
       "description": "Caminhos e características de subclasse"
+    },
+    {
+      "id": "beastforms",
+      "name": "Formas de Fera",
+      "icon": "♧",
+      "description": "Formas do Druida, atributos, ataques e habilidades por patamar"
     },
     {
       "id": "domains",
@@ -26982,6 +26988,879 @@
         "fear": false
       },
       "art": null
+    },
+    {
+      "id": "srd-beastform-agile-scout",
+      "sourceId": "Agile Scout",
+      "name": "Explorador Ágil",
+      "originalName": "Agile Scout",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 1\n\nExemplos: Camundongo, doninha, raposa etc.\n\nAgilidade +1\n\nEvasão +2\n\nAtaque: Agilidade · Corpo-a-Corpo · d4 de dano físico usando sua Proficiência.\n\nVantagem em testes para: enganar, localizar, esgueirar-se.\n\nÁgil: Seu movimento é silencioso e você pode gastar uma Esperança para se mover até um ponto Distante sem precisar fazer um teste.\n\nFrágil: Ao sofrer dano maior ou severo, você sai da Forma de Fera.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d4",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Distante"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 1
+    },
+    {
+      "id": "srd-beastform-aquatic-scout",
+      "sourceId": "Aquatic Scout",
+      "name": "Explorador Aquático",
+      "originalName": "Aquatic Scout",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 1\n\nExemplos: Enguia, peixe, polvo etc.\n\nAgilidade +1\n\nEvasão +2\n\nAtaque: Agilidade · Corpo-a-Corpo · d4 de dano físico usando sua Proficiência.\n\nVantagem em testes para: navegar, esgueirar-se, nadar.\n\nAquático: Você pode respirar e se movimentar naturalmente embaixo d’água.\n\nFrágil: Ao sofrer dano maior ou severo, você sai da Forma de Fera.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d4",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 1
+    },
+    {
+      "id": "srd-beastform-household-friend",
+      "sourceId": "Household Friend",
+      "name": "Animal Doméstico",
+      "originalName": "Household Friend",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 1\n\nExemplos: Cão, coelho, gato etc.\n\nInstinto +1\n\nEvasão +2\n\nAtaque: Instinto · Corpo-a-Corpo · d6 de dano físico usando sua Proficiência.\n\nVantagem em testes para: escalar, localizar, proteger.\n\nCompanhia: Ao ajudar um aliado, você pode rolar um d8 como seu dado de vantagem.\n\nFrágil: Ao sofrer dano maior ou severo, você sai da Forma de Fera.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d6",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 1
+    },
+    {
+      "id": "srd-beastform-nimble-grazer",
+      "sourceId": "Nimble Grazer",
+      "name": "Ruminante Arisco",
+      "originalName": "Nimble Grazer",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 1\n\nExemplos: Cabra, cervo, gazela etc.\n\nAgilidade +1\n\nEvasão +3\n\nAtaque: Agilidade · Corpo-a-Corpo · d6 de dano físico usando sua Proficiência.\n\nVantagem em testes para: saltar, esgueirar-se, correr.\n\nPresa Arisca: Quando sofre um ataque, você pode marcar um Fadiga para rolar um d4 e somar o resultado à sua Evasão contra esse ataque.\n\nFrágil: Ao sofrer dano maior ou severo, você sai da Forma de Fera.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d6",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 1
+    },
+    {
+      "id": "srd-beastform-pack-predator",
+      "sourceId": "Pack Predator",
+      "name": "Predador de Bando",
+      "originalName": "Pack Predator",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 1\n\nExemplos: Coiote, hiena, lobo etc.\n\nForça +2\n\nEvasão +1\n\nAtaque: Força · Corpo-a-Corpo · d8 + 2 de dano físico usando sua Proficiência.\n\nVantagem em testes para: atacar, correr, rastrear.\n\nGolpe Debilitante: Quando você acerta um ataque contra um alvo Adjacente, você pode marcar um Fadiga para torná-lo temporariamente Vulnerável.\n\nCaça em Bando: Quando você acerta um ataque contra um alvo atingido por um aliado imediatamente antes de você, seu dano aumenta em +1d8.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d8+2",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Adjacente"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 1
+    },
+    {
+      "id": "srd-beastform-stalking-arachnid",
+      "sourceId": "Stalking Arachnid",
+      "name": "Aracnídeo Espreitador",
+      "originalName": "Stalking Arachnid",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 1\n\nExemplos: Aranha-lobo, tarântula etc.\n\nFinesse +1\n\nEvasão +2\n\nAtaque: Finesse · Corpo-a-Corpo · d6 + 1 de dano físico usando sua Proficiência.\n\nVantagem em testes para: atacar, escalar, esgueirar-se.\n\nPicada Peçonhenta: Quando acerta um ataque contra um alvo Adjacente, você o deixa temporariamente Envenenado. Uma criatura Envenenada sofre 1d10 de dano físico direto cada vez que age.\n\nLança-teia: Você pode criar uma poderosa teia, útil nas aventuras e nas batalhas. Ela é resistente o bastante para suportar uma criatura. Você pode Imobilizar temporariamente um alvo Próximo se passar em um teste de Finesse contra ele.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d6+1",
+            "type": "físico"
+          },
+          {
+            "formula": "1d10",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Adjacente",
+          "Próximo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 1
+    },
+    {
+      "id": "srd-beastform-armored-sentry",
+      "sourceId": "Armored Sentry",
+      "name": "Carapaça Vigilante",
+      "originalName": "Armored Sentry",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 2\n\nExemplos: Pangolim, tartaruga, tatu etc.\n\nForça +1\n\nEvasão +1\n\nAtaque: Força · Corpo-a-Corpo · d8 + 2 de dano físico usando sua Proficiência.\n\nVantagem em testes para: cavar, localizar, proteger.\n\nCarapaça Reforçada: Seu exterior sólido concede resistência a dano físico. Além disso, você pode marcar uma Armadura para se recolher em sua carapaça. Enquanto estiver dentro dela, o dano físico que você sofre é reduzido em um número igual à sua Armadura (após aplicar a resistência), mas você não pode realizar outros movimentos.\n\nCanhão Ricochete: Marque um Fadiga para que um aliado arremesse você contra um adversário. Para fazer isso, o aliado faz um teste de ataque usando Agilidade ou Força (à escolha dele) contra um alvo Próximo. Em um sucesso, o adversário sofre d12+2 de dano físico usando a Proficiência de seu aliado. Você pode gastar uma Esperança para escolher outro adversário Muito Próximo do primeiro como alvo. O segundo alvo sofre metade do dano causado ao primeiro alvo.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Armadura",
+            "amount": 1,
+            "label": "1 Armadura"
+          },
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          },
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d8+2",
+            "type": "físico"
+          },
+          {
+            "formula": "d12+2",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Muito Próximo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 2
+    },
+    {
+      "id": "srd-beastform-mighty-strider",
+      "sourceId": "Mighty Strider",
+      "name": "Trotador Robusto",
+      "originalName": "Mighty Strider",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 2\n\nExemplos: Camelo, cavalo, zebra etc.\n\nAgilidade +1\n\nEvasão +2\n\nAtaque: Agilidade · Corpo-a-Corpo · d8 + 1 de dano físico usando sua Proficiência.\n\nVantagem em testes para: saltar, navegar, correr.\n\nBesta de Carga: Você pode carregar até 2 aliados voluntários com você enquanto se movimenta.\n\nAtropelar: Marque um Fadiga para se mover até um ponto em alcance Próximo em linha reta e atacar todos os alvos Adjacentes à linha. Alvos atingidos sofrem d8+1 de dano físico usando sua Proficiência e ficam temporariamente Vulneráveis.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d8+1",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Adjacente",
+          "Próximo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 2
+    },
+    {
+      "id": "srd-beastform-pouncing-predator",
+      "sourceId": "Pouncing Predator",
+      "name": "Predador Furtivo",
+      "originalName": "Pouncing Predator",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 2\n\nExemplos: Guepardo, leão, pantera etc.\n\nInstinto +1\n\nEvasão +3\n\nAtaque: Instinto · Corpo-a-Corpo · d8 + 6 de dano físico usando sua Proficiência.\n\nVantagem em testes para: atacar, escalar, esgueirar-se.\n\nDisparada: Gaste uma Esperança para se mover até um ponto em alcance Distante sem precisar fazer um teste.\n\nAbate: Marque um Fadiga para se mover até ficar Adjacente a um alvo e fazer um teste de ataque contra ele. Em um sucesso, você recebe um bônus de +2 em sua Proficiência para esse ataque e o alvo deve marcar um Fadiga.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          },
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d8+6",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Adjacente",
+          "Distante"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 2
+    },
+    {
+      "id": "srd-beastform-powerful-beast",
+      "sourceId": "Powerful Beast",
+      "name": "Fera Poderosa",
+      "originalName": "Powerful Beast",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 2\n\nExemplos: Alce, touro, urso etc.\n\nForça +3\n\nEvasão +1\n\nAtaque: Força · Corpo-a-Corpo · d10 + 4 de dano físico usando sua Proficiência.\n\nVantagem em testes para: navegar, proteger, assustar.\n\nAtaque Violento: Quando tira 1 em um dado de dano, você pode rolar um d10 e somar o resultado à rolagem de dano. Além disso, antes de fazer um teste de ataque, você pode marcar um Fadiga para receber um bônus de +1 em sua Proficiência para esse ataque.\n\nCouro Espesso: Você recebe +2 de bônus nos seus limiares de dano.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d10+4",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 2
+    },
+    {
+      "id": "srd-beastform-striking-serpent",
+      "sourceId": "Striking Serpent",
+      "name": "Serpente Traiçoeira",
+      "originalName": "Striking Serpent",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 2\n\nExemplos: Cascavel, naja, víbora etc.\n\nFinesse +1\n\nEvasão +2\n\nAtaque: Finesse · Muito Próximo · d8 + 4 de dano físico usando sua Proficiência.\n\nVantagem em testes para: escalar, enganar, correr.\n\nBote Peçonhento: Faça um ataque contra qualquer número de alvos Próximos. Em um sucesso, o alvo fica temporariamente Envenenado. Uma criatura Envenenada sofre 1d10 de dano físico direto a cada vez que age.\n\nSilvo de alerta: Marque um Fadiga para forçar qualquer número de alvos Adjacentes a se afastarem até ficarem Muito Próximos.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d8+4",
+            "type": "físico"
+          },
+          {
+            "formula": "1d10",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Muito Próximo",
+          "Adjacente"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 2
+    },
+    {
+      "id": "srd-beastform-winged-beast",
+      "sourceId": "Winged Beast",
+      "name": "Fera Alada",
+      "originalName": "Winged Beast",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 2\n\nExemplos: Coruja, corvo, gavião etc.\n\nFinesse +1\n\nEvasão +3\n\nAtaque: Finesse · Corpo-a-Corpo · d4 + 2 de dano físico usando sua Proficiência.\n\nVantagem em testes para: enganar, localizar, assustar.\n\nVisão Aérea: Você pode voar à vontade. Uma vez por descanso, e enquanto estiver no ar, você pode perguntar ao mestre algo sobre a paisagem abaixo sem precisar de teste. Na primeira vez em que um personagem fizer um teste para agir em relação a essa informação, ele o faz com vantagem.\n\nOssos Ocos: Você sofre uma penalidade de -2 nos seus limiares de dano.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d4+2",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [
+          "Uma vez por descanso"
+        ],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 2
+    },
+    {
+      "id": "srd-beastform-aquatic-predator",
+      "sourceId": "Aquatic Predator",
+      "name": "Predador Aquático",
+      "originalName": "Aquatic Predator",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 3\n\nExemplos: Golfinho, orca, tubarão etc.\n\nAgilidade +2\n\nEvasão +4\n\nAtaque: Agilidade · Corpo-a-Corpo · d10 + 6 de dano físico usando sua Proficiência.\n\nVantagem em testes para: atacar, nadar, rastrear.\n\nAquático: Você pode respirar e se movimentar naturalmente embaixo d’água.\n\nAtaque Voraz: Quando acerta um ataque em um alvo, você pode gastar uma Esperança para deixá-lo temporariamente Vulnerável e receber um bônus de +1 em Proficiência nesse ataque.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d10+6",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 3
+    },
+    {
+      "id": "srd-beastform-great-predator",
+      "sourceId": "Great Predator",
+      "name": "Grande Predador",
+      "originalName": "Great Predator",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 3\n\nExemplos: Lobo atroz, tigre dente-de-sabre, velocirraptor etc.\n\nForça +2\n\nEvasão +2\n\nAtaque: Força · Corpo-a-Corpo · d12 + 8 de dano físico usando sua Proficiência.\n\nVantagem em testes para: atacar, esgueirar-se, correr.\n\nBesta de Carga: Você pode carregar até 2 aliados voluntários com você enquanto se movimenta.\n\nAtaque Voraz: Quando acerta um ataque em um alvo, você pode gastar uma Esperança para deixá-lo temporariamente Vulnerável e receber um bônus de +1 em Proficiência nesse ataque.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d12+8",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 3
+    },
+    {
+      "id": "srd-beastform-great-winged-beast",
+      "sourceId": "Great Winged Beast",
+      "name": "Grande Fera Alada",
+      "originalName": "Great Winged Beast",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 3\n\nExemplos: Águia gigante, falcão etc.\n\nFinesse +2\n\nEvasão +3\n\nAtaque: Finesse · Corpo-a-Corpo · d8 + 6 de dano físico usando sua Proficiência.\n\nVantagem em testes para: enganar, distrair, localizar.\n\nVisão Aérea: Você pode voar à vontade. Uma vez por descanso, e enquanto estiver no ar, você pode perguntar ao mestre algo sobre a paisagem abaixo sem precisar de teste. Na primeira vez em que um personagem fizer um teste para agir em relação a essa informação, ele o faz com vantagem.\n\nBesta de Carga: Você pode carregar até 2 aliados voluntários com você enquanto se movimenta.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d8+6",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [
+          "Uma vez por descanso"
+        ],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 3
+    },
+    {
+      "id": "srd-beastform-legendary-beast",
+      "sourceId": "Legendary Beast",
+      "name": "Fera Lendária",
+      "originalName": "Legendary Beast",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 3\n\nExemplos: Aprimoradamento de 1º patamar\n\nEscolha uma forma de até o patamar 1. Mantenha suas vantagens e habilidades e acrescente os seguintes bônus aos da forma escolhida: atributo de ataque +1, Evasão +2 e dano +6.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 3
+    },
+    {
+      "id": "srd-beastform-legendary-hybrid",
+      "sourceId": "Legendary Hybrid",
+      "name": "Híbrido Lendário",
+      "originalName": "Legendary Hybrid",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 3\n\nExemplos: Esfinge, grifo etc.\n\nForça +2\n\nEvasão +3\n\nAtaque: Força · Corpo-a-Corpo · d10 + 8 de dano físico usando sua Proficiência.\n\nCombine 2 formas de até o patamar 2. Escolha um total de 4 vantagens e 2 habilidades dessas formas.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d10+8",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 3
+    },
+    {
+      "id": "srd-beastform-mighty-lizard",
+      "sourceId": "Mighty Lizard",
+      "name": "Lagarto Poderoso",
+      "originalName": "Mighty Lizard",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 3\n\nExemplos: Crocodilo, jacaré, monstro-de-gila etc.\n\nInstinto +2\n\nEvasão +1\n\nAtaque: Instinto · Corpo-a-Corpo · d10 + 7 de dano físico usando sua Proficiência.\n\nVantagem em testes para: atacar, esgueirar-se, rastrear.\n\nArmadura Física: Você recebe um bônus de +3 em seus limiares de dano.\n\nGolpe Súbito: Quando acerta um ataque contra um alvo Adjacente, você pode gastar uma Esperança para segurá-lo com a mandíbula, deixando-o temporariamente Imobilizado e Vulnerável.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d10+7",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Adjacente"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 3
+    },
+    {
+      "id": "srd-beastform-epic-aquatic-beast",
+      "sourceId": "Epic Aquatic Beast",
+      "name": "Fera Aquática Épica",
+      "originalName": "Epic Aquatic Beast",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 4\n\nExemplos: Baleia, lula gigante etc.\n\nAgilidade +3\n\nEvasão +3\n\nAtaque: Agilidade · Corpo-a-Corpo · d10 + 10 de dano físico usando sua Proficiência.\n\nVantagem em testes para: localizar, proteger, assustar, rastrear.\n\nMestre do Oceano: Você pode respirar e se movimentar naturalmente debaixo d'água. Quando acerta um ataque contra um alvo Adjacente, você pode deixá-lo temporariamente Imobilizado.\n\nRobusto: Quando for marcar Armadura, role 1d6. Em um resultado 5 ou mais, reduza a gravidade em um limiar sem marcar Armadura.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Armadura",
+            "amount": null,
+            "label": "variável Armadura"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d10+10",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Adjacente"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 4
+    },
+    {
+      "id": "srd-beastform-massive-behemoth",
+      "sourceId": "Massive Behemoth",
+      "name": "Gigante Massiva",
+      "originalName": "Massive Behemoth",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 4\n\nExemplos: Elefante, mamute, rinoceronte etc.\n\nForça +3\n\nEvasão +1\n\nAtaque: Força · Corpo-a-Corpo · d12 + 12 de dano físico usando sua Proficiência.\n\nVantagem em testes para: localizar, proteger, assustar, correr.\n\nBesta de Carga: Você pode carregar até 4 aliados voluntários com você enquanto se movimenta.\n\nDemolir: Gaste uma Esperança para se mover até um ponto Distante em linha reta e atacar todos os alvos Adjacentes à linha. Alvos atingidos sofrem d8+10 de dano físico usando sua Proficiência e ficam temporariamente Vulneráveis.\n\nImpávido: Você recebe um bônus de +2 em seus limiares de dano.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Esperança",
+            "amount": 1,
+            "label": "1 Esperança"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d12+12",
+            "type": "físico"
+          },
+          {
+            "formula": "d8+10",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Adjacente",
+          "Distante"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": true,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 4
+    },
+    {
+      "id": "srd-beastform-mythic-aerial-hunter",
+      "sourceId": "Mythic Aerial Hunter",
+      "name": "Caçador Aéreo Mítico",
+      "originalName": "Mythic Aerial Hunter",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 4\n\nExemplos: Dragão, pterodátilo, roca, serpe etc.\n\nFinesse +3\n\nEvasão +4\n\nAtaque: Finesse · Corpo-a-Corpo · d10 + 11 de dano físico usando sua Proficiência.\n\nVantagem em testes para: atacar, enganar, localizar, navegar.\n\nBesta de Carga: Você pode carregar até 3 aliados voluntários com você enquanto se movimenta.\n\nAve de Rapina Mortal: Você pode voar à vontade e se mover até um ponto em alcance Distante como parte de seu movimento. Quando ataca um alvo após se mover em linha reta até ficar Adjacente a ele a partir de no mínimo alcance Próximo, você pode rolar novamente todos os dados de dano com um resultado menor que sua Proficiência.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d10+11",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Adjacente",
+          "Distante",
+          "Próximo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 4
+    },
+    {
+      "id": "srd-beastform-mythic-beast",
+      "sourceId": "Mythic Beast",
+      "name": "Fera Mítica",
+      "originalName": "Mythic Beast",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 4\n\nExemplos: Aprimoramento de 1º ou 2º patamar\n\nEscolha uma forma de até o patamar 2. Mantenha suas vantagens e habilidades e acrescente os seguintes bônus aos da forma escolhida: atributo de ataque +2, Evasão +3 e dano +9. Aumente o dado de dano em um passo.",
+      "mechanics": {
+        "costs": [],
+        "damage": [],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 4
+    },
+    {
+      "id": "srd-beastform-mythic-hybrid",
+      "sourceId": "Mythic Hybrid",
+      "name": "Híbrido Mítico",
+      "originalName": "Mythic Hybrid",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 4\n\nExemplos: Cocatriz, mantícora, quimera etc.\n\nForça +3\n\nEvasão +2\n\nAtaque: Força · Corpo-a-Corpo · d12 + 10 de dano físico usando sua Proficiência.\n\nCombine 3 formas de até o patamar 3. Escolha um total de 5 vantagens e 3 habilidades dessas formas.",
+      "mechanics": {
+        "costs": [],
+        "damage": [
+          {
+            "formula": "d12+10",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 4
+    },
+    {
+      "id": "srd-beastform-terrible-lizard",
+      "sourceId": "Terrible Lizard",
+      "name": "Lagarto Terrível",
+      "originalName": "Terrible Lizard",
+      "type": "beastform",
+      "category": "beastforms",
+      "source": "srd",
+      "parent": "Beastform",
+      "description": "Patamar 4\n\nExemplos: Braquiossauro, tiranossauro etc.\n\nForça +3\n\nEvasão +2\n\nAtaque: Força · Corpo-a-Corpo · d12 + 10 de dano físico usando sua Proficiência.\n\nVantagem em testes para: atacar, enganar, assustar, rastrear.\n\nGolpes Devastadores: Quando causa dano severo em um alvo Adjacente, você pode marcar um Fadiga para forçá-lo a marcar um Ponto de Vida adicional.\n\nDisparada Massiva: Você pode se mover até um ponto Distante sem precisar fazer uma teste. Você ignora terreno difícil (a critério do mestre) devido ao seu tamanho.",
+      "mechanics": {
+        "costs": [
+          {
+            "resource": "Fadiga",
+            "amount": 1,
+            "label": "1 Fadiga"
+          },
+          {
+            "resource": "Ponto de Vida",
+            "amount": 1,
+            "label": "1 Ponto de Vida"
+          }
+        ],
+        "damage": [
+          {
+            "formula": "d12+10",
+            "type": "físico"
+          }
+        ],
+        "tests": [],
+        "difficulties": [],
+        "ranges": [
+          "Corpo-a-Corpo",
+          "Adjacente",
+          "Distante"
+        ],
+        "frequency": [],
+        "reaction": false,
+        "hope": false,
+        "fear": false
+      },
+      "art": null,
+      "beastformTier": 4
     },
     {
       "id": "core-adversary-cult-adept",

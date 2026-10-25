@@ -9,6 +9,7 @@ const order = payload.categories.map((category) => category.id);
 const flatten = (sections) => sections.flatMap((section) => {
   if (section.kind === "families") return [...section.families.flatMap(({ parent, children }) => [parent, ...children]), ...section.ungrouped];
   if (section.kind === "domains") return section.domains.flatMap((domain) => domain.levels.flatMap((level) => level.entries));
+  if (section.kind === "beastforms") return section.tiers.flatMap((tier) => tier.entries);
   return section.entries;
 });
 

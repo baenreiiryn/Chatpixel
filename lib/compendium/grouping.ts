@@ -23,6 +23,7 @@ export type CompendiumDomain = {
 export type CompendiumSection =
   | { category: string; kind: "families"; families: CompendiumFamily[]; ungrouped: CompendiumEntry[] }
   | { category: string; kind: "domains"; domains: CompendiumDomain[] }
+  | { category: string; kind: "beastforms"; tiers: Array<{ tier: number; entries: CompendiumEntry[] }> }
   | { category: string; kind: "flat"; entries: CompendiumEntry[] };
 
 function compareEntries(a: CompendiumEntry, b: CompendiumEntry) {
@@ -122,6 +123,13 @@ export function buildCompendiumSections(
     if (familyTypes) {
       const grouped = groupFamilies(entriesByCategory.get(category) || [], categoryMatches, ...familyTypes);
       sections.push({ category, kind: "families", ...grouped });
+    } else if (category === "beastforms") {
+      const tiers = new Map<number, CompendiumEntry[]>();
+      for (const entry of categoryMatches) {
+        const tier = entry.beastformTier || 1;
+        tiers.set(tier, [...(tiers.get(tier) || []), entry]);
+      }
+      sections.push({ category, kind: "beastforms", tiers: Array.from(tiers, ([tier, items]) => ({ tier, entries: items.toSorted(compareEntries) })).sort((a, b) => a.tier - b.tier) });
     } else if (category === "domains") {
       sections.push({ category, kind: "domains", domains: groupDomains(categoryMatches) });
     } else {

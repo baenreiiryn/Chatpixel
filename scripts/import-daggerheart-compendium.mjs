@@ -977,6 +977,53 @@ for (const entry of entries) {
   delete entry.artLicense;
 }
 
+const beastformManifest = readJson(path.join(root, "lib", "compendium", "beastforms.manifest.json"));
+const beastformTranslations = new Map(loadEntries("daggerheart.beastforms.json"));
+const beastformTerms = {
+  agility: "Agilidade", strength: "Força", finesse: "Finesse", instinct: "Instinto", presence: "Presença", knowledge: "Conhecimento",
+  Deceive: "enganar", Locate: "localizar", Sneak: "esgueirar-se", Navigate: "navegar", Swim: "nadar", Climb: "escalar", Protect: "proteger", Leap: "saltar", Sprint: "correr", Attack: "atacar", Track: "rastrear", Dig: "cavar", Scare: "assustar", Distract: "distrair",
+  melee: "Corpo-a-Corpo", veryClose: "Muito Próximo", close: "Próximo", far: "Distante", veryFar: "Muito Distante",
+};
+const signed = (n) => n >= 0 ? `+${n}` : String(n);
+for (const form of beastformManifest.forms) {
+  const translated = beastformTranslations.get(form.name);
+  if (!translated) throw new Error(`Missing beastform translation: ${form.name}`);
+  const paragraphs = [`Patamar ${form.tier}`, `Exemplos: ${translated.examples}`];
+  if (form.kind === "evolved") {
+    const e = form.evolved;
+    paragraphs.push(`Escolha uma forma de até o patamar ${e.maximumTier}. Mantenha suas vantagens e habilidades e acrescente os seguintes bônus aos da forma escolhida: atributo de ataque ${signed(e.mainTraitBonus)}, Evasão ${signed(e.evasionBonus)} e dano ${signed(e.damageBonus)}.${e.increaseDamageDice ? " Aumente o dado de dano em um passo." : ""}`);
+  } else {
+    for (const change of form.changes) {
+      if (change.key?.startsWith("system.traits.")) {
+        const trait = change.key.split(".")[2];
+        paragraphs.push(`${beastformTerms[trait] || trait} ${signed(change.value)}`);
+      } else if (change.key === "system.evasion") {
+        paragraphs.push(`Evasão ${signed(change.value)}`);
+      } else if (change.type === "standardAttack") {
+        const a = change.value;
+        paragraphs.push(`Ataque: ${beastformTerms[a.trait] || a.trait} · ${beastformTerms[a.attackRange] || a.attackRange} · ${a.damageFormula.replace(/@prof/g, "")} de dano físico usando sua Proficiência.`);
+      }
+    }
+    if (form.kind === "hybrid") {
+      const h = form.hybrid;
+      paragraphs.push(`Combine ${h.beastformOptions} formas de até o patamar ${h.maximumTier}. Escolha um total de ${h.advantages} vantagens e ${h.features} habilidades dessas formas.`);
+    }
+  }
+  if (form.advantages.length) paragraphs.push(`Vantagem em testes para: ${form.advantages.map((v) => beastformTerms[v] || v).join(", ")}.`);
+  for (const name of form.features) {
+    const feature = beastformTranslations.get(name);
+    if (!feature?.description) throw new Error(`Missing beastform feature translation: ${name}`);
+    // Foundry inline-roll labels duplicate the formula; render only the label.
+    const description = name === "Carrier" && form.carrierCapacity
+      ? `Você pode carregar até ${form.carrierCapacity} aliados voluntários com você enquanto se movimenta.`
+      : feature.description.replace(/\[\[[^\]]+\]\]\{([^}]+)\}/g, "$1");
+    paragraphs.push(`${feature.name}: ${cleanText(description)}`);
+  }
+  const entry = makeEntry({ key: form.name, data: { name: translated.name, description: paragraphs.join("\n\n") }, type: "beastform", category: "beastforms", source: "srd", parent: "Beastform" });
+  entry.beastformTier = form.tier;
+  entries.push(entry);
+}
+
 const portraitDir = path.join(artRoot, "adversaries", "portraits");
 const portraitFiles = fs.existsSync(portraitDir) ? fs.readdirSync(portraitDir).filter((file) => file.toLowerCase().endsWith(".webp")) : [];
 const portraitMap = new Map(portraitFiles.map((file) => [
@@ -1124,6 +1171,7 @@ const categories = [
   { id: "ancestries", name: "Ancestralidades", icon: "◐", description: "Ancestralidades e características" },
   { id: "communities", name: "Comunidades", icon: "⌂", description: "Origens culturais e características" },
   { id: "subclasses", name: "Subclasses", icon: "△", description: "Caminhos e características de subclasse" },
+  { id: "beastforms", name: "Formas de Fera", icon: "♧", description: "Formas do Druida, atributos, ataques e habilidades por patamar" },
   { id: "domains", name: "Domínios", icon: "◈", description: "Cartas, feitiços e habilidades de domínio" },
   { id: "equipment", name: "Equipamentos", icon: "⚔", description: "Armas, armaduras, consumíveis e itens de saque" },
   { id: "adversaries", name: "Adversários", icon: "♜", description: "Criaturas e oponentes para o Mestre" },

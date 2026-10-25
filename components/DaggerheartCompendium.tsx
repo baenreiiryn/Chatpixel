@@ -92,6 +92,7 @@ function EntryCard({ entry, onOpen, compact = false }: { entry: CompendiumEntry;
       <div className="compEntryBody">
         <div className="compEntryMeta">
           <span>{entryTypeLabel(entry.type)}</span>
+          {entry.type === "beastform" && <em>Patamar {entry.beastformTier}</em>}
           {entry.type === "subclassFeature" && entry.tier && <em>{subclassFeatureTierLabel(entry.tier)}</em>}
           {entry.source === "expansion" && <em>Expansão</em>}
           {entry.source === "void-unofficial" && <em>The Void</em>}
@@ -144,6 +145,21 @@ function SectionEntries({ section, onOpen }: { section: CompendiumSection; onOpe
                 </div>
               </section>
             ))}
+          </section>
+        ))}
+      </div>
+    );
+  }
+
+  if (section.kind === "beastforms") {
+    return (
+      <div className="compDomainList">
+        {section.tiers.map(({ tier, entries }) => (
+          <section className="compDomainLevel" aria-label={"Patamar " + tier} key={tier}>
+            <h3>Patamar {tier}<span>{entries.length} formas</span></h3>
+            <div className="compEntryGrid">
+              {entries.map((entry) => <EntryCard entry={entry} onOpen={() => onOpen(entry)} key={entry.id} />)}
+            </div>
           </section>
         ))}
       </div>
@@ -268,6 +284,7 @@ export default function DaggerheartCompendium({ onBack }: Props) {
           entryTypeLabel(entry.type),
           entry.type === "subclassFeature" ? subclassFeatureTierLabel(entry.tier) : "",
           entry.domain || "",
+          entry.beastformTier ? "Patamar " + entry.beastformTier : "",
           entry.type === "domainCard" && entry.level !== undefined ? "Nível " + entry.level : "",
         ].join(" "));
         return haystack.includes(normalizedQuery);
