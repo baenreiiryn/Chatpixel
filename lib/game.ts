@@ -91,6 +91,20 @@ export type RollResultRecord = {
   campaignMinute: number;
 };
 
+export type GmAppliedTool = {
+  name: string;
+  arguments: string;
+  result: unknown;
+};
+
+export type GmTurnRecovery = {
+  text: string;
+  allowTools: boolean;
+  allowedToolNames?: string[];
+  finalizeLastGlory?: boolean;
+  appliedTools: GmAppliedTool[];
+};
+
 export type InventoryItem = {
   id: string;
   name: string;
@@ -395,6 +409,7 @@ export type GameState = {
   sceneVisual?: SceneWebImage;
   events: EventRecord[];
   pendingRoll?: PendingPlayerRoll;
+  gmRecovery?: GmTurnRecovery;
   rollHistory?: RollResultRecord[];
   milestones?: CampaignMilestone[];
   pendingLevelUp?: PendingDaggerheartLevelUp;

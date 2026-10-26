@@ -31,7 +31,8 @@ import {
   useCloudSync,
 } from "@/hooks/useCloudSync";
 import { useOracleBridge } from "@/hooks/useOracleBridge";
-import { buildCampaignOpeningPrompt, buildTurnInput, executeGmTool, extractNarration, extractRefusal, gmInstructions, responseTools } from "@/lib/gm";
+import { buildCampaignOpeningPrompt, extractNarration, extractRefusal, gmInstructions } from "@/lib/gm";
+import { runGmTurn } from "@/lib/gmTurn";
 import { buildSceneImagePrompt, buildSceneSnapshot, formatNarrationText, latestGmMessage } from "@/lib/scene";
 import { buildSceneWebImageSearchPrompt, describeSceneWebImageError, extractSceneWebImage } from "@/lib/sceneWebImage";
 import DaggerheartCompendium from "@/components/DaggerheartCompendium";
@@ -1540,6 +1541,7 @@ export default function OracleApp() {
         },
       ],
       pendingRoll: undefined,
+      gmRecovery: undefined,
     };
     replacementCampaignId && setReplacementCampaignId(null);
     stateRef.current = next;
@@ -2125,6 +2127,15 @@ export default function OracleApp() {
     finalizeLastGlory = false,
   ) {
     if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
+      const deferred: GameState = {
+        ...working,
+        gmRecovery: working.gmRecovery?.text === text ? working.gmRecovery : {
+          text, allowTools, allowedToolNames, finalizeLastGlory, appliedTools: [],
+        },
+      };
+      stateRef.current = deferred;
+      setState(deferred);
+      setGmError("A resposta do Mestre está aguardando conexão. Seu progresso foi preservado.");
       setShowConnect(true);
       return;
     }
@@ -2137,129 +2148,26 @@ export default function OracleApp() {
       activeCampaignIdRef.current === runCampaignId
       && campaignEpochRef.current === runCampaignEpoch;
     setGmBusy(true);
+    setGmError("");
     setShowDiceTray(false);
     try {
-      const conversationInput: unknown[] = buildTurnInput(working, text);
-      if (finalizeLastGlory && working.character.death?.status === "last-glory") {
-        conversationInput.push({
-          role: "developer",
-          content: "GLÓRIA FINAL: esta é a ação final do personagem. Ela é um CRÍTICO AUTOMÁTICO com aprovação do Mestre. Não peça rolagem para determinar sucesso; narre o feito final e suas consequências. Depois desta ação, o personagem atravessa o véu da morte.",
-        });
-      }
-      if (!allowTools) {
-        conversationInput.push({
-          role: "developer",
-          content: "As consequências persistentes desta ação já foram aplicadas anteriormente. Não execute ferramentas nem altere o estado novamente. Produza somente a narração do Mestre coerente com o estado atual.",
-        });
-      }
-      let narration = "";
-      let refusal = "";
-      let lastOutputTypes: string[] = [];
-      let reachedRoundLimit = true;
-      const availableTools = allowedToolNames?.length
-        ? responseTools.filter((tool) => allowedToolNames.includes(tool.name))
-        : responseTools;
-      for (let round = 0; round < 12; round += 1) {
-        const response = await bridge.respond({
-          model: bridge.model,
-          instructions: gmInstructions(working.campaign.system),
-          input: conversationInput,
-          ...(allowTools && !working.pendingRoll && availableTools.length ? { tools: availableTools } : {}),
-        });
-        if (!runIsCurrent()) return;
-        const output = Array.isArray(response.output) ? response.output : [];
-        const calls = output.filter((item: Record<string, unknown>) => item.type === "function_call");
-        lastOutputTypes = output.map((item: Record<string, unknown>) => String(item.type || "unknown"));
-        narration = extractNarration(response) || narration;
-        refusal = extractRefusal(response) || refusal;
-
-        // store:false is intentionally stateless. Replay the complete model output,
-        // including encrypted reasoning items, before the function outputs.
-        conversationInput.push(...output);
-
-        // A reasoning model can return a reasoning-only phase. That is not the
-        // final answer: keep sampling until a message, refusal, or tool call arrives.
-        if (!calls.length) {
-          if (narration || refusal) {
-            reachedRoundLimit = false;
-            break;
-          }
-          continue;
-        }
-
-        for (const call of calls as Array<Record<string, unknown>>) {
-          if (!allowTools) continue;
-          if (working.pendingRoll) {
-            conversationInput.push({
-              type: "function_call_output",
-              call_id: call.call_id,
-              output: JSON.stringify({
-                ok: false,
-                waitingForPlayerRoll: true,
-                error: "A cena está aguardando a rolagem do jogador. Nenhuma outra ferramenta foi executada.",
-                pendingRoll: working.pendingRoll,
-              }),
-              ...(call.caller ? { caller: call.caller } : {}),
-            });
-            continue;
-          }
-          const executed = executeGmTool(
-            working,
-            String(call.name || ""),
-            String(call.arguments || "{}"),
-          );
-          working = executed.state;
-          conversationInput.push({
-            type: "function_call_output",
-            call_id: call.call_id,
-            output: JSON.stringify(executed.result),
-            ...(call.caller ? { caller: call.caller } : {}),
-          });
-        }
-        stateRef.current = working;
-        setState(working);
-        if (working.pendingRoll) {
-          const pending = working.pendingRoll;
-          const diceInstruction = pending.formula
-            ? `Role ${pending.formula}`
-            : `Use ${pending.allowedDice?.join(", ") || "os dados indicados"}`;
-          const rollInstruction = [
-            pending.reason,
-            `${diceInstruction} para ${pending.label}${pending.target !== undefined ? ` · CD ${pending.target}` : ""}.`,
-          ].filter(Boolean).join("\n\n");
-          narration = [narration.trim(), rollInstruction].filter(Boolean).join("\n\n");
-          refusal = "";
-          reachedRoundLimit = false;
-          break;
-        }
-      }
-
-      // Safety valve: if the model spent every round reasoning/using tools without
-      // emitting a message, ask one final pass with tools disabled.
-      if (!working.pendingRoll && !narration && !refusal && reachedRoundLimit) {
-        conversationInput.push({
-          role: "developer",
-          content: "As alterações solicitadas já foram executadas no OracleRPG. Não use novas ferramentas. Produza agora apenas a narração final coerente com os resultados acima.",
-        });
-        const finalResponse = await bridge.respond({
-          model: bridge.model,
-          instructions: gmInstructions(working.campaign.system),
-          input: conversationInput,
-        });
-        if (!runIsCurrent()) return;
-        narration = extractNarration(finalResponse);
-        refusal = extractRefusal(finalResponse);
-        if (Array.isArray(finalResponse.output)) {
-          lastOutputTypes = finalResponse.output.map((item: Record<string, unknown>) => String(item.type || "unknown"));
-        }
-      }
-
-      if (!narration && refusal) {
-        narration = refusal;
-      } else if (!narration) {
-        const received = lastOutputTypes.length ? lastOutputTypes.join(", ") : "nenhum item";
-        narration = `O Mestre não retornou uma mensagem narrativa. Tipos recebidos: ${received}. O estado da campanha foi preservado.`;
-      }
+      const result = await runGmTurn(working, text, bridge.respond, {
+        model: bridge.model,
+        allowTools,
+        allowedToolNames,
+        finalizeLastGlory,
+        isCurrent: runIsCurrent,
+        onProgress: (next) => {
+          if (!runIsCurrent()) return;
+          working = next;
+          stateRef.current = next;
+          setState(next);
+        },
+      });
+      if (!runIsCurrent()) return;
+      working = result.state;
+      let narration = result.narration || result.refusal;
+      if (!narration) throw new Error("O Mestre não retornou uma mensagem narrativa. Retome a resposta para continuar.");
       narration = formatNarrationText(narration);
       const sceneSnapshot = buildSceneSnapshot(working, narration);
       working = {
@@ -2285,16 +2193,19 @@ export default function OracleApp() {
       if (!runIsCurrent()) return;
       const message = error instanceof Error ? error.message : "Falha ao consultar o Mestre.";
       setGmError(message);
-      setState((current) => ({
+      const current = stateRef.current;
+      const failed: GameState = {
         ...current,
-        ...(current.crafting.pendingAttempt?.stage === "review" && !current.pendingRoll
-          ? { crafting: rejectCraftAttempt(current.crafting, current.crafting.pendingAttempt.id) }
-          : {}),
+        gmRecovery: current.gmRecovery || working.gmRecovery || {
+          text, allowTools, allowedToolNames, finalizeLastGlory, appliedTools: [],
+        },
         messages: [
           ...current.messages,
           { id: crypto.randomUUID(), role: "system", text: `Mestre IA indisponível: ${message}`, createdAt: new Date().toISOString(), campaignMinute: current.time.campaignMinute },
         ],
-      }));
+      };
+      stateRef.current = failed;
+      setState(failed);
     } finally {
       gmRunningRef.current = false;
       setGmBusy(false);
@@ -2338,6 +2249,15 @@ export default function OracleApp() {
       setGmError(`O Mestre está aguardando: ${state.pendingRoll.label}. Role os dados pelo ícone ou use /r.`);
       return;
     }
+    if (stateRef.current.gmRecovery) {
+      if (/^(?:continu(?:a|ar|e)|(?:gere|gerar|tente|tentar)\s+novamente|retom(?:e|ar))\b/i.test(text)) {
+        setInput("");
+        await retryGmNarration();
+      } else {
+        setGmError("Retome a resposta pendente do Mestre antes de enviar uma nova ação.");
+      }
+      return;
+    }
 
     const playerMessage = { id: crypto.randomUUID(), role: "player" as const, text, createdAt: new Date().toISOString(), campaignMinute: state.time.campaignMinute };
     const working: GameState = { ...state, messages: [...state.messages, playerMessage] };
@@ -2353,8 +2273,20 @@ export default function OracleApp() {
     await runGmNarration(working, text, true, undefined, working.character.death?.status === "last-glory");
   }
 
+  async function retryGmNarration() {
+    if (gmBusy || gmRunningRef.current || activeDiceRoll || stateRef.current.pendingRoll) return;
+    const working = stateRef.current;
+    const recovery = working.gmRecovery;
+    if (!recovery) return;
+    await runGmNarration(working, recovery.text, recovery.allowTools, recovery.allowedToolNames, recovery.finalizeLastGlory);
+  }
+
   async function regenerateNarration(message: Message) {
     if (gmBusy || gmRunningRef.current || activeDiceRoll || message.role !== "player") return;
+    if (stateRef.current.gmRecovery) {
+      await retryGmNarration();
+      return;
+    }
     if (bridge.status !== "ready" || !bridge.account?.connected || !bridge.model) {
       setShowConnect(true);
       return;
@@ -2374,7 +2306,8 @@ export default function OracleApp() {
     setGmError("");
     stateRef.current = working;
     setState(working);
-    await runGmNarration(working, message.text, !persistentChangesAlreadyApplied);
+    await runGmNarration(working, message.text, true,
+      persistentChangesAlreadyApplied ? ["request_player_roll", "memory_search"] : undefined);
   }
 
   if (screen === "home") {
@@ -2855,7 +2788,7 @@ export default function OracleApp() {
                             <span>✦</span> Gerar imagem da cena
                           </button>
                         )}
-                        {message.role === "player" && latestUnansweredPlayer?.id === message.id && !state.pendingRoll && (
+                        {message.role === "player" && latestUnansweredPlayer?.id === message.id && !state.pendingRoll && !state.gmRecovery && (
                           <button className="regenerateNarrationButton" onClick={() => void regenerateNarration(message)} disabled={gmBusy}>
                             <span>↻</span> {gmBusy ? "Gerando narração…" : "Regenerar narração do Mestre"}
                           </button>
@@ -2870,6 +2803,11 @@ export default function OracleApp() {
                     </button>
                   )}
                 </div>
+                {state.gmRecovery && !state.pendingRoll && !gmBusy && (
+                  <button type="button" className="openingRetryButton" onClick={() => void retryGmNarration()} disabled={Boolean(activeDiceRoll)}>
+                    <span>↻</span> Retomar resposta do Mestre
+                  </button>
+                )}
                 {state.pendingRoll && (
                   <div className="pendingRollBanner">
                     <b>🎲</b>

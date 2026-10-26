@@ -22,6 +22,8 @@ import {
 import { parseDiceFormula, type ParsedDiceFormula } from "@/lib/dice";
 import { formatTimelineEntryDate, timelineEntrySortValue, worldDateOrdinalMinute } from "@/lib/timeline";
 import { oracleTools } from "@/lib/tools";
+import compendium from "./compendium/daggerheart.generated.json" with { type: "json" };
+import type { CompendiumEntry } from "@/lib/compendium/daggerheart";
 import { triggerCampaignMilestoneLevelUp } from "@/lib/daggerheartAdvancement";
 import {
   attachCraftPendingRoll,
@@ -92,6 +94,8 @@ export function gmInstructions(system: string) {
     "Quando o grupo aceitar uma nova missão, registre-a com quest_add; se houver prazo, informe deadlineMinutes para que o Oracle crie o prazo no calendário automaticamente.",
     "Para eventos relativos ao momento atual, prefira startsInMinutes e durationMinutes em vez de calcular datas manualmente.",
     "Não invente valores mecânicos que já estejam no contexto.",
+    "CARACTERÍSTICAS DO PERSONAGEM: characterAbilities contém as regras completas das habilidades que este personagem possui. Interprete a intenção e a fala do jogador à luz dessas regras, sem exigir o nome exato da habilidade. abilityIntentHints são apenas candidatos: confirme o contexto, a disponibilidade, os limites e os trackers antes de aplicar qualquer efeito.",
+    "INSPIRAÇÃO DO BARDO (Rally): falar para inspirar, encorajar os companheiros ou fazer um discurso pode declarar o uso de Inspiração. Se o personagem possui essa característica, use a regra dela e registre a ativação do Dado de Inspiração com character_tracker_set. Não substitua automaticamente a característica por um teste social genérico nem exija um teste para ativá-la quando a regra não pede. Não conceda a habilidade a quem não a possui nem ignore o limite por sessão. Inspirar o grupo e gastar um dado já concedido são ações diferentes.",
     "PONTOS DE VIDA EM DAGGERHEART: character.hp representa espaços de PV MARCADOS, exatamente como Fadiga marcada. 0 PV marcados significa personagem intacto; maxHp PV marcados dispara o movimento de morte. Em character_adjust_resource, amount positivo em hp MARCA dano e amount negativo LIMPA dano. Nunca some PV para representar cura.",
     "TRACKERS: se uma característica, subclasse ou carta possuir contador/dado persistente, use character_tracker_set imediatamente quando a ação ou regra gastar, ganhar, ativar ou alterar esse recurso. O tracker do OracleRPG é a fonte da verdade; não deixe a alteração apenas na narração.",
     "AVANÇO EM DAGGERHEART: níveis são concedidos somente por milestone narrativo, nunca por XP. Quando decidir que o grupo alcançou um milestone que concede nível, use campaign_milestone_level_up uma única vez; a ferramenta cria o level-up pendente e a interface coleta os avanços do jogador antes de alterar o nível.",
@@ -99,6 +103,7 @@ export function gmInstructions(system: string) {
     "COMPANHEIRO ANIMAL: quando o companheiro do Patrulheiro sofrer ou limpar Fadiga, atualize-a com animal_companion_adjust_stress.",
     "MORTE: quando todos os PV estiverem marcados, não escolha um movimento de morte pelo jogador e não contorne a interface do OracleRPG. O jogador escolhe Evitar a Morte, Glória Final ou Arriscar Tudo. Se o estado indicar Glória Final, trate a próxima ação declarada do personagem como um crítico automático, conclua sua consequência e então encerre a vida do personagem.",
     "Quando o desfecho depender de uma rolagem do jogador, use request_player_roll. Nunca role pelo jogador nem invente o resultado.",
+    "Nunca peça uma rolagem apenas no texto: todo pedido de dados deve criar request_player_roll com a fórmula e os modificadores corretos para que o jogador possa rolar pela interface.",
     "Ao chamar request_player_roll, encerre a resolução naquele ponto e aguarde o jogador fornecer o resultado. Não narre sucesso, falha, dano ou consequência da rolagem no mesmo turno.",
     "Se pendingRoll estiver preenchido no estado, a cena está aguardando essa rolagem: não solicite outra e não avance suas consequências até receber o resultado.",
     "Quando pendingRoll desaparecer e o resultado aparecer em rollHistory, continue a cena a partir daquele resultado. Você pode narrar brevemente a consequência e então pedir outra rolagem quando a sequência exigir, por exemplo ataque acertou e agora requer dano.",
@@ -154,7 +159,39 @@ export function buildCampaignOpeningPrompt(state: GameState, source: "creation" 
   ].join("\n");
 }
 
+export function ownedCharacterAbilities(state: GameState) {
+  const character = state.character.daggerheart;
+  if (!character) return [];
+  const groups = [
+    ["classFeature", character.classFeatures || []],
+    ["subclassFeature", character.subclassFeatures || []],
+    ["ancestryFeature", character.ancestry?.features || []],
+    ["communityFeature", character.community?.features || []],
+    ["domainCard", character.domainCards || []],
+  ] as const;
+  const owned = new Map<string, CompendiumEntry>();
+  for (const [type, references] of groups) {
+    for (const reference of references) {
+      const candidates = (compendium.entries as CompendiumEntry[]).filter((entry) => entry.type === type);
+      const exact = candidates.find((entry) => entry.id === reference.id || entry.sourceId === reference.id);
+      const named = candidates.filter((entry) => normalizeTimelineText(entry.name) === normalizeTimelineText(reference.name));
+      const entry = exact || (named.length === 1 ? named[0] : undefined);
+      if (entry) owned.set(entry.id, entry);
+    }
+  }
+  return [...owned.values()].map((entry) => ({
+    id: entry.id, sourceId: entry.sourceId, name: entry.name, type: entry.type,
+    description: entry.description, mechanics: entry.mechanics,
+    trackers: (character.trackers || []).filter((tracker) =>
+      tracker.source.type === entry.type && (tracker.source.id === entry.id || tracker.source.id === entry.sourceId)),
+  }));
+}
+
 export function buildTurnInput(state: GameState, playerText: string) {
+  const characterAbilities = ownedCharacterAbilities(state);
+  const abilityIntentHints = characterAbilities.filter((ability) =>
+    ability.sourceId === "Rally" && /\b(inspir\w*|encoraj\w*|discurso)\b/.test(normalizeTimelineText(playerText)),
+  ).map((ability) => ({id: ability.id, sourceId: ability.sourceId, name: ability.name}));
   const recent = state.messages.slice(-12).map((message) => ({
     role: message.role,
     text: message.text,
@@ -168,6 +205,8 @@ export function buildTurnInput(state: GameState, playerText: string) {
       JSON.stringify({
         campaign: state.campaign,
         character: state.character,
+        characterAbilities,
+        abilityIntentHints,
         inventory: state.inventory,
         crafting: ensureCraftingState(state.crafting),
         activeQuests: state.quests.filter((quest) => quest.status === "active"),
