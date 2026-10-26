@@ -38,11 +38,16 @@ O manifesto e o compêndio gerado são versionados para builds sem acesso às fo
 | 4 | 8–10 | Comum, Incomum, Raro e Muito raro |
 
 A etapa usa espaços para armadura, arma primária e secundária; exibe o pacote
-básico, um consumível e um item pessoal. As sugestões da classe continuam
+básico, uma escolha entre Poção de Vida Menor (cura) e Poção de Vigor Menor,
+e um item pessoal. A poção é uma seleção única, exibida em dois cartões com
+ícones; trocar a opção substitui a poção no inventário, sem conceder as duas.
+Essa escolha inicial permanece entre as duas poções menores em todos os patamares.
+As sugestões da classe continuam
 disponíveis. O item pessoal pode ser uma das recordações da classe ou um item de
 saque permitido pelo patamar, substituindo a recordação.
 
-Cada espaço abre um seletor com busca, filtro de raridade, estatísticas e efeitos.
+Armadura, armas e item pessoal abrem seletores com busca, filtro de raridade,
+estatísticas e efeitos.
 Armas de duas mãos limpam e bloqueiam a secundária; ela volta a ficar disponível
 ao trocar ou remover a primária. Os espaços podem ser deixados vazios.
 

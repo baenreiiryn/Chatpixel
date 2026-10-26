@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import EquipmentArt from "@/components/EquipmentArt";
 import { type ClassCreationConfig } from "@/lib/characterCreation/daggerheart";
@@ -19,10 +19,13 @@ export default function StartingEquipmentPicker({level, config, entries, value, 
   const [query, setQuery] = useState("");
   const [rarity, setRarity] = useState("all");
   const dialogRef = useRef<HTMLDivElement>(null);
+  const potionChoiceName = useId();
   const allowed = allowedEquipmentRarities(tier);
   const primary = entries.find((entry) => entry.id === value.primary);
   const twoHanded = primary?.hands === 2;
   const suggestions = suggestedStartingLoadout(config.suggestedEquipment, entries, tier);
+  const potionChoices = entries.filter((entry) => equipmentFitsSlot(entry, "consumable") && canChooseStartingEquipment(entry, tier))
+    .toSorted((a, b) => a.name.localeCompare(b.name, "pt-BR"));
   const basics = config.suggestedEquipment.filter((item) => {
     const entry = findEquipmentPreset(item, entries);
     return !entry || !["weapon", "armor", "consumable"].includes(entry.type);
@@ -81,7 +84,17 @@ export default function StartingEquipmentPicker({level, config, entries, value, 
     </div>
     <div className="loadoutChoicesGrid">
       <fieldset className="loadoutPanel"><legend>Itens iniciais</legend><div className="loadoutBasics">{basics.map((item, index) => <div key={item.name + index}><span><EquipmentArt item={item} /></span><strong>{item.name}</strong><small>{item.detail}</small></div>)}</div></fieldset>
-      <fieldset className="loadoutPanel"><legend>Consumível</legend>{slotCard("consumable")}<p className="loadoutHint">Escolha um consumível disponível para seu patamar.</p></fieldset>
+      <fieldset className="loadoutPanel"><legend>Poção inicial</legend>
+        <p className="loadoutHint">Escolha uma poção de cura ou de vigor.</p>
+        <div className="loadoutPotionChoices">{potionChoices.map((entry) => {
+          const label = entry.sourceId === "Minor Health Potion" ? "Poção de cura menor" : entry.name;
+          return <label className={"loadoutPotionChoice" + (value.consumable === entry.id ? " selected" : "")} key={entry.id}>
+            <input type="radio" name={potionChoiceName} value={entry.id} checked={value.consumable === entry.id} onChange={() => select("consumable", entry.id)} />
+            <span className="loadoutPotionArt"><EquipmentArt item={entry} /></span>
+            <strong>{label}</strong><small>{entry.description}</small>
+          </label>;
+        })}</div>
+      </fieldset>
       <fieldset className="loadoutPanel"><legend>Item pessoal</legend>{personal && <div className="loadoutPersonal"><span><EquipmentArt item={personal} /></span><strong>{personal.name}</strong><small className="rarityBadge" data-rarity={"rarity" in personal ? personal.rarity : "common"}>{equipmentRarityLabel("rarity" in personal ? personal.rarity : "common")}</small></div>}
         {(config.equipmentChoices || []).map((group, groupIndex) => <div className="loadoutTrinkets" key={groupIndex}>{group.map((item, index) => <button type="button" aria-pressed={!value.personal && (choices[groupIndex] || 0) === index} key={item.name} onClick={() => {onChoicesChange(choices.map((choice, i) => i === groupIndex ? index : choice)); if (value.personal) onChange(chooseStartingEquipment(value, "personal", undefined, entries, tier));}}>{item.name}</button>)}</div>)}
         <button type="button" className="loadoutBrowsePersonal" data-slot="personal" onClick={() => open("personal")}>{value.personal ? "Trocar item do compêndio" : "Escolher item do compêndio"}</button>

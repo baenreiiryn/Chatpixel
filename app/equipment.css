@@ -53,6 +53,15 @@
 .loadoutBasics small{font-size:9px;line-height:1.5;color:#8d8297;margin-top:5px}
 .loadoutChoicesGrid .loadoutSlot{min-height:192px}
 .loadoutHint{font-size:10px;line-height:1.6;color:#95869e;margin:10px 0 0}
+.loadoutPotionChoices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.loadoutPotionChoice{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;padding:12px 9px;border:1px solid #4d3d4f;border-radius:10px;background:#110d16;color:#b7aabd;text-align:center;cursor:pointer}
+.loadoutPotionChoice.selected{border-color:#bb945c;background:#30241f;color:#ead09e}
+.loadoutPotionChoice input{width:16px;height:16px;flex:0 0 16px;margin:0;accent-color:#d2b37c}
+.loadoutPotionChoice:focus-within{outline:2px solid #efc97e;outline-offset:3px}
+.loadoutPotionArt{display:block;width:54px;height:54px}
+.loadoutPotionArt img{display:block;width:100%;height:100%;object-fit:contain}
+.loadoutPotionChoice strong{font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.loadoutPotionChoice small{font-size:10px;line-height:1.6;color:#a99bb4;overflow-wrap:anywhere}
 .loadoutPersonal{display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;margin-bottom:13px}
 .loadoutPersonal>span{width:75px;height:75px;display:grid;place-items:center}
 .loadoutPersonal img{width:100%;height:100%;object-fit:contain}

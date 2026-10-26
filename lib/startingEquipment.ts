@@ -18,6 +18,8 @@ export function canChooseStartingEquipment(entry: CompendiumEntry, tier: number)
 
 export function equipmentFitsSlot(entry: CompendiumEntry, slot: StartingEquipmentSlot) {
   if (slot === "primary" || slot === "secondary") return entry.type === "weapon" && entry.weaponSlot === slot;
+  if (slot === "consumable") return entry.type === "consumable"
+    && (entry.sourceId === "Minor Health Potion" || entry.sourceId === "Minor Stamina Potion");
   return entry.type === (slot === "personal" ? "loot" : slot);
 }
 
