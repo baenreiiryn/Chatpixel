@@ -101,3 +101,10 @@ Para futura integração visual com OracleRPG, o adaptador no navegador pode cha
 A preparação da viagem passa pela mesma proteção que libera os controles após erros. O ciclo de desenho trata falhas, rejeita animações/transições pendentes e continua recebendo frames. Temporizadores concluem efeitos e chegadas mesmo se os frames forem suspensos; o progresso de aparição nunca fica negativo. O botão **Cancelar espera** interrompe o envio local ou a animação pendente, preserva o texto para nova tentativa e ignora a resposta cancelada. A espera da requisição tem limite de 125 segundos. Operações já aplicadas antes de cancelar permanecem na cena.
 
 Testes de regressão incluem seis turnos consecutivos, resposta tardia após cancelamento, retomada de envio, erro de Canvas e ausência de frames.
+
+
+## Versão 0.5.2: presença por encontro
+
+Todo evento `scene` inicia um novo encontro, mesmo se tipo e nome do ambiente forem iguais. NPCs anteriores ficam para trás, exceto IDs/ref em `scene.carry`, reservado a acompanhantes explicitamente estabelecidos na narração. Movimento curto com `move` mantém o encontro.
+
+A resposta do mestre inclui `visibleNpcs`, lista completa de até 8 IDs/ref fisicamente presentes ao final do turno. O transporte exige essa lista e acrescenta um evento `cast` ao lote (máximo 11 eventos do modelo + 1 de presença). O motor resolve refs de NPCs criados no mesmo turno, remove quem saiu de vista, limpa seleção/fala referentes a personagens ausentes e rejeita referências inválidas. Memórias e citações não implicam presença física. O protocolo de `dispatch` também aceita `cast` para o futuro adaptador OracleRPG.
