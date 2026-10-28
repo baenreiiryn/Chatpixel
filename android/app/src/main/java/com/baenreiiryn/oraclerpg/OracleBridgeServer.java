@@ -23,11 +23,11 @@ import java.util.concurrent.Executors;
 
 public final class OracleBridgeServer {
     private static final int PORT = 31417;
-    private static final Set<String> ALLOWED_ORIGINS = Set.of(
+    private static final Set<String> ALLOWED_ORIGINS = new java.util.HashSet<>(java.util.Arrays.asList(
             BuildConfig.ORACLE_URL,
             "http://localhost:3000",
             "http://127.0.0.1:3000"
-    );
+    ));
     private static OracleBridgeServer instance;
 
     public static synchronized OracleBridgeServer get(Context context) {
