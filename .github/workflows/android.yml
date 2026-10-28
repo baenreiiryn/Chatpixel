@@ -27,6 +27,9 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+          log-accepted-android-sdk-licenses: false
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
@@ -40,6 +43,7 @@ jobs:
       - run: gradle -p android testDebugUnitTest lintDebug assembleDebug --no-daemon
       - name: Package APK and checksum
         run: |
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose android/app/build/outputs/apk/debug/app-debug.apk
           cp android/app/build/outputs/apk/debug/app-debug.apk test-results/Chatpixel-0.2.0.apk
           cd test-results
           sha256sum Chatpixel-0.2.0.apk > Chatpixel-0.2.0.apk.sha256
