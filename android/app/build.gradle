@@ -50,6 +50,11 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    // AAPT's default !_* rule drops directories such as Next.js _next.
+    androidResources {
+        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }
+
     sourceSets { main { assets.srcDirs = ["../../out"] } }
 
     buildFeatures {
