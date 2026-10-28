@@ -3,7 +3,7 @@ export function createRenderer(canvas,getState){
  const c=canvas.getContext('2d'); c.imageSmoothingEnabled=false;let animation=null;let alive=true;
  const rect=(x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h)};
  function tree(x,y,s=1){c.save();c.translate(x,y);c.scale(s,s);rect(-9,-10,18,75,'#253126');rect(1,0,6,60,'#3c4430');for(let i=0;i<4;i++){rect(-58+i*9,-100-i*23,116-i*18,39,'#102a27');rect(-48+i*9,-105-i*23,94-i*18,25,i%2?'#244535':'#1d3b30');rect(-34+i*7,-104-i*23,22,5,'#35553c');}c.restore();}
- function weapon(type,x,y,angle=0){c.save();c.translate(x,y);c.rotate(angle);if(type==='sword'){rect(0,-34,5,36,'#d2e8dc');rect(0,-34,2,29,'#8caeb0');rect(-5,0,15,4,'#caa860');rect(0,4,5,10,'#76543a');}else if(type==='bow'){c.strokeStyle='#c79c62';c.lineWidth=4;c.beginPath();c.arc(0,-10,21,-1.3,1.3);c.stroke();c.strokeStyle='#dcd5ad';c.lineWidth=1;c.beginPath();c.moveTo(6,-30);c.lineTo(6,10);c.stroke();}else{rect(0,-40,4,55,'#9a7455');rect(-4,-43,12,12,'#9ae8e0');rect(-1,-46,6,5,'#d4fff1');}c.restore();}
+ function weapon(type,x,y,angle=0){if(!type)return;c.save();c.translate(x,y);c.rotate(angle);if(type==='sword'){rect(0,-34,5,36,'#d2e8dc');rect(0,-34,2,29,'#8caeb0');rect(-5,0,15,4,'#caa860');rect(0,4,5,10,'#76543a');}else if(type==='bow'){c.strokeStyle='#c79c62';c.lineWidth=4;c.beginPath();c.arc(0,-10,21,-1.3,1.3);c.stroke();c.strokeStyle='#dcd5ad';c.lineWidth=1;c.beginPath();c.moveTo(6,-30);c.lineTo(6,10);c.stroke();}else{rect(0,-40,4,55,'#9a7455');rect(-4,-43,12,12,'#9ae8e0');rect(-1,-46,6,5,'#d4fff1');}c.restore();}
  function sprite(x,y,kind,name,selected,t,hit=false,held){
   c.save();c.translate(Math.round(x),Math.round(y));
   c.fillStyle='#08161290';c.beginPath();c.ellipse(0,8,28,9,0,0,7);c.fill();
@@ -39,12 +39,12 @@ export function createRenderer(canvas,getState){
   // Fireflies and dust.
   for(let i=0;i<28;i++){const x=(i*173+t*(.004+i%3*.002))%1280,y=140+(i*83)%470+Math.sin(t/900+i)*8;rect(x,y,2,2,i%3?'#9ba56b77':'#d5d69e');}
   let px=s.player.x,py=s.player.y;let a=animation;
-  if(a){a.progress=Math.min(1,(t-a.start)/a.duration);if(a.type==='attack'&&a.weapon==='sword'){const travel=Math.sin(a.progress*Math.PI);px+=(a.x-70-px)*travel;py+=(a.y-py)*travel;}}
+  if(a){a.progress=Math.min(1,(t-a.start)/a.duration);if(['move','talk'].includes(a.type)){const p=a.progress*a.progress*(3-2*a.progress);px=a.fromX+(s.player.x-a.fromX)*p;py=a.fromY+(s.player.y-a.fromY)*p;}if(a.type==='attack'&&a.weapon==='sword'){const travel=Math.sin(a.progress*Math.PI);px+=(a.x-70-px)*travel;py+=(a.y-py)*travel;}}
   const actors=[...s.npcs.map(n=>({...n})),{id:'player',name:'Aventureiro',kind:'player',x:px,y:py}].sort((a,b)=>a.y-b.y);
   for(const n of actors)sprite(n.x,n.y,n.kind,n.name,n.id===s.selected,t,a?.target===n.id&&a.progress>.5&&a.progress<.8,s.player.weapon);
   if(a){
    if(a.type==='spawn'){c.strokeStyle='#c6e9a6';c.lineWidth=3;c.beginPath();c.ellipse(a.x,a.y+8,50*a.progress,18*a.progress,0,0,7);c.stroke();}
-   if(a.type==='talk'){rect(a.x-45,a.y-115,90,28,'#e1e6ca');c.fillStyle='#32453a';c.font='16px monospace';c.textAlign='center';c.fillText('…',a.x,a.y-95);}
+   if(a.type==='talk'&&a.progress>.65){rect(a.x-45,a.y-115,90,28,'#e1e6ca');c.fillStyle='#32453a';c.font='16px monospace';c.textAlign='center';c.fillText('…',a.x,a.y-95);}
    if(a.type==='attack'){
     if(a.weapon!=='sword'){const p=Math.min(1,a.progress*1.5),x=s.player.x+(a.x-s.player.x)*p,y=s.player.y-35+(a.y-s.player.y)*p;rect(x-12,y,a.weapon==='bow'?26:15,4,a.weapon==='bow'?'#decfa3':'#91f2dd');if(a.weapon==='staff'){rect(x-4,y-5,11,14,'#c9fff0');}}
     else if(a.progress>.3&&a.progress<.8){c.strokeStyle='#f2edb0';c.lineWidth=7;c.beginPath();c.arc(a.x-45,a.y-40,48,-1.5,a.progress*6-1.5);c.stroke();}
@@ -52,8 +52,9 @@ export function createRenderer(canvas,getState){
    }
    if(a.progress>=1){animation=null;a.done();}
   }
+  if(s.dialogue&&!a){const n=s.npcs.find(n=>n.id===s.dialogue.target);if(n){rect(n.x-110,n.y-115,220,30,'#e1e6ca');c.fillStyle='#32453a';c.font='13px monospace';c.textAlign='center';c.fillText(s.dialogue.message,n.x,n.y-95,206);}}
   const vignette=c.createRadialGradient(640,350,180,640,350,720);vignette.addColorStop(0,'#08171300');vignette.addColorStop(1,'#051310b0');c.fillStyle=vignette;c.fillRect(0,0,1280,720);requestAnimationFrame(draw);
  }
  requestAnimationFrame(draw);
- return {animate(e){const s=getState(),n=s.npcs.find(n=>n.id===(e.target??s.selected));return new Promise(done=>{animation={...e,target:n?.id,x:n?.x??640,y:n?.y??400,weapon:s.player.weapon,start:performance.now(),duration:e.type==='attack'?1100:650,progress:0,done};});},stop(){alive=false;}};
+ return {animate(e){const s=getState(),n=s.npcs.find(n=>n.id===(e.target??s.selected));return new Promise(done=>{animation={...e,target:n?.id,x:n?.x??640,y:n?.y??400,weapon:s.player.weapon,start:performance.now(),duration:e.type==='attack'?1100:['move','talk'].includes(e.type)?1000:650,progress:0,done};});},stop(){alive=false;}};
 }

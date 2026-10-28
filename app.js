@@ -7,7 +7,10 @@ function fit(){const mobile=matchMedia('(max-width: 900px), (pointer: coarse)').
 function save(){try{localStorage.setItem('chatpixel-v1',JSON.stringify(state));}catch{notice('O navegador não permitiu salvar a cena.');}}
 function notice(text=''){$('notice').textContent=text;}
 function sync(){
- $('location').textContent=names[state.scene];$('weapon').value=state.player.weapon;$('weapon-label').textContent=`${weapons[state.player.weapon]} equipado${state.player.weapon==='sword'?'a':''}`;
+ $('location').textContent=state.location||names[state.scene];$('weapon').value=state.player.weapon;$('weapon-label').textContent=`${weapons[state.player.weapon]||'Sem arma'} equipado${state.player.weapon==='sword'?'a':''}`;
+ for(const option of $('weapon').options)option.disabled=!(state.player.inventory??Object.keys(weapons)).includes(option.value);
+ $('inventory').textContent='Inventário: '+(state.player.inventory??Object.keys(weapons)).map(w=>weapons[w]).join(', ');
+ $('inventory-items').replaceChildren();for(const [weapon,name] of Object.entries(weapons)){const label=document.createElement('label'),box=document.createElement('input');box.type='checkbox';box.checked=state.player.inventory.includes(weapon);box.disabled=busy;box.onchange=async()=>{if(busy)return;lock(true);try{await execute([{type:'inventory',weapon,action:box.checked?'add':'remove'}]);}catch(e){notice(e.message);}finally{lock(false);}};label.append(box,document.createTextNode(name));$('inventory-items').append(label);}
  $('target').replaceChildren();if(!state.npcs.length)$('target').add(new Option('Nenhum NPC presente',''));
  for(const n of state.npcs)$('target').add(new Option(`${n.name} · ${n.hits} impactos`,n.id));$('target').value=state.selected??'';$('count').textContent=`${state.events.length} eventos`;
 }
@@ -16,12 +19,12 @@ function log(text,role='gm',result=''){
  const label=document.createElement('small');label.textContent=role==='gm'?'MESTRE':role==='player'?'JOGADOR':'SISTEMA';const p=document.createElement('p');p.textContent=text;el.append(label,p);
  if(result){const detail=document.createElement('small');detail.textContent=result;el.append(detail);} $('log').append(el);while($('log').children.length>60)$('log').firstChild.remove();$('log').scrollTop=$('log').scrollHeight;
 }
-function lock(value){busy=value;for(const el of document.querySelectorAll('#send,#demo,#reset,#weapon,#target,#role,#ai,.suggestions button'))el.disabled=value||(el.id==='ai'&&!session.planEnabled);}
+function lock(value){busy=value;for(const el of document.querySelectorAll('#inventory-items input,#send,#demo,#reset,#weapon,#target,#role,#ai,.suggestions button'))el.disabled=value||(el.id==='ai'&&!session.planEnabled);}
 async function execute(events){
  if(!Array.isArray(events)||events.length>12)throw Error('Lote de eventos inválido');
  // Validate the whole batch on a copy, so invalid GPT output cannot partly mutate the scene.
  const check=structuredClone(state);for(const event of events)applyEvent(check,validateEvent(event));
- for(const event of events){applyEvent(state,event);sync();save();$('activity').textContent=({spawn:'Uma nova presença entra na história.',attack:`Ataque com ${weapons[state.player.weapon].toLowerCase()}.`,equip:'Equipamento atualizado.',scene:'O cenário mudou.',remove:'Um personagem deixou a cena.',talk:'Uma conversa começa.'})[event.type];if(['attack','spawn','talk'].includes(event.type))await renderer.animate(event);}
+ for(const event of events){const fromX=state.player.x,fromY=state.player.y;applyEvent(state,event);sync();save();$('activity').textContent=({spawn:'Uma nova presença entra na história.',attack:`Ataque com ${(weapons[state.player.weapon]||'Sem arma').toLowerCase()}.`,equip:'Equipamento atualizado.',scene:'O cenário mudou.',remove:'Um personagem deixou a cena.',talk:state.dialogue?.message||'Uma conversa começa.',move:'O aventureiro se desloca.',inventory:'Inventário atualizado.'})[event.type];if(['attack','spawn','talk','move'].includes(event.type))await renderer.animate({...event,fromX,fromY});}
 }
 async function submit(text,role){if(busy||!text.trim())return;lock(true);notice();try{
  let events;if($('ai').checked){const r=await fetch('/api/interpret',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,role,state,model:$('model').value})});const data=await r.json();if(!r.ok)throw Error(data.error);events=data.events;}else events=interpretLocal(text,role,state);
@@ -29,7 +32,7 @@ async function submit(text,role){if(busy||!text.trim())return;lock(true);notice(
  }catch(e){notice(e.message);log(text,role,'Não executado');}finally{lock(false);}}
 $('narration').addEventListener('submit',e=>{e.preventDefault();submit($('text').value,$('role').value);});
 for(const b of document.querySelectorAll('[data-text]'))b.onclick=()=>{$('role').value=b.dataset.role;submit(b.dataset.text,b.dataset.role);};
-$('weapon').onchange=async()=>{if(busy)return;lock(true);try{await execute([{type:'equip',weapon:$('weapon').value}]);log(`Equipou ${weapons[state.player.weapon].toLowerCase()}.`,'player');}finally{lock(false);}};
+$('weapon').onchange=async()=>{if(busy)return;lock(true);try{await execute([{type:'equip',weapon:$('weapon').value}]);log(`Equipou ${(weapons[state.player.weapon]||'Sem arma').toLowerCase()}.`,'player');}finally{lock(false);}};
 $('target').onchange=()=>{state.selected=$('target').value;save();};
 $('scene').onclick=e=>{if(busy)return;const r=$('scene').getBoundingClientRect();const x=(e.clientX-r.left)*1280/r.width,y=(e.clientY-r.top)*720/r.height;const n=state.npcs.find(n=>Math.abs(n.x-x)<40&&y>n.y-80&&y<n.y+50);if(n){state.selected=n.id;sync();save();}};
 $('reset').onclick=()=>{state=initialState();save();sync();$('log').replaceChildren();notice();$('activity').textContent='Cena reiniciada. Narre o próximo encontro.';};
@@ -42,7 +45,7 @@ async function status(){try{const r=await fetch('/api/session');if(!r.ok)return;
  }catch(e){notice(e.message||'Inicie com npm start para conectar o ChatGPT.');}}
 $('login').onclick=()=>{if(location.protocol==='file:'){notice('Para conectar: execute npm start e abra http://127.0.0.1:3210.');return;}location.href='/auth/login';};
 $('logout').onclick=async()=>{await fetch('/auth/logout',{method:'POST'});location.reload();};
-try{const saved=JSON.parse(localStorage.getItem('chatpixel-v1'));if(saved?.version===1&&Array.isArray(saved.events)&&saved.events.length<=100&&Array.isArray(saved.npcs)&&saved.npcs.length<=8&&weapons[saved.player?.weapon]&&names[saved.scene]&&saved.npcs.every(n=>typeof n.name==='string'&&Number.isFinite(n.x)&&Number.isFinite(n.y)&&['goblin','guard','merchant'].includes(n.kind)))state=saved;}catch{}
+try{const saved=JSON.parse(localStorage.getItem('chatpixel-v1'));if(saved?.version===1&&Array.isArray(saved.events)&&saved.events.length<=100&&Array.isArray(saved.npcs)&&saved.npcs.length<=8&&(weapons[saved.player?.weapon]||saved.player?.weapon===null)&&names[saved.scene]&&saved.npcs.every(n=>typeof n.name==='string'&&Number.isFinite(n.x)&&Number.isFinite(n.y)&&['goblin','guard','merchant'].includes(n.kind))){state=saved;state.player.inventory??=Object.keys(weapons);}}catch{}
 addEventListener('chatpixel:resume',()=>status());
 sync();status();if(new URLSearchParams(location.search).has('auth')){notice(new URLSearchParams(location.search).get('auth')==='ok'?'ChatGPT conectado. Ative a interpretação para controlar a cena.':'Não foi possível conectar. Tente novamente.');history.replaceState(null,'',location.pathname);}
 // OracleRPG adapter seam. An authenticated transport can call the same validated event queue.

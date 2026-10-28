@@ -1,26 +1,39 @@
 export const weapons = {sword:'Espada',bow:'Arco',staff:'Cajado'};
 export const normalize = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-export function initialState(){return {version:1,scene:'forest',player:{x:340,y:400,weapon:'sword'},npcs:[],selected:null,events:[],sequence:0};}
+export function initialState(){return {version:1,scene:'forest',player:{x:340,y:400,weapon:'sword',inventory:['sword','bow','staff']},npcs:[],selected:null,events:[],sequence:0};}
 export function validateEvent(e){
  if(!e || typeof e!=='object')throw Error('Evento inválido');
  if(e.type==='spawn'){if(typeof e.name!=='string'||!e.name.trim()||e.name.length>50)throw Error('Nome inválido');if(!['goblin','guard','merchant'].includes(e.kind))throw Error('Tipo de NPC inválido');}
  else if(e.type==='equip'){if(!weapons[e.weapon])throw Error('Arma inválida');}
+ else if(e.type==='inventory'){if(!weapons[e.weapon]||!['add','remove'].includes(e.action))throw Error('Item inválido');}
+ else if(e.type==='move'){if(e.target!==undefined){if(typeof e.target!=='string'||!e.target)throw Error('Destino inválido');}else if(!Number.isFinite(e.x)||!Number.isFinite(e.y)||e.x<70||e.x>1210||e.y<330||e.y>620)throw Error('Destino fora da área caminhável');}
  else if(e.type==='scene'){if(!['forest','dungeon','village'].includes(e.scene))throw Error('Cenário inválido');}
  else if(['attack','remove','talk'].includes(e.type)){if(typeof e.target!=='string'||!e.target)throw Error('Alvo inválido');}
  else throw Error('Ação não suportada');
+ if(e.weapon!==undefined&&!weapons[e.weapon])throw Error('Arma inválida');
+ if(e.message!==undefined&&(typeof e.message!=='string'||e.message.length>180))throw Error('Fala inválida');
+ if(e.location!==undefined&&(typeof e.location!=='string'||e.location.length>60))throw Error('Local inválido');
  return e;
 }
 export function applyEvent(state,event){
  const e=validateEvent(event);
+ const inventory=state.player.inventory??Object.keys(weapons);
+ if((e.type==='equip'||e.type==='attack')&&e.weapon&&!inventory.includes(e.weapon))throw Error('Você não possui '+weapons[e.weapon]+' no inventário.');
+ if(['attack','talk','remove'].includes(e.type)||(e.type==='move'&&e.target)){if(!state.npcs.some(n=>n.id===e.target))throw Error('Escolha um NPC presente na cena.');}
+ state.player.inventory=inventory;
+ if(e.type==='attack'&&e.weapon)state.player.weapon=e.weapon;
  if(e.type==='spawn'){
   if(state.npcs.length>=8)throw Error('Limite de 8 NPCs. Remova um para continuar.');
   const id=`npc-${++state.sequence}`; const i=Array.from({length:8},(_,i)=>i).find(i=>!state.npcs.some(n=>n.x===640+(i%3)*150&&n.y===330+Math.floor(i/3)*100));
   state.npcs.push({id,name:e.name.trim(),kind:e.kind,x:640+(i%3)*150,y:330+Math.floor(i/3)*100,hits:0});state.selected=id;
  }else if(e.type==='equip')state.player.weapon=e.weapon;
- else if(e.type==='scene')state.scene=e.scene;
+ else if(e.type==='inventory'){state.player.inventory=e.action==='add'?[...new Set([...inventory,e.weapon])]:inventory.filter(w=>w!==e.weapon);if(!state.player.inventory.includes(state.player.weapon))state.player.weapon=state.player.inventory[0]??null;}
+ else if(e.type==='scene'){if(state.scene!==e.scene||e.location&&e.location!==state.location){state.npcs=[];state.selected=null;state.player.x=340;state.player.y=400;state.dialogue=null;}state.scene=e.scene;state.location=e.location??null;}
+ else if(e.type==='move'){const n=state.npcs.find(n=>n.id===e.target);state.player.x=n?Math.max(70,n.x-85):e.x;state.player.y=n?n.y:e.y;state.dialogue=null;}
  else {const npc=state.npcs.find(n=>n.id===e.target);if(!npc)throw Error('Escolha um NPC presente na cena.');
   state.selected=npc.id;
-  if(e.type==='attack')npc.hits++;
+  if(e.type==='attack'){if(!state.player.weapon)throw Error('Nenhuma arma disponível.');npc.hits++;state.dialogue=null;}
+  if(e.type==='talk'){state.player.x=Math.max(70,npc.x-85);state.player.y=npc.y;state.dialogue={target:npc.id,message:e.message||'Uma conversa começa.'};}
   if(e.type==='remove'){state.npcs=state.npcs.filter(n=>n.id!==npc.id);state.selected=state.npcs[0]?.id??null;}
  }
  state.events.push({...e,number:state.events.length+1});state.events=state.events.slice(-100);return e;
@@ -30,9 +43,10 @@ export function interpretLocal(text,role,state){
  const weapon=/arco/.test(t)?'bow':/cajado|bastao/.test(t)?'staff':/espada/.test(t)?'sword':null;
  const target=state.npcs.find(n=>t.includes(normalize(n.name)))?.id??state.selected;
  if(role==='player'){
-  if(/atac|golpe|disparo|disparar|flecha|lanco.*magia/.test(t))return [{type:'attack',target}];
+  if(/atac|golpe|disparo|disparar|flecha|lanco.*magia/.test(t))return [{type:'attack',target,...(weapon?{weapon}:{})}];
   if(/equip|empunh|troco|trocar/.test(t)&&weapon)return [{type:'equip',weapon}];
-  if(/convers|falo|falar/.test(t))return [{type:'talk',target}];
+  if(/convers|falo|falar/.test(t))return [{type:'talk',target,message:text.slice(0,180)}];
+  if(/vou|caminh|ando|ir |entro|viajo|aproxim/.test(t)){const scene=/vila|taverna|aldeia/.test(t)?'village':/masmorra|caverna/.test(t)?'dungeon':/floresta|clareira/.test(t)?'forest':null;if(scene)return [{type:'scene',scene}];if(target&&state.npcs.some(n=>t.includes(normalize(n.name))))return [{type:'move',target}];if(/direita/.test(t))return [{type:'move',x:Math.min(1210,state.player.x+160),y:state.player.y}];if(/esquerda/.test(t))return [{type:'move',x:Math.max(70,state.player.x-160),y:state.player.y}];}
  }else{
   if(/masmorra|caverna/.test(t))return [{type:'scene',scene:'dungeon'}];
   if(/vila|taverna|aldeia/.test(t))return [{type:'scene',scene:'village'}];
