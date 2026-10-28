@@ -85,3 +85,12 @@ Com ChatGPT conectado, use **Aventura** para iniciar uma sessão: o GPT narra co
 O seletor de ambiente oferece 18 cenários: floresta, vila, masmorra, taverna, castelo, caverna, deserto, praia, porto, pântano, montanha, neve, ruínas, templo, cemitério, biblioteca, mercado e acampamento. Elementos são desenhados em Canvas; não dependem de geração de imagens.
 
 `spawn.appearance` combina camadas independentes de cabeça/ancestralidade, corpo, roupa, cabelo, chapéu, barba e acessório, além de cores de pele, cabelo, roupa e detalhes. Consulte `appearanceOptions` em `world.js`. O mestre descreve e seleciona essas peças; a aparência permanece salva. O motor valida as opções e continua aplicando os lotes de eventos de forma atômica. Não é um gerador ilimitado de sprites nem um sistema completo de regras de RPG.
+
+
+## Versão 0.5.0: viagem e cenários modulares
+
+A viagem usa a cena de origem em quatro camadas de Canvas preparadas uma vez, com deslocamentos diferentes para fundo, chão, elementos e primeiro plano. A caminhada começa durante pedidos de deslocamento reconhecidos, permanece enquanto o GPT prepara a resposta e só chega após validar o lote completo. O personagem atravessa portão de cidade, fachada/porta de loja, passagem de masmorra/caverna ou caminho na vegetação; então a cena nova é aplicada com uma breve revelação. Falhas mantêm a origem. O tempo total inclui a espera real da geração e uma animação curta de chegada.
+
+O evento `scene` aceita `layout` com `ground`, `background` e até 24 `props` posicionáveis. Catálogos, limites e composições padrão estão em `scenery.js`. Há 19 ambientes, incluindo loja. A composição é enviada ao GPT no próximo turno e salva com o estado.
+
+Para futura integração visual com OracleRPG, o adaptador no navegador pode chamar `window.chatpixel.prepareScene({scene:'shop',location:'Loja de Borin'})` antes de preparar o destino; depois `await window.chatpixel.dispatch(events)` valida e conclui a entrada. Em caso de falha use `window.chatpixel.cancelScenePreparation()`. `getTransition()` permite observar a espera sem alterar o estado de jogo. Não há conexão remota OracleRPG implementada ainda. Se o destino só for conhecido após receber os eventos, a viagem começa nesse momento.

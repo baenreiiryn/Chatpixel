@@ -1,4 +1,5 @@
 export const environments={
+ shop:{name:'Loja',palette:['#302b33','#755d43','#8a7254'],style:'books'},
  forest:{name:'Floresta',palette:['#152d30','#30483a','#3e5740'],style:'trees'},
  village:{name:'Vila',palette:['#34404a','#6c6650','#787456'],style:'houses'},
  dungeon:{name:'Masmorra',palette:['#171d2c','#303949','#414b59'],style:'cells'},

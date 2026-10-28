@@ -1,7 +1,9 @@
+import {sceneLayout,drawBackdrop,drawGround,drawModule} from './scenery.js';
+import {entranceFor,journeyFrame} from './journey.js';
 import {environments,npcAppearance,drawNpcLayers,drawEnvironment} from './world.js';
 
 export function createRenderer(canvas,getState){
- const c=canvas.getContext('2d'); c.imageSmoothingEnabled=false;let animation=null;let alive=true;
+ const c=canvas.getContext('2d'); c.imageSmoothingEnabled=false;let animation=null;let alive=true;let travel=null;
  const rect=(x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h)};
  function tree(x,y,s=1){c.save();c.translate(x,y);c.scale(s,s);rect(-9,-10,18,75,'#253126');rect(1,0,6,60,'#3c4430');for(let i=0;i<4;i++){rect(-58+i*9,-100-i*23,116-i*18,39,'#102a27');rect(-48+i*9,-105-i*23,94-i*18,25,i%2?'#244535':'#1d3b30');rect(-34+i*7,-104-i*23,22,5,'#35553c');}c.restore();}
  function weapon(type,x,y,angle=0){if(!type)return;c.save();c.translate(x,y);c.rotate(angle);if(type==='sword'){rect(0,-34,5,36,'#d2e8dc');rect(0,-34,2,29,'#8caeb0');rect(-5,0,15,4,'#caa860');rect(0,4,5,10,'#76543a');}else if(type==='bow'){c.strokeStyle='#c79c62';c.lineWidth=4;c.beginPath();c.arc(0,-10,21,-1.3,1.3);c.stroke();c.strokeStyle='#dcd5ad';c.lineWidth=1;c.beginPath();c.moveTo(6,-30);c.lineTo(6,10);c.stroke();}else{rect(0,-40,4,55,'#9a7455');rect(-4,-43,12,12,'#9ae8e0');rect(-1,-46,6,5,'#d4fff1');}c.restore();}
@@ -20,19 +22,28 @@ export function createRenderer(canvas,getState){
   c.font='16px monospace';const words=message.split(/\s+/),lines=[];let line='';for(const word of words){if(c.measureText(line+' '+word).width>290&&line){lines.push(line);line=word;}else line+=(line?' ':'')+word;}if(line)lines.push(line);const visible=lines.slice(0,5);if(lines.length>5)visible[4]+='…';
   const w=330,h=38+visible.length*22,bx=Math.max(8,Math.min(1280-w-8,x-w/2)),by=Math.max(12,y-110-h);rect(bx-2,by-2,w+4,h+4,'#475651');rect(bx,by,w,h,'#e1e6ca');rect(Math.max(bx+8,Math.min(bx+w-16,x-4)),by+h,8,8,'#e1e6ca');c.textAlign='left';c.fillStyle='#677253';c.font='bold 13px monospace';c.fillText(label||'NPC',bx+14,by+20);c.fillStyle='#253a33';c.font='16px monospace';visible.forEach((text,i)=>c.fillText(text,bx+14,by+43+i*22,302));
  }
- function draw(t){if(!alive)return;const s=getState(),pal=(environments[s.scene]??environments.forest).palette;rect(0,0,1280,720,pal[0]);
-  // Distant silhouettes and a hand-built tiled floor stay deterministic across frames.
-  if(['forest','swamp','camp'].includes(s.scene)){for(let i=0;i<14;i++){rect(i*100-20,80+(i%3)*17,65,310,'#19312e');rect(i*100,0,14,390,'#112925');}}
-  else if(['dungeon','tavern','castle','temple','library'].includes(s.scene)){for(let y=60;y<300;y+=45)for(let x=-50;x<1300;x+=105)rect(x+(y%2)*40,y,102,42,pal[1]);}
-  else if(['desert','coast','harbor','mountain','snow','village','market','ruins'].includes(s.scene)){rect(1040,65,54,42,'#e2ce95');rect(1048,57,38,58,'#e2ce95');}
-  rect(0,300,1280,420,pal[1]);
-  for(let row=0;row<14;row++)for(let col=0;col<30;col++){
-   const n=(row*71+col*137)%53,x=col*48+(row%2)*24,y=300+row*32;
-   if(['dungeon','castle','temple','ruins','cave','mountain','cemetery'].includes(s.scene)){rect(x,y,46,30,n%3===0?'#333d48':'#2b343e');rect(x+3,y+3,38,2,'#3b4650');}
-   else if(['tavern','library','harbor'].includes(s.scene)){rect(x,y,46,30,n%4===0?pal[2]:pal[1]);rect(x+3,y+27,40,2,'#382f2a');}
-   else{rect(x,y,44,30,n%4===0?pal[2]:pal[1]);if(n<15&&['forest','swamp','village','camp'].includes(s.scene)){rect(x+9,y+10,3,6,'#58704a');rect(x+14,y+6,3,10,'#425e41');}}
-  }
-  drawEnvironment(c,rect,s.scene,t,tree);
+ function makeLayers(snapshot){
+  const factory=()=>canvas.ownerDocument?.createElement('canvas')??(typeof OffscreenCanvas!=='undefined'?new OffscreenCanvas(1280,720):null);
+  const layout=sceneLayout(snapshot.scene,snapshot.layout);return [0,1,2,3].map(layer=>{const surface=factory();if(!surface)return null;surface.width=1280;surface.height=720;const ctx=surface.getContext('2d');ctx.imageSmoothingEnabled=false;const r=(x,y,w,h,color)=>{ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),w,h);};
+   if(layer===0)drawBackdrop(ctx,r,snapshot.scene,layout);if(layer===1)drawGround(ctx,r,snapshot.scene,layout);
+   for(const prop of layout.props){const l=prop.layer==='far'?0:prop.layer==='front'?3:2;if(l===layer)drawModule(ctx,r,prop,(x,y,scale)=>{ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);r(-8,-15,16,80,'#654f36');for(let i=0;i<4;i++)r(-55+i*10,-80-i*24,110-i*20,35,'#284c39');ctx.restore();});}return surface;});
+ }
+ function beginTravel(destination={}){if(travel)return;const origin=structuredClone(getState());travel={origin,destination,started:performance.now(),readyAt:null,layers:makeLayers(origin),phase:'waiting'};}
+ function drawTravel(t){const tr=travel;if(!tr)return false;if(tr.phase==='reveal')return false;const frame=journeyFrame(tr,t),layout=sceneLayout(tr.origin.scene,tr.origin.layout);
+  if(tr.layers.every(Boolean)){for(let i=0;i<4;i++){const x=-(frame.offset*[.18,1,.5,1.2][i])%1280;for(const shift of [0,1280])c.drawImage(tr.layers[i],Math.round(x+shift),0);}}
+  else{drawBackdrop(c,rect,tr.origin.scene,layout);drawGround(c,rect,tr.origin.scene,layout);for(const prop of layout.props)drawModule(c,rect,{...prop,x:(prop.x-frame.offset*.5+1280)%1280},tree,t);}
+  const bob=Math.sin((t-tr.started)/80)*3,px=frame.playerX,py=450+bob;
+  // Alternating boots, dust and bobbing make walking legible without sprite sheets.
+  sprite(px,py,'player','Aventureiro',false,t,false,tr.origin.player.weapon);rect(px-14+Math.sin(t/90)*7,py+7,12,5,'#273431');rect(px+3-Math.sin(t/90)*7,py+7,12,5,'#273431');
+  if(frame.entranceX!==null){const kind=entranceFor(tr.destination.scene);if(kind==='path'){rect(frame.entranceX-55,310,110,230,'#263d3280');for(const x of [-75,75])tree(frame.entranceX+x,450,1.1);}else drawModule(c,rect,{type:kind==='gate'?'gate':kind==='door'?'shop':'door',x:frame.entranceX-(kind==='door'?90:0),y:470,scale:1.2,color:kind==='arch'?'#565e68':'#8d7958'},tree,t);}
+  rect(320,610,640,48,'#10201ee8');c.fillStyle='#e1e6ca';c.textAlign='center';c.font='18px monospace';c.fillText(frame.phase==='walking'?'A caminho · preparando o próximo local…':'Entrando em '+(tr.destination.location||tr.destination.label||environments[tr.destination.scene]?.name||'novo local'),640,640,610);
+  if(frame.fade){c.fillStyle='rgba(5,12,15,'+frame.fade+')';c.fillRect(0,0,1280,720);}
+  if(frame.phase==='arrived'){try{tr.commit?.();tr.phase='reveal';tr.revealAt=t;}catch(e){travel=null;tr.reject?.(e);}}
+  return true;
+ }
+ function draw(t){if(!alive)return;if(drawTravel(t)){requestAnimationFrame(draw);return;}const s=getState(),layout=sceneLayout(s.scene,s.layout);
+  drawBackdrop(c,rect,s.scene,layout);drawGround(c,rect,s.scene,layout);
+  for(const prop of layout.props.filter(p=>p.layer!=='front').sort((a,b)=>(a.layer==='far'?-1:1)-(b.layer==='far'?-1:1)||a.y-b.y))drawModule(c,rect,prop,tree,t);
   // Stone ring and runes mark the encounter area.
   c.strokeStyle='#68806b40';c.lineWidth=3;c.beginPath();c.ellipse(650,430,365,136,0,0,7);c.stroke();
   for(let i=0;i<16;i++){let a=i*Math.PI/8;rect(650+Math.cos(a)*365,430+Math.sin(a)*136,13,5,'#6e826349');}
@@ -52,8 +63,10 @@ export function createRenderer(canvas,getState){
    if(a.progress>=1){animation=null;a.done();}
   }
   if(s.dialogue&&(!a||a.type==='talk'&&a.progress>.35)){const speaker=s.dialogue.speaker??'player';const n=speaker==='player'?{x:px,y:py}:s.npcs.find(n=>n.id===speaker);if(n)drawSpeech(n.x,n.y,s.dialogue.message,speaker==='player'?'Você':s.npcs.find(n=>n.id===speaker)?.name);}
+  for(const prop of layout.props.filter(p=>p.layer==='front'))drawModule(c,rect,prop,tree,t);
+  if(travel?.phase==='reveal'){const p=Math.min(1,(t-travel.revealAt)/350);c.fillStyle='rgba(5,12,15,'+(1-p)+')';c.fillRect(0,0,1280,720);if(p>=1){const done=travel.resolve;travel=null;done?.();}}
   const vignette=c.createRadialGradient(640,350,180,640,350,720);vignette.addColorStop(0,'#08171300');vignette.addColorStop(1,'#051310b0');c.fillStyle=vignette;c.fillRect(0,0,1280,720);requestAnimationFrame(draw);
  }
  requestAnimationFrame(draw);
- return {animate(e){const s=getState(),n=s.npcs.find(n=>n.id===(e.target??s.selected));return new Promise(done=>{animation={...e,target:n?.id,x:n?.x??640,y:n?.y??400,weapon:s.player.weapon,start:performance.now(),duration:e.type==='attack'?1100:e.type==='talk'?2300:e.type==='move'?1000:650,progress:0,done};});},stop(){alive=false;}};
+ return {beginTravel,cancelTravel(){if(!travel)return;const done=travel.resolve;travel=null;done?.();},getTravel(){return travel?{phase:travel.phase,destination:travel.destination,waiting:travel.readyAt===null}:null;},transition(destination,commit){beginTravel(destination);travel.destination=destination;travel.readyAt=Math.max(performance.now(),travel.started+500);travel.commit=commit;return new Promise((resolve,reject)=>{travel.resolve=resolve;travel.reject=reject;});},animate(e){const s=getState(),n=s.npcs.find(n=>n.id===(e.target??s.selected));return new Promise(done=>{animation={...e,target:n?.id,x:n?.x??640,y:n?.y??400,weapon:s.player.weapon,start:performance.now(),duration:e.type==='attack'?1100:e.type==='talk'?2300:e.type==='move'?1000:650,progress:0,done};});},stop(){alive=false;travel?.resolve?.();travel=null;}};
 }

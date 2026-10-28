@@ -1,3 +1,4 @@
+import {validateLayout} from './scenery.js';
 import {environments,npcAppearance,validateAppearance} from './world.js';
 export const weapons = {sword:'Espada',bow:'Arco',staff:'Cajado'};
 export const normalize = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -11,6 +12,7 @@ export function validateEvent(e){
  else if(e.type==='scene'){if(!Object.hasOwn(environments,e.scene))throw Error('Cenário inválido');}
  else if(['attack','remove','talk'].includes(e.type)){if(typeof e.target!=='string'||!e.target)throw Error('Alvo inválido');}
  else throw Error('Ação não suportada');
+ if(e.layout!==undefined)validateLayout(e.layout);
  if(e.appearance!==undefined)validateAppearance(e.appearance);
  if(e.ref!==undefined&&(typeof e.ref!=='string'||!e.ref||e.ref.length>50))throw Error('Referência inválida');
  if(e.speaker!==undefined&&(typeof e.speaker!=='string'||!e.speaker))throw Error('Falante inválido');
@@ -36,7 +38,7 @@ export function applyEvent(state,event){
   state.npcs.push({id,name:e.name.trim(),kind:e.kind,x:640+(i%3)*150,y:330+Math.floor(i/3)*140,hits:0,ref:e.ref??id,appearance:npcAppearance(e.kind,e.appearance)});state.selected=id;e.target=id;
  }else if(e.type==='equip')state.player.weapon=e.weapon;
  else if(e.type==='inventory'){state.player.inventory=e.action==='add'?[...new Set([...inventory,e.weapon])]:inventory.filter(w=>w!==e.weapon);if(!state.player.inventory.includes(state.player.weapon))state.player.weapon=state.player.inventory[0]??null;}
- else if(e.type==='scene'){if(state.scene!==e.scene||e.location&&e.location!==state.location){state.npcs=[];state.selected=null;state.player.x=340;state.player.y=400;state.dialogue=null;}state.scene=e.scene;state.location=e.location??null;}
+ else if(e.type==='scene'){if(state.scene!==e.scene||e.location&&e.location!==state.location){state.npcs=[];state.selected=null;state.player.x=340;state.player.y=400;state.dialogue=null;}state.scene=e.scene;state.location=e.location??null;state.layout=e.layout??null;}
  else if(e.type==='move'){const n=state.npcs.find(n=>n.id===e.target);state.player.x=n?Math.max(70,n.x-85):e.x;state.player.y=n?n.y:e.y;state.dialogue=null;}
  else {const npc=state.npcs.find(n=>n.id===e.target);if(!npc)throw Error('Escolha um NPC presente na cena.');
   state.selected=npc.id;
@@ -48,7 +50,7 @@ export function applyEvent(state,event){
 }
 export function interpretLocal(text,role,state){
  const t=normalize(text);if(/\b(nao|nunca|talvez|se)\b/.test(t))throw Error('Modo local: use uma ação afirmativa simples por mensagem.');
- const sceneWords={tavern:/taverna|estalagem/,castle:/castelo|palacio/,cave:/caverna|gruta/,desert:/deserto/,coast:/praia|litoral/,harbor:/porto|doca/,swamp:/pantano|brejo/,mountain:/montanha|pico/,snow:/neve|nevado/,ruins:/ruina/,temple:/templo|santuario/,cemetery:/cemiterio/,library:/biblioteca/,market:/mercado|feira/,camp:/acampamento/};
+ const sceneWords={shop:/loja|ferreiro|botica/,tavern:/taverna|estalagem/,castle:/castelo|palacio/,cave:/caverna|gruta/,desert:/deserto/,coast:/praia|litoral/,harbor:/porto|doca/,swamp:/pantano|brejo/,mountain:/montanha|pico/,snow:/neve|nevado/,ruins:/ruina/,temple:/templo|santuario/,cemetery:/cemiterio/,library:/biblioteca/,market:/mercado|feira/,camp:/acampamento/};
  const destination=Object.entries(sceneWords).find(([,re])=>re.test(t))?.[0];if(destination&&/vou|vamos|entro|entramos|chego|estamos|viajo/.test(t))return [{type:'scene',scene:destination}];
  const weapon=/arco/.test(t)?'bow':/cajado|bastao/.test(t)?'staff':/espada/.test(t)?'sword':null;
  const target=state.npcs.find(n=>t.includes(normalize(n.name)))?.id??state.selected;

@@ -1,8 +1,8 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {environments,appearanceOptions,npcAppearance,validateAppearance} from '../world.js';
 import {initialState,applyEvent} from '../engine.js';import {createRenderer} from '../renderer.js';
-test('18 ambientes e todas as opções modulares são válidas e renderizam',()=>{
- assert.equal(Object.keys(environments).length,18);let next;const old=globalThis.requestAnimationFrame;globalThis.requestAnimationFrame=fn=>{next=fn;};const text=[];
+test('19 ambientes e todas as opções modulares são válidas e renderizam',()=>{
+ assert.equal(Object.keys(environments).length,19);let next;const old=globalThis.requestAnimationFrame;globalThis.requestAnimationFrame=fn=>{next=fn;};const text=[];
  const c=new Proxy({measureText:s=>({width:s.length*9}),createRadialGradient:()=>({addColorStop(){}}),fillText:(...args)=>text.push(args)}, {get:(o,k)=>k in o?o[k]:()=>{},set:(o,k,v)=>(o[k]=v,true)});
  const s=initialState(),renderer=createRenderer({getContext:()=>c},()=>s);
  try{for(const scene of Object.keys(environments)){applyEvent(s,{type:'scene',scene});next(100);}

@@ -44,9 +44,9 @@ jobs:
       - name: Package APK and checksum
         run: |
           "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose android/app/build/outputs/apk/debug/app-debug.apk
-          cp android/app/build/outputs/apk/debug/app-debug.apk test-results/Chatpixel-0.4.0.apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk test-results/Chatpixel-0.5.0.apk
           cd test-results
-          sha256sum Chatpixel-0.4.0.apk > Chatpixel-0.4.0.apk.sha256
+          sha256sum Chatpixel-0.5.0.apk > Chatpixel-0.5.0.apk.sha256
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -58,7 +58,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if ! gh release view mobile-v0.4.0 >/dev/null 2>&1; then
-            gh release create mobile-v0.4.0 --title 'Chatpixel Android 0.4.0 — mestre, ambientes e NPCs modulares' --prerelease --notes 'APK de teste para Android 8 ou superior. Jogo incluído, controles por toque, modo local offline e Sign in with ChatGPT no próprio aparelho. Login real requer autorização do usuário e ainda precisa de validação em um celular físico.' --target "$GITHUB_SHA"
+          if ! gh release view mobile-v0.5.0 >/dev/null 2>&1; then
+            gh release create mobile-v0.5.0 --title 'Chatpixel Android 0.5.0 — mestre, ambientes e NPCs modulares' --prerelease --notes 'APK de teste para Android 8 ou superior. Jogo incluído, controles por toque, modo local offline e Sign in with ChatGPT no próprio aparelho. Login real requer autorização do usuário e ainda precisa de validação em um celular físico.' --target "$GITHUB_SHA"
           fi
-          gh release upload mobile-v0.4.0 test-results/Chatpixel-0.4.0.apk test-results/Chatpixel-0.4.0.apk.sha256 test-results/chatpixel-portrait.png test-results/chatpixel-landscape.png test-results/chatpixel-master.png test-results/chatpixel-environments.png test-results/chatpixel-npc-layers.png --clobber
+          gh release upload mobile-v0.5.0 test-results/Chatpixel-0.5.0.apk test-results/Chatpixel-0.5.0.apk.sha256 test-results/chatpixel-portrait.png test-results/chatpixel-landscape.png test-results/chatpixel-master.png test-results/chatpixel-environments.png test-results/chatpixel-npc-layers.png test-results/chatpixel-travel.png --clobber

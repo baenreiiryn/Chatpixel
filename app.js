@@ -1,7 +1,8 @@
+import {travelIntent} from './journey.js';
 import {environments} from './world.js';
 import {initialState,applyEvent,interpretLocal,weapons,validateEvent} from './engine.js';
 import {createRenderer} from './renderer.js';
-const $=id=>document.getElementById(id);let state=initialState(),busy=false,session={connected:false};
+const $=id=>document.getElementById(id);let state=initialState(),busy=false,externalWaiting=false,session={connected:false};
 const renderer=createRenderer($('scene'),()=>state);
 const names=Object.fromEntries(Object.entries(environments).map(([id,e])=>[id,e.name]));
 for(const [id,e] of Object.entries(environments))$('environment').add(new Option(e.name,id));
@@ -28,14 +29,15 @@ async function execute(events){
  if(!Array.isArray(events)||events.length>12)throw Error('Lote de eventos inválido');
  // Validate the whole batch on a copy, so invalid GPT output cannot partly mutate the scene.
  const check=structuredClone(state);for(const event of events)applyEvent(check,validateEvent(event));
- for(const raw of events){const fromX=state.player.x,fromY=state.player.y;const event=applyEvent(state,raw);sync();save();$('activity').textContent=({spawn:'Uma nova presença entra na história.',attack:`Ataque com ${(weapons[state.player.weapon]||'Sem arma').toLowerCase()}.`,equip:'Equipamento atualizado.',scene:'O cenário mudou.',remove:'Um personagem deixou a cena.',talk:state.dialogue?.message||'Uma conversa começa.',move:'O aventureiro se desloca.',inventory:'Inventário atualizado.'})[event.type];if(['attack','spawn','talk','move'].includes(event.type))await renderer.animate({...event,fromX,fromY});if(event.type==='talk'&&event.message)log(event.message,event.speaker==='player'?'player':'npc',state.npcs.find(n=>n.id===event.speaker)?.name||'');}
+ for(const raw of events){const fromX=state.player.x,fromY=state.player.y;let event;if(raw.type==='scene'){await renderer.transition(raw,()=>{event=applyEvent(state,raw);sync();save();});}else{event=applyEvent(state,raw);sync();save();}$('activity').textContent=({spawn:'Uma nova presença entra na história.',attack:`Ataque com ${(weapons[state.player.weapon]||'Sem arma').toLowerCase()}.`,equip:'Equipamento atualizado.',scene:'O cenário mudou.',remove:'Um personagem deixou a cena.',talk:state.dialogue?.message||'Uma conversa começa.',move:'O aventureiro se desloca.',inventory:'Inventário atualizado.'})[event.type];if(['attack','spawn','talk','move'].includes(event.type))await renderer.animate({...event,fromX,fromY});if(event.type==='talk'&&event.message)log(event.message,event.speaker==='player'?'player':'npc',state.npcs.find(n=>n.id===event.speaker)?.name||'');}
 }
-async function submit(text,role){if(busy||!text.trim())return;lock(true);notice();try{
- let events,narration='';if($('ai').checked){const r=await fetch('/api/interpret',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,role,state:{scene:state.scene,location:state.location,dialogue:state.dialogue,player:state.player,npcs:state.npcs,selected:state.selected,history:state.history},model:$('model').value})});const data=await r.json();if(!r.ok)throw Error(data.error);events=data.events;narration=data.narration||'';}else events=interpretLocal(text,role,state);
+async function submit(text,role){if(busy||!text.trim())return;lock(true);notice();const intent=travelIntent(text);if(intent){renderer.beginTravel(intent);$('activity').textContent='Em viagem: preparando o destino…';}try{
+ let events,narration='';if($('ai').checked){const r=await fetch('/api/interpret',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,role,state:{scene:state.scene,location:state.location,dialogue:state.dialogue,layout:state.layout,player:state.player,npcs:state.npcs,selected:state.selected,history:state.history},model:$('model').value})});const data=await r.json();if(!r.ok)throw Error(data.error);events=data.events;narration=data.narration||'';}else events=interpretLocal(text,role,state);
  const check=structuredClone(state);for(const event of events)applyEvent(check,event);
+ if(!events.some(e=>e.type==='scene'))renderer.cancelTravel();
  log(text,role);if(narration)log(narration,'gm');await execute(events);
  state.history=[...(state.history??[]),{role,text:text.slice(0,1500)},...(narration?[{role:'gm',text:narration.slice(0,2000)}]:[]),...events.filter(e=>e.type==='talk'&&e.speaker!=='player').map(e=>({role:'npc',text:(e.speaker+': '+(e.message||'')).slice(0,300)}))].slice(-12);save();$('text').value='';
- }catch(e){notice(e.message);log(text,role,'Não executado');}finally{lock(false);}}
+ }catch(e){renderer.cancelTravel();notice(e.message);log(text,role,'Não executado');}finally{lock(false);}}
 $('start-story').onclick=()=>{if(!$('ai').checked){notice('Conecte o ChatGPT e ative a interpretação para iniciar a aventura.');return;}$('role').value='player';submit('Comece uma aventura de fantasia como mestre de RPG. Apresente o local e um NPC com aparência detalhada, dê a ele uma fala e pergunte o que faço.','player');};
 $('narration').addEventListener('submit',e=>{e.preventDefault();submit($('text').value,$('role').value);});
 for(const b of document.querySelectorAll('[data-text]'))b.onclick=()=>{$('role').value=b.dataset.role;submit(b.dataset.text,b.dataset.role);};
@@ -56,4 +58,4 @@ try{const saved=JSON.parse(localStorage.getItem('chatpixel-v1'));if(saved?.versi
 addEventListener('chatpixel:resume',()=>status());
 sync();status();if(new URLSearchParams(location.search).has('auth')){notice(new URLSearchParams(location.search).get('auth')==='ok'?'ChatGPT conectado. Ative a interpretação para controlar a cena.':'Não foi possível conectar. Tente novamente.');history.replaceState(null,'',location.pathname);}
 // OracleRPG adapter seam. An authenticated transport can call the same validated event queue.
-window.chatpixel={version:1,getState:()=>structuredClone(state),async dispatch(events){if(busy)throw Error('Cena ocupada; aguarde a animação.');lock(true);try{await execute(events);}finally{lock(false);}}};
+window.chatpixel={version:1,getState:()=>structuredClone(state),getTransition:()=>renderer.getTravel(),prepareScene(destination){if(busy)throw Error('Cena ocupada.');validateEvent({...destination,type:'scene'});renderer.beginTravel(destination);externalWaiting=true;lock(true);},cancelScenePreparation(){if(externalWaiting){externalWaiting=false;renderer.cancelTravel();lock(false);}},async dispatch(events){if(busy&&!externalWaiting)throw Error('Cena ocupada; aguarde a animação.');externalWaiting=false;lock(true);try{await execute(events);renderer.cancelTravel();}catch(e){renderer.cancelTravel();throw e;}finally{lock(false);}}};
