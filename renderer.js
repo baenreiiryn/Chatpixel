@@ -2,8 +2,12 @@ import {sceneLayout,drawBackdrop,drawGround,drawModule} from './scenery.js';
 import {entranceFor,journeyFrame} from './journey.js';
 import {environments,npcAppearance,drawNpcLayers,drawEnvironment} from './world.js';
 
-export function createRenderer(canvas,getState){
+export function createRenderer(canvas,getState,{onError=()=>{}}={}){
  const c=canvas.getContext('2d'); c.imageSmoothingEnabled=false;let animation=null;let alive=true;let travel=null;
+ function report(error){try{onError(error);}catch{}}
+ function finishAnimation(error){if(!animation)return;const a=animation;animation=null;clearTimeout(a.timer);if(error)a.reject(error);else a.done();}
+ function finishTravel(error){if(!travel)return;const tr=travel;travel=null;clearTimeout(tr.arrivalTimer);clearTimeout(tr.revealTimer);if(error)tr.reject?.(error);else tr.resolve?.();}
+ function arrive(tr,t=performance.now()){if(travel!==tr||tr.phase==='reveal')return;try{tr.commit?.();tr.phase='reveal';tr.revealAt=t;clearTimeout(tr.arrivalTimer);tr.revealTimer=setTimeout(()=>{if(travel===tr)finishTravel();},400);tr.revealTimer.unref?.();}catch(error){finishTravel(error);}}
  const rect=(x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),w,h)};
  function tree(x,y,s=1){c.save();c.translate(x,y);c.scale(s,s);rect(-9,-10,18,75,'#253126');rect(1,0,6,60,'#3c4430');for(let i=0;i<4;i++){rect(-58+i*9,-100-i*23,116-i*18,39,'#102a27');rect(-48+i*9,-105-i*23,94-i*18,25,i%2?'#244535':'#1d3b30');rect(-34+i*7,-104-i*23,22,5,'#35553c');}c.restore();}
  function weapon(type,x,y,angle=0){if(!type)return;c.save();c.translate(x,y);c.rotate(angle);if(type==='sword'){rect(0,-34,5,36,'#d2e8dc');rect(0,-34,2,29,'#8caeb0');rect(-5,0,15,4,'#caa860');rect(0,4,5,10,'#76543a');}else if(type==='bow'){c.strokeStyle='#c79c62';c.lineWidth=4;c.beginPath();c.arc(0,-10,21,-1.3,1.3);c.stroke();c.strokeStyle='#dcd5ad';c.lineWidth=1;c.beginPath();c.moveTo(6,-30);c.lineTo(6,10);c.stroke();}else{rect(0,-40,4,55,'#9a7455');rect(-4,-43,12,12,'#9ae8e0');rect(-1,-46,6,5,'#d4fff1');}c.restore();}
@@ -28,7 +32,7 @@ export function createRenderer(canvas,getState){
    if(layer===0)drawBackdrop(ctx,r,snapshot.scene,layout);if(layer===1)drawGround(ctx,r,snapshot.scene,layout);
    for(const prop of layout.props){const l=prop.layer==='far'?0:prop.layer==='front'?3:2;if(l===layer)drawModule(ctx,r,prop,(x,y,scale)=>{ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);r(-8,-15,16,80,'#654f36');for(let i=0;i<4;i++)r(-55+i*10,-80-i*24,110-i*20,35,'#284c39');ctx.restore();});}return surface;});
  }
- function beginTravel(destination={}){if(travel)return;const origin=structuredClone(getState());travel={origin,destination,started:performance.now(),readyAt:null,layers:makeLayers(origin),phase:'waiting'};}
+ function beginTravel(destination={}){if(travel)return;const origin=structuredClone(getState());travel={origin,destination,started:performance.now(),readyAt:null,layers:(()=>{try{return makeLayers(origin);}catch{return [null,null,null,null];}})(),phase:'waiting'};}
  function drawTravel(t){const tr=travel;if(!tr)return false;if(tr.phase==='reveal')return false;const frame=journeyFrame(tr,t),layout=sceneLayout(tr.origin.scene,tr.origin.layout);
   if(tr.layers.every(Boolean)){for(let i=0;i<4;i++){const x=-(frame.offset*[.18,1,.5,1.2][i])%1280;for(const shift of [0,1280])c.drawImage(tr.layers[i],Math.round(x+shift),0);}}
   else{drawBackdrop(c,rect,tr.origin.scene,layout);drawGround(c,rect,tr.origin.scene,layout);for(const prop of layout.props)drawModule(c,rect,{...prop,x:(prop.x-frame.offset*.5+1280)%1280},tree,t);}
@@ -38,10 +42,10 @@ export function createRenderer(canvas,getState){
   if(frame.entranceX!==null){const kind=entranceFor(tr.destination.scene);if(kind==='path'){rect(frame.entranceX-55,310,110,230,'#263d3280');for(const x of [-75,75])tree(frame.entranceX+x,450,1.1);}else drawModule(c,rect,{type:kind==='gate'?'gate':kind==='door'?'shop':'door',x:frame.entranceX-(kind==='door'?90:0),y:470,scale:1.2,color:kind==='arch'?'#565e68':'#8d7958'},tree,t);}
   rect(320,610,640,48,'#10201ee8');c.fillStyle='#e1e6ca';c.textAlign='center';c.font='18px monospace';c.fillText(frame.phase==='walking'?'A caminho · preparando o próximo local…':'Entrando em '+(tr.destination.location||tr.destination.label||environments[tr.destination.scene]?.name||'novo local'),640,640,610);
   if(frame.fade){c.fillStyle='rgba(5,12,15,'+frame.fade+')';c.fillRect(0,0,1280,720);}
-  if(frame.phase==='arrived'){try{tr.commit?.();tr.phase='reveal';tr.revealAt=t;}catch(e){travel=null;tr.reject?.(e);}}
+  if(frame.phase==='arrived')arrive(tr,t);
   return true;
  }
- function draw(t){if(!alive)return;if(drawTravel(t)){requestAnimationFrame(draw);return;}const s=getState(),layout=sceneLayout(s.scene,s.layout);
+ function drawFrame(t){if(drawTravel(t))return;const s=getState(),layout=sceneLayout(s.scene,s.layout);
   drawBackdrop(c,rect,s.scene,layout);drawGround(c,rect,s.scene,layout);
   for(const prop of layout.props.filter(p=>p.layer!=='front').sort((a,b)=>(a.layer==='far'?-1:1)-(b.layer==='far'?-1:1)||a.y-b.y))drawModule(c,rect,prop,tree,t);
   // Stone ring and runes mark the encounter area.
@@ -50,7 +54,7 @@ export function createRenderer(canvas,getState){
   // Fireflies and dust.
   for(let i=0;i<28;i++){const x=(i*173+t*(.004+i%3*.002))%1280,y=140+(i*83)%470+Math.sin(t/900+i)*8;rect(x,y,2,2,i%3?'#9ba56b77':'#d5d69e');}
   let px=s.player.x,py=s.player.y;let a=animation;
-  if(a){a.progress=Math.min(1,(t-a.start)/a.duration);if(a.type==='move'||a.type==='talk'&&a.speaker==='player'){const p=a.progress*a.progress*(3-2*a.progress);px=a.fromX+(s.player.x-a.fromX)*p;py=a.fromY+(s.player.y-a.fromY)*p;}if(a.type==='attack'&&a.weapon==='sword'){const travel=Math.sin(a.progress*Math.PI);px+=(a.x-70-px)*travel;py+=(a.y-py)*travel;}}
+  if(a){a.progress=Math.max(0,Math.min(1,(t-a.start)/a.duration));if(a.type==='move'||a.type==='talk'&&a.speaker==='player'){const p=a.progress*a.progress*(3-2*a.progress);px=a.fromX+(s.player.x-a.fromX)*p;py=a.fromY+(s.player.y-a.fromY)*p;}if(a.type==='attack'&&a.weapon==='sword'){const travel=Math.sin(a.progress*Math.PI);px+=(a.x-70-px)*travel;py+=(a.y-py)*travel;}}
   const actors=[...s.npcs.map(n=>({...n})),{id:'player',name:'Aventureiro',kind:'player',x:px,y:py}].sort((a,b)=>a.y-b.y);
   for(const n of actors)sprite(n.x,n.y,n.kind,n.name,n.id===s.selected,t,a?.target===n.id&&a.progress>.5&&a.progress<.8,s.player.weapon,n.appearance);
   if(a){
@@ -60,13 +64,14 @@ export function createRenderer(canvas,getState){
     else if(a.progress>.3&&a.progress<.8){c.strokeStyle='#f2edb0';c.lineWidth=7;c.beginPath();c.arc(a.x-45,a.y-40,48,-1.5,a.progress*6-1.5);c.stroke();}
     if(a.progress>.6){for(let i=0;i<10;i++){const q=i*Math.PI/5,d=(a.progress-.6)*150;rect(a.x+Math.cos(q)*d,a.y-30+Math.sin(q)*d,4,4,'#f7db92');}c.font='bold 15px monospace';c.fillStyle='#f2deb0';c.textAlign='center';c.fillText('IMPACTO',a.x,a.y-85-(a.progress-.6)*40);}
    }
-   if(a.progress>=1){animation=null;a.done();}
+   if(a.progress>=1)finishAnimation();
   }
   if(s.dialogue&&(!a||a.type==='talk'&&a.progress>.35)){const speaker=s.dialogue.speaker??'player';const n=speaker==='player'?{x:px,y:py}:s.npcs.find(n=>n.id===speaker);if(n)drawSpeech(n.x,n.y,s.dialogue.message,speaker==='player'?'Você':s.npcs.find(n=>n.id===speaker)?.name);}
   for(const prop of layout.props.filter(p=>p.layer==='front'))drawModule(c,rect,prop,tree,t);
-  if(travel?.phase==='reveal'){const p=Math.min(1,(t-travel.revealAt)/350);c.fillStyle='rgba(5,12,15,'+(1-p)+')';c.fillRect(0,0,1280,720);if(p>=1){const done=travel.resolve;travel=null;done?.();}}
-  const vignette=c.createRadialGradient(640,350,180,640,350,720);vignette.addColorStop(0,'#08171300');vignette.addColorStop(1,'#051310b0');c.fillStyle=vignette;c.fillRect(0,0,1280,720);requestAnimationFrame(draw);
+  if(travel?.phase==='reveal'){const p=Math.min(1,(t-travel.revealAt)/350);c.fillStyle='rgba(5,12,15,'+(1-p)+')';c.fillRect(0,0,1280,720);if(p>=1)finishTravel();}
+  const vignette=c.createRadialGradient(640,350,180,640,350,720);vignette.addColorStop(0,'#08171300');vignette.addColorStop(1,'#051310b0');c.fillStyle=vignette;c.fillRect(0,0,1280,720);
  }
+ function draw(t){if(!alive)return;try{drawFrame(t);}catch(error){finishAnimation(error);finishTravel(error);report(error);}finally{if(alive)requestAnimationFrame(draw);}}
  requestAnimationFrame(draw);
- return {beginTravel,cancelTravel(){if(!travel)return;const done=travel.resolve;travel=null;done?.();},getTravel(){return travel?{phase:travel.phase,destination:travel.destination,waiting:travel.readyAt===null}:null;},transition(destination,commit){beginTravel(destination);travel.destination=destination;travel.readyAt=Math.max(performance.now(),travel.started+500);travel.commit=commit;return new Promise((resolve,reject)=>{travel.resolve=resolve;travel.reject=reject;});},animate(e){const s=getState(),n=s.npcs.find(n=>n.id===(e.target??s.selected));return new Promise(done=>{animation={...e,target:n?.id,x:n?.x??640,y:n?.y??400,weapon:s.player.weapon,start:performance.now(),duration:e.type==='attack'?1100:e.type==='talk'?2300:e.type==='move'?1000:650,progress:0,done};});},stop(){alive=false;travel?.resolve?.();travel=null;}};
+ return {beginTravel,cancelTravel(){finishTravel(new Error('Transição cancelada.'));},cancelPending(error=new Error('Operação cancelada.')){finishAnimation(error);finishTravel(error);},getTravel(){return travel?{phase:travel.phase,destination:travel.destination,waiting:travel.readyAt===null}:null;},transition(destination,commit){beginTravel(destination);const tr=travel;tr.destination=destination;tr.readyAt=Math.max(performance.now(),tr.started+500);tr.commit=commit;return new Promise((resolve,reject)=>{tr.resolve=resolve;tr.reject=reject;tr.arrivalTimer=setTimeout(()=>arrive(tr),Math.max(0,tr.readyAt-performance.now())+1850);tr.arrivalTimer.unref?.();});},animate(e){const s=getState(),n=s.npcs.find(n=>n.id===(e.target??s.selected));return new Promise((done,reject)=>{const a={...e,target:n?.id,x:n?.x??640,y:n?.y??400,weapon:s.player.weapon,start:performance.now(),duration:e.type==='attack'?1100:e.type==='talk'?2300:e.type==='move'?1000:650,progress:0,done,reject};animation=a;a.timer=setTimeout(()=>{if(animation===a)finishAnimation();},a.duration+250);a.timer.unref?.();});},stop(){alive=false;finishAnimation(new Error('Renderização encerrada.'));finishTravel(new Error('Renderização encerrada.'));}};
 }

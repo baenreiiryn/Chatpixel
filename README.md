@@ -94,3 +94,10 @@ A viagem usa a cena de origem em quatro camadas de Canvas preparadas uma vez, co
 O evento `scene` aceita `layout` com `ground`, `background` e até 24 `props` posicionáveis. Catálogos, limites e composições padrão estão em `scenery.js`. Há 19 ambientes, incluindo loja. A composição é enviada ao GPT no próximo turno e salva com o estado.
 
 Para futura integração visual com OracleRPG, o adaptador no navegador pode chamar `window.chatpixel.prepareScene({scene:'shop',location:'Loja de Borin'})` antes de preparar o destino; depois `await window.chatpixel.dispatch(events)` valida e conclui a entrada. Em caso de falha use `window.chatpixel.cancelScenePreparation()`. `getTransition()` permite observar a espera sem alterar o estado de jogo. Não há conexão remota OracleRPG implementada ainda. Se o destino só for conhecido após receber os eventos, a viagem começa nesse momento.
+
+
+## Versão 0.5.1: recuperação do envio
+
+A preparação da viagem passa pela mesma proteção que libera os controles após erros. O ciclo de desenho trata falhas, rejeita animações/transições pendentes e continua recebendo frames. Temporizadores concluem efeitos e chegadas mesmo se os frames forem suspensos; o progresso de aparição nunca fica negativo. O botão **Cancelar espera** interrompe o envio local ou a animação pendente, preserva o texto para nova tentativa e ignora a resposta cancelada. A espera da requisição tem limite de 125 segundos. Operações já aplicadas antes de cancelar permanecem na cena.
+
+Testes de regressão incluem seis turnos consecutivos, resposta tardia após cancelamento, retomada de envio, erro de Canvas e ausência de frames.
