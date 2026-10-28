@@ -32,8 +32,8 @@ export function applyEvent(state,event){
  if(e.type==='attack'&&e.weapon)state.player.weapon=e.weapon;
  if(e.type==='spawn'){
   if(state.npcs.length>=8)throw Error('Limite de 8 NPCs. Remova um para continuar.');
-  const id=`npc-${++state.sequence}`; const i=Array.from({length:8},(_,i)=>i).find(i=>!state.npcs.some(n=>n.x===640+(i%3)*150&&n.y===330+Math.floor(i/3)*100));
-  state.npcs.push({id,name:e.name.trim(),kind:e.kind,x:640+(i%3)*150,y:330+Math.floor(i/3)*100,hits:0,ref:e.ref??id,appearance:npcAppearance(e.kind,e.appearance)});state.selected=id;e.target=id;
+  const id=`npc-${++state.sequence}`; const i=Array.from({length:8},(_,i)=>i).find(i=>!state.npcs.some(n=>n.x===640+(i%3)*150&&n.y===330+Math.floor(i/3)*140));
+  state.npcs.push({id,name:e.name.trim(),kind:e.kind,x:640+(i%3)*150,y:330+Math.floor(i/3)*140,hits:0,ref:e.ref??id,appearance:npcAppearance(e.kind,e.appearance)});state.selected=id;e.target=id;
  }else if(e.type==='equip')state.player.weapon=e.weapon;
  else if(e.type==='inventory'){state.player.inventory=e.action==='add'?[...new Set([...inventory,e.weapon])]:inventory.filter(w=>w!==e.weapon);if(!state.player.inventory.includes(state.player.weapon))state.player.weapon=state.player.inventory[0]??null;}
  else if(e.type==='scene'){if(state.scene!==e.scene||e.location&&e.location!==state.location){state.npcs=[];state.selected=null;state.player.x=340;state.player.y=400;state.dialogue=null;}state.scene=e.scene;state.location=e.location??null;}

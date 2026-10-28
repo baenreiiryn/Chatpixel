@@ -22,12 +22,15 @@ export function createRenderer(canvas,getState){
  }
  function draw(t){if(!alive)return;const s=getState(),pal=(environments[s.scene]??environments.forest).palette;rect(0,0,1280,720,pal[0]);
   // Distant silhouettes and a hand-built tiled floor stay deterministic across frames.
-  for(let i=0;i<14;i++){rect(i*100-20,80+(i%3)*17,65,310,'#19312e');rect(i*100,0,14,390,'#112925');}
+  if(['forest','swamp','camp'].includes(s.scene)){for(let i=0;i<14;i++){rect(i*100-20,80+(i%3)*17,65,310,'#19312e');rect(i*100,0,14,390,'#112925');}}
+  else if(['dungeon','tavern','castle','temple','library'].includes(s.scene)){for(let y=60;y<300;y+=45)for(let x=-50;x<1300;x+=105)rect(x+(y%2)*40,y,102,42,pal[1]);}
+  else if(['desert','coast','harbor','mountain','snow','village','market','ruins'].includes(s.scene)){rect(1040,65,54,42,'#e2ce95');rect(1048,57,38,58,'#e2ce95');}
   rect(0,300,1280,420,pal[1]);
   for(let row=0;row<14;row++)for(let col=0;col<30;col++){
    const n=(row*71+col*137)%53,x=col*48+(row%2)*24,y=300+row*32;
-   if(s.scene==='dungeon'){rect(x,y,46,30,n%3===0?'#333d48':'#2b343e');rect(x+3,y+3,38,2,'#3b4650');}
-   else{rect(x,y,44,30,n%4===0?pal[2]:pal[1]);if(n<15){rect(x+9,y+10,3,6,'#58704a');rect(x+14,y+6,3,10,'#425e41');}}
+   if(['dungeon','castle','temple','ruins','cave','mountain','cemetery'].includes(s.scene)){rect(x,y,46,30,n%3===0?'#333d48':'#2b343e');rect(x+3,y+3,38,2,'#3b4650');}
+   else if(['tavern','library','harbor'].includes(s.scene)){rect(x,y,46,30,n%4===0?pal[2]:pal[1]);rect(x+3,y+27,40,2,'#382f2a');}
+   else{rect(x,y,44,30,n%4===0?pal[2]:pal[1]);if(n<15&&['forest','swamp','village','camp'].includes(s.scene)){rect(x+9,y+10,3,6,'#58704a');rect(x+14,y+6,3,10,'#425e41');}}
   }
   drawEnvironment(c,rect,s.scene,t,tree);
   // Stone ring and runes mark the encounter area.
