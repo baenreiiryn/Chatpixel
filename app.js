@@ -3,7 +3,7 @@ import {createRenderer} from './renderer.js';
 const $=id=>document.getElementById(id);let state=initialState(),busy=false,session={connected:false};
 const renderer=createRenderer($('scene'),()=>state);
 const names={forest:'Clareira dos Ecos',dungeon:'Salão Esquecido',village:'Vila do Limiar'};
-function fit(){const scale=Math.min(innerWidth/1280,innerHeight/720,1.25);$('game').style.transform=`scale(${scale})`;document.body.style.width='100vw';document.body.style.height='100vh';document.body.style.overflow='hidden';}addEventListener('resize',fit);fit();
+function fit(){const mobile=matchMedia('(max-width: 900px), (pointer: coarse)').matches;document.documentElement.classList.toggle('mobile',mobile);if(mobile){$('game').style.transform='none';document.body.style.width='';document.body.style.height='';document.body.style.overflow='';return;}const scale=Math.min(innerWidth/1280,innerHeight/720,1.25);$('game').style.transform=`scale(${scale})`;document.body.style.width='100vw';document.body.style.height='100vh';document.body.style.overflow='hidden';}addEventListener('resize',fit);fit();
 function save(){try{localStorage.setItem('chatpixel-v1',JSON.stringify(state));}catch{notice('O navegador não permitiu salvar a cena.');}}
 function notice(text=''){$('notice').textContent=text;}
 function sync(){
@@ -43,6 +43,7 @@ async function status(){try{const r=await fetch('/api/session');if(!r.ok)return;
 $('login').onclick=()=>{if(location.protocol==='file:'){notice('Para conectar: execute npm start e abra http://127.0.0.1:3210.');return;}location.href='/auth/login';};
 $('logout').onclick=async()=>{await fetch('/auth/logout',{method:'POST'});location.reload();};
 try{const saved=JSON.parse(localStorage.getItem('chatpixel-v1'));if(saved?.version===1&&Array.isArray(saved.events)&&saved.events.length<=100&&Array.isArray(saved.npcs)&&saved.npcs.length<=8&&weapons[saved.player?.weapon]&&names[saved.scene]&&saved.npcs.every(n=>typeof n.name==='string'&&Number.isFinite(n.x)&&Number.isFinite(n.y)&&['goblin','guard','merchant'].includes(n.kind)))state=saved;}catch{}
+addEventListener('chatpixel:resume',()=>status());
 sync();status();if(new URLSearchParams(location.search).has('auth')){notice(new URLSearchParams(location.search).get('auth')==='ok'?'ChatGPT conectado. Ative a interpretação para controlar a cena.':'Não foi possível conectar. Tente novamente.');history.replaceState(null,'',location.pathname);}
 // OracleRPG adapter seam. An authenticated transport can call the same validated event queue.
 window.chatpixel={version:1,getState:()=>structuredClone(state),async dispatch(events){if(busy)throw Error('Cena ocupada; aguarde a animação.');lock(true);try{await execute(events);}finally{lock(false);}}};

@@ -1,0 +1,60 @@
+name: Android APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['android/**', '*.js', '*.css', 'index.html', 'package*.json', 'tools/**', '.github/workflows/android.yml']
+permissions:
+  contents: write
+concurrency:
+  group: android-apk
+  cancel-in-progress: false
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:mobile
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Restore app test signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.CHATPIXEL_ANDROID_KEYSTORE }}
+        run: |
+          test -n "$KEYSTORE_BASE64"
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/chatpixel-test.jks"
+          echo "CHATPIXEL_KEYSTORE=$RUNNER_TEMP/chatpixel-test.jks" >> "$GITHUB_ENV"
+      - run: gradle -p android testDebugUnitTest lintDebug assembleDebug --no-daemon
+      - name: Package APK and checksum
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk test-results/Chatpixel-0.2.0.apk
+          cd test-results
+          sha256sum Chatpixel-0.2.0.apk > Chatpixel-0.2.0.apk.sha256
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chatpixel-android-test
+          path: |
+            test-results/
+            android/app/build/reports/
+      - name: Publish mobile test build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view mobile-v0.2.0 >/dev/null 2>&1; then
+            gh release create mobile-v0.2.0 --title 'Chatpixel Android 0.2.0 — teste de mecânicas' --prerelease --notes 'APK de teste para Android 8 ou superior. Jogo incluído, controles por toque, modo local offline e Sign in with ChatGPT no próprio aparelho. Login real requer autorização do usuário e ainda precisa de validação em um celular físico.' --target "$GITHUB_SHA"
+          fi
+          gh release upload mobile-v0.2.0 test-results/Chatpixel-0.2.0.apk test-results/Chatpixel-0.2.0.apk.sha256 test-results/chatpixel-portrait.png test-results/chatpixel-landscape.png --clobber

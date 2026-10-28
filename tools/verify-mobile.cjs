@@ -1,0 +1,17 @@
+const {chromium}=require('playwright');
+const {spawn}=require('node:child_process');
+const fs=require('node:fs/promises');const os=require('node:os');const path=require('node:path');
+(async()=>{const dir=await fs.mkdtemp(path.join(os.tmpdir(),'chatpixel-ui-'));const server=spawn(process.execPath,['server.mjs'],{env:{...process.env,PORT:'43220',CHATPIXEL_CONFIG_DIR:dir},stdio:['ignore','pipe','inherit']});let browser;
+try{await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);server.once('exit',()=>reject(Error('Servidor não iniciou')));});browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:393,height:851},isMobile:true,hasTouch:true,deviceScaleFactor:1});const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:43220');
+ await page.waitForFunction(()=>!!window.chatpixel);await fs.mkdir('test-results',{recursive:true});
+ if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Portrait horizontal overflow');
+ await page.locator('#demo').click();await page.waitForFunction(()=>!document.querySelector('#demo').disabled);let state=await page.evaluate(()=>window.chatpixel.getState());if(state.npcs.length!==1||state.npcs[0].hits!==3||state.player.weapon!=='staff')throw Error('Sequência incompleta');
+ await page.screenshot({path:'test-results/chatpixel-portrait.png',fullPage:true});
+ await page.reload();state=await page.evaluate(()=>window.chatpixel.getState());if(state.npcs[0].hits!==3)throw Error('Persistência falhou');
+ await page.selectOption('#weapon','bow');await page.waitForFunction(()=>window.chatpixel.getState().player.weapon==='bow');
+ await page.locator('[data-text="Ataco esse NPC com minha arma."]').click();await page.waitForFunction(()=>!document.querySelector('#demo').disabled);if((await page.evaluate(()=>window.chatpixel.getState())).npcs[0].hits!==4)throw Error('Ataque por toque falhou');
+ const before=JSON.stringify(await page.evaluate(()=>window.chatpixel.getState()));await page.evaluate(()=>window.chatpixel.dispatch([{type:'equip',weapon:'sword'},{type:'attack',target:'missing'}]).catch(()=>{}));if(JSON.stringify(await page.evaluate(()=>window.chatpixel.getState()))!==before)throw Error('Lote inválido alterou estado');
+ await page.setViewportSize({width:851,height:393});await page.screenshot({path:'test-results/chatpixel-landscape.png',fullPage:true});if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Landscape overflow');
+ await page.setViewportSize({width:1280,height:720});await page.emulateMedia({});await page.locator('#reset').click();if((await page.evaluate(()=>window.chatpixel.getState())).npcs.length!==0)throw Error('Reset falhou');
+ if(errors.length)throw Error(errors.join('\n'));console.log('PASS: touch demo, sword/bow/staff, persistence, equipment, target, atomic batch, portrait and landscape without overflow; zero browser errors');
+}finally{if(browser)await browser.close();server.kill();await new Promise(resolve=>server.once('close',resolve));await fs.rm(dir,{recursive:true,force:true});}})().catch(e=>{console.error(e);process.exitCode=1;});

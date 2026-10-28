@@ -1,3 +1,9 @@
 node_modules/
 .chatpixel/
 test-results/
+
+android/.gradle/
+android/**/build/
+android/local.properties
+*.jks
+*.keystore

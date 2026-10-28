@@ -1,5 +1,15 @@
 # Chatpixel
 
+## Android — versão 0.2.0
+
+O APK de teste está em [Releases](https://github.com/baenreiiryn/Chatpixel/releases/tag/mobile-v0.2.0). Instale `Chatpixel-0.2.0.apk` em Android 8 ou superior. O jogo já está incluído: o modo local funciona offline e não depende do computador. A tela se adapta a retrato e paisagem, mantendo a resolução lógica do mundo em 1280×720.
+
+No aplicativo, clique em **Continue with ChatGPT**, autorize no navegador do próprio celular e toque em **Voltar ao Chatpixel**. Escolha o modelo e ative **Interpretar com GPT**. A autenticação e a interpretação usam a conexão do celular. Tokens ficam criptografados por uma chave do Android Keystore e não são enviados ao JavaScript. O servidor interno aceita apenas conexões de 127.0.0.1 e protege as APIs por um cookie aleatório HttpOnly. O navegador usa um callback com state, nonce e PKCE; a assinatura e as claims do ID token são verificadas antes de salvar a conta.
+
+O APK é uma compilação de teste assinada com uma chave própria de Chatpixel, reutilizada nas atualizações. O login real depende de consentimento e ainda deve ser validado no celular físico do usuário. Não há integração com OracleRPG nesta versão. Se o Android encerrar o app durante o login, reabra e inicie uma nova tentativa.
+
+Compilação: `gradle -p android testDebugUnitTest lintDebug assembleDebug` com Gradle 8.9, JDK 17 e Android SDK 35. O workflow **Android APK** executa os testes do motor, testes de interface por toque em retrato/paisagem, testes do protocolo OAuth Android e lint antes de publicar o APK e o checksum.
+
 Protótipo HTML/Canvas de RPG guiado por narração, com resolução lógica de **1280 × 720** e interface que se ajusta à tela. Sem dependências de execução. Node.js 22 ou superior.
 
 ## Jogar
