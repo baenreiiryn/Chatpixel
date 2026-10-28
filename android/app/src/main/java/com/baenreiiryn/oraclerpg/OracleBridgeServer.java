@@ -35,6 +35,7 @@ public final class OracleBridgeServer {
         return instance;
     }
 
+    private final okhttp3.OkHttpClient cloudHttp = new okhttp3.OkHttpClient.Builder().followRedirects(false).connectTimeout(20,java.util.concurrent.TimeUnit.SECONDS).readTimeout(40,java.util.concurrent.TimeUnit.SECONDS).build();
     private final Context appContext;
     private final ChatGptClient chatGpt;
     private final ExecutorService pool = Executors.newCachedThreadPool();
@@ -130,6 +131,7 @@ public final class OracleBridgeServer {
             }
 
             try {
+                if(path.matches("/api/campaigns(?:/[0-9a-fA-F-]{36})?") && java.util.Arrays.asList("GET","POST","PUT","DELETE").contains(method)){proxyCampaign(client,method,path,headers,bodyText,origin);return;}
                 if ("GET".equals(method) && "/health".equals(path)) {
                     JSONObject health = new JSONObject();
                     health.put("ok", true);
@@ -168,6 +170,17 @@ public final class OracleBridgeServer {
                 writeJson(client, 500, failure, origin);
             }
         } catch (Exception ignored) {}
+    }
+
+    private void proxyCampaign(Socket client,String method,String path,Map<String,String> headers,String body,String origin) throws Exception {
+        okhttp3.Request.Builder request=new okhttp3.Request.Builder().url(BuildConfig.CLOUD_ORIGIN+path);
+        String key=headers.get("authorization");if(key!=null)request.header("Authorization",key);
+        okhttp3.RequestBody payload=(method.equals("POST")||method.equals("PUT"))?okhttp3.RequestBody.create(body,okhttp3.MediaType.get("application/json")):null;
+        request.method(method,payload);
+        try(okhttp3.Response response=cloudHttp.newCall(request.build()).execute()){
+            byte[] bytes=response.body()==null?new byte[0]:response.body().bytes();
+            write(client,response.code(),"application/json; charset=utf-8",bytes,origin);
+        }
     }
 
     private boolean serveAsset(Socket client,String path) throws Exception {
@@ -247,8 +260,8 @@ public final class OracleBridgeServer {
                 .append("Content-Length: ").append(body.length).append("\r\n")
                 .append("Cache-Control: no-store\r\n")
                 .append("Connection: close\r\n")
-                .append("Access-Control-Allow-Methods: GET,POST,OPTIONS\r\n")
-                .append("Access-Control-Allow-Headers: content-type\r\n")
+                .append("Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS\r\n")
+                .append("Access-Control-Allow-Headers: content-type,authorization\r\n")
                 .append("Access-Control-Allow-Private-Network: true\r\n")
                 .append("Access-Control-Max-Age: 600\r\n");
         if (origin != null && ALLOWED_ORIGINS.contains(origin)) {

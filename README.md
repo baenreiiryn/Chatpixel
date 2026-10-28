@@ -14,7 +14,7 @@ Cada campanha persiste sua cena e NPCs visíveis junto com ficha e mensagens. O 
 
 ## Android
 
-`npm run build:android` gera a interface estática em `out/`; as rotas de nuvem ficam temporariamente fora da exportação e são restauradas ao terminar. O Gradle inclui `out/` no APK. O aplicativo serve interface e bridge no próprio aparelho em `127.0.0.1:31417`, com login no navegador. Usa `com.baenreiiryn.chatpixel` para atualizar o Chatpixel existente sem substituir o OracleRPG original. Campanhas locais do outro aplicativo não são copiadas automaticamente; use os recursos de importação/exportação da campanha. A sincronização de nuvem com rotas Next requer a versão hospedada; no APK embutido a campanha é local.
+`npm run build:android` gera a interface estática em `out/`; as rotas de nuvem ficam temporariamente fora da exportação e são restauradas ao terminar. O Gradle inclui `out/` no APK. O aplicativo serve interface e bridge no próprio aparelho em `127.0.0.1:31417`, com login no navegador. Usa `com.baenreiiryn.chatpixel` para atualizar o Chatpixel existente sem substituir o OracleRPG original. Campanhas locais do outro aplicativo não são copiadas automaticamente; use os recursos de importação/exportação da campanha. A campanha funciona localmente; ao ativar a sincronização por código, o bridge Android encaminha somente as rotas de campanha ao backend original em `oraclerpg-swig.vercel.app`. Assim é possível usar o código de uma campanha existente. As credenciais ChatGPT nunca são encaminhadas a esse backend.
 
 ## Verificar
 
