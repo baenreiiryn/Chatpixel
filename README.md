@@ -76,3 +76,12 @@ npm test
 ```
 
 Testes cobrem criação, alvo por nome, equipamento, impactos, remoção, mudança de cenário, negações, eventos inválidos, limite de NPCs e IDs únicos. Use `npm ci` para instalar as dependências de testes visuais.
+
+
+## Versão 0.4.0: mestre e arte modular
+
+Com ChatGPT conectado, use **Aventura** para iniciar uma sessão: o GPT narra como mestre, interpreta NPCs, mantém as últimas 12 entradas de contexto e retorna eventos visuais. A narração é separada das falas no registro. Balões usam `talk.speaker`: `player` para jogador ou ID/ref do NPC. Novos NPCs podem receber `ref` estável em `spawn` e falar no mesmo turno.
+
+O seletor de ambiente oferece 18 cenários: floresta, vila, masmorra, taverna, castelo, caverna, deserto, praia, porto, pântano, montanha, neve, ruínas, templo, cemitério, biblioteca, mercado e acampamento. Elementos são desenhados em Canvas; não dependem de geração de imagens.
+
+`spawn.appearance` combina camadas independentes de cabeça/ancestralidade, corpo, roupa, cabelo, chapéu, barba e acessório, além de cores de pele, cabelo, roupa e detalhes. Consulte `appearanceOptions` em `world.js`. O mestre descreve e seleciona essas peças; a aparência permanece salva. O motor valida as opções e continua aplicando os lotes de eventos de forma atômica. Não é um gerador ilimitado de sprites nem um sistema completo de regras de RPG.

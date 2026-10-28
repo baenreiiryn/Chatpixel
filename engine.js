@@ -1,3 +1,4 @@
+import {environments,npcAppearance,validateAppearance} from './world.js';
 export const weapons = {sword:'Espada',bow:'Arco',staff:'Cajado'};
 export const normalize = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 export function initialState(){return {version:1,scene:'forest',player:{x:340,y:400,weapon:'sword',inventory:['sword','bow','staff']},npcs:[],selected:null,events:[],sequence:0};}
@@ -7,16 +8,23 @@ export function validateEvent(e){
  else if(e.type==='equip'){if(!weapons[e.weapon])throw Error('Arma inválida');}
  else if(e.type==='inventory'){if(!weapons[e.weapon]||!['add','remove'].includes(e.action))throw Error('Item inválido');}
  else if(e.type==='move'){if(e.target!==undefined){if(typeof e.target!=='string'||!e.target)throw Error('Destino inválido');}else if(!Number.isFinite(e.x)||!Number.isFinite(e.y)||e.x<70||e.x>1210||e.y<330||e.y>620)throw Error('Destino fora da área caminhável');}
- else if(e.type==='scene'){if(!['forest','dungeon','village'].includes(e.scene))throw Error('Cenário inválido');}
+ else if(e.type==='scene'){if(!Object.hasOwn(environments,e.scene))throw Error('Cenário inválido');}
  else if(['attack','remove','talk'].includes(e.type)){if(typeof e.target!=='string'||!e.target)throw Error('Alvo inválido');}
  else throw Error('Ação não suportada');
+ if(e.appearance!==undefined)validateAppearance(e.appearance);
+ if(e.ref!==undefined&&(typeof e.ref!=='string'||!e.ref||e.ref.length>50))throw Error('Referência inválida');
+ if(e.speaker!==undefined&&(typeof e.speaker!=='string'||!e.speaker))throw Error('Falante inválido');
  if(e.weapon!==undefined&&!weapons[e.weapon])throw Error('Arma inválida');
  if(e.message!==undefined&&(typeof e.message!=='string'||e.message.length>180))throw Error('Fala inválida');
  if(e.location!==undefined&&(typeof e.location!=='string'||e.location.length>60))throw Error('Local inválido');
  return e;
 }
 export function applyEvent(state,event){
- const e=validateEvent(event);
+ const e={...validateEvent(event)};
+ const resolve=target=>state.npcs.find(n=>n.id===target||n.ref===target);
+ if(e.target&&resolve(e.target))e.target=resolve(e.target).id;
+ if(e.speaker&&e.speaker!=='player'){const n=resolve(e.speaker);if(!n)throw Error('Falante não está na cena.');e.speaker=n.id;}
+ if(e.type==='spawn'&&e.ref&&state.npcs.some(n=>n.ref===e.ref||n.id===e.ref))throw Error('Referência de NPC já utilizada.');
  const inventory=state.player.inventory??Object.keys(weapons);
  if((e.type==='equip'||e.type==='attack')&&e.weapon&&!inventory.includes(e.weapon))throw Error('Você não possui '+weapons[e.weapon]+' no inventário.');
  if(['attack','talk','remove'].includes(e.type)||(e.type==='move'&&e.target)){if(!state.npcs.some(n=>n.id===e.target))throw Error('Escolha um NPC presente na cena.');}
@@ -25,7 +33,7 @@ export function applyEvent(state,event){
  if(e.type==='spawn'){
   if(state.npcs.length>=8)throw Error('Limite de 8 NPCs. Remova um para continuar.');
   const id=`npc-${++state.sequence}`; const i=Array.from({length:8},(_,i)=>i).find(i=>!state.npcs.some(n=>n.x===640+(i%3)*150&&n.y===330+Math.floor(i/3)*100));
-  state.npcs.push({id,name:e.name.trim(),kind:e.kind,x:640+(i%3)*150,y:330+Math.floor(i/3)*100,hits:0});state.selected=id;
+  state.npcs.push({id,name:e.name.trim(),kind:e.kind,x:640+(i%3)*150,y:330+Math.floor(i/3)*100,hits:0,ref:e.ref??id,appearance:npcAppearance(e.kind,e.appearance)});state.selected=id;e.target=id;
  }else if(e.type==='equip')state.player.weapon=e.weapon;
  else if(e.type==='inventory'){state.player.inventory=e.action==='add'?[...new Set([...inventory,e.weapon])]:inventory.filter(w=>w!==e.weapon);if(!state.player.inventory.includes(state.player.weapon))state.player.weapon=state.player.inventory[0]??null;}
  else if(e.type==='scene'){if(state.scene!==e.scene||e.location&&e.location!==state.location){state.npcs=[];state.selected=null;state.player.x=340;state.player.y=400;state.dialogue=null;}state.scene=e.scene;state.location=e.location??null;}
@@ -33,13 +41,15 @@ export function applyEvent(state,event){
  else {const npc=state.npcs.find(n=>n.id===e.target);if(!npc)throw Error('Escolha um NPC presente na cena.');
   state.selected=npc.id;
   if(e.type==='attack'){if(!state.player.weapon)throw Error('Nenhuma arma disponível.');npc.hits++;state.dialogue=null;}
-  if(e.type==='talk'){state.player.x=Math.max(70,npc.x-85);state.player.y=npc.y;state.dialogue={target:npc.id,message:e.message||'Uma conversa começa.'};}
+  if(e.type==='talk'){const speaker=e.speaker??'player';if(speaker==='player'){state.player.x=Math.max(70,npc.x-85);state.player.y=npc.y;}state.dialogue={target:npc.id,speaker,message:e.message||'Uma conversa começa.'};e.speaker=speaker;}
   if(e.type==='remove'){state.npcs=state.npcs.filter(n=>n.id!==npc.id);state.selected=state.npcs[0]?.id??null;}
  }
  state.events.push({...e,number:state.events.length+1});state.events=state.events.slice(-100);return e;
 }
 export function interpretLocal(text,role,state){
  const t=normalize(text);if(/\b(nao|nunca|talvez|se)\b/.test(t))throw Error('Modo local: use uma ação afirmativa simples por mensagem.');
+ const sceneWords={tavern:/taverna|estalagem/,castle:/castelo|palacio/,cave:/caverna|gruta/,desert:/deserto/,coast:/praia|litoral/,harbor:/porto|doca/,swamp:/pantano|brejo/,mountain:/montanha|pico/,snow:/neve|nevado/,ruins:/ruina/,temple:/templo|santuario/,cemetery:/cemiterio/,library:/biblioteca/,market:/mercado|feira/,camp:/acampamento/};
+ const destination=Object.entries(sceneWords).find(([,re])=>re.test(t))?.[0];if(destination&&/vou|vamos|entro|entramos|chego|estamos|viajo/.test(t))return [{type:'scene',scene:destination}];
  const weapon=/arco/.test(t)?'bow':/cajado|bastao/.test(t)?'staff':/espada/.test(t)?'sword':null;
  const target=state.npcs.find(n=>t.includes(normalize(n.name)))?.id??state.selected;
  if(role==='player'){
@@ -49,7 +59,7 @@ export function interpretLocal(text,role,state){
   if(/vou|caminh|ando|ir |entro|viajo|aproxim/.test(t)){const scene=/vila|taverna|aldeia/.test(t)?'village':/masmorra|caverna/.test(t)?'dungeon':/floresta|clareira/.test(t)?'forest':null;if(scene)return [{type:'scene',scene}];if(target&&state.npcs.some(n=>t.includes(normalize(n.name))))return [{type:'move',target}];if(/direita/.test(t))return [{type:'move',x:Math.min(1210,state.player.x+160),y:state.player.y}];if(/esquerda/.test(t))return [{type:'move',x:Math.max(70,state.player.x-160),y:state.player.y}];}
  }else{
   if(/masmorra|caverna/.test(t))return [{type:'scene',scene:'dungeon'}];
-  if(/vila|taverna|aldeia/.test(t))return [{type:'scene',scene:'village'}];
+  if(/vila|aldeia/.test(t))return [{type:'scene',scene:'village'}];
   if(/voltamos.*clareira|entramos.*floresta/.test(t))return [{type:'scene',scene:'forest'}];
   if(/desaparece|vai embora|sai da cena/.test(t))return [{type:'remove',target}];
   if(/aparec|surg|chega|entra/.test(t)){

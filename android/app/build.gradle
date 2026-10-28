@@ -6,8 +6,8 @@ android {
         applicationId 'com.baenreiiryn.chatpixel'
         minSdk 26
         targetSdk 35
-        versionCode 4
-        versionName '0.3.0'
+        versionCode 5
+        versionName '0.4.0'
     }
     signingConfigs {
         debug {
@@ -24,7 +24,7 @@ android {
     testOptions { unitTests.returnDefaultValues = true }
 }
 tasks.register('syncGameAssets', Copy) {
-    from('../..') { include 'index.html', 'style.css', 'app.js', 'engine.js', 'renderer.js' }
+    from('../..') { include 'index.html', 'style.css', 'app.js', 'engine.js', 'renderer.js', 'world.js' }
     into(layout.buildDirectory.dir('game-assets'))
 }
 tasks.named('preBuild').configure { dependsOn 'syncGameAssets' }

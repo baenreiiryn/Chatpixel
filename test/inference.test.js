@@ -16,7 +16,7 @@ test('narração GPT envia mensagens estruturadas e só retorna após conclusão
   assert.equal(narration.text,'Surge um guarda.');
   assert.equal(narration.state.selected,null);
   assert.equal(captured.store,false);assert.equal(captured.stream,true);
-  return {body:(async function*(){yield new TextEncoder().encode('data: '+JSON.stringify({type:'response.output_text.delta',delta:'{"events":[]}'})+'\n'+'data: '+JSON.stringify({type:'response.completed'})+'\n');})()};
+  return {body:(async function*(){yield new TextEncoder().encode('data: '+JSON.stringify({type:'response.output_text.delta',delta:'{"narration":"O guarda se aproxima.","events":[]}'})+'\n'+'data: '+JSON.stringify({type:'response.completed'})+'\n');})()};
  };
  vm.createContext(context);vm.runInContext(code,context);
  const result=await context.interpret({model:'test-model',text:'Surge um guarda.',role:'gm',state:{scene:'forest',player:{weapon:'sword'},npcs:[],selected:null}});

@@ -33,7 +33,7 @@ final class GameServer extends NanoHTTPD {
     if(path.equals("/api/interpret")&&s.getMethod()==Method.POST){int length=Integer.parseInt(s.getHeaders().getOrDefault("content-length","0"));if(length<=0||length>64000)return json(error("Mensagem muito grande ou vazia"),Response.Status.BAD_REQUEST);Map<String,String> body=new HashMap<>();s.parseBody(body);String value=body.get("postData");if(value==null||value.length()>64000)throw new Exception("Mensagem inválida");return json(auth.interpret(new JSONObject(value)),Response.Status.OK);}
     return json(error("Não encontrado"),Response.Status.NOT_FOUND);
    }
-   Map<String,String> files=new HashMap<>();files.put("/","index.html");for(String name:new String[]{"index.html","style.css","app.js","engine.js","renderer.js"})files.put("/"+name,name);
+   Map<String,String> files=new HashMap<>();files.put("/","index.html");for(String name:new String[]{"index.html","style.css","app.js","engine.js","renderer.js","world.js"})files.put("/"+name,name);
    if(s.getMethod()!=Method.GET||!files.containsKey(path))return json(error("Não encontrado"),Response.Status.NOT_FOUND);
    String name=files.get(path),type=name.endsWith(".js")?"text/javascript":name.endsWith(".css")?"text/css":"text/html";
    InputStream stream=context.getAssets().open(name);Response r=newChunkedResponse(Response.Status.OK,type+"; charset=utf-8",stream);r.addHeader("Content-Security-Policy","default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'");r.addHeader("X-Content-Type-Options","nosniff");return r;
