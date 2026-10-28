@@ -1,85 +1,75 @@
-name: Android APK
-
+name: OracleRPG + Chatpixel Android
 on:
   push:
-    tags:
-      - "v*"
+    branches: [main]
   workflow_dispatch:
-
 permissions:
   contents: write
-
+concurrency:
+  group: chatpixel-oracle-apk
+  cancel-in-progress: false
 jobs:
-  build:
+  integrated:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Java
-        uses: actions/setup-java@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci
+      - name: Importer test sources
+        run: |
+          git clone --depth 1 https://github.com/etiagoabreu/daggerheart-translation-pt-BR.git ../daggerheart-translation-pt-BR
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/Foundryborne/daggerheart.git ../daggerheart-foundryborne
+          git -C ../daggerheart-foundryborne sparse-checkout set src/packs/domains
+      - run: npm test
+      - run: npm run test:pixel
+      - run: npm run lint
+      - run: git restore lib/compendium/daggerheart.generated.json
+      - run: npm run build:android
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/verify-integrated-ui.mjs
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: "17"
-
-      - name: Install Android 35
-        shell: bash
-        run: |
-          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
-          yes | "$SDKMANAGER" --licenses >/dev/null || true
-          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0" "platform-tools"
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
         with:
-          gradle-version: "8.9"
-
-      - name: Resolve version
-        shell: bash
-        run: |
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            VERSION="${GITHUB_REF_NAME#v}"
-          else
-            VERSION="0.2.${GITHUB_RUN_NUMBER}"
-          fi
-          echo "ORACLE_VERSION_NAME=$VERSION" >> "$GITHUB_ENV"
-          # Dedicated post-migration SWIG range. The bridge v0.2.5 was also built
-          # in the legacy repository, whose run counter is higher. Starting future
-          # SWIG releases at 300000 guarantees Android always sees them as upgrades.
-          echo "ORACLE_VERSION_CODE=$((300000 + GITHUB_RUN_NUMBER))" >> "$GITHUB_ENV"
-          echo "APK_NAME=OracleRPG-v${VERSION}.apk" >> "$GITHUB_ENV"
-
-      - name: Restore signing key
-        shell: bash
-        run: |
-          base64 --decode .github/oraclerpg-test.jks.b64 > "$RUNNER_TEMP/oraclerpg-release.jks"
-          echo "ORACLE_KEYSTORE_PATH=$RUNNER_TEMP/oraclerpg-release.jks" >> "$GITHUB_ENV"
-
-      - name: Build signed APK
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+          log-accepted-android-sdk-licenses: false
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Sign and build APK
         env:
-          ORACLE_KEYSTORE_PASSWORD: oraclerpg-test
-          ORACLE_KEY_ALIAS: oraclerpg-test
-          ORACLE_KEY_PASSWORD: oraclerpg-test
-        run: gradle -p android :app:assembleRelease --stacktrace
-
-      - name: Prepare artifact
-        shell: bash
+          KEYSTORE_BASE64: ${{ secrets.CHATPIXEL_ANDROID_KEYSTORE }}
+          ORACLE_VERSION_NAME: '0.6.0'
+          ORACLE_VERSION_CODE: '600000'
+          ORACLE_KEYSTORE_PASSWORD: android
+          ORACLE_KEY_ALIAS: chatpixel
+          ORACLE_KEY_PASSWORD: android
         run: |
-          cp android/app/build/outputs/apk/release/app-release.apk "$APK_NAME"
-          sha256sum "$APK_NAME" > "$APK_NAME.sha256"
-
-      - name: Upload workflow artifact
-        uses: actions/upload-artifact@v4
+          test -n "$KEYSTORE_BASE64"
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/chatpixel.jks"
+          export ORACLE_KEYSTORE_PATH="$RUNNER_TEMP/chatpixel.jks"
+          gradle -p android lintRelease assembleRelease --no-daemon
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose android/app/build/outputs/apk/release/app-release.apk
+          cp android/app/build/outputs/apk/release/app-release.apk test-results/Chatpixel-OracleRPG-0.6.0.apk
+          cd test-results
+          sha256sum Chatpixel-OracleRPG-0.6.0.apk > Chatpixel-OracleRPG-0.6.0.apk.sha256
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: OracleRPG-Android-${{ env.ORACLE_VERSION_NAME }}
+          name: chatpixel-oracle-integrated
           path: |
-            ${{ env.APK_NAME }}
-            ${{ env.APK_NAME }}.sha256
-
-      - name: Publish GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v')
+            test-results/
+            android/app/build/reports/
+      - name: Publish integrated APK
         env:
           GH_TOKEN: ${{ github.token }}
-        shell: bash
         run: |
-          gh release create "$GITHUB_REF_NAME" "$APK_NAME" "$APK_NAME.sha256" --title "OracleRPG $GITHUB_REF_NAME" --generate-notes
+          if ! gh release view mobile-v0.6.0 >/dev/null 2>&1; then
+            gh release create mobile-v0.6.0 --target "$GITHUB_SHA" --title 'Chatpixel + OracleRPG 0.6.0' --prerelease --notes 'Cópia do OracleRPG com Chatpixel no painel da cena, controlado pelo chat da sessão. Interface incluída no APK, login ChatGPT da sessão e estado visual salvo por campanha.'
+          fi
+          gh release upload mobile-v0.6.0 test-results/Chatpixel-OracleRPG-0.6.0.apk test-results/Chatpixel-OracleRPG-0.6.0.apk.sha256 test-results/chatpixel-oracle-desktop.png test-results/chatpixel-oracle-mobile.png --clobber

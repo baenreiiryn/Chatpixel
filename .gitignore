@@ -9,3 +9,12 @@ dist/
 .DS_Store
 .vercel/
 *.tsbuildinfo
+
+prototype/node_modules/
+prototype/test-results/
+android/.gradle/
+android/**/build/
+android/local.properties
+*.jks
+*.keystore
+.integration/

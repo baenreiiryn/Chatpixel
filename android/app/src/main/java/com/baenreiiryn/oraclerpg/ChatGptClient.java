@@ -33,7 +33,7 @@ public final class ChatGptClient {
     private static final String PREFS = "oracle_public";
     private static final String HOST_ID = "host_id";
     private static final String PENDING = "oauth_pending";
-    private static final int PORT = 31415;
+    private static final int PORT = 31417;
 
     private final Context context;
     private final SecureStore secureStore;

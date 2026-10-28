@@ -1,3 +1,4 @@
+import {executePixelScene,pixelStateFor,pixelInstructions} from "./chatpixelIntegration";
 import {
   executeCommand,
   requestPlayerRoll,
@@ -87,7 +88,7 @@ export function gmInstructions(system: string) {
     "Use ferramentas sempre que uma ação alterar dados persistentes ou quando precisar consultar memória.",
     "Quando a narração indicar passagem de tempo, avance o relógio da campanha pelo tempo transcorrido descrito, inclusive minutos, horas ou dias.",
     "CENA ATUAL: quando o grupo entrar em uma sala diferente, sair para uma rua, viajar para outra área, chegar a uma cidade, floresta, ruína ou qualquer ambiente fisicamente distinto, use scene_set com um rótulo curto e visual do novo local. Não use scene_set para pequenas ações ou mudanças de enquadramento dentro do mesmo ambiente.",
-    "O campo de cena alimenta o painel visual fixo da Sessão: uma mudança via scene_set invalida a imagem anterior e o OracleRPG buscará automaticamente uma nova referência de ambiente na web.",
+    pixelInstructions(),
     "Se advance_time retornar reachedEvents, esses prazos ou efeitos chegaram ao fim durante a passagem de tempo e devem ser considerados na narração e no estado.",
     "Quando a narração mudar o clima, atualize o clima persistido da campanha para refletir a nova condição.",
     "Use eventos do calendário para prazos de missões, buffs, efeitos temporários e acontecimentos futuros que dependam do tempo da campanha.",
@@ -152,7 +153,7 @@ export function buildCampaignOpeningPrompt(state: GameState, source: "creation" 
     companionNames.length
       ? `Companheiros inicialmente disponíveis no contexto: ${companionNames.join(", ")}. Inclua apenas quem fizer sentido estar presente na abertura.`
       : "Não há companheiros NPC registrados para esta abertura.",
-    "Antes da narração final, use obrigatoriamente scene_set para registrar um local físico curto e concreto que represente a primeira cena (sala, rua, floresta, cidade, ruína etc.). Esse local será usado para buscar automaticamente a imagem da cena.",
+    "Antes da narração final, use obrigatoriamente scene_set para registrar um local físico curto e concreto que represente a primeira cena (sala, rua, floresta, cidade, ruína etc.). Esse local será reproduzido pelo Chatpixel; chame scene_render para montar o primeiro encontro.",
     "Narre a primeira cena em alguns parágrafos curtos: estabeleça o ambiente, a atmosfera, a situação imediata e um elemento que convide o personagem a agir.",
     "Não escolha ações pelo personagem, não resolva decisões por ele e não peça nenhuma rolagem nesta abertura, pois o jogador ainda não declarou uma ação.",
     "Não diga apenas que a jornada está pronta. A ficção já deve estar acontecendo quando a resposta terminar.",
@@ -204,6 +205,7 @@ export function buildTurnInput(state: GameState, playerText: string) {
       "ESTADO ATUAL DO ORACLE:",
       JSON.stringify({
         campaign: state.campaign,
+        pixelScene: pixelStateFor(state),
         character: state.character,
         characterAbilities,
         abilityIntentHints,
@@ -242,6 +244,8 @@ export function executeGmTool(
     return { state, result: { ok: false, error: "Invalid JSON arguments." } };
   }
 
+  if (name === "scene_render") return executePixelScene(state,args);
+
   if (name === "scene_set") {
     const scene = String(args.scene || "").trim().slice(0, 140);
     const reason = String(args.reason || "").trim().slice(0, 240);
@@ -256,7 +260,7 @@ export function executeGmTool(
       campaign: { ...state.campaign, scene },
       sceneVisual: undefined,
     };
-    return { state: next, result: { ok: true, scene, reason, imageRefreshRequired: true } };
+    return { state: next, result: { ok: true, scene, reason, pixelRefreshRequired: true } };
   }
 
   if (name === "campaign_milestone_level_up") {

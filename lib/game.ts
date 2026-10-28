@@ -1,3 +1,4 @@
+import type {PixelVisual} from "./chatpixelIntegration";
 import {
   MINUTES_PER_DAY,
   createCampaignTimeState,
@@ -392,6 +393,7 @@ export type CampaignRestartSnapshot = {
 };
 
 export type GameState = {
+  pixelVisual?: PixelVisual;
   resourceModelVersion?: number;
   campaign: CampaignCore & {
     restartSnapshot?: CampaignRestartSnapshot;

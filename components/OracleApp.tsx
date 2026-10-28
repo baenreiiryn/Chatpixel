@@ -73,6 +73,7 @@ import {
   sortCampaigns,
   writeCampaignLibrary,
 } from "@/lib/campaignLibrary";
+import ChatpixelScene from "@/components/ChatpixelScene";
 import DiceOverlay from "@/components/DiceOverlay";
 import DiceAppearanceSettings from "@/components/DiceAppearanceSettings";
 import CampaignTimeline from "@/components/CampaignTimeline";
@@ -1105,80 +1106,6 @@ export default function OracleApp() {
     void startCampaignOpening(stateRef.current, "creation");
   }, [bridge.status, bridge.account?.connected, bridge.model, hasGmNarration]);
 
-  useEffect(() => {
-    if (!ready || screen !== "campaign" || view !== "session" || !activeCampaignId) return;
-    if (!bridge.account?.connected || !bridge.model) return;
-    if (gmBusy || gmRunningRef.current) return;
-    if (!hasGmNarration) return;
-    if (state.sceneVisual?.scene === state.campaign.scene) return;
-
-    const scene = state.campaign.scene.trim();
-    if (!scene) return;
-    const requestKey = `${activeCampaignId}:${campaignEpochRef.current}:${bridge.model}:${scene}`;
-    if (sceneImageSearchInFlightRef.current === requestKey || sceneImageFailedRef.current === requestKey) return;
-
-    const runCampaignId = activeCampaignId;
-    const runCampaignEpoch = campaignEpochRef.current;
-    const query = buildSceneWebImageSearchPrompt({
-      scene,
-      narration: lastGmMessage?.text,
-      tone: state.campaign.tone,
-    });
-    sceneImageSearchInFlightRef.current = requestKey;
-    setSceneImageBusy(true);
-    setSceneImageError("");
-
-    void (async () => {
-      try {
-        const response = await bridge.respond({
-          model: bridge.model,
-          instructions: [
-            "Você seleciona referências visuais reais da web para o painel de cena de um RPG.",
-            "Use obrigatoriamente a ferramenta de busca web fornecida. Não invente URLs.",
-            "Priorize imagens do ambiente/local, sem procurar uma representação exata dos personagens do jogador.",
-          ].join("\n"),
-          input: [{ role: "user", content: query }],
-          tools: [{
-            type: "web_search",
-            search_content_types: ["image"],
-            image_settings: { max_results: 6, caption: true },
-          }],
-          include: ["web_search_call.results"],
-          toolChoice: "required",
-        });
-        const visual = extractSceneWebImage(response, scene, query);
-        if (!visual) throw new Error("A busca não retornou uma imagem utilizável.");
-        if (activeCampaignIdRef.current !== runCampaignId || campaignEpochRef.current !== runCampaignEpoch) return;
-        sceneImageFailedRef.current = null;
-        setState((current) => current.campaign.scene === scene
-          ? { ...current, sceneVisual: visual }
-          : current);
-      } catch (error) {
-        if (activeCampaignIdRef.current !== runCampaignId || campaignEpochRef.current !== runCampaignEpoch) return;
-        sceneImageFailedRef.current = requestKey;
-        setSceneImageError(error instanceof Error ? error.message : "Não foi possível buscar uma imagem para esta cena.");
-      } finally {
-        if (sceneImageSearchInFlightRef.current === requestKey) sceneImageSearchInFlightRef.current = null;
-        if (activeCampaignIdRef.current === runCampaignId && campaignEpochRef.current === runCampaignEpoch) {
-          setSceneImageBusy(false);
-        }
-      }
-    })();
-  }, [
-    activeCampaignId,
-    bridge.account?.connected,
-    bridge.model,
-    gmBusy,
-    hasGmNarration,
-    lastGmMessage?.id,
-    ready,
-    screen,
-    state.campaign.scene,
-    state.campaign.tone,
-    state.sceneVisual?.scene,
-    view,
-    sceneImageRetryNonce,
-  ]);
 
   const cloudLabel = ({
     local: "somente local",
@@ -2153,6 +2080,7 @@ export default function OracleApp() {
     try {
       const result = await runGmTurn(working, text, bridge.respond, {
         model: bridge.model,
+        requirePixelVisual: true,
         allowTools,
         allowedToolNames,
         finalizeLastGlory,
@@ -2723,59 +2651,9 @@ export default function OracleApp() {
                   <div><small>CENA ATUAL</small><h1>{state.campaign.scene}</h1></div>
                   <span className="livePill">● AO VIVO</span>
                 </div>
-                <div className={`sceneArt ${currentSceneVisual ? "hasSceneImage" : ""}`}>
-                  {currentSceneVisual ? (
-                    <>
-                      <img
-                        src={currentSceneVisual.imageUrl}
-                        alt={currentSceneVisual.caption || `Referência visual para ${state.campaign.scene}`}
-                        referrerPolicy="no-referrer"
-                        onError={(event) => {
-                          const fallback = currentSceneVisual.thumbnailUrl;
-                          if (fallback && event.currentTarget.src !== fallback) {
-                            event.currentTarget.src = fallback;
-                          } else {
-                            event.currentTarget.style.display = "none";
-                          }
-                        }}
-                      />
-                      <div className="sceneImageShade" aria-hidden="true" />
-                      <div className="sceneImageMeta">
-                        <span>REFERÊNCIA VISUAL · WEB</span>
-                        <a href={currentSceneVisual.sourceUrl} target="_blank" rel="noreferrer noopener">
-                          Fonte ↗
-                        </a>
-                      </div>
-                      {currentSceneVisual.caption && <p className="sceneImageCaption">{currentSceneVisual.caption}</p>}
-                    </>
-                  ) : (
-                    <>
-                      <div className="sceneMoon" />
-                      <div className="sceneDoor"><span>◈</span></div>
-                      <div className="sceneFog" />
-                      <p>{sceneImageBusy ? "BUSCANDO REFERÊNCIA DA CENA…" : sceneImageError ? "REFERÊNCIA VISUAL INDISPONÍVEL" : "AGUARDANDO REFERÊNCIA DA CENA"}</p>
-                      {sceneImageErrorInfo && !sceneImageBusy && (
-                        <div className="sceneImageErrorDetail" data-category={sceneImageErrorInfo.category} title={sceneImageErrorInfo.detail}>
-                          <strong>{sceneImageErrorInfo.title}</strong>
-                          <small>{sceneImageErrorInfo.detail}</small>
-                        </div>
-                      )}
-                      {sceneImageError && !sceneImageBusy && (
-                        <button
-                          type="button"
-                          className="sceneImageRetryButton"
-                          onClick={() => {
-                            sceneImageFailedRef.current = null;
-                            setSceneImageError("");
-                            setSceneImageRetryNonce((value) => value + 1);
-                          }}
-                        >
-                          Tentar novamente
-                        </button>
-                      )}
-                    </>
-                  )}
-                </div>
+                <ChatpixelScene key={activeCampaignId || "local"} visual={state.pixelVisual} busy={gmBusy}
+                  playerText={[...state.messages].reverse().find(message=>message.role === "player")?.text || ""}
+                  scene={state.campaign.scene} playerName={state.character.name}/>
                 <div className="messages">
                   {state.messages.map((message) => (
                     <article className={`message ${message.role}`} key={message.id}>

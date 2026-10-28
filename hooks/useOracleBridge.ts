@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const BRIDGE_URL = "http://127.0.0.1:31415";
+const BRIDGE_URL = "http://127.0.0.1:31417";
 
 export type BridgeModel = { slug: string; displayName: string };
 export type BridgeAccount = {

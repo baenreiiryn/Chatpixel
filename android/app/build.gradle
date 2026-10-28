@@ -7,14 +7,14 @@ android {
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.baenreiiryn.oraclerpg"
+        applicationId "com.baenreiiryn.chatpixel"
         minSdk 26
         targetSdk 35
         versionCode Integer.parseInt(System.getenv("ORACLE_VERSION_CODE") ?: "2")
         versionName System.getenv("ORACLE_VERSION_NAME") ?: "0.2.0"
 
-        buildConfigField "String", "ORACLE_URL", "\"https://oraclerpg-swig.vercel.app\""
-        buildConfigField "String", "GITHUB_REPO", "\"baenreiiryn/RPGptSWIG\""
+        buildConfigField "String", "ORACLE_URL", "\"http://127.0.0.1:31417\""
+        buildConfigField "String", "GITHUB_REPO", "\"baenreiiryn/Chatpixel\""
     }
 
     signingConfigs {
@@ -48,6 +48,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
+    sourceSets { main { assets.srcDirs = ["../../out"] } }
 
     buildFeatures {
         buildConfig true

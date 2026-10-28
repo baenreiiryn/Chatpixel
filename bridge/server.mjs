@@ -6,7 +6,7 @@ import path from "node:path";
 import { execFile } from "node:child_process";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 
-const PORT = Number(process.env.ORACLE_BRIDGE_PORT || 31415);
+const PORT = Number(process.env.ORACLE_BRIDGE_PORT || 31417);
 const HOST = "127.0.0.1";
 const APP_NAME = "OracleRPG";
 const RESOURCE = "https://api.openai.com/v1";
@@ -14,7 +14,7 @@ const AUTHORIZATION_ENDPOINT = "https://auth.openai.com/api/accounts/authorize";
 const TOKEN_ENDPOINT = "https://auth.openai.com/api/accounts/oauth/token";
 const OIDC_CONFIGURATION = "https://auth.openai.com/.well-known/openid-configuration";
 const JWKS = createRemoteJWKSet(new URL("https://auth.openai.com/.well-known/jwks.json"));
-const DATA_DIR = process.env.ORACLE_BRIDGE_HOME || path.join(os.homedir(), ".oraclerpg");
+const DATA_DIR = process.env.ORACLE_BRIDGE_HOME || path.join(os.homedir(), ".chatpixel-oracle");
 const DATA_FILE = path.join(DATA_DIR, "bridge.json");
 const DEFAULT_ORIGINS = [
   "https://oraclerpg.vercel.app",

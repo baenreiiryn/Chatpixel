@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public final class OracleBridgeServer {
-    private static final int PORT = 31415;
+    private static final int PORT = 31417;
     private static final Set<String> ALLOWED_ORIGINS = Set.of(
             BuildConfig.ORACLE_URL,
             "http://localhost:3000",
@@ -35,21 +35,24 @@ public final class OracleBridgeServer {
         return instance;
     }
 
+    private final Context appContext;
     private final ChatGptClient chatGpt;
     private final ExecutorService pool = Executors.newCachedThreadPool();
     private volatile boolean running;
     private ServerSocket serverSocket;
 
     private OracleBridgeServer(Context context) {
+        appContext=context;
         chatGpt = new ChatGptClient(context);
     }
 
     public synchronized void start() {
         if (running) return;
+        try { serverSocket = new ServerSocket(PORT,16,InetAddress.getByName("127.0.0.1")); }
+        catch (Exception error) { throw new IllegalStateException("Não foi possível iniciar o servidor local.",error); }
         running = true;
         pool.execute(() -> {
             try {
-                serverSocket = new ServerSocket(PORT, 16, InetAddress.getByName("127.0.0.1"));
                 while (running) {
                     Socket socket = serverSocket.accept();
                     pool.execute(() -> handle(socket));
@@ -157,6 +160,7 @@ public final class OracleBridgeServer {
                     writeJson(client, 200, result, origin);
                     return;
                 }
+                if ("GET".equals(method) && !path.startsWith("/api/") && serveAsset(client,path)) return;
                 writeJson(client, 404, new JSONObject().put("error", "Not found."), origin);
             } catch (Exception error) {
                 JSONObject failure = new JSONObject();
@@ -164,6 +168,17 @@ public final class OracleBridgeServer {
                 writeJson(client, 500, failure, origin);
             }
         } catch (Exception ignored) {}
+    }
+
+    private boolean serveAsset(Socket client,String path) throws Exception {
+        if(path==null||path.contains("..")||path.contains("\\")||path.indexOf('\0')>=0)return false;
+        String asset=path.equals("/")?"index.html":path.substring(1);
+        if(!asset.contains("."))asset=asset.replaceAll("/$","")+".html";
+        try(InputStream input=appContext.getAssets().open(asset)){
+            ByteArrayOutputStream bytes=new ByteArrayOutputStream();byte[] buffer=new byte[16384];int n;while((n=input.read(buffer))!=-1)bytes.write(buffer,0,n);
+            String type=asset.endsWith(".js")?"text/javascript":asset.endsWith(".css")?"text/css":asset.endsWith(".json")?"application/json":asset.endsWith(".svg")?"image/svg+xml":asset.endsWith(".webp")?"image/webp":asset.endsWith(".png")?"image/png":asset.endsWith(".woff2")?"font/woff2":asset.endsWith(".txt")?"text/plain":"text/html; charset=utf-8";
+            write(client,200,type,bytes.toByteArray(),null);return true;
+        }catch(java.io.FileNotFoundException missing){return false;}
     }
 
     private boolean isOriginAllowed(String origin) {

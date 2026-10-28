@@ -1,6 +1,6 @@
 {
-  "name": "oraclerpg",
-  "version": "0.1.0",
+  "name": "chatpixel-oracle",
+  "version": "0.6.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -13,7 +13,9 @@
     "sync:foundryborne-subclasses": "node scripts/sync-foundryborne-subclasses.mjs",
     "sync:foundryborne-equipment": "node scripts/sync-foundryborne-equipment.mjs",
     "sync:beastforms": "node scripts/sync-beastforms.mjs",
-    "import:daggerheart": "node scripts/import-daggerheart-compendium.mjs"
+    "import:daggerheart": "node scripts/import-daggerheart-compendium.mjs",
+    "build:android": "node scripts/build-android-web.mjs",
+    "test:pixel": "node --test prototype/test/*.test.js"
   },
   "dependencies": {
     "@3d-dice/dice-box-threejs": "^0.0.12",
@@ -27,6 +29,7 @@
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "typescript": "^5.9.0"
+    "typescript": "^5.9.0",
+    "playwright": "1.62.1"
   }
 }

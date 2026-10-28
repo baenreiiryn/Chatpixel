@@ -5,6 +5,7 @@ export type GmResponse = { output?: Array<Record<string, unknown>>; output_text?
 type GmRequest = { model: string; instructions: string; input: unknown[]; tools?: unknown[]; toolChoice?: unknown };
 type Options = {
   model: string;
+  requirePixelVisual?: boolean;
   allowTools?: boolean;
   allowedToolNames?: string[];
   finalizeLastGlory?: boolean;
@@ -90,19 +91,22 @@ export async function runGmTurn(
     role: "developer",
     content: "GLÓRIA FINAL: a ação final é um CRÍTICO AUTOMÁTICO. Não peça dados para determinar sucesso; narre o feito e suas consequências.",
   });
-  const availableTools = allowTools ? responseTools.filter((tool) =>
-    !options.allowedToolNames?.length || options.allowedToolNames.includes(tool.name)) : [];
+  const availableTools = responseTools.filter((tool) => (allowTools || options.requirePixelVisual && tool.name === "scene_render") &&
+    (!options.allowedToolNames?.length || options.allowedToolNames.includes(tool.name) || options.requirePixelVisual && tool.name === "scene_render"));
   let narration = "";
   let refusal = "";
   let repairRoll = false;
+  let repairVisual = false;
+  let visualRepairs = 0;
+  let visualUpdated = previous.some(entry=>entry.name === "scene_render");
   let repairAttempts = 0;
   for (let round = 0; round < 12; round++) {
     current();
-    const tools = repairRoll ? availableTools.filter((tool) => tool.name === "request_player_roll") : availableTools;
+    const tools = repairRoll ? availableTools.filter((tool) => tool.name === "request_player_roll") : repairVisual ? availableTools.filter(tool=>tool.name === "scene_render") : availableTools;
     const response = await respond({
       model: options.model, instructions: gmInstructions(working.campaign.system), input: [...input],
       ...(tools.length ? {tools} : {}),
-      ...(repairRoll ? {toolChoice: {type: "function", name: "request_player_roll"}} : {}),
+      ...(repairRoll ? {toolChoice: {type: "function", name: "request_player_roll"}} : repairVisual ? {toolChoice:{type:"function",name:"scene_render"}} : {}),
     });
     current();
     const output = Array.isArray(response.output) ? response.output : [];
@@ -124,6 +128,9 @@ export async function runGmTurn(
         repairRoll = true;
         continue;
       }
+      if (narration && options.requirePixelVisual && !visualUpdated && visualRepairs++ < 2) {
+        repairVisual=true;input.push({role:"developer",content:"Antes de finalizar, atualize a referência Chatpixel usando scene_render. Reproduza somente a narração já estabelecida, com visibleNpcs completo; não altere regras nem peça novos dados. Narração: "+narration});continue;
+      }
       if (narration || refusal) return {state: {...working, gmRecovery: undefined}, narration, refusal};
       continue;
     }
@@ -131,7 +138,7 @@ export async function runGmTurn(
       const name = String(call.name || "");
       const args = String(call.arguments || "{}");
       let result: unknown;
-      if (working.pendingRoll) {
+      if (working.pendingRoll && name !== "scene_render") {
         result = {ok: false, waitingForPlayerRoll: true, pendingRoll: working.pendingRoll};
       } else if (!tools.some((tool) => tool.name === name)) {
         result = {ok: false, error: "Esta ferramenta não está disponível nesta etapa."};
@@ -146,6 +153,7 @@ export async function runGmTurn(
           const executed = executeGmTool(working, name, args);
           working = executed.state;
           result = executed.result;
+          if(name === "scene_render" && result && typeof result === "object" && (result as {ok?:boolean}).ok){visualUpdated=true;repairVisual=false;}
           if (name !== "memory_search" && result && typeof result === "object" && (result as {ok?: boolean}).ok === true) {
             appliedTools.push({name, arguments: args, result});
           }

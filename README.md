@@ -1,97 +1,27 @@
-# OracleRPG SWIG
+# Chatpixel + OracleRPG
 
-OracleRPG é uma interface persistente para campanhas em que o ChatGPT atua como Mestre.
+Cópia de `baenreiiryn/RPGptSWIG`, commit `f75846285bd14a55b06ff1d34e0cd22573aa0b96`, com o Chatpixel 0.5.2 integrado no painel visual da Sessão. O OracleRPG original não é modificado. O protótipo independente foi preservado em `prototype/` com seu histórico no repositório.
 
-Esta é a linha **standalone / Sign in with ChatGPT** do projeto. Ela é mantida separadamente
-da versão Plugin/MCP do OracleRPG. Os APKs desta linha recebem atualizações pelo repositório
-`baenreiiryn/RPGptSWIG` e carregam a interface hospedada em
-`https://oraclerpg-swig.vercel.app`.
+## Funcionamento
 
-## Compêndio
+O chat da sessão controla a cena pelo mesmo Sign in with ChatGPT e pela ferramenta `scene_render`. Não há outro mestre, campo de comando ou login no painel. A ficha OracleRPG continua sendo a fonte das regras, inventário, HP e dados. O visual usa somente categorias de armas possuídas; outras armas corpo a corpo usam a animação aproximada de espada. A aparência modular, presença por encontro e composição do cenário são validadas antes de alterar o estado visual.
 
-O app inclui um compêndio Daggerheart PT-BR otimizado para consulta em mesa: regras,
-classes, ancestralidades, comunidades, subclasses, cartas de domínio e adversários.
-O pipeline e as fontes estão documentados em `docs/daggerheart-compendium.md`.
+Cada campanha persiste sua cena e NPCs visíveis junto com ficha e mensagens. O cadastro global de NPCs e as memórias não implicam presença física. A troca de encontro preserva a transição parallax; falhas no Canvas não bloqueiam o chat. Retomar uma resposta usa os checkpoints do mestre para não repetir animações já aplicadas.
 
-## Princípio
+## Executar
 
-- O **OracleRPG é a fonte da verdade**: ficha, recursos, NPCs, missões, memória e histórico de eventos.
-- O **ChatGPT é o Mestre**: recebe apenas o contexto relevante, narra e chama ferramentas.
-- Alterações manuais e alterações da IA passam pelo mesmo command bus.
-- A campanha não depende da duração de uma conversa: o contexto pode ser reconstruído a qualquer turno.
+`npm ci`, `npm run bridge` e `npm run dev`. O bridge desta cópia usa `127.0.0.1:31417` e dados próprios em `.chatpixel-oracle`, separados do OracleRPG original. A aplicação web mantém as rotas opcionais de sincronização, configuradas por `.env.example`.
 
-## MVP atual
+## Android
 
-- UI mobile-first responsiva.
-- Campanha demonstrativa em Daggerheart.
-- PV, Esperança, Estresse e Armadura editáveis.
-- Inventário editável.
-- Condições, NPCs e missões.
-- Memória persistente e prévia do pacote de contexto.
-- Log de alterações com Undo.
-- Cache offline em `localStorage`.
-- Sincronização opcional em Postgres/Neon com pareamento entre dispositivos.
-- Versionamento otimista e resolução explícita de conflitos.
-- Oracle Bridge local para Sign in with ChatGPT open-source.
-- Registro OAuth dinâmico com `dynamic_agent_client`, PKCE e callback em `127.0.0.1`.
-- Tokens ChatGPT ficam somente no dispositivo do usuário.
-- Catálogo de modelos da própria conta ChatGPT.
-- Loop real de Mestre IA com function tools → Command Bus → narração.
-- Narração formatada em blocos, separando fala e descrição.
-- Snapshot de cena salvo junto das mensagens do Mestre.
-- Memórias visuais de personagens (`kind: visual`) usadas na composição de prompts de imagem.
-- Botão **Gerar imagem da cena** abaixo da última mensagem do Mestre.
+`npm run build:android` gera a interface estática em `out/`; as rotas de nuvem ficam temporariamente fora da exportação e são restauradas ao terminar. O Gradle inclui `out/` no APK. O aplicativo serve interface e bridge no próprio aparelho em `127.0.0.1:31417`, com login no navegador. Usa `com.baenreiiryn.chatpixel` para atualizar o Chatpixel existente sem substituir o OracleRPG original. Campanhas locais do outro aplicativo não são copiadas automaticamente; use os recursos de importação/exportação da campanha. A sincronização de nuvem com rotas Next requer a versão hospedada; no APK embutido a campanha é local.
 
-## Rodar
+## Verificar
 
-```bash
-npm install
-npm run dev
-```
+- `npm test`: testes de regras, sessão, dados, memória e integração Chatpixel. Os testes do importador usam os repositórios `etiagoabreu/daggerheart-translation-pt-BR` e `Foundryborne/daggerheart` em pastas irmãs (este último apenas `src/packs/domains`).
+- `npm run test:pixel`: testes do protótipo preservado.
+- `npm run lint`: TypeScript.
+- `npm run build:android`: exportação e compilação da interface.
+- `node scripts/verify-integrated-ui.mjs`: chat → bridge simulado → ferramenta → painel, persistência, presença de NPCs, inventário/HP, desktop e celular. Requer Chromium do Playwright. Não valida a conta ChatGPT real.
 
-Abra http://localhost:3000.
-
-Copie `.env.example` para `.env.local` e configure `DATABASE_URL` para habilitar a nuvem.
-
-Para usar o ChatGPT como Mestre neste computador:
-
-```bash
-npm run bridge
-```
-
-Depois clique em **ChatGPT → Continuar com ChatGPT** no OracleRPG. O primeiro login usa
-o registro dinâmico oficial para apps open-source; não é necessário API key, empresa,
-client secret ou client ID pré-aprovado.
-
-## Segurança do ChatGPT plan
-
-Credenciais que dão acesso ao plano ChatGPT **não pertencem ao banco do OracleRPG**.
-O browser também não recebe access/refresh tokens. O Oracle Bridge guarda as credenciais
-em `~/.oraclerpg/bridge.json` e faz a inferência localmente em nome do usuário.
-
-O Vercel/Neon continuam responsáveis somente pela interface e pelos dados persistentes da campanha.
-
-## Imagens de cena
-
-O OracleRPG já monta um prompt visual persistente a partir da mensagem do Mestre, local,
-personagens presentes, objetos mencionados e memórias visuais conhecidas.
-
-No preview atual de ChatGPT plan sharing, a OpenAI não oferece a tool hospedada de image
-generation nesse fluxo. Por isso o botão de geração fica oculto; a infraestrutura de snapshot e
-prompt continua no código para ser reativada quando a tool estiver disponível, sem fingir
-compatibilidade nem alterar o modelo de memória.
-
-Como alternativa disponível hoje, a aba Sessão pode usar a tool hospedada de **Web Search**
-para buscar uma referência visual existente na web. Quando o Mestre muda de ambiente usando
-`scene_set`, o painel fixo da cena busca uma nova imagem e exibe também um link para a fonte.
-
-Ao terminar a criação do personagem — e também ao usar **Recomeçar campanha** — o Mestre inicia
-a primeira cena automaticamente a partir das escolhas de criação. O jogador já entra na Sessão
-com a ficção em andamento; não é mais necessário enviar uma primeira ação apenas para começar o prólogo.
-
-## Próximas camadas
-
-1. Empacotar o Oracle Bridge como aplicativo desktop instalável.
-2. Criar runtime equivalente no app Android.
-3. Recuperação semântica de memória por campanha.
-4. Regras por sistema (Daggerheart, D&D, Cyberpunk etc.).
+O workflow compila e assina o APK com a chave de teste existente do Chatpixel. Confira `THIRD_PARTY_NOTICES.md` para os créditos dos materiais do compêndio copiados da base OracleRPG.

@@ -1,3 +1,4 @@
+import {pixelSceneTool} from "./chatpixelIntegration";
 export type OracleTool = {
   name: string;
   description: string;
@@ -5,9 +6,10 @@ export type OracleTool = {
 };
 
 export const oracleTools: OracleTool[] = [
+  pixelSceneTool,
   {
     name: "scene_set",
-    description: "Atualiza a cena/local físico atual quando o grupo entra em um ambiente significativamente diferente. Isso também solicita uma nova referência visual da web para o painel fixo da Sessão. Não use para pequenas ações dentro do mesmo local.",
+    description: "Atualiza a cena/local físico atual quando o grupo entra em um ambiente significativamente diferente. O Chatpixel acompanha a mudança no painel fixo da Sessão. Atualize-o com scene_render. Não use para pequenas ações dentro do mesmo local.",
     inputSchema: {
       type: "object",
       properties: {
