@@ -1,36 +1,61 @@
-plugins { id 'com.android.application' }
+plugins {
+    id "com.android.application"
+}
+
 android {
-    namespace 'com.baenreiiryn.chatpixel'
+    namespace "com.baenreiiryn.oraclerpg"
     compileSdk 35
+
     defaultConfig {
-        applicationId 'com.baenreiiryn.chatpixel'
+        applicationId "com.baenreiiryn.oraclerpg"
         minSdk 26
         targetSdk 35
-        versionCode 8
-        versionName '0.5.2'
+        versionCode Integer.parseInt(System.getenv("ORACLE_VERSION_CODE") ?: "2")
+        versionName System.getenv("ORACLE_VERSION_NAME") ?: "0.2.0"
+
+        buildConfigField "String", "ORACLE_URL", "\"https://oraclerpg-swig.vercel.app\""
+        buildConfigField "String", "GITHUB_REPO", "\"baenreiiryn/RPGptSWIG\""
     }
+
     signingConfigs {
-        debug {
-            if (System.getenv('CHATPIXEL_KEYSTORE')) {
-                storeFile file(System.getenv('CHATPIXEL_KEYSTORE'))
-                storePassword 'android'
-                keyAlias 'chatpixel'
-                keyPassword 'android'
+        release {
+            def storePath = System.getenv("ORACLE_KEYSTORE_PATH")
+            if (storePath) {
+                storeFile file(storePath)
+                storePassword System.getenv("ORACLE_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("ORACLE_KEY_ALIAS")
+                keyPassword System.getenv("ORACLE_KEY_PASSWORD")
             }
         }
     }
-    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
-    sourceSets { main { assets.srcDirs = [layout.buildDirectory.dir('game-assets')] } }
-    testOptions { unitTests.returnDefaultValues = true }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            if (System.getenv("ORACLE_KEYSTORE_PATH")) {
+                signingConfig signingConfigs.release
+            }
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
 }
-tasks.register('syncGameAssets', Copy) {
-    from('../..') { include 'index.html', 'style.css', 'app.js', 'engine.js', 'renderer.js', 'world.js', 'journey.js', 'scenery.js' }
-    into(layout.buildDirectory.dir('game-assets'))
-}
-tasks.named('preBuild').configure { dependsOn 'syncGameAssets' }
+
 dependencies {
-    implementation 'org.nanohttpd:nanohttpd:2.3.1'
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.json:json:20240303'
+    implementation "androidx.webkit:webkit:1.12.1"
+    implementation "androidx.core:core:1.15.0"
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
 }

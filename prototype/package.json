@@ -1,0 +1,17 @@
+{
+  "name": "chatpixel",
+  "version": "0.5.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test",
+    "test:mobile": "node tools/verify-mobile.cjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

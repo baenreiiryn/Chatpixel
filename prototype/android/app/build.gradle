@@ -1,0 +1,36 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.baenreiiryn.chatpixel'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'com.baenreiiryn.chatpixel'
+        minSdk 26
+        targetSdk 35
+        versionCode 8
+        versionName '0.5.2'
+    }
+    signingConfigs {
+        debug {
+            if (System.getenv('CHATPIXEL_KEYSTORE')) {
+                storeFile file(System.getenv('CHATPIXEL_KEYSTORE'))
+                storePassword 'android'
+                keyAlias 'chatpixel'
+                keyPassword 'android'
+            }
+        }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    sourceSets { main { assets.srcDirs = [layout.buildDirectory.dir('game-assets')] } }
+    testOptions { unitTests.returnDefaultValues = true }
+}
+tasks.register('syncGameAssets', Copy) {
+    from('../..') { include 'index.html', 'style.css', 'app.js', 'engine.js', 'renderer.js', 'world.js', 'journey.js', 'scenery.js' }
+    into(layout.buildDirectory.dir('game-assets'))
+}
+tasks.named('preBuild').configure { dependsOn 'syncGameAssets' }
+dependencies {
+    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.json:json:20240303'
+}

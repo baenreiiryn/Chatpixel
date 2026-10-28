@@ -1,0 +1,1294 @@
+{
+  "source": "https://github.com/Foundryborne/daggerheart/tree/main/src/packs/beastforms",
+  "forms": [
+    {
+      "name": "Agile Scout",
+      "tier": 1,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Deceive",
+        "Locate",
+        "Sneak"
+      ],
+      "features": [
+        "Agile",
+        "Fragile"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.agility.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "agility",
+            "damageFormula": "@profd4",
+            "img": "icons/magic/nature/wolf-paw-glow-small-orange.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Aquatic Scout",
+      "tier": 1,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Navigate",
+        "Sneak",
+        "Swim"
+      ],
+      "features": [
+        "Aquatic",
+        "Fragile"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.agility.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "agility",
+            "damageFormula": "@profd4",
+            "img": "icons/creatures/tentacles/tentacles-octopus-black-pink.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Household Friend",
+      "tier": 1,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Climb",
+        "Locate",
+        "Protect"
+      ],
+      "features": [
+        "Companion",
+        "Fragile"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.instinct.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "instinct",
+            "damageFormula": "@profd6",
+            "img": "icons/magic/nature/wolf-paw-glow-small-teal-blue.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Nimble Grazer",
+      "tier": 1,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Leap",
+        "Sneak",
+        "Sprint"
+      ],
+      "features": [
+        "Elusive Prey",
+        "Fragile"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.agility.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "agility",
+            "damageFormula": "@profd6",
+            "img": "icons/creatures/mammals/deer-antlers-glowing-blue.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Pack Predator",
+      "tier": 1,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Attack",
+        "Sprint",
+        "Track"
+      ],
+      "features": [
+        "Hobbling Strike",
+        "Pack Hunting"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.strength.value",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "strength",
+            "damageFormula": "@profd8 + 2",
+            "img": "icons/magic/nature/wolf-paw-glow-purple-teal.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Stalking Arachnid",
+      "tier": 1,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Attack",
+        "Climb",
+        "Sneak"
+      ],
+      "features": [
+        "Venomous Bite",
+        "Webslinger"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.finesse.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "finesse",
+            "damageFormula": "@profd6 + 1",
+            "img": "icons/creatures/abilities/fang-tooth-poison-green.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Armored Sentry",
+      "tier": 2,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Dig",
+        "Locate",
+        "Protect"
+      ],
+      "features": [
+        "Armored Shell",
+        "Cannonball"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.strength.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "strength",
+            "damageFormula": "@profd8 + 2",
+            "img": "icons/magic/nature/wolf-paw-glow-green.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Mighty Strider",
+      "tier": 2,
+      "kind": "normal",
+      "carrierCapacity": 2,
+      "advantages": [
+        "Leap",
+        "Navigate",
+        "Sprint"
+      ],
+      "features": [
+        "Carrier",
+        "Trample"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.agility.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "agility",
+            "damageFormula": "@profd8 + 1",
+            "img": "icons/environment/creatures/horse-tan.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Pouncing Predator",
+      "tier": 2,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Attack",
+        "Climb",
+        "Sneak"
+      ],
+      "features": [
+        "Fleet",
+        "Takedown"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.instinct.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "instinct",
+            "damageFormula": "@profd8 + 6",
+            "img": "icons/creatures/claws/claw-straight-orange.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Powerful Beast",
+      "tier": 2,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Navigate",
+        "Protect",
+        "Scare"
+      ],
+      "features": [
+        "Rampage",
+        "Thick Hide"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.strength.value",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "strength",
+            "damageFormula": "@profd10 + 4",
+            "img": "icons/creatures/claws/claw-bear-paw-swipe-brown.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Striking Serpent",
+      "tier": 2,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Climb",
+        "Deceive",
+        "Sprint"
+      ],
+      "features": [
+        "Venomous Strike",
+        "Warning Hiss"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.finesse.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "veryClose",
+            "trait": "finesse",
+            "damageFormula": "@profd8 + 4",
+            "img": "icons/creatures/abilities/fang-tooth-poison-green.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Winged Beast",
+      "tier": 2,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Deceive",
+        "Locate",
+        "Scare"
+      ],
+      "features": [
+        "Bird's-Eye View",
+        "Hollow Bones"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.finesse.value",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "finesse",
+            "damageFormula": "@profd4 + 2",
+            "img": "icons/creatures/abilities/wings-birdlike-blue.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Aquatic Predator",
+      "tier": 3,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Attack",
+        "Swim",
+        "Track"
+      ],
+      "features": [
+        "Aquatic",
+        "Vicious Maul"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.agility.value",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 4,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "agility",
+            "damageFormula": "@profd10 + 6",
+            "img": "icons/creatures/fish/fish-marlin-swordfight-blue.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Great Predator",
+      "tier": 3,
+      "kind": "normal",
+      "carrierCapacity": 2,
+      "advantages": [
+        "Attack",
+        "Sneak",
+        "Sprint"
+      ],
+      "features": [
+        "Carrier",
+        "Vicious Maul"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.strength.value",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "strength",
+            "damageFormula": "@profd12 + 8",
+            "img": "icons/creatures/abilities/mouth-teeth-long-red.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Great Winged Beast",
+      "tier": 3,
+      "kind": "normal",
+      "carrierCapacity": 2,
+      "advantages": [
+        "Deceive",
+        "Distract",
+        "Locate"
+      ],
+      "features": [
+        "Bird's-Eye View",
+        "Carrier"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.finesse.value",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "finesse",
+            "damageFormula": "@profd8 + 6",
+            "img": "icons/creatures/claws/claw-talons-glowing-orange.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Legendary Beast",
+      "tier": 3,
+      "kind": "evolved",
+      "carrierCapacity": null,
+      "advantages": [],
+      "features": [],
+      "evolved": {
+        "mainTraitBonus": 1,
+        "maximumTier": 1,
+        "damageBonus": 6,
+        "evasionBonus": 2,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": []
+    },
+    {
+      "name": "Legendary Hybrid",
+      "tier": 3,
+      "kind": "hybrid",
+      "carrierCapacity": null,
+      "advantages": [],
+      "features": [],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 4,
+        "features": 2,
+        "maximumTier": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.strength.value",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "strength",
+            "damageFormula": "@profd10 + 8",
+            "img": "icons/creatures/claws/claw-talons-yellow-red.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Mighty Lizard",
+      "tier": 3,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Attack",
+        "Sneak",
+        "Track"
+      ],
+      "features": [
+        "Physical Defense",
+        "Snapping Strike"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.instinct.value",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "instinct",
+            "damageFormula": "@profd10 + 7",
+            "img": "icons/creatures/reptiles/lizard-iguana-green.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Epic Aquatic Beast",
+      "tier": 4,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Locate",
+        "Protect",
+        "Scare",
+        "Track"
+      ],
+      "features": [
+        "Ocean Master",
+        "Unyielding"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.agility.value",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "agility",
+            "damageFormula": "@profd10 + 10",
+            "img": "icons/creatures/fish/squid-kraken-orange.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Massive Behemoth",
+      "tier": 4,
+      "kind": "normal",
+      "carrierCapacity": 4,
+      "advantages": [
+        "Locate",
+        "Protect",
+        "Scare",
+        "Sprint"
+      ],
+      "features": [
+        "Carrier",
+        "Demolish",
+        "Undaunted"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.strength.value",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 1,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "strength",
+            "damageFormula": "@profd12 + 12",
+            "img": "icons/creatures/mammals/beast-horned-scaled-glowing-orange.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Mythic Aerial Hunter",
+      "tier": 4,
+      "kind": "normal",
+      "carrierCapacity": 3,
+      "advantages": [
+        "Attack",
+        "Deceive",
+        "Locate",
+        "Navigate"
+      ],
+      "features": [
+        "Carrier",
+        "Deadly Raptor"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.finesse.value",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 4,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "finesse",
+            "damageFormula": "@profd10 + 11",
+            "img": "icons/creatures/claws/claw-scaled-red.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Mythic Beast",
+      "tier": 4,
+      "kind": "evolved",
+      "carrierCapacity": null,
+      "advantages": [],
+      "features": [],
+      "evolved": {
+        "mainTraitBonus": 2,
+        "maximumTier": 2,
+        "damageBonus": 9,
+        "evasionBonus": 3,
+        "increaseDamageDice": 1
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": []
+    },
+    {
+      "name": "Mythic Hybrid",
+      "tier": 4,
+      "kind": "hybrid",
+      "carrierCapacity": null,
+      "advantages": [],
+      "features": [],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 3,
+        "advantages": 5,
+        "features": 3,
+        "maximumTier": 3
+      },
+      "changes": [
+        {
+          "key": "system.traits.strength.value",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "strength",
+            "damageFormula": "@profd12 + 10",
+            "img": "icons/creatures/claws/claw-hooked-barbed.webp"
+          },
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "name": "Terrible Lizard",
+      "tier": 4,
+      "kind": "normal",
+      "carrierCapacity": null,
+      "advantages": [
+        "Attack",
+        "Deceive",
+        "Scare",
+        "Track"
+      ],
+      "features": [
+        "Devastating Strikes",
+        "Massive Stride"
+      ],
+      "evolved": {
+        "mainTraitBonus": 0,
+        "damageBonus": 0,
+        "evasionBonus": 0,
+        "increaseDamageDice": 0
+      },
+      "hybrid": {
+        "beastformOptions": 2,
+        "advantages": 2,
+        "features": 2
+      },
+      "changes": [
+        {
+          "key": "system.traits.strength.value",
+          "type": "add",
+          "value": 3,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "key": "system.evasion",
+          "type": "add",
+          "value": 2,
+          "priority": null,
+          "phase": "initial"
+        },
+        {
+          "type": "standardAttack",
+          "phase": "initial",
+          "value": {
+            "name": "DAGGERHEART.ITEMS.Beastform.attackName",
+            "damageTypes": [
+              "physical"
+            ],
+            "attackRange": "melee",
+            "trait": "strength",
+            "damageFormula": "@profd12 + 10",
+            "img": "icons/creatures/abilities/tail-swipe-green.webp"
+          },
+          "priority": 0
+        }
+      ]
+    }
+  ]
+}

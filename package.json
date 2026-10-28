@@ -1,17 +1,32 @@
 {
-  "name": "chatpixel",
-  "version": "0.5.2",
+  "name": "oraclerpg",
+  "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "start": "node server.mjs",
-    "test": "node --test",
-    "test:mobile": "node tools/verify-mobile.cjs"
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc --noEmit",
+    "test": "node --test --test-concurrency=1 scripts/*.test.mjs",
+    "bridge": "node bridge/server.mjs",
+    "sync:foundryborne-art": "node scripts/sync-foundryborne-art.mjs",
+    "sync:foundryborne-subclasses": "node scripts/sync-foundryborne-subclasses.mjs",
+    "sync:foundryborne-equipment": "node scripts/sync-foundryborne-equipment.mjs",
+    "sync:beastforms": "node scripts/sync-beastforms.mjs",
+    "import:daggerheart": "node scripts/import-daggerheart-compendium.mjs"
   },
-  "engines": {
-    "node": ">=22"
+  "dependencies": {
+    "@3d-dice/dice-box-threejs": "^0.0.12",
+    "@neondatabase/serverless": "^1.2.0",
+    "jose": "^6.2.12",
+    "next": "^16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "playwright": "1.62.1"
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.9.0"
   }
 }
