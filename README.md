@@ -31,7 +31,7 @@ No modo local, escolha Mestre ou Jogador, escreva uma ação e clique em **Dar v
 - Mestre: `Grik vai embora.`
 - Mestre: `Entramos em uma masmorra.` / `Entramos em uma vila.` / `Voltamos à clareira.`
 
-Selecione o alvo no painel ou clique no NPC. Ataques usam a arma equipada, inclusive quando o texto menciona outra arma. Equipar é uma ação separada. O modo local usa regras simples em português, uma ação afirmativa por mensagem, e exibe erro se não entender. Não é uma simulação de GPT.
+Selecione o alvo no painel ou clique no NPC. Ataques usam a arma explicitamente mencionada se ela estiver no inventário e a equipam automaticamente. Sem arma mencionada, usam a equipada. Arma ausente bloqueia a ação sem alterar a cena. Os controles de inventário permitem testar posse de espada, arco e cajado. Conversar aproxima o jogador do NPC; viajar troca o ambiente e limpa os NPCs do local anterior. O modo local usa regras simples em português, uma ação afirmativa por mensagem, e exibe erro se não entender. Não é uma simulação de GPT.
 
 A cena é salva no localStorage deste navegador. Reiniciar limpa a cena. Há limite de oito NPCs e uma fila serial de animações. Impactos são visuais: não há dano, rolagens, morte automática ou regras de Daggerheart nesta versão.
 
@@ -67,7 +67,7 @@ await window.chatpixel.dispatch([
 ]);
 ```
 
-Tipos disponíveis: `spawn`, `equip`, `attack`, `talk`, `remove`, `scene`. IDs são atribuídos pelo motor, não pelo GPT. `dispatch` retorna uma Promise que termina quando as animações terminam e rejeita chamadas concorrentes. Isso é uma interface no navegador, não um endpoint remoto já integrado ao OracleRPG. Não há integração OracleRPG nesta versão.
+Tipos disponíveis: `spawn`, `equip`, `attack`, `talk`, `remove`, `scene`, `move`, `inventory`. IDs são atribuídos pelo motor, não pelo GPT. `dispatch` retorna uma Promise que termina quando as animações terminam e rejeita chamadas concorrentes. Isso é uma interface no navegador, não um endpoint remoto já integrado ao OracleRPG. Não há integração OracleRPG nesta versão.
 
 ## Testar
 
@@ -75,4 +75,4 @@ Tipos disponíveis: `spawn`, `equip`, `attack`, `talk`, `remove`, `scene`. IDs s
 npm test
 ```
 
-Testes cobrem criação, alvo por nome, equipamento, impactos, remoção, mudança de cenário, negações, eventos inválidos, limite de NPCs e IDs únicos. Não há dependências npm a instalar.
+Testes cobrem criação, alvo por nome, equipamento, impactos, remoção, mudança de cenário, negações, eventos inválidos, limite de NPCs e IDs únicos. Use `npm ci` para instalar as dependências de testes visuais.
