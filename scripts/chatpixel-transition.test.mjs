@@ -15,6 +15,7 @@ test('destination commits at full darkness then reveals gradually; static layers
  try{
   frame(0);assert.equal(created,4);frame(10);assert.equal(created,4);
   const done=renderer.transition({scene:'shop'},()=>{assert.equal(colors.at(-1),'rgba(5,12,15,1)');commits++;state.scene='shop';}).then(()=>{finished=true;});
+  await new Promise(resolve=>setImmediate(resolve));
   const arrival=510+ENTRY_MS;
   frame(arrival-ENTRY_MS/4);assert.equal(commits,0);assert.ok(colors.includes('rgba(5,12,15,0.5)'));
   frame(arrival);assert.equal(commits,1);assert.equal(renderer.getTravel().phase,'reveal');
