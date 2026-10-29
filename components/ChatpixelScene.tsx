@@ -2,7 +2,6 @@
 import {useEffect,useRef,useState} from 'react';
 import {createRenderer,type PixelRenderer} from '@/lib/chatpixel/renderer.js';
 import {applyEvent,initialState,type PixelState} from '@/lib/chatpixel/engine.js';
-import {travelIntent} from '@/lib/chatpixel/journey.js';
 import type {PixelVisual} from '@/lib/chatpixelIntegration';
 
 type Props={visual?:PixelVisual;busy:boolean;playerText:string;scene:string;playerName:string};
@@ -28,7 +27,7 @@ export default function ChatpixelScene({visual,busy,playerText,scene,playerName}
    finally{if(epoch.current===token){current.current=frame.state;processing.current=false;r.cancelTravel();}}
   });
  },[visual]);
- useEffect(()=>{if(busy){const destination=travelIntent(playerText);if(destination)renderer.current?.beginTravel(destination);}else if(!processing.current)renderer.current?.cancelTravel();},[busy,playerText]);
+ useEffect(()=>{if(!busy&&!processing.current)renderer.current?.cancelTravel();},[busy]);
  return <div className="sceneArt pixelScene" ref={container} data-testid="chatpixel-scene">
   <canvas ref={canvas} width={1280} height={720} role="img" aria-label={`Cena visual de ${scene}. ${visual?.state.npcs.map(n=>n.name).join(', ')||'Nenhum NPC confirmado.'}`}/>
   <div className="pixelSceneMeta"><span>CHATPIXEL · CHAT DA SESSÃO</span><button type="button" aria-label="Ampliar cena" onClick={()=>{void container.current?.requestFullscreen?.().catch(()=>setError('Tela cheia indisponível.'));}}>⛶</button></div>

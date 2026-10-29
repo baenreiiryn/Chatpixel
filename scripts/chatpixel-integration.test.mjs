@@ -62,3 +62,13 @@ test('scene metadata and visual narration can finish together without another mo
  let requests=0;const result=await runGmTurn(state(),'Vou à clareira',async()=>{requests++;return {output:[call('scene_set',{scene:'Clareira',reason:'Chegada'}),call('scene_render',{...opening,narration:'Você chega à clareira.'})]};},{model:'test',requirePixelVisual:true});
  assert.equal(requests,1);assert.equal(result.state.campaign.scene,'Clareira');assert.equal(result.state.pixelVisual.state.npcs[0].name,'Borin');
 });
+
+test('same location preserves the scenery; object and NPC deltas persist without travel',()=>{
+ let s=gm.executeGmTool(state(),'scene_render',JSON.stringify({events:[{type:'scene',scene:'tavern',location:'Javali',layout:{wealth:'poor'}}],visibleNpcs:[]})).state;
+ const original=structuredClone(s.pixelVisual.state);
+ const result=gm.executeGmTool(s,'scene_render',JSON.stringify({events:[{type:'scene',scene:'tavern',location:'Javali',layout:{wealth:'noble'}},{type:'prop',action:'add',ref:'loot',prop:{type:'rock',asset:'chest',x:800,y:300}},{type:'spawn',name:'Borin',kind:'merchant',ref:'borin'}],visibleNpcs:['borin']}));
+ assert.equal(result.result.ok,true);s=result.state;assert.equal(s.pixelVisual.state.layout.wealth,'poor');assert.equal(s.pixelVisual.state.encounter,original.encounter);assert.ok(!s.pixelVisual.batch.some(e=>e.type==='scene'));
+ const removed=gm.executeGmTool(s,'scene_render',JSON.stringify({events:[{type:'prop',action:'remove',ref:'loot'}],visibleNpcs:[]}));assert.equal(removed.result.ok,true);assert.deepEqual(removed.state.pixelVisual.state.layout.props,[]);assert.deepEqual(removed.state.pixelVisual.state.npcs,[]);
+ const reentered=gm.executeGmTool(removed.state,'scene_render',JSON.stringify({events:[{type:'scene',scene:'tavern',location:'Javali',newEncounter:true,layout:{wealth:'noble'}}],visibleNpcs:[]}));assert.equal(reentered.result.ok,true);assert.equal(reentered.state.pixelVisual.state.encounter,original.encounter+1);assert.equal(reentered.state.pixelVisual.state.layout.wealth,'noble');
+ const bad=gm.executeGmTool(s,'scene_render',JSON.stringify({events:[{type:'prop',action:'remove',ref:'unknown'}],visibleNpcs:[]}));assert.equal(bad.result.ok,false);assert.equal(bad.state,s);
+});

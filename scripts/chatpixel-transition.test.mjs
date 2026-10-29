@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRenderer} from '../lib/chatpixel/renderer.js';
-import {initialState} from '../lib/chatpixel/engine.js';
+import {initialState,applyEvent} from '../lib/chatpixel/engine.js';
 import {ENTRY_MS,REVEAL_MS} from '../lib/chatpixel/journey.js';
 
 test('destination commits at full darkness then reveals gradually; static layers are reused',async t=>{
@@ -14,13 +14,16 @@ test('destination commits at full darkness then reveals gradually; static layers
  const frame=at=>{clock=at;colors=[];next(at);};let commits=0,finished=false;
  try{
   frame(0);assert.equal(created,4);frame(10);assert.equal(created,4);
-  const done=renderer.transition({scene:'shop'},()=>{assert.equal(colors.at(-1),'rgba(5,12,15,1)');commits++;state.scene='shop';}).then(()=>{finished=true;});
+  applyEvent(state,{type:'spawn',name:'Borin',kind:'merchant',ref:'borin'});frame(20);assert.equal(created,4);
+  applyEvent(state,{type:'prop',action:'add',ref:'chest',prop:{type:'rock',asset:'chest',x:800,y:300}});frame(30);assert.equal(created,5);
+  applyEvent(state,{type:'prop',action:'remove',ref:'chest'});frame(40);assert.equal(created,5);
+  const done=renderer.transition({scene:'shop'},()=>{assert.equal(colors.at(-1),'rgba(5,12,15,1)');commits++;state.scene='shop';state.layout=null;}).then(()=>{finished=true;});
   await new Promise(resolve=>setImmediate(resolve));
-  const arrival=510+ENTRY_MS;
+  const arrival=540+ENTRY_MS;
   frame(arrival-ENTRY_MS/4);assert.equal(commits,0);assert.ok(colors.includes('rgba(5,12,15,0.5)'));
   frame(arrival);assert.equal(commits,1);assert.equal(renderer.getTravel().phase,'reveal');
-  frame(arrival+REVEAL_MS/2);assert.ok(colors.includes('rgba(5,12,15,0.5)'));assert.equal(finished,false);assert.equal(created,8);
+  frame(arrival+REVEAL_MS/2);assert.ok(colors.includes('rgba(5,12,15,0.5)'));assert.equal(finished,false);assert.equal(created,9);
   frame(arrival+REVEAL_MS);await done;assert.equal(renderer.getTravel(),null);
-  frame(arrival+REVEAL_MS+20);assert.equal(created,8);
+  frame(arrival+REVEAL_MS+20);assert.equal(created,9);
  }finally{renderer.stop();globalThis.requestAnimationFrame=old;}
 });
