@@ -1,4 +1,4 @@
-import {executePixelScene,pixelStateFor,pixelInstructions} from "./chatpixelIntegration";
+import {executePixelScene,pixelContextFor,pixelInstructions} from "./chatpixelIntegration";
 import {
   executeCommand,
   requestPlayerRoll,
@@ -205,7 +205,7 @@ export function buildTurnInput(state: GameState, playerText: string) {
       "ESTADO ATUAL DO ORACLE:",
       JSON.stringify({
         campaign: state.campaign,
-        pixelScene: pixelStateFor(state),
+        pixelScene: pixelContextFor(state),
         character: state.character,
         characterAbilities,
         abilityIntentHints,

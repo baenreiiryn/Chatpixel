@@ -17,8 +17,12 @@ export default function ChatpixelScene({visual,busy,playerText,scene,playerName}
   if(!visual||visual.revision===revision.current)return;
   revision.current=visual.revision;const token=epoch.current;const frame=structuredClone(visual);
   queue.current=queue.current.catch(()=>{}).then(async()=>{if(epoch.current!==token||!renderer.current)return;const r=renderer.current;processing.current=true;setError('');current.current=frame.before;
-   try{for(const raw of frame.batch){if(epoch.current!==token)return;const fromX=current.current.player.x,fromY=current.current.player.y;
-    if(raw.type==='scene')await r.transition(raw,()=>{current.current=structuredClone(current.current);applyEvent(current.current,raw);});
+   try{for(let i=0;i<frame.batch.length;i++){const raw=frame.batch[i];if(epoch.current!==token)return;const fromX=current.current.player.x,fromY=current.current.player.y;
+    if(raw.type==='scene'){
+     // Prepare static actors before revealing the destination, without serial spawn waits.
+     const setup=[raw];while(i+1<frame.batch.length&&['spawn','equip'].includes(frame.batch[i+1].type))setup.push(frame.batch[++i]);
+     await r.transition(raw,()=>{current.current=structuredClone(current.current);for(const event of setup)applyEvent(current.current,event);});
+    }
     else{const event=applyEvent(current.current,raw);if(['attack','spawn','talk','move'].includes(event.type))await r.animate({...event,fromX,fromY});}
    }}catch(e){if(epoch.current===token)setError(e instanceof Error?e.message:'Não foi possível animar este turno.');}
    finally{if(epoch.current===token){current.current=frame.state;processing.current=false;r.cancelTravel();}}
