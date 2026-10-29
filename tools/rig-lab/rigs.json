@@ -1,0 +1,3537 @@
+{
+  "version": 1,
+  "sizes": {
+    "small": 0.6666666666666666,
+    "medium": 1,
+    "large": 1.5
+  },
+  "sizeLabels": {
+    "small": "Pequeno",
+    "medium": "Médio",
+    "large": "Grande"
+  },
+  "referenceBodyHeight": 48,
+  "units": "logical pixels; positive y down; rotations degrees",
+  "assets": {
+    "human/head": {
+      "file": "parts/human/head.png",
+      "width": 55,
+      "height": 69,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1030,
+        60,
+        1090,
+        137
+      ],
+      "trim": [
+        2,
+        5,
+        57,
+        74
+      ]
+    },
+    "human/chest": {
+      "file": "parts/human/chest.png",
+      "width": 88,
+      "height": 91,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1110,
+        60,
+        1203,
+        155
+      ],
+      "trim": [
+        2,
+        2,
+        90,
+        93
+      ]
+    },
+    "human/pelvis": {
+      "file": "parts/human/pelvis.png",
+      "width": 60,
+      "height": 53,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1220,
+        92,
+        1285,
+        152
+      ],
+      "trim": [
+        2,
+        4,
+        62,
+        57
+      ]
+    },
+    "human/upperArm": {
+      "file": "parts/human/upperArm.png",
+      "width": 51,
+      "height": 83,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1030,
+        150,
+        1088,
+        240
+      ],
+      "trim": [
+        3,
+        3,
+        54,
+        86
+      ]
+    },
+    "human/forearm": {
+      "file": "parts/human/forearm.png",
+      "width": 53,
+      "height": 79,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1120,
+        158,
+        1182,
+        244
+      ],
+      "trim": [
+        5,
+        4,
+        58,
+        83
+      ]
+    },
+    "human/hand": {
+      "file": "parts/human/hand.png",
+      "width": 42,
+      "height": 51,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1218,
+        185,
+        1267,
+        243
+      ],
+      "trim": [
+        4,
+        5,
+        46,
+        56
+      ]
+    },
+    "human/thigh": {
+      "file": "parts/human/thigh.png",
+      "width": 59,
+      "height": 119,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1028,
+        239,
+        1094,
+        364
+      ],
+      "trim": [
+        4,
+        3,
+        63,
+        122
+      ]
+    },
+    "human/shin": {
+      "file": "parts/human/shin.png",
+      "width": 57,
+      "height": 109,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1120,
+        250,
+        1185,
+        368
+      ],
+      "trim": [
+        4,
+        5,
+        61,
+        114
+      ]
+    },
+    "human/foot": {
+      "file": "parts/human/foot.png",
+      "width": 73,
+      "height": 47,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1201,
+        310,
+        1282,
+        364
+      ],
+      "trim": [
+        4,
+        4,
+        77,
+        51
+      ]
+    },
+    "feather/upperWing": {
+      "file": "parts/feather/upperWing.png",
+      "width": 61,
+      "height": 72,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1145,
+        438,
+        1213,
+        516
+      ],
+      "trim": [
+        3,
+        4,
+        64,
+        76
+      ]
+    },
+    "feather/outerWing": {
+      "file": "parts/feather/outerWing.png",
+      "width": 186,
+      "height": 141,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1219,
+        417,
+        1411,
+        567
+      ],
+      "trim": [
+        3,
+        5,
+        189,
+        146
+      ]
+    },
+    "feather/foldedWing": {
+      "file": "parts/feather/foldedWing.png",
+      "width": 106,
+      "height": 144,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1311,
+        570,
+        1425,
+        721
+      ],
+      "trim": [
+        4,
+        3,
+        110,
+        147
+      ]
+    },
+    "bird/head": {
+      "file": "parts/bird/head.png",
+      "width": 86,
+      "height": 72,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        972,
+        769,
+        1066,
+        848
+      ],
+      "trim": [
+        4,
+        4,
+        90,
+        76
+      ]
+    },
+    "bird/body": {
+      "file": "parts/bird/body.png",
+      "width": 135,
+      "height": 111,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        998,
+        835,
+        1138,
+        950
+      ],
+      "trim": [
+        4,
+        1,
+        139,
+        112
+      ]
+    },
+    "bird/wing": {
+      "file": "parts/bird/wing.png",
+      "width": 195,
+      "height": 184,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1220,
+        753,
+        1420,
+        942
+      ],
+      "trim": [
+        1,
+        3,
+        196,
+        187
+      ]
+    },
+    "bird/tail": {
+      "file": "parts/bird/tail.png",
+      "width": 155,
+      "height": 111,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1240,
+        923,
+        1405,
+        1040
+      ],
+      "trim": [
+        5,
+        2,
+        160,
+        113
+      ]
+    },
+    "bird/thigh": {
+      "file": "parts/bird/thigh.png",
+      "width": 51,
+      "height": 122,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        983,
+        924,
+        1042,
+        1050
+      ],
+      "trim": [
+        4,
+        1,
+        55,
+        123
+      ]
+    },
+    "bird/shin": {
+      "file": "parts/bird/shin.png",
+      "width": 58,
+      "height": 92,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1060,
+        955,
+        1123,
+        1055
+      ],
+      "trim": [
+        3,
+        4,
+        61,
+        96
+      ]
+    },
+    "bird/foot": {
+      "file": "parts/bird/foot.png",
+      "width": 85,
+      "height": 83,
+      "source": "exec-cfe6a894-268f-4a16-acc2-a9fde4ab0765.png",
+      "rect": [
+        1138,
+        974,
+        1231,
+        1063
+      ],
+      "trim": [
+        4,
+        2,
+        89,
+        85
+      ]
+    },
+    "quad/head": {
+      "file": "parts/quad/head.png",
+      "width": 94,
+      "height": 105,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        989,
+        126,
+        1090,
+        237
+      ],
+      "trim": [
+        4,
+        3,
+        98,
+        108
+      ]
+    },
+    "quad/neck": {
+      "file": "parts/quad/neck.png",
+      "width": 80,
+      "height": 104,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1088,
+        125,
+        1174,
+        236
+      ],
+      "trim": [
+        3,
+        3,
+        83,
+        107
+      ]
+    },
+    "quad/chest": {
+      "file": "parts/quad/chest.png",
+      "width": 107,
+      "height": 100,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1176,
+        126,
+        1288,
+        231
+      ],
+      "trim": [
+        2,
+        3,
+        109,
+        103
+      ]
+    },
+    "quad/pelvis": {
+      "file": "parts/quad/pelvis.png",
+      "width": 96,
+      "height": 101,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1301,
+        135,
+        1403,
+        242
+      ],
+      "trim": [
+        3,
+        3,
+        99,
+        104
+      ]
+    },
+    "quad/tail": {
+      "file": "parts/quad/tail.png",
+      "width": 132,
+      "height": 85,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        918,
+        269,
+        1056,
+        360
+      ],
+      "trim": [
+        3,
+        3,
+        135,
+        88
+      ]
+    },
+    "quad/upperFront": {
+      "file": "parts/quad/upperFront.png",
+      "width": 71,
+      "height": 157,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1065,
+        230,
+        1141,
+        391
+      ],
+      "trim": [
+        2,
+        1,
+        73,
+        158
+      ]
+    },
+    "quad/lowerFront": {
+      "file": "parts/quad/lowerFront.png",
+      "width": 92,
+      "height": 132,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1139,
+        241,
+        1237,
+        379
+      ],
+      "trim": [
+        3,
+        3,
+        95,
+        135
+      ]
+    },
+    "quad/upperBack": {
+      "file": "parts/quad/upperBack.png",
+      "width": 76,
+      "height": 150,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1254,
+        230,
+        1336,
+        382
+      ],
+      "trim": [
+        3,
+        0,
+        79,
+        150
+      ]
+    },
+    "quad/lowerBack": {
+      "file": "parts/quad/lowerBack.png",
+      "width": 75,
+      "height": 98,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1343,
+        273,
+        1425,
+        378
+      ],
+      "trim": [
+        4,
+        4,
+        79,
+        102
+      ]
+    },
+    "dragon/head": {
+      "file": "parts/dragon/head.png",
+      "width": 116,
+      "height": 112,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        983,
+        431,
+        1107,
+        550
+      ],
+      "trim": [
+        4,
+        3,
+        120,
+        115
+      ]
+    },
+    "dragon/neck": {
+      "file": "parts/dragon/neck.png",
+      "width": 102,
+      "height": 130,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1108,
+        426,
+        1218,
+        561
+      ],
+      "trim": [
+        4,
+        3,
+        106,
+        133
+      ]
+    },
+    "dragon/chest": {
+      "file": "parts/dragon/chest.png",
+      "width": 91,
+      "height": 107,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1208,
+        448,
+        1302,
+        560
+      ],
+      "trim": [
+        1,
+        1,
+        92,
+        108
+      ]
+    },
+    "dragon/pelvis": {
+      "file": "parts/dragon/pelvis.png",
+      "width": 88,
+      "height": 93,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1310,
+        458,
+        1403,
+        557
+      ],
+      "trim": [
+        2,
+        3,
+        90,
+        96
+      ]
+    },
+    "dragon/tail": {
+      "file": "parts/dragon/tail.png",
+      "width": 214,
+      "height": 224,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        941,
+        555,
+        1162,
+        785
+      ],
+      "trim": [
+        3,
+        2,
+        217,
+        226
+      ]
+    },
+    "dragon/front": {
+      "file": "parts/dragon/front.png",
+      "width": 71,
+      "height": 112,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1172,
+        567,
+        1249,
+        684
+      ],
+      "trim": [
+        3,
+        2,
+        74,
+        114
+      ]
+    },
+    "dragon/back": {
+      "file": "parts/dragon/back.png",
+      "width": 76,
+      "height": 144,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1277,
+        544,
+        1360,
+        694
+      ],
+      "trim": [
+        3,
+        3,
+        79,
+        147
+      ]
+    },
+    "dragon/foot": {
+      "file": "parts/dragon/foot.png",
+      "width": 68,
+      "height": 70,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1355,
+        594,
+        1428,
+        670
+      ],
+      "trim": [
+        3,
+        3,
+        71,
+        73
+      ]
+    },
+    "dragon/wing": {
+      "file": "parts/dragon/wing.png",
+      "width": 267,
+      "height": 160,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1024,
+        640,
+        1297,
+        807
+      ],
+      "trim": [
+        3,
+        3,
+        270,
+        163
+      ]
+    },
+    "dragon/wingTip": {
+      "file": "parts/dragon/wingTip.png",
+      "width": 145,
+      "height": 107,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1275,
+        689,
+        1425,
+        802
+      ],
+      "trim": [
+        2,
+        3,
+        147,
+        110
+      ]
+    },
+    "snake/head": {
+      "file": "parts/snake/head.png",
+      "width": 96,
+      "height": 62,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        962,
+        860,
+        1064,
+        928
+      ],
+      "trim": [
+        3,
+        3,
+        99,
+        65
+      ]
+    },
+    "snake/neck": {
+      "file": "parts/snake/neck.png",
+      "width": 54,
+      "height": 89,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1072,
+        856,
+        1132,
+        951
+      ],
+      "trim": [
+        3,
+        3,
+        57,
+        92
+      ]
+    },
+    "snake/segment": {
+      "file": "parts/snake/segment.png",
+      "width": 138,
+      "height": 95,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        941,
+        933,
+        1085,
+        1034
+      ],
+      "trim": [
+        3,
+        3,
+        141,
+        98
+      ]
+    },
+    "snake/curve": {
+      "file": "parts/snake/curve.png",
+      "width": 125,
+      "height": 100,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1080,
+        934,
+        1211,
+        1039
+      ],
+      "trim": [
+        2,
+        3,
+        127,
+        103
+      ]
+    },
+    "snake/tail": {
+      "file": "parts/snake/tail.png",
+      "width": 114,
+      "height": 72,
+      "source": "exec-3c455418-5999-4dff-9ccc-765ae702c261.png",
+      "rect": [
+        1300,
+        961,
+        1421,
+        1038
+      ],
+      "trim": [
+        3,
+        3,
+        117,
+        75
+      ]
+    },
+    "spider/abdomen": {
+      "file": "parts/spider/abdomen.png",
+      "width": 157,
+      "height": 117,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1038,
+        113,
+        1201,
+        236
+      ],
+      "trim": [
+        3,
+        3,
+        160,
+        120
+      ]
+    },
+    "spider/head": {
+      "file": "parts/spider/head.png",
+      "width": 122,
+      "height": 96,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1205,
+        134,
+        1333,
+        236
+      ],
+      "trim": [
+        3,
+        3,
+        125,
+        99
+      ]
+    },
+    "spider/mandible": {
+      "file": "parts/spider/mandible.png",
+      "width": 67,
+      "height": 77,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1340,
+        145,
+        1413,
+        228
+      ],
+      "trim": [
+        3,
+        3,
+        70,
+        80
+      ]
+    },
+    "spider/upperLeg": {
+      "file": "parts/spider/upperLeg.png",
+      "width": 72,
+      "height": 84,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1031,
+        230,
+        1108,
+        317
+      ],
+      "trim": [
+        3,
+        3,
+        75,
+        87
+      ]
+    },
+    "spider/lowerLeg": {
+      "file": "parts/spider/lowerLeg.png",
+      "width": 93,
+      "height": 109,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1042,
+        310,
+        1137,
+        422
+      ],
+      "trim": [
+        0,
+        0,
+        93,
+        109
+      ]
+    },
+    "fly/head": {
+      "file": "parts/fly/head.png",
+      "width": 75,
+      "height": 84,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1072,
+        465,
+        1153,
+        555
+      ],
+      "trim": [
+        3,
+        3,
+        78,
+        87
+      ]
+    },
+    "fly/thorax": {
+      "file": "parts/fly/thorax.png",
+      "width": 97,
+      "height": 80,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1015,
+        549,
+        1146,
+        630
+      ],
+      "trim": [
+        31,
+        1,
+        128,
+        81
+      ]
+    },
+    "fly/abdomen": {
+      "file": "parts/fly/abdomen.png",
+      "width": 128,
+      "height": 125,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1012,
+        625,
+        1146,
+        753
+      ],
+      "trim": [
+        3,
+        0,
+        131,
+        125
+      ]
+    },
+    "fly/antenna": {
+      "file": "parts/fly/antenna.png",
+      "width": 73,
+      "height": 44,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1162,
+        460,
+        1241,
+        510
+      ],
+      "trim": [
+        3,
+        3,
+        76,
+        47
+      ]
+    },
+    "fly/mandible": {
+      "file": "parts/fly/mandible.png",
+      "width": 45,
+      "height": 51,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1160,
+        510,
+        1211,
+        566
+      ],
+      "trim": [
+        2,
+        3,
+        47,
+        54
+      ]
+    },
+    "fly/wing": {
+      "file": "parts/fly/wing.png",
+      "width": 215,
+      "height": 95,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1212,
+        488,
+        1434,
+        590
+      ],
+      "trim": [
+        3,
+        4,
+        218,
+        99
+      ]
+    },
+    "fly/hindWing": {
+      "file": "parts/fly/hindWing.png",
+      "width": 161,
+      "height": 61,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1235,
+        589,
+        1400,
+        657
+      ],
+      "trim": [
+        2,
+        3,
+        163,
+        64
+      ]
+    },
+    "fly/upperLeg": {
+      "file": "parts/fly/upperLeg.png",
+      "width": 50,
+      "height": 78,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1152,
+        567,
+        1211,
+        648
+      ],
+      "trim": [
+        4,
+        3,
+        54,
+        81
+      ]
+    },
+    "fly/lowerLeg": {
+      "file": "parts/fly/lowerLeg.png",
+      "width": 85,
+      "height": 114,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1178,
+        642,
+        1265,
+        759
+      ],
+      "trim": [
+        0,
+        0,
+        85,
+        114
+      ]
+    },
+    "bug/abdomen": {
+      "file": "parts/bug/abdomen.png",
+      "width": 142,
+      "height": 108,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1008,
+        803,
+        1155,
+        916
+      ],
+      "trim": [
+        3,
+        3,
+        145,
+        111
+      ]
+    },
+    "bug/thorax": {
+      "file": "parts/bug/thorax.png",
+      "width": 89,
+      "height": 68,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1195,
+        829,
+        1284,
+        921
+      ],
+      "trim": [
+        0,
+        0,
+        89,
+        68
+      ]
+    },
+    "bug/head": {
+      "file": "parts/bug/head.png",
+      "width": 82,
+      "height": 76,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1275,
+        850,
+        1358,
+        928
+      ],
+      "trim": [
+        0,
+        0,
+        82,
+        76
+      ]
+    },
+    "bug/antenna": {
+      "file": "parts/bug/antenna.png",
+      "width": 78,
+      "height": 43,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1338,
+        809,
+        1423,
+        857
+      ],
+      "trim": [
+        3,
+        3,
+        81,
+        46
+      ]
+    },
+    "bug/mandible": {
+      "file": "parts/bug/mandible.png",
+      "width": 56,
+      "height": 68,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1350,
+        850,
+        1412,
+        922
+      ],
+      "trim": [
+        3,
+        2,
+        59,
+        70
+      ]
+    },
+    "bug/upperLeg": {
+      "file": "parts/bug/upperLeg.png",
+      "width": 58,
+      "height": 68,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1024,
+        911,
+        1085,
+        982
+      ],
+      "trim": [
+        3,
+        3,
+        61,
+        71
+      ]
+    },
+    "bug/lowerLeg": {
+      "file": "parts/bug/lowerLeg.png",
+      "width": 61,
+      "height": 70,
+      "source": "exec-91c19e87-7495-49e0-a005-619a0abcd1c2.png",
+      "rect": [
+        1057,
+        976,
+        1121,
+        1049
+      ],
+      "trim": [
+        0,
+        0,
+        61,
+        70
+      ]
+    }
+  },
+  "rigs": {
+    "humanoid": {
+      "name": "Humanoide",
+      "flying": false,
+      "nodes": [
+        {
+          "id": "thigh-1",
+          "part": "human/thigh",
+          "parent": "pelvis",
+          "x": -2,
+          "y": 3,
+          "w": 7,
+          "h": 13,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "shin-1",
+          "part": "human/shin",
+          "parent": "thigh-1",
+          "x": 0,
+          "y": 10,
+          "w": 6,
+          "h": 12,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "foot-1",
+          "part": "human/foot",
+          "parent": "shin-1",
+          "x": 1,
+          "y": 9,
+          "w": 9,
+          "h": 5,
+          "pivot": [
+            0.3,
+            0.35
+          ],
+          "angle": 0,
+          "motion": "foot",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "arm-1",
+          "part": "human/upperArm",
+          "parent": "chest",
+          "x": -4,
+          "y": 1,
+          "w": 6,
+          "h": 11,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "arm",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "forearm-1",
+          "part": "human/forearm",
+          "parent": "arm-1",
+          "x": 0,
+          "y": 8,
+          "w": 6,
+          "h": 10,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "elbow",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "hand-1",
+          "part": "human/hand",
+          "parent": "forearm-1",
+          "x": 1,
+          "y": 8,
+          "w": 5,
+          "h": 5,
+          "pivot": [
+            0.5,
+            0.2
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": true
+        },
+        {
+          "id": "pelvis",
+          "part": "human/pelvis",
+          "parent": null,
+          "x": 0,
+          "y": -25,
+          "w": 10,
+          "h": 8,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "chest",
+          "part": "human/chest",
+          "parent": "pelvis",
+          "x": 0,
+          "y": -12,
+          "w": 13,
+          "h": 15,
+          "pivot": [
+            0.5,
+            0.15
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "thigh1",
+          "part": "human/thigh",
+          "parent": "pelvis",
+          "x": 2,
+          "y": 3,
+          "w": 7,
+          "h": 13,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "shin1",
+          "part": "human/shin",
+          "parent": "thigh1",
+          "x": 0,
+          "y": 10,
+          "w": 6,
+          "h": 12,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "foot1",
+          "part": "human/foot",
+          "parent": "shin1",
+          "x": 1,
+          "y": 9,
+          "w": 9,
+          "h": 5,
+          "pivot": [
+            0.3,
+            0.35
+          ],
+          "angle": 0,
+          "motion": "foot",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "arm1",
+          "part": "human/upperArm",
+          "parent": "chest",
+          "x": 4,
+          "y": 1,
+          "w": 6,
+          "h": 11,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "arm",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "forearm1",
+          "part": "human/forearm",
+          "parent": "arm1",
+          "x": 0,
+          "y": 8,
+          "w": 6,
+          "h": 10,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "elbow",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "hand1",
+          "part": "human/hand",
+          "parent": "forearm1",
+          "x": 1,
+          "y": 8,
+          "w": 5,
+          "h": 5,
+          "pivot": [
+            0.5,
+            0.2
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "head",
+          "part": "human/head",
+          "parent": "chest",
+          "x": 1,
+          "y": 0,
+          "w": 9,
+          "h": 11,
+          "pivot": [
+            0.5,
+            0.8
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        }
+      ]
+    },
+    "winged-humanoid": {
+      "name": "Humanoide alado",
+      "flying": true,
+      "nodes": [
+        {
+          "id": "wing-1",
+          "part": "feather/outerWing",
+          "parent": "chest",
+          "x": -2,
+          "y": 2,
+          "w": 30,
+          "h": 22,
+          "pivot": [
+            0.1,
+            0.15
+          ],
+          "angle": 25,
+          "motion": "wing",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "thigh-1",
+          "part": "human/thigh",
+          "parent": "pelvis",
+          "x": -2,
+          "y": 3,
+          "w": 7,
+          "h": 13,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "shin-1",
+          "part": "human/shin",
+          "parent": "thigh-1",
+          "x": 0,
+          "y": 10,
+          "w": 6,
+          "h": 12,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "foot-1",
+          "part": "human/foot",
+          "parent": "shin-1",
+          "x": 1,
+          "y": 9,
+          "w": 9,
+          "h": 5,
+          "pivot": [
+            0.3,
+            0.35
+          ],
+          "angle": 0,
+          "motion": "foot",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "arm-1",
+          "part": "human/upperArm",
+          "parent": "chest",
+          "x": -4,
+          "y": 1,
+          "w": 6,
+          "h": 11,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "arm",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "forearm-1",
+          "part": "human/forearm",
+          "parent": "arm-1",
+          "x": 0,
+          "y": 8,
+          "w": 6,
+          "h": 10,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "elbow",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "hand-1",
+          "part": "human/hand",
+          "parent": "forearm-1",
+          "x": 1,
+          "y": 8,
+          "w": 5,
+          "h": 5,
+          "pivot": [
+            0.5,
+            0.2
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": true
+        },
+        {
+          "id": "pelvis",
+          "part": "human/pelvis",
+          "parent": null,
+          "x": 0,
+          "y": -25,
+          "w": 10,
+          "h": 8,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "chest",
+          "part": "human/chest",
+          "parent": "pelvis",
+          "x": 0,
+          "y": -12,
+          "w": 13,
+          "h": 15,
+          "pivot": [
+            0.5,
+            0.15
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "wing1",
+          "part": "feather/outerWing",
+          "parent": "chest",
+          "x": -2,
+          "y": 2,
+          "w": 30,
+          "h": 22,
+          "pivot": [
+            0.1,
+            0.15
+          ],
+          "angle": 12,
+          "motion": "wing",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "thigh1",
+          "part": "human/thigh",
+          "parent": "pelvis",
+          "x": 2,
+          "y": 3,
+          "w": 7,
+          "h": 13,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "shin1",
+          "part": "human/shin",
+          "parent": "thigh1",
+          "x": 0,
+          "y": 10,
+          "w": 6,
+          "h": 12,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "foot1",
+          "part": "human/foot",
+          "parent": "shin1",
+          "x": 1,
+          "y": 9,
+          "w": 9,
+          "h": 5,
+          "pivot": [
+            0.3,
+            0.35
+          ],
+          "angle": 0,
+          "motion": "foot",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "arm1",
+          "part": "human/upperArm",
+          "parent": "chest",
+          "x": 4,
+          "y": 1,
+          "w": 6,
+          "h": 11,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "arm",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "forearm1",
+          "part": "human/forearm",
+          "parent": "arm1",
+          "x": 0,
+          "y": 8,
+          "w": 6,
+          "h": 10,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "elbow",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "hand1",
+          "part": "human/hand",
+          "parent": "forearm1",
+          "x": 1,
+          "y": 8,
+          "w": 5,
+          "h": 5,
+          "pivot": [
+            0.5,
+            0.2
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "head",
+          "part": "human/head",
+          "parent": "chest",
+          "x": 1,
+          "y": 0,
+          "w": 9,
+          "h": 11,
+          "pivot": [
+            0.5,
+            0.8
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        }
+      ]
+    },
+    "quadruped": {
+      "name": "Quadrúpede",
+      "flying": false,
+      "nodes": [
+        {
+          "id": "back-1",
+          "part": "quad/upperBack",
+          "parent": "pelvis",
+          "x": 3,
+          "y": 3,
+          "w": 9,
+          "h": 16,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "back-1lower",
+          "part": "quad/lowerBack",
+          "parent": "back-1",
+          "x": 1,
+          "y": 12,
+          "w": 12,
+          "h": 13,
+          "pivot": [
+            0.25,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "front-1",
+          "part": "quad/upperFront",
+          "parent": "chest",
+          "x": 3,
+          "y": 3,
+          "w": 9,
+          "h": 16,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "front-1lower",
+          "part": "quad/lowerFront",
+          "parent": "front-1",
+          "x": 1,
+          "y": 12,
+          "w": 12,
+          "h": 13,
+          "pivot": [
+            0.25,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "tail",
+          "part": "quad/tail",
+          "parent": "pelvis",
+          "x": -5,
+          "y": -4,
+          "w": 32,
+          "h": 22,
+          "pivot": [
+            0.85,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "tail",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "pelvis",
+          "part": "quad/pelvis",
+          "parent": null,
+          "x": -13,
+          "y": -25,
+          "w": 20,
+          "h": 19,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "chest",
+          "part": "quad/chest",
+          "parent": "pelvis",
+          "x": 14,
+          "y": -1,
+          "w": 24,
+          "h": 21,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "neck",
+          "part": "quad/neck",
+          "parent": "chest",
+          "x": 6,
+          "y": -3,
+          "w": 14,
+          "h": 20,
+          "pivot": [
+            0.45,
+            0.85
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "back1",
+          "part": "quad/upperBack",
+          "parent": "pelvis",
+          "x": -2,
+          "y": 3,
+          "w": 9,
+          "h": 16,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "back1lower",
+          "part": "quad/lowerBack",
+          "parent": "back1",
+          "x": 1,
+          "y": 12,
+          "w": 12,
+          "h": 13,
+          "pivot": [
+            0.25,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "front1",
+          "part": "quad/upperFront",
+          "parent": "chest",
+          "x": -2,
+          "y": 3,
+          "w": 9,
+          "h": 16,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "front1lower",
+          "part": "quad/lowerFront",
+          "parent": "front1",
+          "x": 1,
+          "y": 12,
+          "w": 12,
+          "h": 13,
+          "pivot": [
+            0.25,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "head",
+          "part": "quad/head",
+          "parent": "neck",
+          "x": 1,
+          "y": -9,
+          "w": 18,
+          "h": 17,
+          "pivot": [
+            0.2,
+            0.7
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        }
+      ]
+    },
+    "bird": {
+      "name": "Pássaro",
+      "flying": true,
+      "nodes": [
+        {
+          "id": "thigh-1",
+          "part": "bird/thigh",
+          "parent": "body",
+          "x": -4,
+          "y": 5,
+          "w": 6,
+          "h": 12,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "shin-1",
+          "part": "bird/shin",
+          "parent": "thigh-1",
+          "x": 1,
+          "y": 9,
+          "w": 5,
+          "h": 9,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "foot-1",
+          "part": "bird/foot",
+          "parent": "shin-1",
+          "x": 0,
+          "y": 7,
+          "w": 10,
+          "h": 6,
+          "pivot": [
+            0.25,
+            0.3
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": true
+        },
+        {
+          "id": "wing-1",
+          "part": "bird/wing",
+          "parent": "body",
+          "x": -2,
+          "y": -4,
+          "w": 30,
+          "h": 25,
+          "pivot": [
+            0.1,
+            0.15
+          ],
+          "angle": 15,
+          "motion": "wing",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "tail",
+          "part": "bird/tail",
+          "parent": "body",
+          "x": -9,
+          "y": 4,
+          "w": 24,
+          "h": 15,
+          "pivot": [
+            0.85,
+            0.2
+          ],
+          "angle": 25,
+          "motion": "tail",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "body",
+          "part": "bird/body",
+          "parent": null,
+          "x": 0,
+          "y": -24,
+          "w": 24,
+          "h": 20,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "thigh1",
+          "part": "bird/thigh",
+          "parent": "body",
+          "x": 4,
+          "y": 5,
+          "w": 6,
+          "h": 12,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "shin1",
+          "part": "bird/shin",
+          "parent": "thigh1",
+          "x": 1,
+          "y": 9,
+          "w": 5,
+          "h": 9,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "foot1",
+          "part": "bird/foot",
+          "parent": "shin1",
+          "x": 0,
+          "y": 7,
+          "w": 10,
+          "h": 6,
+          "pivot": [
+            0.25,
+            0.3
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "wing1",
+          "part": "bird/wing",
+          "parent": "body",
+          "x": -2,
+          "y": -4,
+          "w": 30,
+          "h": 25,
+          "pivot": [
+            0.1,
+            0.15
+          ],
+          "angle": 15,
+          "motion": "wing",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "head",
+          "part": "bird/head",
+          "parent": "body",
+          "x": 9,
+          "y": -5,
+          "w": 13,
+          "h": 13,
+          "pivot": [
+            0.25,
+            0.7
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        }
+      ]
+    },
+    "dragon": {
+      "name": "Dragão quadrúpede",
+      "flying": true,
+      "nodes": [
+        {
+          "id": "back-1",
+          "part": "dragon/back",
+          "parent": "pelvis",
+          "x": 3,
+          "y": 3,
+          "w": 9,
+          "h": 16,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "back-1lower",
+          "part": "dragon/foot",
+          "parent": "back-1",
+          "x": 1,
+          "y": 12,
+          "w": 12,
+          "h": 13,
+          "pivot": [
+            0.25,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "front-1",
+          "part": "dragon/front",
+          "parent": "chest",
+          "x": 3,
+          "y": 3,
+          "w": 9,
+          "h": 16,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "front-1lower",
+          "part": "dragon/foot",
+          "parent": "front-1",
+          "x": 1,
+          "y": 12,
+          "w": 12,
+          "h": 13,
+          "pivot": [
+            0.25,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "wing-1",
+          "part": "dragon/wing",
+          "parent": "chest",
+          "x": -2,
+          "y": -7,
+          "w": 45,
+          "h": 28,
+          "pivot": [
+            0.85,
+            0.75
+          ],
+          "angle": -12,
+          "motion": "wing",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "tail",
+          "part": "dragon/tail",
+          "parent": "pelvis",
+          "x": -5,
+          "y": -4,
+          "w": 32,
+          "h": 22,
+          "pivot": [
+            0.85,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "tail",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "pelvis",
+          "part": "dragon/pelvis",
+          "parent": null,
+          "x": -13,
+          "y": -25,
+          "w": 20,
+          "h": 19,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "chest",
+          "part": "dragon/chest",
+          "parent": "pelvis",
+          "x": 14,
+          "y": -1,
+          "w": 24,
+          "h": 21,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "neck",
+          "part": "dragon/neck",
+          "parent": "chest",
+          "x": 6,
+          "y": -3,
+          "w": 14,
+          "h": 20,
+          "pivot": [
+            0.45,
+            0.85
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "back1",
+          "part": "dragon/back",
+          "parent": "pelvis",
+          "x": -2,
+          "y": 3,
+          "w": 9,
+          "h": 16,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "back1lower",
+          "part": "dragon/foot",
+          "parent": "back1",
+          "x": 1,
+          "y": 12,
+          "w": 12,
+          "h": 13,
+          "pivot": [
+            0.25,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "front1",
+          "part": "dragon/front",
+          "parent": "chest",
+          "x": -2,
+          "y": 3,
+          "w": 9,
+          "h": 16,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "leg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "front1lower",
+          "part": "dragon/foot",
+          "parent": "front1",
+          "x": 1,
+          "y": 12,
+          "w": 12,
+          "h": 13,
+          "pivot": [
+            0.25,
+            0.12
+          ],
+          "angle": 0,
+          "motion": "knee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "wing1",
+          "part": "dragon/wing",
+          "parent": "chest",
+          "x": -2,
+          "y": -7,
+          "w": 45,
+          "h": 28,
+          "pivot": [
+            0.85,
+            0.75
+          ],
+          "angle": -12,
+          "motion": "wing",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "head",
+          "part": "dragon/head",
+          "parent": "neck",
+          "x": 1,
+          "y": -9,
+          "w": 18,
+          "h": 17,
+          "pivot": [
+            0.2,
+            0.7
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        }
+      ]
+    },
+    "arachnid": {
+      "name": "Aracnídeo",
+      "flying": false,
+      "nodes": [
+        {
+          "id": "leg-1-0",
+          "part": "spider/upperLeg",
+          "parent": "body",
+          "x": -6,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": -67.5,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "tip-1-0",
+          "part": "spider/lowerLeg",
+          "parent": "leg-1-0",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": 33.75,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "leg-1-1",
+          "part": "spider/upperLeg",
+          "parent": "body",
+          "x": 0,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": -22.5,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "tip-1-1",
+          "part": "spider/lowerLeg",
+          "parent": "leg-1-1",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": 11.25,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "leg-1-2",
+          "part": "spider/upperLeg",
+          "parent": "body",
+          "x": 6,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 22.5,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "tip-1-2",
+          "part": "spider/lowerLeg",
+          "parent": "leg-1-2",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -11.25,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "leg-1-3",
+          "part": "spider/upperLeg",
+          "parent": "body",
+          "x": 12,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 67.5,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "tip-1-3",
+          "part": "spider/lowerLeg",
+          "parent": "leg-1-3",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -33.75,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "abdomen",
+          "part": "spider/abdomen",
+          "parent": "body",
+          "x": -16,
+          "y": -2,
+          "w": 25,
+          "h": 20,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "tail",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "body",
+          "part": "spider/head",
+          "parent": null,
+          "x": 2,
+          "y": -18,
+          "w": 18,
+          "h": 15,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "leg1-0",
+          "part": "spider/upperLeg",
+          "parent": "body",
+          "x": -8,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": -67.5,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "tip1-0",
+          "part": "spider/lowerLeg",
+          "parent": "leg1-0",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": 33.75,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "leg1-1",
+          "part": "spider/upperLeg",
+          "parent": "body",
+          "x": -2,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": -22.5,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "tip1-1",
+          "part": "spider/lowerLeg",
+          "parent": "leg1-1",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": 11.25,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "leg1-2",
+          "part": "spider/upperLeg",
+          "parent": "body",
+          "x": 4,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 22.5,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "tip1-2",
+          "part": "spider/lowerLeg",
+          "parent": "leg1-2",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -11.25,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "leg1-3",
+          "part": "spider/upperLeg",
+          "parent": "body",
+          "x": 10,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 67.5,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "tip1-3",
+          "part": "spider/lowerLeg",
+          "parent": "leg1-3",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -33.75,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "mouth",
+          "part": "spider/mandible",
+          "parent": "body",
+          "x": 10,
+          "y": 3,
+          "w": 6,
+          "h": 8,
+          "pivot": [
+            0.3,
+            0.3
+          ],
+          "angle": 0,
+          "motion": "mouth",
+          "phase": 0,
+          "far": false
+        }
+      ]
+    },
+    "serpent": {
+      "name": "Serpentino",
+      "flying": false,
+      "nodes": [
+        {
+          "id": "tail",
+          "part": "snake/tail",
+          "parent": "s0",
+          "x": 6,
+          "y": 0,
+          "w": 22,
+          "h": 10,
+          "pivot": [
+            0.95,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "tail",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "s0",
+          "part": "snake/segment",
+          "parent": null,
+          "x": -18,
+          "y": -7,
+          "w": 22,
+          "h": 14,
+          "pivot": [
+            0.15,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "serpent",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "s1",
+          "part": "snake/curve",
+          "parent": "s0",
+          "x": 7,
+          "y": 0,
+          "w": 22,
+          "h": 14,
+          "pivot": [
+            0.15,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "serpent",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "s2",
+          "part": "snake/curve",
+          "parent": "s1",
+          "x": 7,
+          "y": 0,
+          "w": 22,
+          "h": 14,
+          "pivot": [
+            0.15,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "serpent",
+          "phase": 2,
+          "far": false
+        },
+        {
+          "id": "s3",
+          "part": "snake/curve",
+          "parent": "s2",
+          "x": 7,
+          "y": 0,
+          "w": 22,
+          "h": 14,
+          "pivot": [
+            0.15,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "serpent",
+          "phase": 3,
+          "far": false
+        },
+        {
+          "id": "s4",
+          "part": "snake/curve",
+          "parent": "s3",
+          "x": 7,
+          "y": 0,
+          "w": 22,
+          "h": 14,
+          "pivot": [
+            0.15,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "serpent",
+          "phase": 4,
+          "far": false
+        },
+        {
+          "id": "neck",
+          "part": "snake/neck",
+          "parent": "s4",
+          "x": 9,
+          "y": -2,
+          "w": 11,
+          "h": 17,
+          "pivot": [
+            0.5,
+            0.85
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "head",
+          "part": "snake/head",
+          "parent": "neck",
+          "x": 1,
+          "y": -8,
+          "w": 16,
+          "h": 11,
+          "pivot": [
+            0.25,
+            0.6
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        }
+      ]
+    },
+    "flying-insect": {
+      "name": "Insetoide voador",
+      "flying": true,
+      "nodes": [
+        {
+          "id": "leg-1-0",
+          "part": "fly/upperLeg",
+          "parent": "body",
+          "x": -6,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": -45.0,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "tip-1-0",
+          "part": "fly/lowerLeg",
+          "parent": "leg-1-0",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": 22.5,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "leg-1-1",
+          "part": "fly/upperLeg",
+          "parent": "body",
+          "x": 0,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0.0,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "tip-1-1",
+          "part": "fly/lowerLeg",
+          "parent": "leg-1-1",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -0.0,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "leg-1-2",
+          "part": "fly/upperLeg",
+          "parent": "body",
+          "x": 6,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 45.0,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "tip-1-2",
+          "part": "fly/lowerLeg",
+          "parent": "leg-1-2",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -22.5,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "wing-1-0",
+          "part": "fly/wing",
+          "parent": "body",
+          "x": -3,
+          "y": -4,
+          "w": 34,
+          "h": 12,
+          "pivot": [
+            0.05,
+            0.8
+          ],
+          "angle": -145,
+          "motion": "wing",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "wing-1-1",
+          "part": "fly/hindWing",
+          "parent": "body",
+          "x": -3,
+          "y": -4,
+          "w": 26,
+          "h": 12,
+          "pivot": [
+            0.05,
+            0.8
+          ],
+          "angle": -115,
+          "motion": "wing",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "abdomen",
+          "part": "fly/abdomen",
+          "parent": "body",
+          "x": -16,
+          "y": -2,
+          "w": 25,
+          "h": 20,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "tail",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "body",
+          "part": "fly/thorax",
+          "parent": null,
+          "x": 2,
+          "y": -18,
+          "w": 18,
+          "h": 15,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "leg1-0",
+          "part": "fly/upperLeg",
+          "parent": "body",
+          "x": -8,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": -45.0,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "tip1-0",
+          "part": "fly/lowerLeg",
+          "parent": "leg1-0",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": 22.5,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "leg1-1",
+          "part": "fly/upperLeg",
+          "parent": "body",
+          "x": -2,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0.0,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "tip1-1",
+          "part": "fly/lowerLeg",
+          "parent": "leg1-1",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -0.0,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "leg1-2",
+          "part": "fly/upperLeg",
+          "parent": "body",
+          "x": 4,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 45.0,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "tip1-2",
+          "part": "fly/lowerLeg",
+          "parent": "leg1-2",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -22.5,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "wing1-0",
+          "part": "fly/wing",
+          "parent": "body",
+          "x": -3,
+          "y": -4,
+          "w": 34,
+          "h": 12,
+          "pivot": [
+            0.05,
+            0.8
+          ],
+          "angle": -145,
+          "motion": "wing",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "wing1-1",
+          "part": "fly/hindWing",
+          "parent": "body",
+          "x": -3,
+          "y": -4,
+          "w": 26,
+          "h": 12,
+          "pivot": [
+            0.05,
+            0.8
+          ],
+          "angle": -115,
+          "motion": "wing",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "head",
+          "part": "fly/head",
+          "parent": "body",
+          "x": 12,
+          "y": -1,
+          "w": 13,
+          "h": 12,
+          "pivot": [
+            0.3,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "mouth",
+          "part": "fly/mandible",
+          "parent": "head",
+          "x": 8,
+          "y": 3,
+          "w": 6,
+          "h": 8,
+          "pivot": [
+            0.3,
+            0.3
+          ],
+          "angle": 0,
+          "motion": "mouth",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "antenna",
+          "part": "fly/antenna",
+          "parent": "head",
+          "x": 5,
+          "y": -4,
+          "w": 12,
+          "h": 8,
+          "pivot": [
+            0.05,
+            0.9
+          ],
+          "angle": 0,
+          "motion": "antenna",
+          "phase": 0,
+          "far": false
+        }
+      ]
+    },
+    "ground-insect": {
+      "name": "Insetoide terrestre",
+      "flying": false,
+      "nodes": [
+        {
+          "id": "leg-1-0",
+          "part": "bug/upperLeg",
+          "parent": "body",
+          "x": -6,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": -45.0,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "tip-1-0",
+          "part": "bug/lowerLeg",
+          "parent": "leg-1-0",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": 22.5,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "leg-1-1",
+          "part": "bug/upperLeg",
+          "parent": "body",
+          "x": 0,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0.0,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "tip-1-1",
+          "part": "bug/lowerLeg",
+          "parent": "leg-1-1",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -0.0,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": true
+        },
+        {
+          "id": "leg-1-2",
+          "part": "bug/upperLeg",
+          "parent": "body",
+          "x": 6,
+          "y": 1,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 45.0,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "tip-1-2",
+          "part": "bug/lowerLeg",
+          "parent": "leg-1-2",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -22.5,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": true
+        },
+        {
+          "id": "abdomen",
+          "part": "bug/abdomen",
+          "parent": "body",
+          "x": -16,
+          "y": -2,
+          "w": 25,
+          "h": 20,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "tail",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "body",
+          "part": "bug/thorax",
+          "parent": null,
+          "x": 2,
+          "y": -18,
+          "w": 18,
+          "h": 15,
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "leg1-0",
+          "part": "bug/upperLeg",
+          "parent": "body",
+          "x": -8,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": -45.0,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "tip1-0",
+          "part": "bug/lowerLeg",
+          "parent": "leg1-0",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": 22.5,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "leg1-1",
+          "part": "bug/upperLeg",
+          "parent": "body",
+          "x": -2,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 0.0,
+          "motion": "insectLeg",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "tip1-1",
+          "part": "bug/lowerLeg",
+          "parent": "leg1-1",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -0.0,
+          "motion": "insectKnee",
+          "phase": -1,
+          "far": false
+        },
+        {
+          "id": "leg1-2",
+          "part": "bug/upperLeg",
+          "parent": "body",
+          "x": 4,
+          "y": 4,
+          "w": 8,
+          "h": 14,
+          "pivot": [
+            0.5,
+            0.12
+          ],
+          "angle": 45.0,
+          "motion": "insectLeg",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "tip1-2",
+          "part": "bug/lowerLeg",
+          "parent": "leg1-2",
+          "x": 0,
+          "y": 10,
+          "w": 8,
+          "h": 16,
+          "pivot": [
+            0.2,
+            0.1
+          ],
+          "angle": -22.5,
+          "motion": "insectKnee",
+          "phase": 1,
+          "far": false
+        },
+        {
+          "id": "head",
+          "part": "bug/head",
+          "parent": "body",
+          "x": 12,
+          "y": -1,
+          "w": 13,
+          "h": 12,
+          "pivot": [
+            0.3,
+            0.5
+          ],
+          "angle": 0,
+          "motion": "head",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "mouth",
+          "part": "bug/mandible",
+          "parent": "head",
+          "x": 8,
+          "y": 3,
+          "w": 6,
+          "h": 8,
+          "pivot": [
+            0.3,
+            0.3
+          ],
+          "angle": 0,
+          "motion": "mouth",
+          "phase": 0,
+          "far": false
+        },
+        {
+          "id": "antenna",
+          "part": "bug/antenna",
+          "parent": "head",
+          "x": 5,
+          "y": -4,
+          "w": 12,
+          "h": 8,
+          "pivot": [
+            0.05,
+            0.9
+          ],
+          "angle": 0,
+          "motion": "antenna",
+          "phase": 0,
+          "far": false
+        }
+      ]
+    }
+  }
+}
