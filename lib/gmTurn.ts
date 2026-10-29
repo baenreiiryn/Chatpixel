@@ -134,7 +134,7 @@ export async function runGmTurn(
       if (narration || refusal) return {state: {...working, gmRecovery: undefined}, narration, refusal};
       continue;
     }
-    let visualOnlySucceeded = calls.every(call => call.name === "scene_render");
+    let visualOnlySucceeded = calls.some(call => call.name === "scene_render") && calls.every(call => call.name === "scene_render" || call.name === "scene_set");
     for (const call of calls) {
       const name = String(call.name || "");
       const args = String(call.arguments || "{}");
@@ -170,7 +170,7 @@ export async function runGmTurn(
         ...(call.caller ? {caller: call.caller} : {}),
       });
     }
-    // A successful visual-only batch already contains everything needed to finish.
+    // A successful visual/scene-metadata batch already contains everything needed to finish.
     // Mechanical tools still receive their normal result/continuation round.
     if (visualOnlySucceeded && narration && !narrationRequestsRoll(narration) && !working.pendingRoll) {
       return {state: {...working, gmRecovery: undefined}, narration, refusal};

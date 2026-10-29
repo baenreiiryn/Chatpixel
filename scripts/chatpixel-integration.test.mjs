@@ -57,3 +57,8 @@ test('failed visual update must not publish its bundled narration',async()=>{
  const result=await runGmTurn(state(),'Olho',async()=>{requests++;return {output:[call('scene_render',requests===1?{events:[],visibleNpcs:['inexistente'],narration:'Texto inválido.'}:{...opening,narration:'Borin está aqui.'})]};},{model:'test',requirePixelVisual:true});
  assert.equal(requests,2);assert.equal(result.narration,'Borin está aqui.');
 });
+
+test('scene metadata and visual narration can finish together without another model round',async()=>{
+ let requests=0;const result=await runGmTurn(state(),'Vou à clareira',async()=>{requests++;return {output:[call('scene_set',{scene:'Clareira',reason:'Chegada'}),call('scene_render',{...opening,narration:'Você chega à clareira.'})]};},{model:'test',requirePixelVisual:true});
+ assert.equal(requests,1);assert.equal(result.state.campaign.scene,'Clareira');assert.equal(result.state.pixelVisual.state.npcs[0].name,'Borin');
+});
