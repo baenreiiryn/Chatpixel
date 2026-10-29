@@ -19,7 +19,13 @@ export function pose(rig,action,time){
   if(n.motion==='serpent')angle+=Math.sin(phase-n.phase*.8)*(moving?12:3)+pulse*4;
   const a=p.angle*Math.PI/180;const out={x:p.x+Math.cos(a)*n.x-Math.sin(a)*n.y,y:p.y+Math.sin(a)*n.x+Math.cos(a)*n.y,angle:p.angle+angle};world.set(id,out);return out;
  }
- for(const n of rig.nodes)resolve(n.id);return world;
+ for(const n of rig.nodes)resolve(n.id);
+ // Ground contact is shared by every size; keep walking feet and snake body above the floor.
+ if(!flying){const support=rig.nodes.filter(n=>/^(foot|tip)|lower$/.test(n.id));const grounded=support.length?support:rig.nodes;let bottom=-Infinity;
+  for(const n of grounded){const p=world.get(n.id),a=p.angle*Math.PI/180;for(const u of [0,1])for(const v of [0,1])bottom=Math.max(bottom,p.y+Math.sin(a)*(u-n.pivot[0])*n.w+Math.cos(a)*(v-n.pivot[1])*n.h);}
+  for(const p of world.values())p.y-=bottom;
+ }
+ return world;
 }
 export function drawRig(ctx,rig,images,{x,y,scale=4,time=0,action='idle',joints=false,flip=false}={}){
  const world=pose(rig,action,time);ctx.save();ctx.translate(Math.round(x),Math.round(y));ctx.scale(flip?-scale:scale,scale);ctx.imageSmoothingEnabled=false;
