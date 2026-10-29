@@ -28,7 +28,7 @@ import okhttp3.Response;
 public final class UpdateManager {
     private static final String PREFS = "oracle_updates";
     private static final String PENDING_APK = "pending_apk";
-    private static final String API = "https://api.github.com/repos/" + BuildConfig.GITHUB_REPO + "/releases/latest";
+    private static final String API = "https://api.github.com/repos/" + BuildConfig.GITHUB_REPO + "/releases?per_page=100";
 
     private final Activity activity;
     private final OkHttpClient http = new OkHttpClient.Builder()
@@ -61,8 +61,21 @@ public final class UpdateManager {
                                 Toast.makeText(activity, "Nenhuma atualização disponível.", Toast.LENGTH_SHORT).show());
                         return;
                     }
-                    JSONObject release = new JSONObject(result.body().string());
-                    String tag = release.optString("tag_name").replaceFirst("^[vV]", "");
+                    JSONArray releases = new JSONArray(result.body().string());
+                    JSONObject release = null;
+                    String tag = "0.0.0";
+                    for (int j = 0; j < releases.length(); j++) {
+                        JSONObject candidate = releases.getJSONObject(j);
+                        String name = candidate.optString("tag_name");
+                        if (candidate.optBoolean("draft") || !name.matches("mobile-v[0-9]+\\.[0-9]+\\.[0-9]+")) continue;
+                        String version = name.substring(8);
+                        JSONArray files = candidate.optJSONArray("assets");
+                        boolean hasApk = false;
+                        if (files != null) for (int k = 0; k < files.length(); k++)
+                            if (files.getJSONObject(k).optString("name").equals("Chatpixel-OracleRPG-" + version + ".apk")) hasApk = true;
+                        if (hasApk && compareVersions(version, tag) > 0) { release = candidate; tag = version; }
+                    }
+                    if (release == null) return;
                     if (compareVersions(tag, BuildConfig.VERSION_NAME.replaceFirst("-.*$", "")) <= 0) {
                         if (manual) activity.runOnUiThread(() ->
                                 Toast.makeText(activity, "Você já está na versão mais recente.", Toast.LENGTH_SHORT).show());
@@ -75,7 +88,7 @@ public final class UpdateManager {
                         for (int i = 0; i < assets.length(); i++) {
                             JSONObject asset = assets.getJSONObject(i);
                             String name = asset.optString("name");
-                            if (name.toLowerCase().endsWith(".apk")) {
+                            if (name.equals("Chatpixel-OracleRPG-" + tag + ".apk")) {
                                 apkUrl = asset.optString("browser_download_url");
                                 if (name.toLowerCase().contains("oraclerpg")) break;
                             }
@@ -92,7 +105,7 @@ public final class UpdateManager {
     }
 
     private void prompt(String version, String notes, String url) {
-        String message = "A versão " + version + " do OracleRPG está disponível.";
+        String message = "A versão " + version + " do Chatpixel está disponível.";
         if (notes != null && !notes.trim().isEmpty()) {
             String clean = notes.trim();
             if (clean.length() > 600) clean = clean.substring(0, 600) + "…";

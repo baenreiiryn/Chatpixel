@@ -21,6 +21,7 @@ public final class MainActivity extends Activity {
 
     private WebView webView;
     private UpdateManager updates;
+    private long lastUpdateCheck;
     private ValueCallback<Uri[]> fileChooserCallback;
     private final String oracleHost = Uri.parse(BuildConfig.ORACLE_URL).getHost();
 
@@ -97,7 +98,7 @@ public final class MainActivity extends Activity {
             webView.restoreState(savedInstanceState);
         }
 
-        root.postDelayed(() -> updates.check(false), 2500);
+        root.postDelayed(() -> { lastUpdateCheck = System.currentTimeMillis(); updates.check(false); }, 2500);
     }
 
     @Override
@@ -133,7 +134,12 @@ public final class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (updates != null) updates.resumePendingInstall();
+        if (updates != null) {
+            updates.resumePendingInstall();
+            if (lastUpdateCheck != 0 && System.currentTimeMillis() - lastUpdateCheck > 6 * 60 * 60 * 1000L) {
+                lastUpdateCheck = System.currentTimeMillis(); updates.check(false);
+            }
+        }
     }
 
     @Override
